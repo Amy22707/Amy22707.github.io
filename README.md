@@ -94,7 +94,7 @@
 
 ## To be continued...
 
-## The following is default message & the tutorial
+## The following is the tutorial
 
 
 ## Welcome to GitHub Pages
