@@ -13,7 +13,7 @@
 
 ## Flora
 
-# 致橡树 舒婷
+致橡树 舒婷
 
 我如果爱你——
 
@@ -89,7 +89,6 @@
 
 足下的土地。
 
-# random photos
 
 ![random photos](https://random.52ecy.cn/randbg.php)
 
