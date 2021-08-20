@@ -1,4 +1,4 @@
-### [Amy_xue](https://www.luogu.com.cn/user/181177)'s secret garden
+# [Amy_xue](https://www.luogu.com.cn/user/181177)'s secret garden
 
 ## About me
 
