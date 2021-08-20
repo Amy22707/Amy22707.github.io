@@ -8,6 +8,8 @@
 
 最菜的Oier
 
+不会用Markdown的菜鸡
+
 
 ## A poem
 
@@ -91,8 +93,6 @@
 
 
 ## To be continued...
-
-
 
 ## The following is default message & the tutorial
 
