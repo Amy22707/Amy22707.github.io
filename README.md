@@ -18,7 +18,7 @@
 
 ## Daisy
 
-![over the clouds](https://imgtu.com/i/fjAXr9)
+[![fjAXr9.png](https://z3.ax1x.com/2021/08/20/fjAXr9.png)](https://imgtu.com/i/fjAXr9)
 
 我不能决定怎么生，怎么死。但我可以决定怎样爱，怎样活-萧红
 
