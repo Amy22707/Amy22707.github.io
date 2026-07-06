@@ -1,8 +1,8 @@
 {
   "apiEndpoint": "https://upload.imagekit.io/api/v1/files/upload",
-  "uploadHeader": "",
-  "uploadBody": "{\"image\": \"$FILE\"}",
-  "imageUrlPath": "",
+  "uploadHeader": "{\"Accept\": \"application/json\",\n\"Authorization\": \"Basic cHJpdmF0ZV8yMCtiMEJkQjVyOFV1emJiZm5WQXdYRHZoN009Og==\", \"Content-Type\":\n\"multipart/form-data\"}",
+  "uploadBody": "{\"file\": \"$FILE\", \"fileName\":\"blog\", \"folder\":\n\"/Homepage_Amy\"}",
+  "imageUrlPath": "url",
   "maxWidth": 4096,
   "enableResize": false
 }

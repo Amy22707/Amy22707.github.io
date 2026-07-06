@@ -16,3 +16,7 @@ tags:
 Astro 很适合以内容为主的网站：它默认生成静态 HTML，并且只在真正需要交互的地方加载 JavaScript。
 
 接下来，我会在这里记录学习笔记、项目复盘和一些有趣的尝试。
+
+![](https://ik.imagekit.io/Amyxue/Homepage_Amy/blog_xCEZHn3Ar)
+
+
