@@ -2,8 +2,8 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const personalLinks = [
-  { title: "GitHub", description: "代码、项目与开源记录", href: "https://github.com/Amy22707", icon: "GH" },
-  { title: "Email", description: "欢迎交流学习与项目", href: "zhiyaoxue25@stu.pku.edu.cn", icon: "@" },
+  { title: "GitHub", description: "代码、项目与开源记录", href: "https://github.com/Amy22707", icon: "GH", type: "link" },
+  { title: "Email", description: "zhiyaoxue25@stu.pku.edu.cn", icon: "@", type: "email" },
 ];
 
 const friendLinks = [
@@ -21,8 +21,14 @@ const friendLinks = [
   <section class="link-section">
     <h2>找到我</h2>
     <div class="link-grid">
-      {personalLinks.map((link) => (
-        <a class="link-card" href={link.href} target={link.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+      {personalLinks.map((link) => link.type === "email" ? (
+        <div class="link-card email-card">
+          <span class="link-icon">{link.icon}</span>
+          <div><h3>{link.title}</h3><p class="email-address">{link.description}</p></div>
+          <button class="copy-email" type="button" data-email={link.description} aria-label="复制邮箱地址">复制</button>
+        </div>
+      ) : (
+        <a class="link-card" href={link.href} target="_blank" rel="noreferrer">
           <span class="link-icon">{link.icon}</span>
           <div><h3>{link.title}</h3><p>{link.description}</p></div>
           <span class="arrow">↗</span>
@@ -45,3 +51,15 @@ const friendLinks = [
     <p class="friend-note">想交换友链？请通过邮件联系我。</p>
   </section>
 </BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>(".copy-email").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const email = button.dataset.email;
+      if (!email) return;
+      await navigator.clipboard.writeText(email);
+      button.textContent = "已复制";
+      window.setTimeout(() => { button.textContent = "复制"; }, 1600);
+    });
+  });
+</script>
