@@ -43,6 +43,34 @@ const beyondCode = [
     description: "Beyond technical notes, I write about campus life, personal growth, and ideas that are worth remembering.",
   },
 ];
+
+
+const educationAndExperience = [
+    {
+    period: "2022.09 — 2025.06",
+    type: "Education",
+    title: "Senior High School Student",
+    organization: "Shanghai High School",
+  },
+
+  {
+    period: "2025.09 — Present",
+    type: "Education",
+    title: "Undergraduate",
+    organization: "Peking University · EECS",
+    description: "Computer Science & Artificial Intelligence",
+  },
+];
+
+
+const awards = [
+  {
+    year: "20XX",
+    title: "Award or Honor",
+    issuer: "Issuing Organization",
+    description: "Add the level, ranking, or a short note about this achievement.",
+  },
+];
 ---
 
 <BaseLayout title="About" description="Xue Zhiyao's personal website, writing, and projects">
@@ -70,7 +98,7 @@ const beyondCode = [
 
     <div class="intro-panel">
       <p class="eyebrow">SELF · INTRODUCTION</p>
-      <h2>Anything one man can imagine,<br /><span>other men can make real.</span></h2>
+      <h4>Anything one man can imagine,<br /><span>other men can make real.</span></h4>
       <div class="intro-copy">
         <p>
           Hi, I am Xue Zhiyao, an undergraduate at School of Electronics Engineering and Computer Science, Peking University.
@@ -92,19 +120,6 @@ const beyondCode = [
         <div><strong>∞</strong><span>Curiosity</span></div>
       </div>
     </div>
-  </section>
-
-  <section class="focus-strip" aria-label="Current focus">
-    <div class="focus-heading">
-      <span class="live-pulse"></span>
-      <strong>NOW</strong>
-    </div>
-    {focuses.map((focus) => (
-      <div class="focus-item">
-        <span>{focus.label}</span>
-        <strong>{focus.value}</strong>
-      </div>
-    ))}
   </section>
 
   <section class="home-section skills-section">
@@ -156,45 +171,78 @@ const beyondCode = [
     </div>
   </section>
 
-  <section class="home-split">
-    <div class="timeline-block">
-      <p class="eyebrow">MY PATH</p>
-      <h2>A path still unfolding</h2>
-      <ol class="timeline">
+  <section class="home-section resume-section">
+    <header class="home-section-header">
+      <div>
+        <p class="eyebrow">EDUCATION & EXPERIENCE</p>
+        <h2>Where I have learned and worked</h2>
+      </div>
+      <p class="section-note">A chronological view of my academic and professional journey.</p>
+    </header>
+    <ol class="resume-timeline">
+      {educationAndExperience.map((entry) => (
         <li>
-          <span class="timeline-year">NOW</span>
-          <div><strong>Exploring AI systems</strong><p>Building an end-to-end understanding, from model training to intelligent agents.</p></div>
+          <time>{entry.period}</time>
+          <span class="resume-dot"></span>
+          <article>
+            <span class="resume-type">{entry.type}</span>
+            <h3>{entry.title}</h3>
+            <strong>{entry.organization}</strong>
+            <p>{entry.description}</p>
+          </article>
         </li>
-        <li>
-          <span class="timeline-year">2026</span>
-          <div><strong>Building a Mahjong agent</strong><p>Applying supervised and reinforcement learning to complex decision-making.</p></div>
-        </li>
-        <li>
-          <span class="timeline-year">PKU</span>
-          <div><strong>Computer Science & AI</strong><p>Learning across coursework, personal projects, and the wider open-source world.</p></div>
-        </li>
-      </ol>
-    </div>
+      ))}
+    </ol>
+  </section>
 
-    <div class="recent-writing">
-      <div class="recent-heading">
-        <div><p class="eyebrow">RECENT WRITING</p><h2>From the notebook</h2></div>
-        <a href="/blog/">All articles →</a>
+  <section class="home-section awards-section">
+    <header class="home-section-header">
+      <div>
+        <p class="eyebrow">AWARDS & HONORS</p>
+        <h2>Milestones along the way</h2>
       </div>
-      <div class="compact-posts">
-        {recentPosts.length ? recentPosts.map((post) => (
-          <a href={`/blog/${post.id}/`}>
-            <time datetime={post.data.publishedAt.toISOString()}>
-              {post.data.publishedAt.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-            </time>
-            <div><h3>{post.data.title}</h3><p>{post.data.description}</p></div>
-            <span>→</span>
-          </a>
-        )) : <p class="empty-note">New notes are on the way.</p>}
+      <p class="section-note">Recognition for academic, technical, and community work.</p>
+    </header>
+    <div class="awards-grid">
+      {awards.map((award, index) => (
+        <article class="award-card">
+          <div class="award-topline"><span>{award.year}</span><span>0{index + 1}</span></div>
+          <h3>{award.title}</h3>
+          <strong>{award.issuer}</strong>
+          <p>{award.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="focus-strip late-focus" aria-label="Current focus">
+    <div class="focus-heading">
+      <span class="live-pulse"></span>
+      <strong>NOW</strong>
+    </div>
+    {focuses.map((focus) => (
+      <div class="focus-item">
+        <span>{focus.label}</span>
+        <strong>{focus.value}</strong>
       </div>
-      <blockquote>
-        “A personal website should not be a finished display case, but a workbench that keeps evolving.”
-      </blockquote>
+    ))}
+  </section>
+
+  <section class="home-section recent-writing-wide">
+    <div class="recent-heading">
+      <div><p class="eyebrow">RECENT WRITING</p><h2>From the notebook</h2></div>
+      <a href="/blog/">All articles →</a>
+    </div>
+    <div class="compact-posts">
+      {recentPosts.length ? recentPosts.map((post) => (
+        <a href={`/blog/${post.id}/`}>
+          <time datetime={post.data.publishedAt.toISOString()}>
+            {post.data.publishedAt.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+          </time>
+          <div><h3>{post.data.title}</h3><p>{post.data.description}</p></div>
+          <span>→</span>
+        </a>
+      )) : <p class="empty-note">New notes are on the way.</p>}
     </div>
   </section>
 
