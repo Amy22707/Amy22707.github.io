@@ -1,56 +1,149 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const projects = await getCollection("projects");
+const posts = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+
+const selectedProjects = [...projects]
+  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured))
+  .slice(0, 3);
+const recentPosts = posts.slice(0, 2);
+
+const focuses = [
+  { label: "LEARNING", value: "强化学习与智能体" },
+  { label: "BUILDING", value: "中国标准麻将 AI" },
+  { label: "EXPLORING", value: "AI × Web 的更多可能" },
+];
 ---
 
-<BaseLayout title="个人简介" description="Amy 的个人主页">
-  <section class="hero">
-    <div class="hero-copy">
-      <p class="eyebrow">HELLO, WORLD</p>
-      <h1>你好，我是 <span>Amy</span></h1>
-      <p class="hero-lead">
-        一名对人工智能与软件开发保持好奇的学生。这里记录我的学习、项目，
-        以及偶尔冒出来的想法。
-      </p>
-      <div class="hero-actions">
-        <a class="button primary" href="/blog/">阅读博客 <span>→</span></a>
-        <a class="button secondary" href="https://github.com/Amy22707" target="_blank" rel="noreferrer">GitHub ↗</a>
+<BaseLayout title="个人简介" description="薛之瑶的个人主页、博客与项目">
+  <section class="profile-hero">
+    <aside class="identity-panel">
+      <div class="avatar-wrap">
+        <img src="/avatar.jpg" alt="薛之瑶的头像" />
+        <span class="status-dot" title="保持好奇"></span>
       </div>
-    </div>
-    <div class="profile-card">
-      <img src="/avatar.jpg" alt="Amy 的头像" />
-      <div>
-        <strong>Amy</strong>
-        <span>Student · Developer</span>
+      <div class="identity-title">
+        <h1>薛之瑶</h1>
+        <p>Xue Zhiyao</p>
       </div>
-      <p>📍 Beijing, China</p>
-      <p>🎓 Peking University</p>
-      <p>💡 AI · Python · Web</p>
+      <p class="identity-role">Student · Developer · Explorer</p>
+      <ul class="identity-facts">
+        <li><span>⌖</span> Beijing, China</li>
+        <li><span>◇</span> Peking University</li>
+        <li><span>↗</span> EECS & SAI · Zhi Class</li>
+      </ul>
+      <div class="identity-links">
+        <a href="https://github.com/Amy22707" target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a href="/links/">联系我 →</a>
+      </div>
+    </aside>
+
+    <div class="intro-panel">
+      <p class="eyebrow">SELF · INTRODUCTION</p>
+      <h2>把好奇心写进代码，<br /><span>也写进生活。</span></h2>
+      <div class="intro-copy">
+        <p>
+          你好，我是薛之瑶，目前在北京大学学习计算机科学与人工智能。
+          我喜欢理解一个系统为何工作，也享受把模糊的想法做成真正可运行的东西。
+        </p>
+        <p>
+          最近的注意力主要放在机器学习、强化学习和智能体上。
+          这里既是一份持续生长的个人档案，也是一间对互联网敞开的小书房。
+        </p>
+      </div>
+      <div class="intro-actions">
+        <a class="button primary" href="/projects/">查看作品 <span>→</span></a>
+        <a class="text-link" href="/blog/">阅读我的博客</a>
+      </div>
+      <div class="mini-stats" aria-label="网站内容统计">
+        <div><strong>{String(projects.length).padStart(2, "0")}</strong><span>Projects</span></div>
+        <div><strong>{String(posts.length).padStart(2, "0")}</strong><span>Articles</span></div>
+        <div><strong>∞</strong><span>Curiosity</span></div>
+      </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">ABOUT ME</p>
-        <h2>关于我</h2>
-      </div>
+  <section class="focus-strip" aria-label="当前关注">
+    <div class="focus-heading">
+      <span class="live-pulse"></span>
+      <strong>NOW</strong>
     </div>
-    <div class="about-grid">
-      <article class="info-card">
-        <span class="card-icon">01</span>
-        <h3>我在学习</h3>
-        <p>人工智能、机器学习与计算机科学。最近正在完成中国标准麻将 AI 项目。</p>
-      </article>
-      <article class="info-card">
-        <span class="card-icon">02</span>
-        <h3>我在创造</h3>
-        <p>把课堂知识变成真正可以运行的代码，也把踩过的坑整理成博客。</p>
-      </article>
-      <article class="info-card">
-        <span class="card-icon">03</span>
-        <h3>我喜欢</h3>
-        <p>清晰的表达、漂亮而克制的设计，以及从零到一完成一个作品。</p>
-      </article>
+    {focuses.map((focus) => (
+      <div class="focus-item">
+        <span>{focus.label}</span>
+        <strong>{focus.value}</strong>
+      </div>
+    ))}
+  </section>
+
+  <section class="home-section">
+    <header class="home-section-header">
+      <div>
+        <p class="eyebrow">SELECTED WORK</p>
+        <h2>我做过的一些事</h2>
+      </div>
+      <a href="/projects/">全部项目 →</a>
+    </header>
+    <div class="featured-work-grid">
+      {selectedProjects.map((project, index) => (
+        <a class="featured-work" href={project.data.repository} target="_blank" rel="noreferrer">
+          <div class="work-number">{String(index + 1).padStart(2, "0")}</div>
+          <div class="work-copy">
+            <div class="work-kicker">{project.data.featured ? "FEATURED PROJECT" : "OPEN SOURCE"}</div>
+            <h3>{project.data.title}</h3>
+            <p>{project.data.description}</p>
+            <div class="tag-row">
+              {project.data.technologies.slice(0, 3).map((technology) => <span>{technology}</span>)}
+            </div>
+          </div>
+          <span class="work-arrow">↗</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="home-split">
+    <div class="timeline-block">
+      <p class="eyebrow">MY PATH</p>
+      <h2>一条仍在延伸的路径</h2>
+      <ol class="timeline">
+        <li>
+          <span class="timeline-year">NOW</span>
+          <div><strong>探索 AI 系统</strong><p>从模型训练到智能体，在实践中建立完整理解。</p></div>
+        </li>
+        <li>
+          <span class="timeline-year">2026</span>
+          <div><strong>构建麻将智能体</strong><p>尝试将监督学习与强化学习用于复杂决策问题。</p></div>
+        </li>
+        <li>
+          <span class="timeline-year">PKU</span>
+          <div><strong>计算机科学与人工智能</strong><p>在课程、项目和开放世界之间持续学习。</p></div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="recent-writing">
+      <div class="recent-heading">
+        <div><p class="eyebrow">RECENT WRITING</p><h2>最近在写</h2></div>
+        <a href="/blog/">全部文章 →</a>
+      </div>
+      <div class="compact-posts">
+        {recentPosts.length ? recentPosts.map((post) => (
+          <a href={`/blog/${post.id}/`}>
+            <time datetime={post.data.publishedAt.toISOString()}>
+              {post.data.publishedAt.toLocaleDateString("zh-CN", { month: "short", day: "numeric" })}
+            </time>
+            <div><h3>{post.data.title}</h3><p>{post.data.description}</p></div>
+            <span>→</span>
+          </a>
+        )) : <p class="empty-note">新的文字正在酝酿中。</p>}
+      </div>
+      <blockquote>
+        “真正有趣的个人主页，不是完成后的展柜，而是持续更新的工作台。”
+      </blockquote>
     </div>
   </section>
 </BaseLayout>
