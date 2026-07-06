@@ -1,0 +1,55 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Amy 的个人主页、博客与项目" } = Astro.props;
+const pathname = Astro.url.pathname;
+const navItems = [
+  { href: "/", label: "个人简介" },
+  { href: "/blog/", label: "博客" },
+  { href: "/projects/", label: "项目" },
+  { href: "/links/", label: "链接" },
+];
+
+const active = (href: string) =>
+  href === "/" ? pathname === "/" : pathname.startsWith(href);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} · Amy</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav-wrap" aria-label="主导航">
+        <a class="brand" href="/" aria-label="返回首页">
+          <span class="brand-mark">A</span>
+          <span>Amy's Space</span>
+        </a>
+        <div class="nav-links">
+          {navItems.map((item) => (
+            <a href={item.href} class:list={{ active: active(item.href) }}>
+              {item.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+    </header>
+    <main class="page-shell">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>© {new Date().getFullYear()} Amy · Built with Astro</p>
+      <a href="https://github.com/Amy22707" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </footer>
+  </body>
+</html>

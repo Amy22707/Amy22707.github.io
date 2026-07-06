@@ -1,20 +1,56 @@
 ---
-import { getCollection } from "astro:content";
-
-const posts = (await getCollection("blog", ({ data }) => !data.draft))
-  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<h1>博客</h1>
+<BaseLayout title="个人简介" description="Amy 的个人主页">
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">HELLO, WORLD</p>
+      <h1>你好，我是 <span>Amy</span></h1>
+      <p class="hero-lead">
+        一名对人工智能与软件开发保持好奇的学生。这里记录我的学习、项目，
+        以及偶尔冒出来的想法。
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="/blog/">阅读博客 <span>→</span></a>
+        <a class="button secondary" href="https://github.com/Amy22707" target="_blank" rel="noreferrer">GitHub ↗</a>
+      </div>
+    </div>
+    <div class="profile-card">
+      <img src="/avatar.jpg" alt="Amy 的头像" />
+      <div>
+        <strong>Amy</strong>
+        <span>Student · Developer</span>
+      </div>
+      <p>📍 Beijing, China</p>
+      <p>🎓 Peking University</p>
+      <p>💡 AI · Python · Web</p>
+    </div>
+  </section>
 
-<ul>
-  {posts.map((post) => (
-    <li>
-      <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-      <p>{post.data.description}</p>
-      <time datetime={post.data.publishedAt.toISOString()}>
-        {post.data.publishedAt.toLocaleDateString("zh-CN")}
-      </time>
-    </li>
-  ))}
-</ul>
+  <section class="section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">ABOUT ME</p>
+        <h2>关于我</h2>
+      </div>
+    </div>
+    <div class="about-grid">
+      <article class="info-card">
+        <span class="card-icon">01</span>
+        <h3>我在学习</h3>
+        <p>人工智能、机器学习与计算机科学。最近正在完成中国标准麻将 AI 项目。</p>
+      </article>
+      <article class="info-card">
+        <span class="card-icon">02</span>
+        <h3>我在创造</h3>
+        <p>把课堂知识变成真正可以运行的代码，也把踩过的坑整理成博客。</p>
+      </article>
+      <article class="info-card">
+        <span class="card-icon">03</span>
+        <h3>我喜欢</h3>
+        <p>清晰的表达、漂亮而克制的设计，以及从零到一完成一个作品。</p>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

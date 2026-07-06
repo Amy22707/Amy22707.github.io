@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const projects = (await getCollection("projects"))
+  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured));
+---
+
+<BaseLayout title="项目" description="Amy 的开源项目与实践作品">
+  <section class="page-intro">
+    <p class="eyebrow">SELECTED WORK</p>
+    <h1>项目</h1>
+    <p>一些我认真做过、仍在维护，或教会了我很多东西的项目。</p>
+  </section>
+
+  <section class="project-grid">
+    {projects.map((project) => (
+      <a class="project-card" href={project.data.repository} target="_blank" rel="noreferrer">
+        <div class="project-topline">
+          <span>{project.data.featured ? "FEATURED" : "PROJECT"}</span>
+          <span class="arrow">↗</span>
+        </div>
+        <h2>{project.data.title}</h2>
+        <p>{project.data.description}</p>
+        <div class="tag-row">
+          {project.data.technologies.map((technology) => <span>{technology}</span>)}
+        </div>
+      </a>
+    ))}
+  </section>
+</BaseLayout>

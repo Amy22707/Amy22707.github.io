@@ -1,0 +1,39 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+---
+
+<BaseLayout title="博客" description="学习记录、项目复盘与技术随笔">
+  <section class="page-intro">
+    <p class="eyebrow">WRITING</p>
+    <h1>博客</h1>
+    <p>记录学习过程、项目复盘和一些值得留下来的想法。</p>
+  </section>
+
+  <section class="post-list">
+    {posts.length === 0 ? (
+      <div class="empty-state">第一篇文章正在路上。</div>
+    ) : posts.map((post, index) => (
+      <a class="post-card" href={`/blog/${post.id}/`}>
+        <div class="post-index">{String(index + 1).padStart(2, "0")}</div>
+        <div class="post-main">
+          <div class="post-meta">
+            <time datetime={post.data.publishedAt.toISOString()}>
+              {post.data.publishedAt.toLocaleDateString("zh-CN", {
+                year: "numeric", month: "long", day: "numeric"
+              })}
+            </time>
+            <span>·</span>
+            <span>{post.data.tags.join(" / ") || "随笔"}</span>
+          </div>
+          <h2>{post.data.title}</h2>
+          <p>{post.data.description}</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    ))}
+  </section>
+</BaseLayout>

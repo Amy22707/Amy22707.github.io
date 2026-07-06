@@ -1,0 +1,47 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const personalLinks = [
+  { title: "GitHub", description: "代码、项目与开源记录", href: "https://github.com/Amy22707", icon: "GH" },
+  { title: "Email", description: "欢迎交流学习与项目", href: "mailto:your-email@example.com", icon: "@" },
+];
+
+const friendLinks = [
+  { title: "JingXu's site", description: "笔记、项目与博客", href: "https://xj.editlife.cn/Notes/" },
+];
+---
+
+<BaseLayout title="链接" description="个人链接与友情链接">
+  <section class="page-intro">
+    <p class="eyebrow">CONNECT</p>
+    <h1>链接</h1>
+    <p>互联网很大，很高兴在这里与你相遇。</p>
+  </section>
+
+  <section class="link-section">
+    <h2>找到我</h2>
+    <div class="link-grid">
+      {personalLinks.map((link) => (
+        <a class="link-card" href={link.href} target={link.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+          <span class="link-icon">{link.icon}</span>
+          <div><h3>{link.title}</h3><p>{link.description}</p></div>
+          <span class="arrow">↗</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="link-section">
+    <h2>友情链接</h2>
+    <div class="link-grid">
+      {friendLinks.map((link) => (
+        <a class="link-card" href={link.href} target="_blank" rel="noreferrer">
+          <span class="link-icon">友</span>
+          <div><h3>{link.title}</h3><p>{link.description}</p></div>
+          <span class="arrow">↗</span>
+        </a>
+      ))}
+    </div>
+    <p class="friend-note">想交换友链？请通过邮件联系我。</p>
+  </section>
+</BaseLayout>
