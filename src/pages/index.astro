@@ -44,6 +44,19 @@ const beyondCode = [
   },
 ];
 
+// Add your papers, preprints, workshop papers, or technical reports here.
+const publications = [
+  {
+    year: "20XX",
+    title: "Your Paper Title",
+    authors: "Xue Zhiyao, Coauthor Name",
+    venue: "Conference, Journal, Workshop, or arXiv",
+    description: "A one-sentence summary of the problem and your contribution.",
+    href: "",
+    tags: ["tag1", "tag2"],
+  },
+];
+
 
 const educationAndExperience = [
     {
@@ -98,7 +111,7 @@ const awards = [
 
     <div class="intro-panel">
       <p class="eyebrow">SELF · INTRODUCTION</p>
-      <h4>Anything one man can imagine,<br /><span>other men can make real.</span></h4>
+      <h3>Anything one man can imagine,<br /><span>other men can make real.</span></h3>
       <div class="intro-copy">
         <p>
           Hi, I am Xue Zhiyao, an undergraduate at School of Electronics Engineering and Computer Science, Peking University.
@@ -171,28 +184,29 @@ const awards = [
     </div>
   </section>
 
-  <section class="home-section resume-section">
+  <section class="home-section publications-section">
     <header class="home-section-header">
       <div>
-        <p class="eyebrow">EDUCATION & EXPERIENCE</p>
-        <h2>Where I have learned and worked</h2>
+        <p class="eyebrow">PUBLICATIONS</p>
+        <h2>Research and writing</h2>
       </div>
-      <p class="section-note">A chronological view of my academic and professional journey.</p>
+      <p class="section-note">Papers, preprints, and technical reports.</p>
     </header>
-    <ol class="resume-timeline">
-      {educationAndExperience.map((entry) => (
-        <li>
-          <time>{entry.period}</time>
-          <span class="resume-dot"></span>
-          <article>
-            <span class="resume-type">{entry.type}</span>
-            <h3>{entry.title}</h3>
-            <strong>{entry.organization}</strong>
-            <p>{entry.description}</p>
-          </article>
-        </li>
+    <div class="publication-list">
+      {publications.map((publication, index) => (
+        <article class="publication-card">
+          <div class="publication-index">{String(index + 1).padStart(2, "0")}</div>
+          <div class="publication-main">
+            <div class="publication-meta"><span>{publication.year}</span><span>{publication.venue}</span></div>
+            <h3>{publication.title}</h3>
+            <p class="publication-authors">{publication.authors}</p>
+            <p>{publication.description}</p>
+            <div class="tag-row">{publication.tags.map((tag) => <span>{tag}</span>)}</div>
+          </div>
+          {publication.href && <a class="publication-link" href={publication.href} target="_blank" rel="noreferrer" aria-label={`Open ${publication.title}`}>↗</a>}
+        </article>
       ))}
-    </ol>
+    </div>
   </section>
 
   <section class="home-section awards-section">
@@ -215,6 +229,32 @@ const awards = [
     </div>
   </section>
 
+  <section class="home-section resume-section">
+    <header class="home-section-header">
+      <div>
+        <p class="eyebrow">EDUCATION & EXPERIENCE</p>
+        <h2>Where I have learned and worked</h2>
+      </div>
+      <p class="section-note">A chronological view of my academic and professional journey.</p>
+    </header>
+    <ol class="resume-timeline">
+      {educationAndExperience.map((entry) => (
+        <li>
+          <time>{entry.period}</time>
+          <span class="resume-dot"></span>
+          <article>
+            <span class="resume-type">{entry.type}</span>
+            <h3>{entry.title}</h3>
+            <strong>{entry.organization}</strong>
+            {entry.description && <p>{entry.description}</p>}
+          </article>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+<!--
+  {/* Current focus section — remove this comment wrapper to show it again.
   <section class="focus-strip late-focus" aria-label="Current focus">
     <div class="focus-heading">
       <span class="live-pulse"></span>
@@ -227,6 +267,8 @@ const awards = [
       </div>
     ))}
   </section>
+  */}
+-->
 
   <section class="home-section recent-writing-wide">
     <div class="recent-heading">
