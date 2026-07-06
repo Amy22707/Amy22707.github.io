@@ -1,0 +1,8 @@
+{
+  "apiEndpoint": "https://upload.imagekit.io/api/v1/files/upload",
+  "uploadHeader": "",
+  "uploadBody": "{\"image\": \"$FILE\"}",
+  "imageUrlPath": "",
+  "maxWidth": 4096,
+  "enableResize": false
+}
