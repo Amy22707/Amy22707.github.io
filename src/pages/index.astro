@@ -6,7 +6,8 @@ const projects = await getCollection("projects");
 const posts = (await getCollection("blog", ({ data }) => !data.draft))
   .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 
-const selectedProjects = [...projects]
+const selectedProjects = projects
+  .filter((project) => project.data.kind === "project")
   .sort((a, b) => Number(b.data.featured) - Number(a.data.featured))
   .slice(0, 3);
 const recentPosts = posts.slice(0, 2);
@@ -247,8 +248,8 @@ const awards = [
           <span class="resume-dot"></span>
           <article>
             <span class="resume-type">{entry.type}</span>
-            <h3>{entry.title}</h3>
-            <strong>{entry.organization}</strong>
+            <h3>{entry.organization}</h3>
+            <strong>{entry.title}</strong>
             {entry.description && <p>{entry.description}</p>}
           </article>
         </li>

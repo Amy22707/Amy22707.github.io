@@ -6,19 +6,19 @@ const projects = (await getCollection("projects"))
   .sort((a, b) => Number(b.data.featured) - Number(a.data.featured));
 ---
 
-<BaseLayout title="项目" description="Amy 的开源项目与实践作品">
+<BaseLayout title="Projects & Notes" description="Projects and course notes by Xue Zhiyao">
   <section class="page-intro">
-    <p class="eyebrow">SELECTED WORK</p>
-    <h1>项目</h1>
-    <p>一些课程笔记与我做过的项目。</p>
+    <p class="eyebrow">PROJECTS & NOTES</p>
+    <h1>Things I build and learn</h1>
+    <p>A collection of my software projects, experiments, and course notes.</p>
   </section>
 
   <section class="project-grid">
     {projects.map((project) => (
-      <a class="project-card" href={project.data.repository} target="_blank" rel="noreferrer">
+      <a class="project-card" href={project.data.repository} target={project.data.repository ? "_blank" : undefined} rel={project.data.repository ? "noreferrer" : undefined}>
         <div class="project-topline">
-          <span>{project.data.featured ? "FEATURED" : "PROJECT"}</span>
-          <span class="arrow">↗</span>
+          <span>{project.data.featured ? "FEATURED" : project.data.kind === "notes" ? "NOTES" : "PROJECT"}</span>
+          <span class="arrow">{project.data.repository ? "↗" : "—"}</span>
         </div>
         <h2>{project.data.title}</h2>
         <p>{project.data.description}</p>

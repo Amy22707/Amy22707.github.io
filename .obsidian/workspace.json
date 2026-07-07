@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "GITHUB_PROFILE_README.md",
+                "file": "src/content/projects/25fall-introduction-to-computing.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "GITHUB_PROFILE_README"
+              "title": "25fall-introduction-to-computing"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "GITHUB_PROFILE_README.md",
+                "file": "src/content/projects/25fall-introduction-to-computing.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "GITHUB_PROFILE_README 的反向链接列表"
+              "title": "25fall-introduction-to-computing 的反向链接列表"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "GITHUB_PROFILE_README.md",
+                "file": "src/content/projects/25fall-introduction-to-computing.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "GITHUB_PROFILE_README 的出链列表"
+              "title": "25fall-introduction-to-computing 的出链列表"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "GITHUB_PROFILE_README.md",
+                "file": "src/content/projects/25fall-introduction-to-computing.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "GITHUB_PROFILE_README 的大纲"
+              "title": "25fall-introduction-to-computing 的大纲"
             }
           }
         ]
@@ -185,8 +185,9 @@
   },
   "active": "1ef3b469680fa32d",
   "lastOpenFiles": [
-    "src/content/blog/hello-world.md",
-    "GITHUB_PROFILE_README.md",
+    "src/content/projects/26spring-data-structure-and-algorithms.md",
+    "src/content/projects/26spring-programming-practice.md",
+    "src/content/projects/25fall-introduction-to-computing.md",
     "dist/index.html",
     "dist/projects/index.html",
     "dist/projects",
@@ -196,8 +197,13 @@
     "dist/blog/hello-world",
     "dist/blog/index.html",
     "dist/blog",
-    "dist/_astro/BaseLayout.C-04Uy9Z.css",
+    "dist/_astro/BaseLayout.Bv-etHjQ.css",
     "dist/favicon.svg",
-    "dist/avatar.jpg"
+    "dist/avatar.jpg",
+    "src/content/projects/mahjong-ai.md",
+    "src/content/projects/personal-homepage.md",
+    "未命名.md",
+    "GITHUB_PROFILE_README.md",
+    "src/content/blog/hello-world.md"
   ]
 }

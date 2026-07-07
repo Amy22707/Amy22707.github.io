@@ -16,7 +16,6 @@ I am an undergraduate student at the School of Electronics Engineering and Compu
 
 I enjoy understanding why systems work and turning vague ideas into things that actually run. My current interests lie in **machine learning**, **reinforcement learning**, **intelligent agents**, and **embodied AI**.
 
-> Anything one man can imagine, other men can make real.
 
 ## Technical Toolkit
 
@@ -72,13 +71,14 @@ This section is being updated.
 ## Beyond Code
 
 - Interested in classical and contemporary Chinese poetry
-- Curious about esotericism and the ways people make sense of the world
+- Curious about esotericism and the ways people make sense of the world, especially tarot and astrology
 - Interested in campus life, community work, writing, and reflection
 
 ## Currently Exploring
 
 - Reinforcement learning and intelligent agents
 - Chinese Standard Mahjong AI
+- Interesting data structures and randomized algorithms
 - New possibilities at the intersection of AI and the web
 
 ## Connect
@@ -91,6 +91,6 @@ This section is being updated.
 
 <div align="center">
 
-*Learning by building, one system at a time.*
+*Anything one man can imagine, other men can make real.*
 
 </div>

@@ -6,13 +6,13 @@ interface Props {
   description?: string;
 }
 
-const { title, description = "Amy 的个人主页、博客与项目" } = Astro.props;
+const { title, description = "Xue Zhiyao's personal website, blog, and projects" } = Astro.props;
 const pathname = Astro.url.pathname;
 const navItems = [
-  { href: "/", label: "个人简介" },
-  { href: "/blog/", label: "博客" },
-  { href: "/projects/", label: "项目" },
-  { href: "/links/", label: "链接" },
+  { href: "/", label: "About" },
+  { href: "/blog/", label: "Blog" },
+  { href: "/projects/", label: "Projects" },
+  { href: "/links/", label: "Links" },
 ];
 
 const active = (href: string) =>
@@ -20,7 +20,7 @@ const active = (href: string) =>
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -30,8 +30,8 @@ const active = (href: string) =>
   </head>
   <body>
     <header class="site-header">
-      <nav class="nav-wrap" aria-label="主导航">
-        <a class="brand" href="/" aria-label="返回首页">
+      <nav class="nav-wrap" aria-label="Main navigation">
+        <a class="brand" href="/" aria-label="Back to homepage">
           <span class="brand-mark">A</span>
           <span>Amy's Space</span>
         </a>

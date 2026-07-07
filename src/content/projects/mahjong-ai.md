@@ -1,7 +1,8 @@
 ---
-title: "Chinese Standard Mahjong AI"
-description: "基于监督学习与强化学习构建的中国标准麻将智能体，包含训练、评估和模型管理流程。"
-repository: "https://github.com/Amy22707/Chinese-Standard-Mahjong"
+title: Chinese Standard Mahjong AI
+description: A Chinese Standard Mahjong agent built with supervised and reinforcement learning, including training, evaluation, and model management.
+repository: https://github.com/Amy22707/Chinese-Standard-Mahjong
+kind: project
 technologies:
   - Python
   - PyTorch

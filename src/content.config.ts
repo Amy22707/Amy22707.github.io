@@ -22,6 +22,7 @@ const projects = defineCollection({
     repository: z.string().url().optional(),
     demo: z.string().url().optional(),
     technologies: z.array(z.string()).default([]),
+    kind: z.enum(["project", "notes"]).default("project"),
     featured: z.boolean().default(false),
   }),
 });
