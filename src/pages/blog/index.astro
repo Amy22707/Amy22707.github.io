@@ -6,28 +6,28 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft))
   .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 ---
 
-<BaseLayout title="Blog" description="学习记录、项目复盘与技术随笔">
+<BaseLayout title="Blog" description="Learning notes, project retrospectives, and technical essays">
   <section class="page-intro">
     <p class="eyebrow">WRITING</p>
     <h1>Blog</h1>
-    <p>学习记录、项目复盘与技术随笔。</p>
+    <p>Learning notes, project retrospectives, and technical essays.</p>
   </section>
 
   <section class="post-list">
     {posts.length === 0 ? (
-      <div class="empty-state">第一篇文章正在路上。</div>
+      <div class="empty-state">The first article is on its way.</div>
     ) : posts.map((post, index) => (
       <a class="post-card" href={`/blog/${post.id}/`}>
         <div class="post-index">{String(index + 1).padStart(2, "0")}</div>
         <div class="post-main">
           <div class="post-meta">
             <time datetime={post.data.publishedAt.toISOString()}>
-              {post.data.publishedAt.toLocaleDateString("zh-CN", {
+              {post.data.publishedAt.toLocaleDateString("en-US", {
                 year: "numeric", month: "long", day: "numeric"
               })}
             </time>
             <span>·</span>
-            <span>{post.data.tags.join(" / ") || "随笔"}</span>
+            <span>{post.data.tags.join(" / ") || "Notes"}</span>
           </div>
           <h2>{post.data.title}</h2>
           <p>{post.data.description}</p>

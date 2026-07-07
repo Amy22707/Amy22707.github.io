@@ -2,7 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const personalLinks = [
-  { title: "GitHub", description: "代码、项目与开源记录", href: "https://github.com/Amy22707", icon: "GH", type: "link" },
+  { title: "GitHub", description: "Code, projects, and open-source work", href: "https://github.com/Amy22707", icon: "GH", type: "link" },
   { title: "Email", description: "zhiyaoxue25@stu.pku.edu.cn", icon: "@", type: "email" },
 ];
 
@@ -11,21 +11,21 @@ const friendLinks = [
 ];
 ---
 
-<BaseLayout title="Links" description="个人链接与友情链接">
+<BaseLayout title="Links" description="Personal links and friends across the web">
   <section class="page-intro">
     <p class="eyebrow">CONNECT</p>
     <h1>Links</h1>
-    <p>四美具，二难并。</p>
+    <p>The four beauties are present, and the two rare blessings meet.</p>
   </section>
 
   <section class="link-section">
-    <h2>找到我</h2>
+    <h2>Find Me</h2>
     <div class="link-grid">
       {personalLinks.map((link) => link.type === "email" ? (
         <div class="link-card email-card">
           <span class="link-icon">{link.icon}</span>
           <div><h3>{link.title}</h3><p class="email-address">{link.description}</p></div>
-          <button class="copy-email" type="button" data-email={link.description} aria-label="复制邮箱地址">复制</button>
+          <button class="copy-email" type="button" data-email={link.description} aria-label="Copy email address">Copy</button>
         </div>
       ) : (
         <a class="link-card" href={link.href} target="_blank" rel="noreferrer">
@@ -38,17 +38,17 @@ const friendLinks = [
   </section>
 
   <section class="link-section">
-    <h2>友情链接</h2>
+    <h2>Friends</h2>
     <div class="link-grid">
       {friendLinks.map((link) => (
         <a class="link-card" href={link.href} target="_blank" rel="noreferrer">
-          <span class="link-icon">友</span>
+          <span class="link-icon">FR</span>
           <div><h3>{link.title}</h3><p>{link.description}</p></div>
           <span class="arrow">↗</span>
         </a>
       ))}
     </div>
-    <p class="friend-note">想交换友链？请通过邮件联系我。</p>
+    <p class="friend-note">Interested in exchanging links? Feel free to reach out by email.</p>
   </section>
 </BaseLayout>
 
@@ -58,8 +58,8 @@ const friendLinks = [
       const email = button.dataset.email;
       if (!email) return;
       await navigator.clipboard.writeText(email);
-      button.textContent = "已复制";
-      window.setTimeout(() => { button.textContent = "复制"; }, 1600);
+      button.textContent = "Copied";
+      window.setTimeout(() => { button.textContent = "Copy"; }, 1600);
     });
   });
 </script>
