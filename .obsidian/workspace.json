@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "42a003133b44a6f6",
+        "id": "3e63b0fc34600530",
         "type": "tabs",
         "children": [
           {
-            "id": "1ef3b469680fa32d",
+            "id": "19b942bc06ef17b3",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "src/content/projects/25fall-introduction-to-computing.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "25fall-introduction-to-computing"
+              "title": "新标签页"
             }
           }
         ]
@@ -183,13 +179,14 @@
       "bases:新建数据库": false
     }
   },
-  "active": "fc9d22402f0a34f6",
+  "active": "19b942bc06ef17b3",
   "lastOpenFiles": [
+    "2026-07-06.md",
+    "src/content/blog/hello-world.md",
+    "src/content/projects/25fall-introduction-to-computing.md",
     "public/friends/Mars_Dingdang.jpg",
     "public/friends/Mars_dingdang.jpg",
     "public/friends/未确认 588103.crdownload",
-    "src/content/blog/hello-world.md",
-    "src/content/projects/25fall-introduction-to-computing.md",
     "src/content/projects/26spring-data-structure-and-algorithms.md",
     "src/content/projects/26spring-programming-practice.md",
     "dist/index.html",

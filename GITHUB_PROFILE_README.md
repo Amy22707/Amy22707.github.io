@@ -91,6 +91,6 @@ This section is being updated.
 
 <div align="center">
 
-*Anything one man can imagine, other men can make real.*
+*The best way to predict the future is to invent it.*
 
 </div>
