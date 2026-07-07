@@ -7,7 +7,12 @@ const personalLinks = [
 ];
 
 const friendLinks = [
-  { title: "Mars_Dingdang", description: "Research notes, experiments, and fragments worth keeping.", href: "https://mars-dingdang.github.io/" },
+  {
+    title: "Mars_Dingdang",
+    description: "Research notes, experiments, and fragments worth keeping.",
+    href: "https://mars-dingdang.github.io/",
+    avatar: "https://github.com/Mars-Dingdang.png",
+  },
 ];
 ---
 
@@ -42,7 +47,7 @@ const friendLinks = [
     <div class="link-grid">
       {friendLinks.map((link) => (
         <a class="link-card" href={link.href} target="_blank" rel="noreferrer">
-          <span class="link-icon">FR</span>
+          <img class="friend-avatar" src={link.avatar} alt={`${link.title}'s avatar`} loading="lazy" />
           <div><h3>{link.title}</h3><p>{link.description}</p></div>
           <span class="arrow">↗</span>
         </a>

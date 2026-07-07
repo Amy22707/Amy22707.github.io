@@ -185,9 +185,10 @@
   },
   "active": "1ef3b469680fa32d",
   "lastOpenFiles": [
+    "src/content/blog/hello-world.md",
+    "src/content/projects/25fall-introduction-to-computing.md",
     "src/content/projects/26spring-data-structure-and-algorithms.md",
     "src/content/projects/26spring-programming-practice.md",
-    "src/content/projects/25fall-introduction-to-computing.md",
     "dist/index.html",
     "dist/projects/index.html",
     "dist/projects",
@@ -203,7 +204,6 @@
     "src/content/projects/mahjong-ai.md",
     "src/content/projects/personal-homepage.md",
     "未命名.md",
-    "GITHUB_PROFILE_README.md",
-    "src/content/blog/hello-world.md"
+    "GITHUB_PROFILE_README.md"
   ]
 }
