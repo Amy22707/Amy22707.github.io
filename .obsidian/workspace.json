@@ -183,8 +183,11 @@
       "bases:新建数据库": false
     }
   },
-  "active": "1ef3b469680fa32d",
+  "active": "fc9d22402f0a34f6",
   "lastOpenFiles": [
+    "public/friends/Mars_Dingdang.jpg",
+    "public/friends/Mars_dingdang.jpg",
+    "public/friends/未确认 588103.crdownload",
     "src/content/blog/hello-world.md",
     "src/content/projects/25fall-introduction-to-computing.md",
     "src/content/projects/26spring-data-structure-and-algorithms.md",
@@ -198,7 +201,6 @@
     "dist/blog/hello-world",
     "dist/blog/index.html",
     "dist/blog",
-    "dist/_astro/BaseLayout.Bv-etHjQ.css",
     "dist/favicon.svg",
     "dist/avatar.jpg",
     "src/content/projects/mahjong-ai.md",
