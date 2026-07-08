@@ -25,8 +25,17 @@ const active = (href: string) =>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} · Amy</title>
+    <script is:inline>
+      (() => {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme === "light" || savedTheme === "dark") {
+          document.documentElement.dataset.theme = savedTheme;
+        }
+      })();
+    </script>
   </head>
   <body>
     <header class="site-header">
@@ -35,12 +44,18 @@ const active = (href: string) =>
           <span class="brand-mark">A</span>
           <span>Amy's Space</span>
         </a>
-        <div class="nav-links">
-          {navItems.map((item) => (
-            <a href={item.href} class:list={{ active: active(item.href) }}>
-              {item.label}
-            </a>
-          ))}
+        <div class="nav-actions">
+          <div class="nav-links">
+            {navItems.map((item) => (
+              <a href={item.href} class:list={{ active: active(item.href) }}>
+                {item.label}
+              </a>
+            ))}
+          </div>
+          <button class="theme-toggle" type="button" aria-label="Switch color theme" aria-pressed="false">
+            <span class="theme-toggle-icon" aria-hidden="true">☾</span>
+            <span class="theme-toggle-text">Theme</span>
+          </button>
         </div>
       </nav>
     </header>
@@ -51,5 +66,40 @@ const active = (href: string) =>
       <p>© {new Date().getFullYear()} Amy · Built with Astro</p>
       <a href="https://github.com/Amy22707" target="_blank" rel="noreferrer">GitHub ↗</a>
     </footer>
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const button = document.querySelector(".theme-toggle");
+        const icon = document.querySelector(".theme-toggle-icon");
+        const label = document.querySelector(".theme-toggle-text");
+        const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+        const getTheme = () => {
+          const savedTheme = localStorage.getItem("theme");
+          if (savedTheme === "light" || savedTheme === "dark") return savedTheme;
+          return media.matches ? "dark" : "light";
+        };
+
+        const paint = () => {
+          const theme = getTheme();
+          button?.setAttribute("aria-pressed", String(theme === "dark"));
+          if (icon) icon.textContent = theme === "dark" ? "☀" : "☾";
+          if (label) label.textContent = theme === "dark" ? "Light" : "Dark";
+        };
+
+        button?.addEventListener("click", () => {
+          const nextTheme = getTheme() === "dark" ? "light" : "dark";
+          localStorage.setItem("theme", nextTheme);
+          root.dataset.theme = nextTheme;
+          paint();
+        });
+
+        media.addEventListener("change", () => {
+          if (!localStorage.getItem("theme")) paint();
+        });
+
+        paint();
+      })();
+    </script>
   </body>
 </html>
