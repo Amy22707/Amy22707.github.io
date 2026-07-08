@@ -113,7 +113,7 @@ a { color: inherit; text-decoration: none; }
 .button:hover { transform: translateY(-2px); }
 .button.primary { color: white; background: var(--accent); box-shadow: 0 12px 28px rgba(82, 103, 223, .24); }
 .button.secondary { border: 1px solid var(--line); background: white; }
-.profile-card { padding: 30px; border: 1px solid rgba(255,255,255,.9); border-radius: 28px; background: var(--surface); box-shadow: var(--shadow); transform: rotate(1.2deg); }
+.profile-card { padding: 30px; border: 1px solid var(--line); border-radius: 28px; background: var(--surface); box-shadow: var(--shadow); transform: rotate(1.2deg); }
 .profile-card img { width: 92px; height: 92px; border-radius: 26px; object-fit: cover; box-shadow: 0 9px 24px rgba(24, 37, 68, .15); }
 .profile-card div { margin: 20px 0 25px; }
 .profile-card strong { display: block; font-size: 24px; }
@@ -197,7 +197,7 @@ a { color: inherit; text-decoration: none; }
 .publication-meta span + span::before { content: "·"; margin-right: 9px; color: #a8b0be; }
 .publication-main h3 { margin: 8px 0 6px; font-size: 21px; letter-spacing: -.03em; }
 .publication-main > p { max-width: 780px; margin: 8px 0 15px; color: var(--muted); font-size: 13px; line-height: 1.7; }
-.publication-main .publication-authors { margin: 0; color: #46526a; font-size: 12px; font-weight: 650; }
+.publication-main .publication-authors { margin: 0; color: var(--muted); font-size: 12px; font-weight: 650; }
 .publication-link { align-self: center; color: var(--accent); font-size: 20px; transition: transform .2s; }
 .publication-link:hover { transform: translate(3px,-3px); }
 
@@ -210,14 +210,14 @@ a { color: inherit; text-decoration: none; }
 .resume-timeline article { padding: 0 0 5px 10px; }
 .resume-type { color: var(--accent); font-size: 9px; font-weight: 850; letter-spacing: .15em; text-transform: uppercase; }
 .resume-timeline h3 { margin: 8px 0 4px; font-size: 20px; letter-spacing: -.03em; }
-.resume-timeline article strong { color: #4d596e; font-size: 13px; }
+.resume-timeline article strong { color: var(--muted); font-size: 13px; }
 .resume-timeline article p { max-width: 720px; margin: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.75; }
 
 .awards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .award-card { min-height: 225px; padding: 25px; border: 1px solid var(--line); border-radius: 20px; background: linear-gradient(145deg, #fff, #f4f5ff); }
 .award-topline { display: flex; justify-content: space-between; color: var(--accent); font-family: ui-monospace, monospace; font-size: 10px; font-weight: 750; }
 .award-card h3 { margin: 45px 0 7px; font-size: 19px; letter-spacing: -.025em; }
-.award-card > strong { color: #59657a; font-size: 12px; }
+.award-card > strong { color: var(--muted); font-size: 12px; }
 .award-card > p { margin: 13px 0 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
 .late-focus { margin-top: 15px; }
 .recent-writing-wide { max-width: 790px; }
@@ -347,8 +347,8 @@ a { color: inherit; text-decoration: none; }
 .prose h1 { margin: 2.2em 0 .8em; padding-bottom: .38em; border-bottom: 1px solid var(--line); font-size: 34px; }
 .prose h2 { margin: 2.1em 0 .75em; padding-left: 14px; border-left: 4px solid var(--accent); font-size: 28px; }
 .prose h3 { margin: 1.8em 0 .65em; font-size: 23px; }
-.prose h4 { margin: 1.6em 0 .55em; color: #46526a; font-size: 19px; }
-.prose h5, .prose h6 { margin: 1.4em 0 .5em; color: #526077; font-size: 16px; }
+.prose h4 { margin: 1.6em 0 .55em; color: var(--text); font-size: 19px; }
+.prose h5, .prose h6 { margin: 1.4em 0 .5em; color: var(--text); font-size: 16px; }
 .prose p { margin: 1.05em 0; }
 .prose ul, .prose ol { padding-left: 1.45em; }
 .prose li + li { margin-top: .35em; }
