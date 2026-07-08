@@ -1,0 +1,55 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getTagHref, getTagSlug } from "../../../utils/blogTags";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
+
+  return tags.map((tag) => ({
+    params: { tag: getTagSlug(tag) },
+    props: { tag },
+  }));
+}
+
+const { tag } = Astro.props;
+const posts = (await getCollection("blog", ({ data }) =>
+  !data.draft && data.tags.includes(tag)
+)).sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+---
+
+<BaseLayout title={`Posts tagged ${tag}`} description={`Blog posts tagged ${tag}`}>
+  <section class="page-intro blog-intro tag-page-intro">
+    <a class="back-link" href="/blog/">← All posts</a>
+    <p class="eyebrow">TAG</p>
+    <h1>#{tag}</h1>
+    <p>{posts.length} {posts.length === 1 ? "post" : "posts"} with this tag.</p>
+  </section>
+
+  <section class="post-list">
+    {posts.map((post, index) => (
+      <article class="post-card">
+        <div class="post-index">{String(index + 1).padStart(2, "0")}</div>
+        <div class="post-main">
+          <div class="post-meta">
+            <time datetime={post.data.publishedAt.toISOString()}>
+              {post.data.publishedAt.toLocaleDateString("en-US", {
+                year: "numeric", month: "long", day: "numeric"
+              })}
+            </time>
+            <span aria-hidden="true">·</span>
+            <div class="post-tags">
+              {post.data.tags.map((postTag) => (
+                <a class:list={{ active: postTag === tag }} href={getTagHref(postTag)}>#{postTag}</a>
+              ))}
+            </div>
+          </div>
+          <h2><a class="post-title-link" href={`/blog/${post.id}/`}>{post.data.title}</a></h2>
+          <p>{post.data.description}</p>
+        </div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </article>
+    ))}
+  </section>
+</BaseLayout>

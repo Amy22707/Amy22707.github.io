@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import GiscusComments from "../../components/GiscusComments.astro";
+import { getTagHref } from "../../utils/blogTags";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog", ({ data }) => !data.draft))
@@ -46,8 +47,10 @@ const tocHeadings = headings.filter((heading) => heading.depth >= 1 && heading.d
               year: "numeric", month: "long", day: "numeric"
             })}
           </time>
-          <span>·</span>
-          <span>{post.data.tags.join(" / ")}</span>
+          <span aria-hidden="true">·</span>
+          <div class="post-tags">
+            {post.data.tags.map((tag) => <a href={getTagHref(tag)}>#{tag}</a>)}
+          </div>
         </div>
         <h1>{post.data.title}</h1>
         <p>{post.data.description}</p>
