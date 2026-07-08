@@ -1,6 +1,6 @@
 ---
 title: CF Hello 2026
-description: CS101期末考试
+description: 愿新的一年如花绚烂。
 publishedAt: 2026-01-08
 tags:
   - 算法
