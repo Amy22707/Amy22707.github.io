@@ -81,10 +81,31 @@ const active = (href: string) =>
           return media.matches ? "dark" : "light";
         };
 
+        const syncGiscusTheme = (theme) => {
+          const iframe = document.querySelector("iframe.giscus-frame");
+          iframe?.contentWindow?.postMessage(
+            {
+              giscus: {
+                setConfig: {
+                  theme: theme === "dark" ? "dark" : "light",
+                },
+              },
+            },
+            "https://giscus.app"
+          );
+        };
+
+        const syncGiscusThemeWhenReady = (theme) => {
+          syncGiscusTheme(theme);
+          window.setTimeout(() => syncGiscusTheme(theme), 600);
+          window.setTimeout(() => syncGiscusTheme(theme), 1600);
+        };
+
         const paint = () => {
           const theme = getTheme();
           button?.setAttribute("aria-pressed", String(theme === "dark"));
           if (label) label.textContent = theme === "dark" ? "Light" : "Dark";
+          syncGiscusThemeWhenReady(theme);
         };
 
         button?.addEventListener("click", () => {
