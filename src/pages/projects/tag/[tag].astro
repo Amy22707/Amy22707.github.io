@@ -1,0 +1,61 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import TagBrowser from "../../../components/TagBrowser.astro";
+import { getProjectTagHref, getProjectTagSlug, getProjectTags } from "../../../utils/projectTags";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  const tags = [...new Set(projects.flatMap((project) => getProjectTags(project.data)))];
+  return tags.map((tag) => ({ params: { tag: getProjectTagSlug(tag) }, props: { tag } }));
+}
+
+const { tag } = Astro.props;
+const allProjects = (await getCollection("projects"))
+  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured));
+const projects = allProjects.filter((project) => getProjectTags(project.data).includes(tag));
+const tagCounts = allProjects.flatMap((project) => getProjectTags(project.data)).reduce((counts, item) => {
+  counts.set(item, (counts.get(item) ?? 0) + 1);
+  return counts;
+}, new Map<string, number>());
+const tags = [...tagCounts]
+  .sort(([a], [b]) => a.localeCompare(b, "en-US"))
+  .map(([name, count]) => ({ name, count, href: getProjectTagHref(name), active: name === tag }));
+---
+
+<BaseLayout title={`${tag} · Projects & Notes`} description={`Projects and notes tagged ${tag}`}>
+  <section class="page-intro tag-page-intro">
+    <a class="back-link" href="/projects/">← All projects & notes</a>
+    <p class="eyebrow">TAG</p>
+    <h1>#{tag}</h1>
+    <p>{projects.length} {projects.length === 1 ? "item" : "items"} with this tag.</p>
+  </section>
+
+  <TagBrowser tags={tags} />
+
+  <section class="project-grid">
+    {projects.map((project) => {
+      const href = project.data.repository ?? project.data.demo;
+      return (
+        <article class="project-card">
+          <div class="project-topline">
+            <div class="project-categories">
+              {project.data.featured && <a href={getProjectTagHref("Featured")}>FEATURED</a>}
+              <a href={getProjectTagHref(project.data.kind === "notes" ? "Notes" : "Projects")}>
+                {project.data.kind === "notes" ? "NOTES" : "PROJECT"}
+              </a>
+            </div>
+            <span class="arrow">{href ? "↗" : "—"}</span>
+          </div>
+          <h2>{href ? <a class="project-title-link" href={href} target="_blank" rel="noreferrer">{project.data.title}</a> : project.data.title}</h2>
+          <p>{project.data.description}</p>
+          <div class="tag-row">
+            {project.data.technologies.map((technology) => (
+              <a class:list={{ active: technology === tag }} href={getProjectTagHref(technology)}>{technology}</a>
+            ))}
+          </div>
+        </article>
+      );
+    })}
+  </section>
+</BaseLayout>

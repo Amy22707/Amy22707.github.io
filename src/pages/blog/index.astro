@@ -1,10 +1,18 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import TagBrowser from "../../components/TagBrowser.astro";
 import { getTagHref } from "../../utils/blogTags";
 
 const posts = (await getCollection("blog", ({ data }) => !data.draft))
   .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const tagCounts = posts.flatMap((post) => post.data.tags).reduce((counts, tag) => {
+  counts.set(tag, (counts.get(tag) ?? 0) + 1);
+  return counts;
+}, new Map<string, number>());
+const tags = [...tagCounts]
+  .sort(([a], [b]) => a.localeCompare(b, "zh-CN"))
+  .map(([name, count]) => ({ name, count, href: getTagHref(name) }));
 ---
 
 <BaseLayout title="Blog" description="Learning notes, project retrospectives, and technical essays">
@@ -13,6 +21,8 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft))
     <h1>Blog</h1>
     <p>Learning notes, project retrospectives, and technical essays.</p>
   </section>
+
+  <TagBrowser tags={tags} />
 
   <section class="post-list">
     {posts.length === 0 ? (

@@ -1,9 +1,18 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import TagBrowser from "../../components/TagBrowser.astro";
+import { getProjectTagHref, getProjectTags } from "../../utils/projectTags";
 
 const projects = (await getCollection("projects"))
   .sort((a, b) => Number(b.data.featured) - Number(a.data.featured));
+const tagCounts = projects.flatMap((project) => getProjectTags(project.data)).reduce((counts, tag) => {
+  counts.set(tag, (counts.get(tag) ?? 0) + 1);
+  return counts;
+}, new Map<string, number>());
+const tags = [...tagCounts]
+  .sort(([a], [b]) => a.localeCompare(b, "en-US"))
+  .map(([name, count]) => ({ name, count, href: getProjectTagHref(name) }));
 ---
 
 <BaseLayout title="Projects & Notes" description="Projects and course notes by Xue Zhiyao">
@@ -13,30 +22,27 @@ const projects = (await getCollection("projects"))
     <p>A collection of my software projects, experiments, and course notes.</p>
   </section>
 
+  <TagBrowser tags={tags} />
+
   <section class="project-grid">
     {projects.map((project) => {
       const href = project.data.repository ?? project.data.demo;
-      const cardContent = (
-        <>
+      return (
+        <article class="project-card">
           <div class="project-topline">
-            <span>{project.data.featured ? "FEATURED" : project.data.kind === "notes" ? "NOTES" : "PROJECT"}</span>
+            <div class="project-categories">
+              {project.data.featured && <a href={getProjectTagHref("Featured")}>FEATURED</a>}
+              <a href={getProjectTagHref(project.data.kind === "notes" ? "Notes" : "Projects")}>
+                {project.data.kind === "notes" ? "NOTES" : "PROJECT"}
+              </a>
+            </div>
             <span class="arrow">{href ? "↗" : "—"}</span>
           </div>
-          <h2>{project.data.title}</h2>
+          <h2>{href ? <a class="project-title-link" href={href} target="_blank" rel="noreferrer">{project.data.title}</a> : project.data.title}</h2>
           <p>{project.data.description}</p>
           <div class="tag-row">
-            {project.data.technologies.map((technology) => <span>{technology}</span>)}
+            {project.data.technologies.map((technology) => <a href={getProjectTagHref(technology)}>{technology}</a>)}
           </div>
-        </>
-      );
-
-      return href ? (
-        <a class="project-card" href={href} target="_blank" rel="noreferrer">
-          {cardContent}
-        </a>
-      ) : (
-        <article class="project-card">
-          {cardContent}
         </article>
       );
     })}

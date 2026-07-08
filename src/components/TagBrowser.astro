@@ -1,0 +1,28 @@
+---
+interface TagItem {
+  name: string;
+  href: string;
+  count: number;
+  active?: boolean;
+}
+
+interface Props {
+  tags: TagItem[];
+  label?: string;
+}
+
+const { tags, label = "Browse by tag" } = Astro.props;
+---
+
+{tags.length > 0 && (
+  <nav class="tag-browser" aria-label={label}>
+    <span class="tag-browser-label">{label}</span>
+    <div class="tag-browser-list">
+      {tags.map((tag) => (
+        <a class:list={{ active: tag.active }} href={tag.href}>
+          {tag.name}<small>{tag.count}</small>
+        </a>
+      ))}
+    </div>
+  </nav>
+)}
