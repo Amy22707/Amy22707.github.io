@@ -11,7 +11,7 @@ tags:
 ## [Sum of Round Numbers](https://codeforces.com/problemset/problem/1352/A)
 取每一位数。
 * 代码
-```
+```python
 t=int(input())
 for i in range(t):
     a=int(input())
@@ -33,7 +33,7 @@ for i in range(t):
 ## [24点](http://cs101.openjudge.cn/pctbook/E18223/)
 19年开始学oi到现在还是第一次见五层循环。但是很舒服的思路。
 * 代码
-```
+```python
 m=int(input())
 for i in range(m):
     a,b,c,d=map(int,input().split())
@@ -53,7 +53,7 @@ for i in range(m):
 ## [Candies and Two Sisters](https://codeforces.com/problemset/problem/1335/A)
 小学数学题。
 * 代码
-```
+```python
 t=int(input())
 for i in range(t):
     a=int(input())
@@ -61,7 +61,7 @@ for i in range(t):
 ```
 ## [Soft Drinking](https://codeforces.com/problemset/problem/151/A)
 * 代码
-```
+```python
 n,k,l,c,d,p,nl,np=map(int,input().split())
 a1=k*l/nl
 a2=p/np
@@ -70,7 +70,7 @@ print(int(min(a1,a2,a3)//n))
 ```
 ## [这一天星期几](http://cs101.openjudge.cn/pctbook/M19944/)
 * 代码
-```
+```python
 n=int(input())
 cal=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
 for i in range(n):
@@ -95,7 +95,7 @@ for i in range(n):
 * Reference
 [Python 如何检查给定的数字是否是2的幂次方](https://geek-docs.com/python/python-ask-answer/848_python_how_to_check_if_a_given_number_is_a_power_of_two.html)
 * 代码
-```
+```python
 t=int(input())
 for i in range(t):
     a=int(input())
@@ -114,7 +114,7 @@ for i in range(t):
 3.[Python 判断dict中key是否存在的三种方法](https://blog.csdn.net/little_stick_i/article/details/120987540)
 4.[Python字典添加元素的几种方法](https://blog.csdn.net/hdxx2022/article/details/128253047)
 * 代码
-```
+```python
 n=int(input())
 tel=[2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,0,7,7,8,8,8,9,9,9,0]
 s={}
@@ -143,7 +143,7 @@ if(flag==0):
 ```
 ## [Twins](https://codeforces.com/problemset/problem/160/A)
 * 代码
-```
+```python
 n=int(input())
 a=list(map(int,input().split()))
 a=sorted(a)[::-1]
@@ -157,7 +157,7 @@ for i in range(len(a)):
 ```
 ## [Football](https://codeforces.com/problemset/problem/96/A)
 * 代码
-```
+```python
 a=list(input())
 cnt=[1]
 for i in range(1,len(a)):
@@ -175,7 +175,7 @@ else:
 1..strip()去除两端空格
 2.列表切片，.index(),.count()
 * 代码
-```
+```python
 while(True):
     try:
         n=list(input().strip())
@@ -201,7 +201,7 @@ while(True):
 * Reference
 [题解：P1018 [NOIP2000 提高组] 乘积最大](https://www.luogu.com.cn/article/ozeje4jt)
 * 代码
-```
+```python
 n,k=map(int,input().split())
 l=input()
 dp=[[0 for _ in range(50)]for _ in range(50)]#前i个元素插入j个乘号
@@ -229,7 +229,7 @@ print(maxm)
 1.[C++中substr()函数用法详解](https://blog.csdn.net/weixin_42240667/article/details/103131329)
 2.[Python 如何找到一个子字符串的所有出现位置](https://geek-docs.com/python/python-ask-answer/143_python_how_to_find_all_occurrences_of_a_substring.html)
 * 代码
-```
+```python
 def search(x):
     global p,s
     ans=0
@@ -270,7 +270,7 @@ print(dp[len(a)-1][k-1])
 2.先预处理，把第一个位置拥有的单词标注出来。然后按照位置逐个搜索，有存过就加一。
 3.由于字典最多六个单词，使用位运算代替二维数组。第几个单词就在二进制第几位等于一。
 * AC代码
-```
+```python
 def search(left,right):
     global p,s
     ans=0
@@ -310,7 +310,7 @@ print(dp[len(a)-1][k-1])
 1.组合的dfs方法。递降思想，具体来说，按照下标递降，存下当前下标，接下来只选后面的
 2.素数筛法改进：如果之前筛过就存起来，避免多次判断。
 * 代码
-```
+```python
 from math import sqrt
 def is_prime(x):
     if(x in p):
@@ -343,7 +343,7 @@ print(ans)
 ```
 ## [提取数字](http://cs101.openjudge.cn/pctbook/E02910/)
 * 代码
-```
+```python
 a=input()
 cnt=""
 flag=0
@@ -365,7 +365,7 @@ for i in range(1,len(ans)):
 ## [Chips on the Board](https://codeforces.com/contest/1879/problem/B)
 贪心。
 * 代码
-```
+```python
 t=int(input())
 for i in range(t):
     n=int(input())
@@ -376,7 +376,7 @@ for i in range(t):
 ## [[入门赛 #18] 禁止在 int 乘 int 时不开 long long](https://www.luogu.com.cn/problem/P1401)
 帮别人debug。
 * 代码
-```
+```cpp
 def check(x,y):
     if(x*y>2147483647 or x*y<-2147483648):
         return True
@@ -392,7 +392,7 @@ else:
 # 2025.9.16
 ## [泰波拿契數](http://cs101.openjudge.cn/pctbook/E20742/)
 * 代码
-```
+```python
 a=[0,1,1]
 n=int(input())
 for i in range(n+1):
@@ -406,7 +406,7 @@ python正则表达式。![image](https://img2024.cnblogs.com/blog/2669443/202509
 1.[python——正则表达式(re模块)详解](https://blog.csdn.net/guo_qingxia/article/details/113979135)
 2.[Python搜索与匹配绝技：掌握search()和match()从零到高手](https://zhuanlan.zhihu.com/p/648911229)
 * 代码
-```
+```python
 import re
 a=input()
 print("YES" if re.search('h.*e.*l.*l.*o',a) else "NO")
@@ -414,7 +414,7 @@ print("YES" if re.search('h.*e.*l.*l.*o',a) else "NO")
 # 2025.9.17
 ## [Young Physicist](https://codeforces.com/problemset/problem/69/A)
 * 代码
-```
+```python
 n=int(input())
 x,y,z=0,0,0
 for i in range(n):
@@ -429,7 +429,7 @@ else:
 ```
 ## [水仙花数II](https://sunnywhy.com/sfbj/3/1/60)
 * 代码
-```
+```python
 def check(x):
     a=x//100
     b=x//10%10
@@ -450,7 +450,7 @@ else:
 ```
 ## [校门外的树](http://cs101.openjudge.cn/pctbook/E02808/)
 * 代码
-```
+```python
 l,m=map(int,input().split())
 tree=[1 for _ in range(l+1)]
 for i in range(m):
@@ -461,7 +461,7 @@ print(sum(tree))
 ```
 ## [Police Recruits](https://codeforces.com/problemset/problem/427/A)
 * 代码
-```
+```python
 n=int(input())
 a=list(map(int,input().split()))
 ans=0
@@ -482,7 +482,7 @@ print(ans)
 使用title()，可以使每个单词首字母大写。再给需要搜索的单词后面加上空格，整体判断即可。
 看题解还是能学到很多东西的。
 * 代码
-```
+```python
 a=input().strip().title()+' '
 t=input().title()+' '
 if(t.find(a)!=-1):
@@ -493,7 +493,7 @@ else:
 ## [Fancy Fence](https://codeforces.com/contest/270/problem/A)
 小奥题。
 * 代码
-```
+```python
 n=int(input())
 for i in range(n):
     t=int(input())
@@ -509,7 +509,7 @@ for i in range(n):
 一开始看错题目WA了。英文题目尤其要仔细看。
 大晚上的太急了还写复杂了。为我的莽撞自罚一杯。（已经不知道罚了多少杯了。）
 * 代码
-```
+```python
 a=input()
 #lst=['0','1','2','3','5','6','8','9','0']
 div=[4,7,44,47,74,77,444,447,474,477,744,747,774,777]
@@ -532,7 +532,7 @@ else:
 ```
 # 2025.9.20
 ## [单调递增序列](https://sunnywhy.com/sfbj/3/1/56)
-```
+```python
 n=int(input())
 a=list(map(int,input().split()))
 flag=1
@@ -546,7 +546,7 @@ else:
     print("NO")
 ```
 ## [数学密码](http://cs101.openjudge.cn/pctbook/M21532/)
-```
+```python
 n=int(input())
 for i in range(6,n+1):
     if(n%i==0):
@@ -555,7 +555,7 @@ for i in range(6,n+1):
 ```
 ## [大整数加法](http://cs101.openjudge.cn/pctbook/M02981/)
 换了C++。复健一下。
-```
+```cpp
 #include<bits/stdc++.h>
 using namespace std;
 int max(int a,int b){
@@ -603,7 +603,7 @@ int main(){
 ## [波兰表达式](http://cs101.openjudge.cn/pctbook/M02694/)
 倒着读存栈里。注意保留六位小数。
 另外本题可以使用递归完成。
-```
+```python
 def cal(a,b,s):
     if(s=='+'):
         return a+b
@@ -630,14 +630,14 @@ print("{:.6f}".format(num[0]))
 开学以来写过最短的代码。
 * Reference
 [Python 十进制转二进制、八进制、十六进制](https://www.runoob.com/python3/python3-conversion-binary-octal-hexadecimal.html)
-```
+```python
 a=oct(int(input()))
 print(a[2::])
 ```
 # 2025.9.21
 ## [约瑟夫问题](http://cs101.openjudge.cn/pctbook/M02746/)
 模拟。del()函数。
-```
+```python
 while(True):
     n,m=map(int,input().split())
     if(n==0 and m==0):
@@ -655,7 +655,7 @@ while(True):
 ## [全排列](http://cs101.openjudge.cn/pctbook/M02748/)
 dfs.
 python内置permutations.返回一个集合组成的列表。
-```
+```python
 def dfs(cur):
     global lena,vis
     if(len(cur)==lena):
@@ -676,7 +676,7 @@ dfs([])
 for i in res:
     print(i)
 ```
-```
+```python
 from itertools import permutations
 a=input()
 perms=permutations(a)
@@ -684,7 +684,7 @@ for i in sorted(perms):
     print(''.join(i))
 ```
 ## [约瑟夫问题No.2](http://cs101.openjudge.cn/pctbook/M03254/)
-```
+```python
 while(True):
     n,p,m=map(int,input().split())
     if(n==0 and m==0):
@@ -703,7 +703,7 @@ while(True):
 ```
 ## [数字三角形](http://cs101.openjudge.cn/pctbook/M02760/)
 可将dp数组压缩为一维。注意要倒着更新数组，否则可能出现还没加就更新值的情况。
-```
+```python
 n=int(input())
 a=[]
 dp=[]
@@ -722,7 +722,7 @@ print(max(dp))
 ```
 # 2025.9.22
 ## [How old are you？](http://cs101.openjudge.cn/pctbook/E21459/)
-```
+```python
 a=int(input())
 while(a!=1):
     if(a%2==1):
@@ -733,7 +733,7 @@ while(a!=1):
         a=a/2
 ```
 ## [寻找元素对](https://sunnywhy.com/sfbj/3/2/64)
-```
+```python
 n=int(input())
 a=list(map(int,input().split()))
 k=int(input())
@@ -751,7 +751,7 @@ print(int(ans/2))
 [最大子矩阵和 = 前缀和 + 最大子段和](https://www.luogu.com.cn/article/bg9zo5cu)
 [【基础算法】前缀和、二维前缀和](https://www.cnblogs.com/Tshaxz/p/15235202.html)
 [Python split()方法](https://www.runoob.com/python/att-string-split.html)
-```
+```python
 import sys
 n=int(input())
 rd=list(map(int,sys.stdin.read().split()))
@@ -783,7 +783,7 @@ print(ans)
 ```
 ## [[AHOI2007] 石块地板](https://www.luogu.com.cn/problem/P7741)
 双倍经验。
-```
+```python
 n,m=map(int,input().split())
 a=[]
 for i in range(n):
@@ -821,7 +821,7 @@ print(ans)
 ```
 ## [采药](http://cs101.openjudge.cn/pctbook/M02773/)
 01背包。状态为时间。可以压缩成一维。
-```
+```python
 t,m=map(int,input().split())
 val=[]
 time=[]
@@ -847,7 +847,7 @@ print(ans)
 * Reference
 [最长上升子序列 (LIS) 详解+例题模板 (全)](https://blog.csdn.net/lxt_Lucia/article/details/81206439)
 [P1020 [NOIP 1999 提高组] 导弹拦截 题解](https://www.luogu.com.cn/problem/solution/P1020)
-```
+```python
 def search1(low,l,r,x):
     while(l<=r):
         mid=(l+r)//2
@@ -897,7 +897,7 @@ print(LIS2())
 ```
 ## [生理周期](http://cs101.openjudge.cn/pctbook/M02977/)
 做的时候真傻了。直接末状态-初状态再取模。注意题目中说了排除天数为零的情况。还有输入的数据中有一个变量命名为了i。
-```
+```python
 p,e,i0,d=map(int,input().split())
 for i in range(d+1,21300):
     if((i-p)%23==0 and (i-e)%28==0 and (i-i0)%33==0):
@@ -908,7 +908,7 @@ for i in range(d+1,21300):
 定义一个二维数组记录两串各自的结尾所对应的LCS长度。注意序列从零开始不好处理，可以在前面加一位。
 * Reference
 [最长公共子序列 (LCS) 详解+例题模板（全）](https://blog.csdn.net/lxt_Lucia/article/details/81209962)
-```
+```python
 while True:
     try:
         x,y=input().split()
@@ -930,7 +930,7 @@ while True:
     print(ans)
 ```
 ## [Lab杯](http://cs101.openjudge.cn/pctbook/M02992/)
-```
+```python
 n=int(input())
 a=[]
 win=[]
@@ -942,7 +942,7 @@ print(win.index(max(win))+1)
 # 2025.9.23
 ## [登山](http://cs101.openjudge.cn/pctbook/M02995/)
 先最长上升子序列再最长下降子序列。考虑直接将序列以i为结尾的LIS长度计算出来，再将序列倒转重复一遍，相当于求出了以i为开头的最长下降子序列。然后对每个i相加求和再求最大值即可。
-```
+```python
 def LIS(dp):
     global n
     for i in range(1,n):
@@ -965,7 +965,7 @@ print(max(res)-1)
 ```
 ## [数论](http://cs101.openjudge.cn/pctbook/E23564/)
 分解质因数不需要筛。从小到大除下来就是正确的分解。
-```
+```python
 n=int(input())
 res=[]
 for i in range(2,n+1):
@@ -984,7 +984,7 @@ else:
 ```
 ## [删除后的最大子数组元素和](https://leetcode.cn/problems/maximum-unique-subarray-sum-after-deletion/description/)
 注意特判数组全部为负数的情况。
-```
+```python
 class Solution:
     def maxSum(self, nums: list[int]) -> int:
         setnum=set(nums)
@@ -1003,7 +1003,7 @@ print(Solution().maxSum([1,2,-1,-2,1,0,-1]))
 ```
 ## [《黑神话：悟空》之加密](http://cs101.openjudge.cn/pctbook/E28674/)
 写复杂了。可以直接作差取模。
-```
+```python
 def caesar(c,x):
     if(65<=ord(c)<=90):
         t=ord(c)-x
@@ -1023,12 +1023,12 @@ for i in range(len(a)):
 print(''.join(res))
 ```
 ## [字符串中的整数求和](http://cs101.openjudge.cn/pctbook/E28691/)
-```
+```python
 a,b=input().split()
 print(int(a[:2])+int(b[:2]))
 ```
 ## [验证身份证号](http://cs101.openjudge.cn/pctbook/M28664/)
-```
+```python
 n=int(input())
 idx=[7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2]
 verify=['1','0','X','9','8','7','6','5','4','3','2']
@@ -1046,7 +1046,7 @@ for i in range(n):
 特判题目中提到的特殊情况。阿拉伯数字转罗马数字从大到小整除即可，特殊数值至多出现一次。罗马数字转阿拉伯数字先把特殊数字提出来。
 * Reference
 [【Python教程】删除字符串中字符的四种方法](https://blog.csdn.net/qdPython/article/details/120510123)
-```
+```python
 idx = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
 r = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"]
 def roman(a):
@@ -1074,12 +1074,12 @@ else:
     print(arabic(a))
 ```
 课上新学了这个。
-```
+```python
 import math
 print(dir(math))
 ```
 ## [Taxi](https://codeforces.com/contest/158/problem/B)
-```
+```python
 n=int(input())
 s=list(map(int,input().split()))
 ans=0
@@ -1102,7 +1102,7 @@ print(ans)
 # 2025.9.24
 ## [蚂蚁王国的越野跑](http://cs101.openjudge.cn/pctbook/T20018/)
 归并排序。注意排完之后要把排好的数组赋值回去。
-```
+```python
 ans=0
 def merge(l,r):
     global ans
@@ -1144,7 +1144,7 @@ print(ans)
 ```
 ## [麦森数](http://cs101.openjudge.cn/pctbook/T02706/)
 快速幂。把幂次转换为二进制，base定为a的一次方。每次b右移一位并与1按位与，相当于判断b的最后一位是否为1.然后如果为一就乘base，每次操作base都自乘。
-```
+```python
 import math
 mod=10**500
 def quickpower(a,b):
@@ -1173,7 +1173,7 @@ statistics模块中的median函数可以直接计算中位数。
 如果直接做也不需要结构体排序。开两个数组然后开一个函数各自排序把中位数求出来即可。
 * Reference
 [Python statistics.median() 方法](https://www.runoob.com/python3/ref-stat-median.html)
-```
+```python
 import statistics
 n=int(input())
 pairs=[i[1:-1] for i in input().split()]
@@ -1190,7 +1190,7 @@ print(ans)
 ```
 ## [2048 Game](https://codeforces.com/problemset/problem/1221/A)
 从小到大合成即可。
-```
+```python
 q=int(input())
 s=[1,2,4,8,16,32,64,128,256,512,1024]
 for i in range(q):
@@ -1216,7 +1216,7 @@ for i in range(q):
 ```
 ## [计算矩阵边缘元素之和](http://cs101.openjudge.cn/pctbook/E07743/)
 特判一行或一列的情况。
-```
+```python
 m,n=map(int,input().split())
 a=[]
 ans=0
@@ -1236,7 +1236,7 @@ print(ans)
 构建二维数组。按照两个标准分别排一遍序，如果不相等就说明有问题。
 * Reference
 [Python 如何对二维列表进行排序](https://geek-docs.com/python/python-ask-answer/203_python_how_to_sort_a_2d_list.html)
-```
+```python
 n=int(input())
 a=[]
 for i in range(n):
@@ -1251,7 +1251,7 @@ else:
 贪心。前后两项列式比较，可得出按a*b从小到大排序。直接用二维数组排序即可。
 * Reference
 [[NOIP 2012 提高组] 国王游戏 题解](https://www.luogu.com.cn/problem/solution/P1080)
-```
+```python
 n=int(input())
 a,b=map(int,input().split())
 x=[]
@@ -1270,7 +1270,7 @@ print(max(ans))
 # 2025.9.27
 ## [红蓝玫瑰](http://cs101.openjudge.cn/pctbook/T25573/)
 贪心。从后往前，如果是红玫瑰就删了，如果一朵蓝玫瑰就换成蓝玫瑰，如果超过一朵蓝玫瑰就全部反转。
-```
+```python
 a=input()
 ans=0
 reverse=1

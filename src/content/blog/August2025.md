@@ -28,7 +28,7 @@ tags:
 4.print()的end=
 
 * 代码
-```
+```python
 a=input()
 for i in range(len(a)):
     b=ord(a[i])
@@ -51,7 +51,7 @@ for i in range(len(a)):
 [分解质因数](https://oi-wiki.org/math/number-theory/pollard-rho/)
 
 * 代码
-```
+```python
 from math import sqrt
 def factor(n):
     ans=1
@@ -83,7 +83,7 @@ for i in range(a):
 1.split()函数
 
 * 代码
-```
+```python
 k=int(input())
 ans1=0
 ans5=0
@@ -109,7 +109,7 @@ print("%d\n%d\n%d"%(ans1,ans5,ans10))
 [掌握这几个函数，轻松搞定Python大小写字母转换！](https://zhuanlan.zhihu.com/p/683378184)
 
 * 代码
-```
+```python
 a=input()
 print(a.swapcase())
 ```
@@ -125,7 +125,7 @@ print(a.swapcase())
 2.注意if嵌套或平行的位置
 
 * 代码
-```
+```python
 a=input()
 b=[]
 while(a!="0 0 0 0 0 0"):
@@ -178,7 +178,7 @@ SHOI2002的题目。一道搜索/dp的黄题，之前还做过。气死我了。
 2.记忆化搜索
 
 * 代码
-```
+```python
 def dfs(x,y):
     if(s[x][y]):
         return s[x][y]
@@ -224,7 +224,7 @@ print(ans)
 3.检验边界，记得return掉
 
 * 代码
-```
+```python
 a=[[" " for _ in range(10)] for _ in range(10)]
 n,k,ans=0,0,0
 flag=[0]*10
@@ -260,7 +260,7 @@ while(True):
 ![4df3f36eae7592a152276eb7fde0c5d5](https://img2024.cnblogs.com/blog/2669443/202508/2669443-20250828183557351-1975812006.jpg)
 
 * 代码
-```
+```python
 t=int(input())
 for i in range(t):
     m,n=map(int,input().split())
@@ -276,7 +276,7 @@ for i in range(t):
 ## [判断闰年](http://cs101.openjudge.cn/pctbook/E02733/)
 
 * 代码
-```
+```python
 a=int(input())
 if(a%4!=0 or (a%100==0 and a%400!=0) or a%3200==0):
     print("N")
@@ -286,7 +286,7 @@ else:
 ## [鸡兔同笼](http://cs101.openjudge.cn/pctbook/E02750/)
 
 * 代码
-```
+```python
 a=int(input())
 minm=a//4
 if(a%4!=0):
@@ -300,7 +300,7 @@ print(minm,maxm)
 有点太简单了，甚至怀疑了一下
 
 * 代码
-```
+```python
 m,n=map(int,input().split())
 print(m*n//2)
 ```
@@ -310,7 +310,7 @@ print(m*n//2)
 用一堆背景掩盖了小学数学题的事实 最喜欢的一集
 
  * 代码
-```
+```python
 n=int(input())
 ans=0
 a=list(map(int,input().split()))
@@ -336,7 +336,7 @@ print(ans)
 3.if/else
 
 * 代码
-```
+```python
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
@@ -364,7 +364,7 @@ Hash表
 3.[Python enumerate() 函数](https://www.runoob.com/python/python-func-enumerate.html)
 
 * 代码
-```
+```python
 class Solution:
     def twoSum(self, nums: list[int], target: int) -> list[int]:
         # for i in range(len(nums)):
@@ -384,7 +384,7 @@ print(Solution().twoSum([2,7,11,15],9))
 ```
 ## [Pell数列](http://cs101.openjudge.cn/pctbook/E02786/)
 * 代码
-```
+```python
 n=int(input())
 a=[0,1,2]
 for i in range(3,1000005):
@@ -402,7 +402,7 @@ for i in range(n):
 2.[Python中定义(声明)结构体](https://blog.csdn.net/qq_37435462/article/details/124097046)
 
 * 代码
-```
+```python
 import math
 # import functools
 # class Rider:
@@ -450,7 +450,7 @@ while(True):
 1.list()
 2.余数为零的处理
 * 代码
-```
+```python
 # import numpy as np
 n=int(input())
 a=list(input())
@@ -469,7 +469,7 @@ for i in range(1,n+1):
 细节挺多
 ![image](https://img2024.cnblogs.com/blog/2669443/202508/2669443-20250829214407044-1145025511.png)
 * 代码
-```
+```python
 from math import sqrt
 n=int(input())
 for i in range(n):
@@ -501,7 +501,7 @@ for i in range(n):
 1.[Python List count()方法](https://www.runoob.com/python/att-list-count.html)
 
 * 代码
-```
+```python
 n=int(input())
 for i in range(n):
     ans=0
@@ -526,7 +526,7 @@ for i in range(n):
 小根堆的建立，添加元素与删除元素
 
 * 代码
-```
+```python
 # Huffman
 # merge
 # heap
@@ -554,7 +554,7 @@ print(ans)
 一开始看到如此水题太激动了直接胡上去了然后WA了。为我的莽撞自罚一杯。
 奇偶性判断。记得特判n=2，此时没有两个偶数的拆分。
 * 代码
-```
+```python
 n=int(input())
 if(n%2==0 and n>=4):
     print("YES")
@@ -565,7 +565,7 @@ else:
 ## [Hangover](http://cs101.openjudge.cn/pctbook/E01003/)
 每日两题。是新搬上oj的，看到老师发了就赶去做了，结果还是没有成为第一个AC的。慢了一分钟，哼
 * 代码
-```
+```python
 a=[0.0,0.5]
 for i in range(2,300):
     a.append(a[i-1]+1/(i+1))
@@ -587,7 +587,7 @@ while(True):
 * 注意点
 字典的setdefault()
 * 代码
-```
+```python
 # class student:
 #     def __init__(self):
 #         self.number=0
@@ -621,7 +621,7 @@ for i in range(1231):
 * Reference
 [Eratosthenes筛法](https://zhuanlan.zhihu.com/p/151432852)
 * 代码
-```
+```python
 # pylint: skip-file
 from math import sqrt
 m,n=map(int,input().split())
@@ -661,7 +661,7 @@ for i in range(m):
 * Reference
 [Python 异常处理](https://www.runoob.com/python/python-exceptions.html)
 * 代码
-```
+```python
 # 0 1 2 3 4 ->5,2
 # 0 1 2 3 4 5 ->6,3
 while(True):
@@ -682,7 +682,7 @@ while(True):
 ## [病人排队](http://cs101.openjudge.cn/pctbook/E07618/)
 复习了一下自定义排序。
 * 代码
-```
+```python
 import functools
 class patient:
     def __init__(self):
@@ -716,7 +716,7 @@ for i in range(len(p1)):
 ## [Theatre Square](https://codeforces.com/problemset/problem/1/A)
 在CF AC的第一道题。重温。
 * 代码
-```
+```python
 n,m,a=map(int,input().split())
 x=n//a
 y=m//a
@@ -729,7 +729,7 @@ print(x*y)
 ## [Next Round](https://codeforces.com/problemset/problem/158/A)
 上午军训结业典礼一小时速通四道今天和明天的每日两题，然后浪了一天。还是先救救迫在眉睫的英语分级考吧。
 * 代码
-```
+```python
 n,k=map(int,input().split())
 a=list(map(int,input().split()))
 t=a[k-1]
@@ -746,7 +746,7 @@ print(ans)
 ## [Checking order](http://cs101.openjudge.cn/pctbook/E02883/)
 帮室友debug的。
 * 代码
-```
+```python
 while(True):
     try:
         flag=1
@@ -767,7 +767,7 @@ while(True):
 ```
 
 * debug的代码
-```
+```python
 import sys
 for line in sys.stdin:
     # processed_line=line.strip()
@@ -787,7 +787,7 @@ for line in sys.stdin:
 ```
 ## [与7无关的数](http://cs101.openjudge.cn/pctbook/E02701/)
 * 代码
-```
+```python
 def check(x):
     if(x%7==0):
         return True
@@ -806,7 +806,7 @@ print(ans)
 * Reference
 [Python如何打印控制字间距](https://docs.pingcode.com/baike/794125)
 * 代码
-```
+```python
 a=[]
 for i in range(5):
     a.append(input())
@@ -824,7 +824,7 @@ else:
 ## [Petya and Strings](https://codeforces.com/problemset/problem/112/A)
 选python就是为了此刻！
 * 代码
-```
+```python
 a=input()
 b=input()
 a=a.lower()
@@ -840,7 +840,7 @@ else:
 ## [验证“歌德巴赫猜想”](http://cs101.openjudge.cn/pctbook/E03143/)
 帮室友debug的一天。神奇ojTLE显示Waiting
 * 代码
-```
+```python
 from math import sqrt
 p=[1 for _ in range(2005)]
 def is_prime(x):
@@ -869,7 +869,7 @@ else:
 * Reference
 [题解 P1908 【逆序对】](https://www.luogu.com.cn/article/u78mgb6k)
 * 代码
-```
+```python
 ans=0
 def merge(l,r):
     global ans
@@ -915,7 +915,7 @@ print(ans)
 2.[Python判断空的多种方法](https://blog.csdn.net/airen3339/article/details/134890795)
 3.[SP348 EXPEDI - Expedition 题解](https://www.luogu.com.cn/problem/solution/SP348)
 * 代码
-```
+```python
 import heapq
 import functools
 class gas:
@@ -972,7 +972,7 @@ else:
 ```
 ## [细菌繁殖](http://cs101.openjudge.cn/pctbook/E02712/)
 * 代码
-```
+```python
 n=int(input())
 month=[0,31,28,31,30,31,30,31,31,30,31,30,31]
 for i in range(n):
@@ -989,7 +989,7 @@ for i in range(n):
 
 ## [Team](https://codeforces.com/problemset/problem/231/A)
 * 代码
-```
+```python
 n=int(input())
 ans=0
 for i in range(n):
@@ -1005,7 +1005,7 @@ LIS，但$O(n^{2})$.盯着题目神游了半天，最后突然发现k<=25.
 * Reference
 [题解 P1020 【[NOIP1999 普及组] 导弹拦截】](https://www.luogu.com.cn/article/yc19s69p)
 * 代码
-```
+```python
 k=int(input())
 a=list(map(int,input().split()))
 dp=[1 for _ in range(30)]
@@ -1019,7 +1019,7 @@ print(max(dp))
 没有技巧，全是细节。太刁钻了，前面写了若干思路最后都假了，最终按照题解还是调了半天。不愧是Tough难度的操作题。
 考虑空出的座位。**注意中间四个可以放两个加一个，同时两个来自一窝的可以拆开。[2/1][2/1]空两格放了三个2.**
 * 代码
-```
+```python
 n,k=map(int,input().split())
 a=list(map(int,input().split()))
 flag=1
@@ -1049,7 +1049,7 @@ else:
 * Reference
 [Python中[-1]、[:-1]、[::-1]、[n::-1]、[:,:,0]、[…,0]、[…,::-1] 的理解](https://blog.csdn.net/weixin_44350337/article/details/116034510)
 * 代码
-```
+```python
 from math import sqrt
 # p=[1 for _ in range(100000005)]
 # p[1]=0
@@ -1101,7 +1101,7 @@ if(len(a)>0):
 * Reference
 [P2024 [NOI2001] 食物链 题解](https://www.luogu.com.cn/problem/solution/P2024)
 * 代码
-```
+```python
 n,k=map(int,input().split())
 fa=[0 for _ in range(300005)] #1-n self;n+1-2n prey;2n+1-3n predator
 siz=[1 for _ in range(300005)]
@@ -1153,7 +1153,7 @@ print(ans)
 题干笑死我了。太真实。
 打了burte froce标签。最喜欢的一集。
 * 代码
-```
+```python
 a=input()
 ans=0
 for i in range(97,123):
@@ -1167,7 +1167,7 @@ else:
 ## [最大上升子序列和](http://cs101.openjudge.cn/pctbook/M03532/)
 一个半小时的心理讲座速通五道Medium。爽。
 * 代码
-```
+```python
 n=int(input())
 a=list(map(int,input().split()))
 dp=[1 for _ in range(1005)]#以i结尾的LIS大小
@@ -1181,7 +1181,7 @@ print(max(dp))
 ```
 ## [最长上升子序列](http://cs101.openjudge.cn/pctbook/M02757/)
 * 代码
-```
+```python
 n=int(input())
 a=list(map(int,input().split()))
 dp=[1 for _ in range(1005)]#以i结尾的LIS长度
@@ -1194,7 +1194,7 @@ print(max(dp))
 ## [分解因数](http://cs101.openjudge.cn/pctbook/M02749/)
 dfs.
 * 代码
-```
+```python
 n=int(input())
 ans=0
 def dfs(x,k):
@@ -1218,7 +1218,7 @@ for i in range(n):
 * Reference
 [区间贪心问题小结（区间选点，区间覆盖，区间选取）](https://www.cnblogs.com/dchnzlh/p/10427309.html)
 * 代码
-```
+```python
 import functools
 class test:
     def __init__(self):
@@ -1255,7 +1255,7 @@ for i in range(k):
 此处应该播放《昨日清空》。
 并查集。
 * 代码
-```
+```python
 def find(x):
     if(fa[x]==x):
         return x
@@ -1290,7 +1290,7 @@ while(True):
 ## [Stones on the Table](https://codeforces.com/problemset/problem/266/A)
 贪心。实验室安全讲座，旁边好奇老哥看着我写的。尴尬。
 * 代码
-```
+```python
 n=int(input())
 a=list(input())
 idx=1
@@ -1307,7 +1307,7 @@ print(ans)
 挺难的搜索+剪枝。
 后面还需要再拿出来理解理解。
 * 代码1
-```
+```python
 a=[]
 vis=[0 for _ in range(100)]
 def factor(x,idx,lst):
@@ -1350,7 +1350,7 @@ while(True):
             break
 ```
 * 代码2
-```
+```python
 a=[]
 vis=[0 for _ in range(100)]
 next=[0 for _ in range(100)]
@@ -1429,7 +1429,7 @@ while(True):
 2..rstrip()函数。
 3..join()函数。
 * 代码
-```
+```python
 n=int(input())
 a=list(input().split())
 # b=[-1]
@@ -1463,7 +1463,7 @@ print("\n".join(ans))
 ## [Beautiful Matrix](https://codeforces.com/problemset/problem/263/A)
 今天精神不太好。总算爽了一次。
 * 代码
-```
+```python
 a=[]
 for i in range(5):
     a.append(list(map(int,input().split())))
@@ -1476,7 +1476,7 @@ for i in range(5):
 ## [Radar Installation](http://cs101.openjudge.cn/pctbook/M01328/)
 一开始贪心贪错了。转化为区间点覆盖问题。
 * 代码
-```
+```python
 import functools
 from math import sqrt
 class isle:
@@ -1535,7 +1535,7 @@ while(True):
 ## [[NOIP 2002 普及组] 级数求和](https://www.luogu.com.cn/problem/P1035)
 这就是我水群的代价。
 * 代码
-```
+```python
 k=int(input())
 n=1
 s=1.0
@@ -1547,7 +1547,7 @@ print(n)
 
 ## [求和](http://cs101.openjudge.cn/pctbook/E02940/)
 * 代码
-```
+```python
 a,n=map(int,input().split())
 ans=0
 for i in range(1,n+1):
@@ -1558,7 +1558,7 @@ print(ans*a)
 开学前最后一天！计概开课之后开新的博客记录！
 ## [编码字符串](http://cs101.openjudge.cn/pctbook/E12556/)
 * 代码
-```
+```python
 a=input().lower()
 ans='('+a[0]+','
 cnt=1
@@ -1574,7 +1574,7 @@ print(ans)
 ## [Hit the Lottery](https://codeforces.com/problemset/problem/996/A)
 对的贪心也有板子题。
 * 代码
-```
+```python
 a=int(input())
 ans=0
 ans+=a//100
@@ -1595,7 +1595,7 @@ print(ans)
 * Reference
 [Python3 集合](https://www.runoob.com/python3/python3-set.html)
 * 代码
-```
+```python
 n,m=map(int,input().split())
 a=list(map(int,input().split()))
 cnt=1
@@ -1615,7 +1615,7 @@ print(cnt)
 * Reference
 [Python set() 函数](https://www.runoob.com/python/python-func-set.html)
 * 代码
-```
+```python
 n=int(input())
 a=["A","B","C","D","E","F","G","H","I","J","K","L"]
 for i in range(n):
@@ -1644,7 +1644,7 @@ for i in range(n):
 ```
 ## [提取实体](http://cs101.openjudge.cn/pctbook/E19949/)
 * 代码
-```
+```python
 n=int(input())
 ans=0
 for i in range(n):
@@ -1663,7 +1663,7 @@ print(ans)
 ```
 ## [Divisibility Problem](https://codeforces.com/problemset/problem/1328/A)
 * 代码
-```
+```python
 n=int(input())
 for i in range(n):
     a,b=map(int,input().split())
@@ -1681,7 +1681,7 @@ for i in range(n):
 ![f1df63e68cfeb23ab86e1319982e4af3](https://img2024.cnblogs.com/blog/2669443/202509/2669443-20250908211533893-1067989306.jpg)
 
 * 代码
-```
+```python
 import sys
 sys.setrecursionlimit(300000)
 input=sys.stdin.read

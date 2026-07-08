@@ -9,7 +9,7 @@ tags:
 期末机考游记。
 ## [春游集合](http://cs101.openjudge.cn/cs1012025feclass11/E30061/)
 桶。
-```
+```python
 n,m=map(int,input().split())
 a=list(map(int,input().split()))
 b=[0]*n
@@ -26,7 +26,7 @@ else:
 ```
 ## [纪念品分组](http://cs101.openjudge.cn/cs1012025feclass11/E30085/)
 排序+双指针。
-```
+```python
 w=int(input())
 n=int(input())
 a=[]
@@ -54,7 +54,7 @@ print(ans)
 赛时做法是dfs，最后排序去重，n比较小所以也能过。
 正解考虑转成字符串然后哈希去重或者搜索时剪枝。
 ![image](https://img2024.cnblogs.com/blog/2669443/202512/2669443-20251225172134040-1412425499.png)
-```
+```python
 a=list(map(int,input().split()))
 n=len(a)
 ans=0
@@ -80,7 +80,7 @@ print(ans)
 ```
 ## [赦免战俘](http://cs101.openjudge.cn/cs1012025feclass11/M30216/)
 递归。
-```
+```python
 def op(m,x,y):
     if(m==1):
         a[x][y]=0
@@ -103,7 +103,7 @@ for i in range(2**n):
 ```
 ## [上课赶时间](http://cs101.openjudge.cn/cs1012025feclass11/M30442/)
 先扫一遍判断删除哪个点对结果的贡献最大，然后删除即可。注意特判开头结尾。
-```
+```python
 t=int(input())
 for _ in range(t):
     n=int(input())
@@ -135,7 +135,7 @@ for _ in range(t):
 ```
 ## [星际贸易航线](http://cs101.openjudge.cn/cs1012025feclass11/T30220/)
 双dp。yhf考前明示最有用的一集。
-```
+```python
 n,m=map(int,input().split())
 a=[]
 for i in range(n):

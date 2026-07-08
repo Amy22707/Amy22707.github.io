@@ -9,7 +9,10 @@ export default defineConfig({
   site: "https://amy22707.github.io/",
   markdown: {
     shikiConfig: {
-      theme: "github-light"
+      themes: {
+        light: "github-light",
+        dark: "github-dark"
+      }
     }
   },
   integrations: [mdx()]

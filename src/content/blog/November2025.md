@@ -10,7 +10,7 @@ tags:
 ## [括号生成](https://leetcode.cn/problems/generate-parentheses/description/)
 向右或向上走，不能超过对角线。
 Catalan数枚举。
-```
+```python
 class Solution:
     def generateParenthesis(self, n: int) -> list[str]:
         ans=[]
@@ -29,7 +29,7 @@ class Solution:
 print(Solution().generateParenthesis((3)))
 ```
 ## [N 皇后](https://leetcode.cn/problems/n-queens/description/)
-```
+```python
 class Solution:
     def solveNQueens(self, n: int) -> list[list[str]]:
         y=[0]*n
@@ -62,7 +62,7 @@ print(Solution().solveNQueens(4))
 ## [熄灯问题](http://cs101.openjudge.cn/pctbook/T02811/)
 根据题目提示，枚举第一行的所有情况，然后一行行往下推，直到遇到刚好全部关闭的情况。
 二维数组的深拷贝需用copy库中的deepcopy().
-```
+```python
 from copy import deepcopy
 a=[]
 a.append([0]*8)
@@ -116,7 +116,7 @@ for i in range(1<<6):
 ```
 # 2025.11.4
 ## [马走日](http://cs101.openjudge.cn/pctbook/M04123/)
-```
+```python
 t=int(input())
 dx=[-2,-1,1,2,2,1,-1,-2]
 dy=[1,2,2,1,-1,-2,-2,-1]
@@ -146,7 +146,7 @@ for i in range(t):
 [康托展开](https://baike.baidu.com/item/%E5%BA%B7%E6%89%98%E5%B1%95%E5%BC%80/7968428)
 2.![image](https://img2024.cnblogs.com/blog/2669443/202511/2669443-20251104170447472-2048681290.png)
 ![image](https://img2024.cnblogs.com/blog/2669443/202511/2669443-20251104170626065-2135628022.png)
-```
+```python
 from math import factorial
 import heapq
 m=int(input())
@@ -185,7 +185,7 @@ for p in range(m):
 模拟。可以使用字典完成。
 注意审题，范围不包括m和n，以及要按数字和大小顺序输出。一开始还没注意输入输出格式。T1再次连交两发WA.
 以后做题一上来一定不能急，仔细审题，确保签到题一次性对。
-```
+```python
 from collections import defaultdict  
 m,n,k=map(int,input().split(','))  
 a=defaultdict(list)  
@@ -369,7 +369,7 @@ for i in ans:
 ```
 # 2025.11.11
 ## [最大连通域面积](http://cs101.openjudge.cn/pctbook/M18160/)
-```
+```python
 t=int(input())
 a=[]
 ans=0
@@ -409,7 +409,7 @@ for i in range(t):
 
 ## [全排列III](https://sunnywhy.com/sfbj/4/3/134)
 同一个位置不放两个相同的数。具体实现方法为每次只取一串相同数中的第一个没有用过的数。注意and与or判断需要加括号以明确优先级。
-```
+```python
 n=int(input())
 a=list(map(int,input().split()))
 a.sort()
@@ -428,7 +428,7 @@ def dfs(step,cur):
 dfs(0,[])
 ```
 ## [组合II](https://sunnywhy.com/sfbj/4/3/136)
-```
+```python
 n,k=map(int,input().split())
 a=list(map(int,input().split()))
 vis=[0]*n
@@ -446,7 +446,7 @@ def dfs(step,cur,t):
 dfs(0,[],-1)
 ```
 ## [组合III](https://sunnywhy.com/sfbj/4/3/137)
-```
+```python
 n,k=map(int,input().split())
 a=list(map(int,input().split()))
 vis=[0]*n
@@ -472,7 +472,7 @@ dfs(0,[],-1)
 而如果田忌最小的马小于齐王最小的马，那么用这匹马输齐王最大的马。（这匹马无论如何都会输。）
 如果田忌最小的马等于齐王最小的马，用这匹马输齐王最大的马更优。（这两组同时平局与相互交叉打的财产均为0，而剩余马贪心的钱财数大于等于安排这两组交叉打的钱财数。）
 使用四个指针即可。注意结束循环的条件。
-```
+```python
 while(True):
     n=int(input())
     if(n==0):
@@ -508,7 +508,7 @@ while(True):
 # 2025.11.12
 ## [简单的整数划分问题](http://cs101.openjudge.cn/pctbook/T04117/)
 dp同月考题。
-```
+```python
 while True:
     try:
         n=int(input())
@@ -526,7 +526,7 @@ while True:
 贪心。从小到大排序，分成总数相近的两组。相差的值可以通过从较大的那组选取两个电池先共同消耗掉一定时长来弥补。因此判断能否弥补即可。
 ![image](https://img2024.cnblogs.com/blog/2669443/202511/2669443-20251112193918212-575442188.png)
 
-```
+```python
 while(True):
     try:
         n=int(input())
@@ -578,7 +578,7 @@ while(True):
 ![image](https://img2024.cnblogs.com/blog/2669443/202511/2669443-20251112232936491-876120575.png)
 ![image](https://img2024.cnblogs.com/blog/2669443/202511/2669443-20251112233009314-1157431472.png)
 ![image](https://img2024.cnblogs.com/blog/2669443/202511/2669443-20251112233044181-1902904048.png)
-```
+```python
 import heapq
 while(True):
     n=int(input())
@@ -623,7 +623,7 @@ while(True):
 # 2025.11.13
 ## [求最大公约数问题](http://cs101.openjudge.cn/practice/07592/)
 辗转相除法
-```
+```python
 x,y=map(int,input().split())
 if(x>y):
     x,y=y,x
@@ -634,7 +634,7 @@ while(x>0):
 print(y)
 ```
 ## [简单的数学题](http://cs101.openjudge.cn/pctbook/E27273/)
-```
+```python
 import math
 t=int(input())
 for i in range(t):
@@ -648,7 +648,7 @@ for i in range(t):
 ## [逃离紫罗兰监狱](http://cs101.openjudge.cn/practice/29954/)
 bfs的使用场景：求最短路/最近关系。
 由于障碍物的存在，使用三维bfs，同时记录穿过障碍物的数量。
-```
+```python
 from collections import deque
 r,c,k=map(int,input().split())
 a=[]
@@ -693,7 +693,7 @@ print(bfs())
 ```
 ## [算24](http://cs101.openjudge.cn/practice/02787/)
 递归。
-```
+```python
 def check(x,target):
     if(abs(x-target)<1e-6):
         return True
@@ -734,7 +734,7 @@ while(True):
 ```
 ## [柱状图中最大的矩形](https://leetcode.cn/problems/largest-rectangle-in-histogram/description/)
 单调栈。
-```
+```python
 from collections import deque
 class Solution:
     def largestRectangleArea(self, heights: list[int]) -> int:
@@ -756,7 +756,7 @@ print(Solution().largestRectangleArea([2,1,5,6,2,3]))
 print(Solution().largestRectangleArea([2,4]))
 ```
 ## [最大矩形](https://leetcode.cn/problems/maximal-rectangle/description/)
-```
+```python
 from collections import deque
 class Solution:
     def maximalRectangle(self, matrix: list[list[str]]) -> int:
@@ -789,7 +789,7 @@ print(Solution().maximalRectangle([["1","0","1","0","0"],["1","0","1","1","1"],[
 ```
 ## [植物观察](http://cs101.openjudge.cn/pctbook/M27306/)
 种类并查集。
-```
+```python
 n,m=map(int,input().split())
 fa=[]
 siz=[]
@@ -834,7 +834,7 @@ else:
     print("YES")
 ```
 ## [爬楼梯](https://leetcode.cn/problems/climbing-stairs/description/)
-```
+```python
 class Solution:
     def climbStairs(self, n: int) -> int:
         dp=[-1]*(n+1)
@@ -846,7 +846,7 @@ class Solution:
 print(Solution().climbStairs(2))
 ```
 ## [杨辉三角](https://leetcode.cn/problems/pascals-triangle/description/)
-```
+```python
 class Solution:
     def generate(self, numRows: int) -> list[list[int]]:
         ans=[[1]]
@@ -860,7 +860,7 @@ class Solution:
 print(Solution().generate(5))
 ```
 ## [Sereja and Suffixes](https://codeforces.com/problemset/problem/368/B)
-```
+```python
 n,m=map(int,input().split())
 a=list(map(int,input().split()))
 dp=[0]*(n+1)
@@ -875,7 +875,7 @@ for i in range(m):
     print(dp[s-1])
 ```
 ## [Kuriyama Mirai's Stones](https://codeforces.com/contest/433/problem/B)
-```
+```python
 n=int(input())
 a=list(map(int,input().split()))
 b=sorted(a)
@@ -894,7 +894,7 @@ for i in range(u):
 ```
 ## [The Sierpinski Fractal](http://cs101.openjudge.cn/practice/01941/)
 递归。
-```
+```python
 from functools import lru_cache
 @lru_cache(maxsize=None)
 def op(n):
@@ -919,7 +919,7 @@ while(True):
 ```
 # 2025.11.18
 ## [跳台阶](http://cs101.openjudge.cn/practice/27528/)
-```
+```python
 n=int(input())
 a=[1,1]
 for i in range(2,n+1):
@@ -928,7 +928,7 @@ print(a[n])
 ```
 ## [《算法图解》小偷背包问题](http://cs101.openjudge.cn/pctbook/M23421/)
 0-1背包
-```
+```python
 n,b=map(int,input().split())
 v=list(map(int,input().split()))
 w=list(map(int,input().split()))
@@ -941,7 +941,7 @@ print(max(dp))
 ```
 ## [最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/description/)
 dp[i][j]记为i-j是否回文。状态转移方程dp[i][j]=dp[i+1][j-1]&(s[i] == s[j]).(从一个回文串向左右扩展。)注意初始赋值，一位的字符串都是回文的。以及注意dp顺序，根据状态转移方程应该按照字符串的长度从小到大更新状态。
-```
+```python
 __import__('atexit').register(lambda: open('display_runtime.txt', 'w').write('0'))
 class Solution:
     def longestPalindrome(self, s: str) -> str:
@@ -970,7 +970,7 @@ print(Solution().longestPalindrome("aaaaa"))
 ```
 ## [打家劫舍](https://leetcode.cn/problems/house-robber/description/)
 dp数组记录最后偷第i家的情况下的最高金额。状态转移即考虑前一个偷了哪一家，应当为能偷的所有家里dp的最大值。
-```
+```python
 class Solution:
     def rob(self, nums: list[int]) -> int:
         dp=nums.copy()
@@ -982,7 +982,7 @@ print(Solution().rob([1,2,3,1]))
 ```
 ## [Flowers](https://codeforces.com/problemset/problem/474/D)
 状态转移，考虑第i个是吃白花还是红花。吃白花则从dp(i-k)来，吃红花则从dp(i-1)来。预先把范围内每个数的方案数都算出来，并使用前缀和进行优化。
-```
+```python
 t,k=map(int,input().split())
 mod=1e9+7
 dp=[0]*100005
@@ -1003,7 +1003,7 @@ for i in range(t):
 # 2025.11.23
 ## [电话号码](http://cs101.openjudge.cn/pctbook/M04089/)
 字典树Trie.
-```
+```python
 class TrieNode:
     def __init__(self):
         self.children={}
@@ -1043,7 +1043,7 @@ for i in range(t):
 # 2025.11.24
 ## [Interesting drink](https://codeforces.com/problemset/problem/706/B)
 bisect.
-```
+```python
 import bisect
 n=int(input())
 p=list(map(int,input().split()))
@@ -1055,7 +1055,7 @@ for i in range(q):
 ```
 ## [PKU游戏](http://cs101.openjudge.cn/practice/28748/)
 第i个签被最后取出的概率为ai/(a1+a2+……+an)，此时拥有这个数字的最后一个人输。因此开两个字典分别记录数字的个数以及持有它的最后一个人。每个人输掉的概率即为抽到最后一个签的概率相加。
-```
+```python
 n,k=map(int,input().split())
 a=[]
 cnt={}
@@ -1079,7 +1079,7 @@ for i in range(n):
 ## [北大杯台球比赛](http://cs101.openjudge.cn/practice/16532/)
 1.撞到x轴则y方向取反，撞到y轴则x方向取反
 2.被撞的球不会改变位置，只需记录当前是黑球运动还是白球运动即可，撞一次球则将flag异或一次。
-```
+```python
 x0,y0=map(int,input().split())
 x1,y1=map(int,input().split())
 aim=[(0,0),(8,0),(16,0),(0,5),(8,5),(16,5)]
@@ -1115,7 +1115,7 @@ if(check==0):
 2：自然数n可以表为两个平方数之和等价于n的每个形如p=4m+3的素因子的次数为偶数。
 4：$4^a*(8k+7)$
 其余均能表示为三平方和。
-```
+```python
 from math import sqrt
 class Solution:
     def numSquares(self, n: int) -> int:
@@ -1144,7 +1144,7 @@ print(Solution().numSquares(12))
 ```
 ## [最小新整数](http://cs101.openjudge.cn/practice/04137/)
 单调栈。每当遇到比栈顶小的数就将栈中所有更大的数弹出，并加入当前数，直到k次删除用完。如果没用完就从栈底删除元素。
-```
+```python
 from collections import deque
 t=int(input())
 for i in range(t):
@@ -1166,7 +1166,7 @@ for i in range(t):
     print("".join(a))
 ```
 dp。dp[i][j]存储0-i位删除j个的最小前缀。
-```
+```python
 def con(a):
     if(a==""):
         return 0
@@ -1189,7 +1189,7 @@ for i in range(t):
 maxm=float("-inf")
 minm=float("inf")
 最大值有可能为负。
-```
+```python
 from math import floor,ceil
 n,m=map(int,input().split())
 a=[]
@@ -1229,7 +1229,7 @@ print(maxm,minm)
 1.二分+bfs，对答案在范围内二分，判断能否走到终点。
 2.dijkstra，路径长度定义为体力消耗的最大值。
 [dijkstra 详解](https://www.luogu.com.cn/article/s581e0wm)
-```
+```python
 import heapq
 n,m=map(int,input().split())
 a=[]
@@ -1258,7 +1258,7 @@ print(dist[n-1][m-1])
 # 2025.11.25
 ## [迷宫最短路径](https://sunnywhy.com/sfbj/8/2/321)
 bfs。记录路径的方法是对每个点记录其其前一个节点。
-```
+```python
 from collections import deque
 dx=[0,1,0,-1]
 dy=[1,0,-1,0]
@@ -1301,7 +1301,7 @@ for i in range(len(ans)-1,-1,-1):
     print(x1+1,y1+1)
 ```
 ## [多终点迷宫问题](https://sunnywhy.com/sfbj/8/2/324)
-```
+```python
 from collections import deque
 n,m=map(int,input().split())
 a=[]
@@ -1331,7 +1331,7 @@ for i in range(n):
 ```
 ## [Piggy-Bank](http://cs101.openjudge.cn/practice/01384/)
 完全背包恰好放满。
-```
+```python
 t=int(input())
 for O_o in range(t):
     e,f=map(int,input().split())
@@ -1354,7 +1354,7 @@ for O_o in range(t):
         print("The minimum amount of money in the piggy-bank is %d." %(dp[f-e]))
 ```
 ## [单词拆分](https://leetcode.cn/problems/word-break/description/)
-```
+```python
 class Solution:
     def wordBreak(self, s: str, wordDict: list[str]) -> bool:
         m=len(s)
@@ -1377,7 +1377,7 @@ print(Solution().wordBreak("leetcode",["leet","code"]))
 ## [合理的饭票设计](http://cs101.openjudge.cn/practice/28702/)
 dfs饭票的所有面值。对dfs进行剪枝，饭票的面值应大于上一次面值，小于当前连续覆盖最大值-1.计算当前连续覆盖最大值的方法是dp，dp数组记录凑出面值i的最少饭票数，每dfs一次就更新dp数组。
 注意题目要求的是凑出1-n，同时不能凑出n+1.以及多测记得清空。
-```
+```python
 ans=0
 def dfs(cnt,val,cur,dp,m,k,n):#已选面值数，上一次面值，当前连续覆盖最大值
     #print(cnt,val,cur,dp[0:7])
@@ -1415,7 +1415,7 @@ for o_0 in range(p):
     print(ans)
 ```
 ## [【模板】Manacher](https://www.luogu.com.cn/problem/P3805)
-```
+```python
 temp=input()
 s='#'.join('^{}$'.format(temp))
 n=len(s)
@@ -1439,7 +1439,7 @@ print(max(p))
 打了助教出的模拟赛。
 ## [迷宫](http://cs101.openjudge.cn/20251127mockexam/E02790/)
 dfs走迷宫不需要回溯。
-```
+```python
 k=int(input())
 dx=[0,1,0,-1]
 dy=[1,0,-1,0]
@@ -1473,7 +1473,7 @@ for o_o in range(k):
         print("NO")
 ```
 ## [给植物浇水](http://cs101.openjudge.cn/20251127mockexam/E27301/)
-```
+```python
 n,a,b=map(int,input().split())
 p=list(map(int,input().split()))
 i,j=0,n-1
@@ -1502,7 +1502,7 @@ if(i==j):
 print(ans1+ans2)
 ```
 ## [解密](http://cs101.openjudge.cn/20251127mockexam/M28969/)
-```
+```python
 def solve(s):
     t=len(s)
     if(t==1):
@@ -1519,7 +1519,7 @@ print(solve(l))
 ## [预测赢家](http://cs101.openjudge.cn/20251127mockexam/M28970/)
 双端取数的博弈问题的dp。dp数组记录剩余数字为第i-j时先手能比后手多出的最多的分。考虑先手取对头或队尾，此时后手变成了先手，由此可以使用dp数据递推。
 建立dp表的顺序应枚举字段长度与开头下标。边界为只剩一个数的时候，此时数组那个数的值即为先手多出的分数。
-```
+```python
 n=int(input())
 for _ in range(n):
     a=list(map(int,input().split()))

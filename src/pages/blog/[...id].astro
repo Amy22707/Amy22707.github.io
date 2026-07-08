@@ -4,11 +4,20 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import GiscusComments from "../../components/GiscusComments.astro";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
-  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+  const posts = (await getCollection("blog", ({ data }) => !data.draft))
+    .sort((a, b) => a.data.publishedAt.valueOf() - b.data.publishedAt.valueOf());
+
+  return posts.map((post, index) => ({
+    params: { id: post.id },
+    props: {
+      post,
+      previousPost: posts[index - 1],
+      nextPost: posts[index + 1],
+    },
+  }));
 }
 
-const { post } = Astro.props;
+const { post, previousPost, nextPost } = Astro.props;
 const { Content, headings } = await render(post);
 const tocHeadings = headings.filter((heading) => heading.depth >= 1 && heading.depth <= 4);
 ---
@@ -43,7 +52,35 @@ const tocHeadings = headings.filter((heading) => heading.depth >= 1 && heading.d
         <h1>{post.data.title}</h1>
         <p>{post.data.description}</p>
       </header>
+
       <div class="prose"><Content /></div>
+
+      <nav class="post-navigation" aria-label="Blog post navigation">
+        {previousPost ? (
+          <a class="post-nav-card previous" href={`/blog/${previousPost.id}/`}>
+            <span>Previous</span>
+            <strong>{previousPost.data.title}</strong>
+          </a>
+        ) : (
+          <div class="post-nav-card disabled">
+            <span>Previous</span>
+            <strong>No older post</strong>
+          </div>
+        )}
+
+        {nextPost ? (
+          <a class="post-nav-card next" href={`/blog/${nextPost.id}/`}>
+            <span>Next</span>
+            <strong>{nextPost.data.title}</strong>
+          </a>
+        ) : (
+          <div class="post-nav-card disabled next">
+            <span>Next</span>
+            <strong>No newer post</strong>
+          </div>
+        )}
+      </nav>
+
       <GiscusComments />
     </article>
   </div>

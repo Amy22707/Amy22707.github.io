@@ -26,8 +26,9 @@ const active = (href: string) =>
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
+    <meta name="referrer" content="no-referrer" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title} · Amy</title>
+    <title>{title} | Amy</title>
     <script is:inline>
       (() => {
         const savedTheme = localStorage.getItem("theme");
@@ -53,7 +54,7 @@ const active = (href: string) =>
             ))}
           </div>
           <button class="theme-toggle" type="button" aria-label="Switch color theme" aria-pressed="false">
-            <span class="theme-toggle-icon" aria-hidden="true">☾</span>
+            <span class="theme-toggle-icon" aria-hidden="true">D</span>
             <span class="theme-toggle-text">Theme</span>
           </button>
         </div>
@@ -63,8 +64,8 @@ const active = (href: string) =>
       <slot />
     </main>
     <footer class="site-footer">
-      <p>© {new Date().getFullYear()} Amy · Built with Astro</p>
-      <a href="https://github.com/Amy22707" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <p>&copy; {new Date().getFullYear()} Amy | Built with Astro</p>
+      <a href="https://github.com/Amy22707" target="_blank" rel="noreferrer">GitHub -&gt;</a>
     </footer>
     <script is:inline>
       (() => {
@@ -83,7 +84,7 @@ const active = (href: string) =>
         const paint = () => {
           const theme = getTheme();
           button?.setAttribute("aria-pressed", String(theme === "dark"));
-          if (icon) icon.textContent = theme === "dark" ? "☀" : "☾";
+          if (icon) icon.textContent = theme === "dark" ? "L" : "D";
           if (label) label.textContent = theme === "dark" ? "Light" : "Dark";
         };
 

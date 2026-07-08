@@ -9,7 +9,7 @@ tags:
 # 2025.12.1
 ## [乘积最大子数组](https://leetcode.cn/problems/maximum-product-subarray/description/)
 由于可能出现两个负数相乘，考虑同时记录最大子数组与最小子数组，两个数组都由上述两个转移而来。
-```
+```python
 class Solution:
     def maxProduct(self, nums: list[int]) -> int:
         n=len(nums)
@@ -22,7 +22,7 @@ class Solution:
 print(Solution().maxProduct([2,3,-2,4]))
 ```
 ## [Pots](http://cs101.openjudge.cn/practice/03151/)
-```
+```python
 from collections import deque
 a,b,c=map(int,input().split())
 ans=[]
@@ -75,7 +75,7 @@ else:
 ```
 ## [土豪购物](http://cs101.openjudge.cn/pctbook/M20744/)
 没有局部最优性，考虑开两个dp数组，分别记录不放回和放回一个。
-```
+```python
 a=list(map(int,input().split(',')))
 n=len(a)
 dp1=a.copy()#不放回
@@ -88,7 +88,7 @@ print(max(max(dp1),max(dp2)))
 ```
 ## [Vacations](https://codeforces.com/problemset/problem/698/A)
 开三个dp数组分别记录第i天休息、打比赛或者锻炼。
-```
+```python
 n=int(input())
 a=list(map(int,input().split()))
 maxm=float("inf")
@@ -109,7 +109,7 @@ for i in range(1,n):
 print(min(dp1[n-1],dp2[n-1],dp3[n-1]))
 ```
 ## [Basketball Exercise](https://codeforces.com/problemset/problem/1195/C)
-```
+```python
 n=int(input())
 a=list(map(int,input().split()))
 b=list(map(int,input().split()))
@@ -123,7 +123,7 @@ for i in range(1,n):
 print(max(max(dp1),max(dp2)))
 ```
 ## [Boredom](https://codeforces.com/problemset/problem/455/A)
-```
+```python
 n=int(input())
 a=list(map(int,input().split()))
 nums={}
@@ -148,7 +148,7 @@ print(dp[m-1])
 ```
 ## [[NOIP2025] 糖果店 / candy](https://www.luogu.com.cn/problem/P14635)
 购买大于等于两个的糖果至多有一种，否则可以都换成最小的那种。因此枚举买一个的糖果总数与买两个的次数。
-```
+```python
 n,m=map(int,input().split())
 a=[]
 c=[]
@@ -173,7 +173,7 @@ print(res)
 # 2025.12.3
 ## [袋子里最少数目的球](https://leetcode.cn/problems/minimum-limit-of-balls-in-a-bag/description/)
 二分答案。
-```
+```python
 class Solution:
     def minimumSize(self, nums: list[int], maxOperations: int) -> int:
         l,r,ans=1,max(nums),0
@@ -192,7 +192,7 @@ class Solution:
 ## [编辑距离](https://leetcode.cn/problems/edit-distance/description/)
 dp数组记录从word1的0-i位置变到word2的0-j位置需要的最少步数。分word1[i]与word2[j]是否相等讨论。
 dp[i-1][j-1]为替换，dp[i-1][j]为插入，dp[i][j-1]为删除。边界条件为word1为空或word2为空，因此细节上注意word的1-n对应原字符串的0-n-1
-```
+```python
 class Solution:
     def minDistance(self, word1: str, word2: str) -> int:
         n1=len(word1)#1-n1
@@ -214,7 +214,7 @@ print(Solution().minDistance("horse","ros"))
 ```
 ## [Aggressive cows](http://cs101.openjudge.cn/practice/02456/)
 二分答案。
-```
+```python
 n,c=map(int,input().split())
 a=[]
 for i in range(n):
@@ -243,7 +243,7 @@ print(ans)
 ```
 # 2025.12.4
 ## [神秘数字的宇宙旅行](http://cs101.openjudge.cn/20251204mockexam/E29945/)
-```
+```python
 n=int(input())
 while(n!=1):
     if(n%2==1):
@@ -259,7 +259,7 @@ print("End")
 ## [删数问题](http://cs101.openjudge.cn/20251204mockexam/E29946/)
 单调栈。维护一个单调增的栈，如果后面的数字符合要求就入栈，不符合就把栈中所有比它大的元素都出栈。贪心可知这样操作后栈中的数即为最小的数。
 注意如果以字符串形式输出，要把数字中多余的前导零删除，例如100删一位应当为0，而栈中存储的是00.
-```
+```python
 from collections import deque
 a=input().lstrip('0')
 k=int(input())
@@ -284,7 +284,7 @@ print(ans)
 ```
 ## [缺德的图书馆管理员](http://cs101.openjudge.cn/20251204mockexam/E30091/)
 贪心。两个同学速度相同，因此相遇后转身用时相当于互换身份后不转身用时。因此同学的离开时间只能是a[i]或l+1-a[i].
-```
+```python
 l=int(input())
 n=int(input())
 a=list(map(int,input().split()))
@@ -297,7 +297,7 @@ maxm=max(max(a),l+1-min(a))
 print(minm,maxm)
 ```
 ## [小P的LLM推理加速](http://cs101.openjudge.cn/20251204mockexam/T30204/)
-```
+```python
 n,m=map(int,input().split())
 a=[]
 c=[]
@@ -321,7 +321,7 @@ print(res)
 ```
 ## [Playfair密码](http://cs101.openjudge.cn/practice/27371/)
 纯模拟。注意j要换成i，不仅构造矩阵的时候要删除j，接收明文的时候也要把其中所有的j替换为一个i。
-```
+```python
 a=input()
 n=int(input().strip())
 m=[["" for _ in range(5)]for _ in range(5)]
@@ -406,7 +406,7 @@ for _ in range(n):
 状压dp。由于路径是一个环，考虑将起点固定为0号点。dp[i][j]记录从0到j，状态为i时的最短路径。
 枚举状态和目标点j。对每个途径的k点，使用类似Floyd算法对最短路进行更新。
 最终答案即为从0到所有点的最短路加上从这个点回到0点的路径和的最小值。
-```
+```python
 n=int(input())
 a=[]
 for i in range(n):
@@ -431,7 +431,7 @@ print(minm)
 状压dp枚举子集。j=i&(j-1).复杂度O(3^n).
 对每个状态枚举其子集，用剩余的直接过桥时间加子集的dp值更新之。
 注意子集包括0，不要碰到零就停止枚举。
-```
+```python
 a,n=map(int,input().split())
 t0=[]
 w0=[]
@@ -460,7 +460,7 @@ print(dp[(1<<n)-1])
 ```
 ## [走山路](http://cs101.openjudge.cn/practice/20106/)
 dijkstra.
-```
+```python
 import heapq
 m,n,p=map(int,input().split())
 a=[]
@@ -496,7 +496,7 @@ for _ in range(p):
 ```
 ## [Subway](http://cs101.openjudge.cn/practice/02502/)
 dijkstra.
-```
+```python
 from math import sqrt
 import heapq
 def get_dis(x,y):
@@ -550,7 +550,7 @@ print(round(path[1]/60))
 ```
 ## [【模板】KMP](https://www.luogu.com.cn/problem/P3375)
 [字符串学习笔记 · 浅析KMP——单模式串匹配算法](https://www.luogu.com.cn/article/qsgkbcp0)
-```
+```python
 a="_"+input().strip()
 b="_"+input().strip()
 l1=len(a)
@@ -582,7 +582,7 @@ for i in range(1,l2):
 # 2025.12.9
 ## [快速堆猪](http://cs101.openjudge.cn/practice/22067/)
 辅助栈。加一个栈记录最小值，最小值栈每次添加的即为当前元素与栈顶元素中的较小值。
-```
+```python
 a=[]
 m=[]
 while True:
@@ -607,7 +607,7 @@ while True:
 ```
 ## [我是最快的马](http://cs101.openjudge.cn/pctbook/T07206/)
 点可能会重复经过，vis数组记录经过每个点的路径长度最小值，当新路径的长度小于等于当前路径的时候才进行搜索。
-```
+```python
 from collections import deque
 a=[[0 for _ in range(11)]for _ in range(11)]
 dx=[-2,-2,-1,1,2,2,1,-1]
@@ -652,7 +652,7 @@ else:
     print(ans)
 ```
 ## [蛇梯棋](https://leetcode.cn/problems/snakes-and-ladders/description/)
-```
+```python
 from collections import deque
 class Solution:
     def snakesAndLadders(self, board: list[list[int]]) -> int:
@@ -702,7 +702,7 @@ print(Solution().snakesAndLadders([[-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1],[-1,-
 ```
 ## [最小基因变化](https://leetcode.cn/problems/minimum-genetic-mutation/description/)
 bfs.
-```
+```python
 from collections import deque
 class Solution:
     def minMutation(self, startGene: str, endGene: str, bank: list[str]) -> int:
@@ -733,7 +733,7 @@ print(Solution().minMutation("AAAAACCC","AACCCCCC",["AAAACCCC","AAACCCCC","AACCC
 ```
 ## [Find The Multiple](http://cs101.openjudge.cn/practice/01426/)
 目标数只由0与1构成，可看成一棵二叉树。从1开始，每次向后加0或1。只关心当前数模n的余数，因此每一步搜索只记录余数，当已经搜到余数了就可以跳过这个节点。
-```
+```python
 from collections import deque
 while(True):
     n=int(input())
@@ -762,7 +762,7 @@ while(True):
 ```
 ## [放苹果](http://cs101.openjudge.cn/practice/01664/)
 至少有一个盘子为空：dp[i][j-1].所有盘子都满：dp[i-j][j]
-```
+```python
 t=int(input())
 for i in range(t):
     m,n=map(int,input().split())
@@ -778,7 +778,7 @@ for i in range(t):
 ```
 ## [两座孤岛最短距离](http://cs101.openjudge.cn/pctbook/T20741/)
 dfs搜连通分量，对其中的每一个点同时bfs。
-```
+```python
 from collections import deque
 n=int(input())
 a=[]
@@ -826,7 +826,7 @@ while(q):
 # 2025.12.16
 ## [小游戏](http://cs101.openjudge.cn/practice/02802/)
 线段数目
-```
+```python
 from collections import deque
 qwq=0
 dx=[0,1,0,-1]
@@ -880,7 +880,7 @@ while(True):
 ```
 ## [01 矩阵](https://leetcode.cn/problems/01-matrix/description/)
 所有0加入起点同时开始bfs。搜到一就标记。这样整个表格每个数只会被遍历到一遍。
-```
+```python
 from collections import deque
 from copy import deepcopy
 class Solution:
@@ -913,7 +913,7 @@ print(Solution().updateMatrix([[0,0,0],[0,1,0],[1,1,1]]))
 ```
 ## [交换字符串中的元素](https://leetcode.cn/problems/smallest-string-with-swaps/description/)
 并查集。同一连通块中的字母可以任意交换顺序。
-```
+```python
 from collections import defaultdict
 class Solution:
     def smallestStringWithSwaps(self, s: str, pairs: list[list[int]]) -> str:
@@ -960,7 +960,7 @@ print(Solution().smallestStringWithSwaps("dcab",[[0,3],[1,2]]))
 ```
 ## [可以到达的最远建筑](https://leetcode.cn/problems/furthest-building-you-can-reach/description/)
 后悔算法。单调队列存高度落差。
-```
+```python
 import heapq
 class Solution:
     def furthestBuilding(self, heights: list[int], bricks: int, ladders: int) -> int:
@@ -991,7 +991,7 @@ print(Solution().furthestBuilding([4,2,7,6,9,14,12],5,1))
 # 2025.12.17
 ## [幸福的寒假生活](http://cs101.openjudge.cn/pctbook/T23568/)
 完全背包。
-```
+```python
 from collections import defaultdict
 def convert(s):
     x,y=map(int,s.split('.'))
@@ -1020,7 +1020,7 @@ print(dp[44])
 ```
 ## [体育游戏跳房子](http://cs101.openjudge.cn/pctbook/T27237/)
 vis可用桶或集合。这边vis包含的数过大，因此用集合。
-```
+```python
 from collections import deque
 while(True):
     n,m=map(int,input().split())
@@ -1050,7 +1050,7 @@ while(True):
     print(res[0])
 ```
 ## [蛇入迷宫](http://cs101.openjudge.cn/pctbook/M28973/)
-```
+```python
 from collections import deque
 n=int(input())
 a=[]
@@ -1094,7 +1094,7 @@ if(flag==0):
     print(-1)
 ```
 ## [温度调节](http://cs101.openjudge.cn/pctbook/M28914/)
-```
+```python
 t=int(input())
 for _ in range(t):
     l,r,x=map(int,input().split())
@@ -1128,7 +1128,7 @@ for _ in range(t):
 ## [买水果](http://cs101.openjudge.cn/pctbook/M28699/)
 [python中的字典排序--sorted()](https://blog.csdn.net/gymaisyl/article/details/83039279)
 [在 Python 中按值對 defaultdict 進行排序](https://tw.python-3.com/?p=25741)
-```
+```python
 n,m=map(int,input().split())
 a=list(map(int,input().split()))
 a.sort()
@@ -1151,7 +1151,7 @@ for i in range(len(f)):
 print(minm,maxm)
 ```
 ## [PASCAL代码](http://cs101.openjudge.cn/practice/28908/)
-```
+```python
 s=list(input().strip(';').split(';'))
 a,b,c=0,0,0
 for i in s:
@@ -1165,7 +1165,7 @@ for i in s:
 print(a,b,c)
 ```
 ## [奖学金](http://cs101.openjudge.cn/pctbook/E28681/)
-```
+```python
 n=int(input())
 a=[]
 for i in range(1,n+1):
@@ -1176,7 +1176,7 @@ for i in range(5):
     print(a[i][2],-a[i][0])
 ```
 ## [猜数](http://cs101.openjudge.cn/practice/29986/)
-```
+```python
 import random, time, sys
 ans = random.randint(0, 1000)
 query = lambda i: 0 if i == ans else (1 if i > ans else -1)
@@ -1220,7 +1220,7 @@ while(True):
         l = mid + 1
 ```
 hack交互库这一块 **from FuYn**
-```
+```python
 import random, time, sys
 ans = random.randint(0, 1000)
 query = lambda i: 0 if i == ans else (1 if i > ans else -1)
@@ -1266,7 +1266,7 @@ os.close(original_stdout_fd)
 cnt =0
 query(found)
 ```
-```
+```python
 import random, time, sys
 ans = random.randint(0, 1000)
 query = lambda i: 0 if i == ans else (1 if i > ans else -1)
@@ -1316,7 +1316,7 @@ if found ==6:
 ## [前缀单词](http://cs101.openjudge.cn/practice/27372/)
 先暴力求解单词两两之间是否为前缀。然后注意到把这些字符串排序后，对于任意一组j<i且他们不互为前缀，若对于任意一组k<j且他们不互为前缀，则k与i不互为前缀。
 因此需要对字符串排序。dp数组记录前i个单词中包括第i个的子集的数目，可以由j<i转移过来。
-```
+```python
 n=int(input())
 a=[[1 for _ in range(n)]for _ in range(n)]
 words=[]
@@ -1345,7 +1345,7 @@ print(sum(dp)+1)
 # 2025.12.18
 ## [月度开销](http://cs101.openjudge.cn/20251218mockexam/M04135/)
 二分答案
-```
+```python
 n,m=map(int,input().split())
 a=[]
 for i in range(n):
@@ -1372,7 +1372,7 @@ print(ans)
 ```
 ## [接雨水](http://cs101.openjudge.cn/20251218mockexam/T26977/)
 单调栈。建立一个单调递减的栈，当当前元素高于栈顶时就弹出，并计算当前元素与新栈顶之间的雨水，(i-left-1)*(min(a[left],a[i])-a[q])
-```
+```python
 from collections import deque
 n=int(input())
 a=list(map(int,input().split()))
@@ -1395,7 +1395,7 @@ print(ans)
 ## [二进制问题](http://cs101.openjudge.cn/20251218mockexam/T30212/)
 考虑直接计算。
 ![image](https://img2024.cnblogs.com/blog/2669443/202512/2669443-20251221152136947-382248645.png)
-```
+```python
 from math import comb
 n,k=map(int,input().split())
 a=bin(n)[2:]
@@ -1417,7 +1417,7 @@ print(ans)
 # 2025.12.21
 ## [P8764 [蓝桥杯 2021 国 BC] 二进制问题](https://www.luogu.com.cn/problem/P8764)
 数位dp.
-```
+```python
 n,k=map(int,input().split())
 dp=[[[0 for _ in range(2)]for _ in range(72)]for _ in range(72)]#首位为t，含有j个1的i位数个数
 dp[1][1][1]=1
@@ -1450,7 +1450,7 @@ print(ans)
 # 2025.12.22
 ## [愉悦的假期](http://cs101.openjudge.cn/practice/30339/)
 0-1BFS。从每个岛向全图搜索，记录每个点到三个岛的最短距离。当当前路径大小更小时更新并加入队列。
-```
+```python
 from collections import deque
 n,m=map(int,input().split())
 dx=[0,1,0,-1]
@@ -1515,7 +1515,7 @@ for i in range(n):
 print(ans)
 ```
 ## [善良的助教](http://cs101.openjudge.cn/practice/30370/)
-```
+```python
 n=int(input())
 a=list(map(int,input().split()))
 ans=0
@@ -1530,7 +1530,7 @@ for i in range(1,n):
 print(ans)
 ```
 ## [核电站](http://cs101.openjudge.cn/pctbook/T09267/)
-```
+```python
 n,m=map(int,input().split())
 dp=[0]*(n+1)
 dp[0]=1
@@ -1546,7 +1546,7 @@ print(dp[n])
 ```
 ## [宠物小精灵之收服](http://cs101.openjudge.cn/practice/04102/)
 二位费用01背包。
-```
+```python
 n,m,k=map(int,input().split())
 w=[]
 h=[]
@@ -1579,7 +1579,7 @@ print(ans,res)
 ```
 ## [小蓝和小桥](http://cs101.openjudge.cn/practice/29853/)
 构建差值矩阵，先手删列后手删行。因此结果一定是每一列最大值中的最小值。
-```
+```python
 n=int(input())
 a=list(map(int,input().split()))
 b=list(map(int,input().split()))
@@ -1592,7 +1592,7 @@ print(ans)
 ```
 ## [Arena of Greed](https://codeforces.com/problemset/problem/1425/A)
 让对手+1>让自己加一半
-```
+```python
 def change(x):
     if(x==1):
         return 0
@@ -1619,7 +1619,7 @@ for _ in range(t):
 ```
 ## [独特蘑菇](https://sunnywhy.com/problem/10065)
 滑动窗口。r一个个往右加，l往右缩。某一段合法区间对答案的贡献是l-r+1.
-```
+```python
 from collections import defaultdict
 n,k=map(int,input().split())
 c=list(map(int,input().split()))
@@ -1640,7 +1640,7 @@ for r in range(n):
 print(ans)
 ```
 ## [滑动窗口最大值](https://leetcode.cn/problems/sliding-window-maximum/description/)
-```
+```python
 from collections import deque
 class Solution:
     def maxSlidingWindow(self, nums: list[int], k: int) -> list[int]:
@@ -1664,7 +1664,7 @@ print(Solution().maxSlidingWindow([1,3,-1,-3,5,3,6,7],3))
 ```
 ## [双生](http://cs101.openjudge.cn/practice/30044/)
 筛法。
-```
+```python
 from math import sqrt
 p=[True]*65537
 def is_prime(x):
@@ -1692,7 +1692,7 @@ print(x,y)
 ```
 ## [不降数组数量](http://cs101.openjudge.cn/practice/30041/)
 dp滚动数组+bisect+前缀和。
-```
+```python
 from bisect import bisect_right
 n,m=map(int,input().split())
 a=[]
@@ -1714,7 +1714,7 @@ for i in range(1,n):
 print(sum(dp))
 ```
 ## [坐地铁](http://cs101.openjudge.cn/practice/30022/)
-```
+```python
 from collections import deque
 n,k,s=map(int,input().split())
 a=[]
@@ -1757,7 +1757,7 @@ print(ans)
 ```
 ## [化学分子式](https://www.luogu.com.cn/problem/P2382)
 记录当前在栈的哪一层。碰到左括号层数加一，碰到右括号则将当前层数值乘以倍数并加入下一层，清空这一层。
-```
+```python
 from collections import defaultdict
 chem=defaultdict(int)
 while(True):
@@ -1821,7 +1821,7 @@ while(True):
 # 2025.12.23
 ## [候选人追踪](http://cs101.openjudge.cn/pctbook/T27384/)
 双堆+懒删除。开两个堆分别记录目标中的最小值和非目标中的最大值，等pop的时候判断是否为旧数据再删除。注意特判k=m的情况，此时大根堆应始终返回-1而不是0.
-```
+```python
 import heapq
 n,k=map(int,input().split())
 qaq=list(map(int,input().split()))
