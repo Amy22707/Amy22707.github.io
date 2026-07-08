@@ -54,7 +54,7 @@ const active = (href: string) =>
             ))}
           </div>
           <button class="theme-toggle" type="button" aria-label="Switch color theme" aria-pressed="false">
-            <span class="theme-toggle-icon" aria-hidden="true">D</span>
+            <span class="theme-toggle-icon" aria-hidden="true"></span>
             <span class="theme-toggle-text">Theme</span>
           </button>
         </div>
@@ -71,7 +71,6 @@ const active = (href: string) =>
       (() => {
         const root = document.documentElement;
         const button = document.querySelector(".theme-toggle");
-        const icon = document.querySelector(".theme-toggle-icon");
         const label = document.querySelector(".theme-toggle-text");
         const media = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -84,7 +83,6 @@ const active = (href: string) =>
         const paint = () => {
           const theme = getTheme();
           button?.setAttribute("aria-pressed", String(theme === "dark"));
-          if (icon) icon.textContent = theme === "dark" ? "L" : "D";
           if (label) label.textContent = theme === "dark" ? "Light" : "Dark";
         };
 

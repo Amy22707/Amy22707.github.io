@@ -8,23 +8,34 @@ tags:
 ---
 # 2025.8.22
 ## [简单密码](http://cs101.openjudge.cn/pctbook/E02767/)
+
 特意挑了AC率100%而且看起来就很简单的题目。结果因为不熟悉语法+括号匹配调了一会。好久没有见到这个单词了qwq
 ![image](https://img2024.cnblogs.com/blog/2669443/202508/2669443-20250822230352128-934587643.png)
 
 * Reference
 [Python 条件语句](https://www.runoob.com/python/python-if-statement.html)
+
 [ASCII 表](https://www.runoob.com/w3cnote/ascii.html)
+
 [VSCode运行python报错SyntaxError: invalid syntax](https://blog.csdn.net/weixin_44721355/article/details/137674442)
+
 [python 代码如何批量注释和取消](https://blog.csdn.net/weixin_47542175/article/details/113969084)
+
 [Python range() 函数用法](https://www.runoob.com/python/python-func-range.html)
+
 [Python ASCII码与字符相互转换](https://www.runoob.com/python3/python3-ascii-character.html)
+
 [Python2 与 Python3 print 不换行](https://www.runoob.com/w3cnote/python-print-without-newline.html)
+
 [Python占位符%详解](https://zhuanlan.zhihu.com/p/670586796)
 
 * 注意点
 1.括号匹配
+
 2.ord()与chr()函数
+
 3.ASCII码：A65 a97
+
 4.print()的end=
 
 * 代码
@@ -117,11 +128,14 @@ print(a.swapcase())
 # 2025.8.26
 ## [装箱问题](http://cs101.openjudge.cn/pctbook/M01017/)
 刚刚发现题目分为easy,medium和tough三个level……
+
 调了半天，最后红温了决定这一次提交还是WA就去睡觉，然后终于AC了……
+
 ![image](https://img2024.cnblogs.com/blog/2669443/202508/2669443-20250826234236287-1766660501.png)
 
 * 注意点
 1.不要对原始数据进行操作，特别是你后面还要用到它的时候
+
 2.注意if嵌套或平行的位置
 
 * 代码
