@@ -20,6 +20,13 @@ const friendLinks = [
     avatar: "https://img.locallych.top/images/{year}/{month}/avatar.webp",
   },
 ];
+
+const myFriendLink = `{
+  title: "Amy_xue",
+  description: "The best way to predict the future is to invent it.",
+  href: "https://amy22707.github.io/",
+  avatar: "https://amy22707.github.io/avatar.jpg",
+}`;
 ---
 
 <BaseLayout title="Links" description="Personal links and friends across the web">
@@ -61,6 +68,21 @@ const friendLinks = [
     </div>
     <p class="friend-note">Interested in exchanging links? Feel free to reach out by email.</p>
   </section>
+
+  <section class="link-section friend-exchange-section">
+    <div class="friend-exchange-card">
+      <div class="friend-exchange-preview">
+        <img class="friend-avatar" src="/avatar.jpg" alt="Amy_xue avatar" loading="lazy" />
+        <div>
+          <p class="eyebrow">FRIEND LINK</p>
+          <h2>Add me to your links</h2>
+          <p>You can copy this snippet directly if you would like to exchange links.</p>
+        </div>
+      </div>
+      <pre class="friend-snippet"><code>{myFriendLink}</code></pre>
+      <button class="copy-friend-link" type="button" data-snippet={myFriendLink}>Copy snippet</button>
+    </div>
+  </section>
 </BaseLayout>
 
 <script>
@@ -71,6 +93,16 @@ const friendLinks = [
       await navigator.clipboard.writeText(email);
       button.textContent = "Copied";
       window.setTimeout(() => { button.textContent = "Copy"; }, 1600);
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>(".copy-friend-link").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const snippet = button.dataset.snippet;
+      if (!snippet) return;
+      await navigator.clipboard.writeText(snippet);
+      button.textContent = "Copied";
+      window.setTimeout(() => { button.textContent = "Copy snippet"; }, 1600);
     });
   });
 </script>
