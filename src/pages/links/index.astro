@@ -86,13 +86,38 @@ const myFriendLink = `{
 </BaseLayout>
 
 <script>
+  const copyText = async (text: string) => {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    textarea.remove();
+  };
+
+  const showCopyStatus = (button: HTMLButtonElement, text: string, resetText: string) => {
+    button.textContent = text;
+    window.setTimeout(() => { button.textContent = resetText; }, 1600);
+  };
+
   document.querySelectorAll<HTMLButtonElement>(".copy-email").forEach((button) => {
     button.addEventListener("click", async () => {
       const email = button.dataset.email;
       if (!email) return;
-      await navigator.clipboard.writeText(email);
-      button.textContent = "Copied";
-      window.setTimeout(() => { button.textContent = "Copy"; }, 1600);
+      try {
+        await copyText(email);
+        showCopyStatus(button, "Copied", "Copy");
+      } catch {
+        showCopyStatus(button, "Copy failed", "Copy");
+      }
     });
   });
 
@@ -100,9 +125,12 @@ const myFriendLink = `{
     button.addEventListener("click", async () => {
       const snippet = button.dataset.snippet;
       if (!snippet) return;
-      await navigator.clipboard.writeText(snippet);
-      button.textContent = "Copied";
-      window.setTimeout(() => { button.textContent = "Copy snippet"; }, 1600);
+      try {
+        await copyText(snippet);
+        showCopyStatus(button, "Copied", "Copy snippet");
+      } catch {
+        showCopyStatus(button, "Copy failed", "Copy snippet");
+      }
     });
   });
 </script>

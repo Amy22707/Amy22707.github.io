@@ -14,18 +14,31 @@ const projects = (await getCollection("projects"))
   </section>
 
   <section class="project-grid">
-    {projects.map((project) => (
-      <a class="project-card" href={project.data.repository} target={project.data.repository ? "_blank" : undefined} rel={project.data.repository ? "noreferrer" : undefined}>
-        <div class="project-topline">
-          <span>{project.data.featured ? "FEATURED" : project.data.kind === "notes" ? "NOTES" : "PROJECT"}</span>
-          <span class="arrow">{project.data.repository ? "↗" : "—"}</span>
-        </div>
-        <h2>{project.data.title}</h2>
-        <p>{project.data.description}</p>
-        <div class="tag-row">
-          {project.data.technologies.map((technology) => <span>{technology}</span>)}
-        </div>
-      </a>
-    ))}
+    {projects.map((project) => {
+      const href = project.data.repository ?? project.data.demo;
+      const cardContent = (
+        <>
+          <div class="project-topline">
+            <span>{project.data.featured ? "FEATURED" : project.data.kind === "notes" ? "NOTES" : "PROJECT"}</span>
+            <span class="arrow">{href ? "↗" : "—"}</span>
+          </div>
+          <h2>{project.data.title}</h2>
+          <p>{project.data.description}</p>
+          <div class="tag-row">
+            {project.data.technologies.map((technology) => <span>{technology}</span>)}
+          </div>
+        </>
+      );
+
+      return href ? (
+        <a class="project-card" href={href} target="_blank" rel="noreferrer">
+          {cardContent}
+        </a>
+      ) : (
+        <article class="project-card">
+          {cardContent}
+        </article>
+      );
+    })}
   </section>
 </BaseLayout>
