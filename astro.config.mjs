@@ -7,5 +7,10 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
   site: "https://amy22707.github.io/",
+  markdown: {
+    shikiConfig: {
+      theme: "github-light"
+    }
+  },
   integrations: [mdx()]
 });

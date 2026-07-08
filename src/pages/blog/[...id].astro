@@ -9,26 +9,42 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+const tocHeadings = headings.filter((heading) => heading.depth >= 1 && heading.depth <= 4);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <article class="article-shell">
-    <a class="back-link" href="/blog/">← 返回博客</a>
-    <header class="article-header">
-      <div class="post-meta">
-        <time datetime={post.data.publishedAt.toISOString()}>
-          {post.data.publishedAt.toLocaleDateString("zh-CN", {
-            year: "numeric", month: "long", day: "numeric"
-          })}
-        </time>
-        <span>·</span>
-        <span>{post.data.tags.join(" / ")}</span>
-      </div>
-      <h1>{post.data.title}</h1>
-      <p>{post.data.description}</p>
-    </header>
-    <div class="prose"><Content /></div>
-    <GiscusComments />
-  </article>
+  <div class:list={["article-layout", tocHeadings.length === 0 && "without-toc"]}>
+    {tocHeadings.length > 0 && (
+      <aside class="article-toc" aria-label="Table of contents">
+        <p>On this page</p>
+        <ol>
+          {tocHeadings.map((heading) => (
+            <li class={`toc-depth-${heading.depth}`}>
+              <a href={`#${heading.slug}`}>{heading.text}</a>
+            </li>
+          ))}
+        </ol>
+      </aside>
+    )}
+
+    <article class="article-shell">
+      <a class="back-link" href="/blog/">← Back to Blog</a>
+      <header class="article-header">
+        <div class="post-meta">
+          <time datetime={post.data.publishedAt.toISOString()}>
+            {post.data.publishedAt.toLocaleDateString("en-US", {
+              year: "numeric", month: "long", day: "numeric"
+            })}
+          </time>
+          <span>·</span>
+          <span>{post.data.tags.join(" / ")}</span>
+        </div>
+        <h1>{post.data.title}</h1>
+        <p>{post.data.description}</p>
+      </header>
+      <div class="prose"><Content /></div>
+      <GiscusComments />
+    </article>
+  </div>
 </BaseLayout>

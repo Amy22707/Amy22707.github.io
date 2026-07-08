@@ -1929,7 +1929,7 @@ int main()
 ```
 # 2026.3.21
 ## [子字符串的最优划分](https://leetcode.cn/problems/optimal-partition-of-string/description/)
-```python3
+```python
 class Solution:
     def partitionString(self, s: str) -> int:
         ans=1
@@ -2032,7 +2032,7 @@ int main(){
 ```
 # 2026.3.23
 ## [统计 X 和 Y 频数相等的子矩阵数量](https://leetcode.cn/problems/count-submatrices-with-equal-frequency-of-x-and-y/description/)
-```python3
+```python
 class Solution:
     def numberOfSubmatrices(self, grid: list[list[str]]) -> int:
         m=len(grid)
