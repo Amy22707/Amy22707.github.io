@@ -182,13 +182,25 @@ a { color: inherit; text-decoration: none; }
 .skill-cloud span { padding: 8px 11px; border: 1px solid var(--line); border-radius: 9px; color: var(--text); background: var(--surface-solid); font-family: ui-monospace, monospace; font-size: 11px; font-weight: 650; }
 
 .beyond-section { margin-top: 110px; margin-bottom: 0; }
-.beyond-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.beyond-grid { display: grid; grid-template-columns: minmax(240px, .8fr) minmax(0, 1.7fr); grid-template-areas: "interest campus" "writing campus"; gap: 16px; }
 .beyond-card { min-height: 235px; padding: 27px; border: 1px solid var(--line); border-radius: 21px; background: linear-gradient(145deg, rgba(255,255,255,.86), rgba(241,243,255,.62)); }
+.beyond-card:nth-child(1) { grid-area: interest; }
+.beyond-card-wide { grid-area: campus; }
+.beyond-card:nth-child(3) { grid-area: writing; }
 .beyond-card > span { color: var(--accent); font-family: ui-monospace, monospace; font-size: 11px; }
 .beyond-card h3 { margin: 55px 0 12px; font-size: 20px; letter-spacing: -.03em; }
+.beyond-card-wide h3 { margin-top: 34px; }
 .beyond-card p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
 .interest-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .interest-list li { padding: 7px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--accent-dark); background: var(--accent-soft); font-size: 11px; font-weight: 650; line-height: 1.3; }
+.beyond-card .campus-intro { max-width: 600px; margin-bottom: 20px; }
+.campus-experience-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.campus-experience-list li { display: grid; grid-template-columns: 138px minmax(0, 1fr); gap: 18px; align-items: center; padding: 15px 17px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface-solid); }
+.campus-experience-list time { color: var(--accent-dark); font-family: ui-monospace, monospace; font-size: 10px; font-weight: 750; white-space: nowrap; }
+.campus-experience-list div { min-width: 0; }
+.campus-experience-list strong, .campus-experience-list span { display: block; }
+.campus-experience-list strong { color: var(--text); font-size: 13px; line-height: 1.45; }
+.campus-experience-list span { margin-top: 4px; color: var(--muted); font-size: 11px; line-height: 1.5; }
 
 .publication-list { border-top: 1px solid var(--line); }
 .publication-card { position: relative; display: grid; grid-template-columns: 48px 1fr 28px; gap: 18px; padding: 28px 8px; border-bottom: 1px solid var(--line); }
@@ -466,6 +478,8 @@ a { color: inherit; text-decoration: none; }
   .focus-heading, .focus-item { min-height: 72px; border-right: 0; border-bottom: 1px solid var(--line); }
   .focus-item:last-child { border-bottom: 0; }
   .featured-work-grid, .home-split, .skill-groups, .beyond-grid, .awards-grid { grid-template-columns: 1fr; }
+  .beyond-grid { grid-template-areas: "interest" "campus" "writing"; }
+  .campus-experience-list li { grid-template-columns: 1fr; gap: 7px; }
   .home-split { gap: 70px; }
   .featured-work { min-height: 280px; }
   .section-note { display: none; }

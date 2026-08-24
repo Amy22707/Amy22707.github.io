@@ -186,7 +186,7 @@ print(res)
 ```
 赛后数据已加强，需要使用`sys.stdin.read()`以优化IO。
 AI优化版：
-```plaintext
+```python
 import sys
 import bisect
 

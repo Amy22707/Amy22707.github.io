@@ -20,7 +20,7 @@ const focuses = [
 
 const skillGroups = [
   { title: "Languages", skills: ["C++", "Python", "TypeScript"] },
-  { title: "AI & Data", skills: ["PyTorch", "Machine Learning", "Reinforcement Learning", "NumPy"] },
+  { title: "AI & Data", skills: ["PyTorch", "Machine Learning", "Supervised Learning", "NumPy"] },
   { title: "Tools", skills: ["Git", "Linux", "Astro", "LaTeX"] },
 ];
 
@@ -28,19 +28,34 @@ const beyondCode = [
   {
     number: "01",
     title: "Interests & Hobbies",
+    layout: "compact",
     items: [
       "Classical & Contemporary Chinese Poetry",
-      "Esotericism (Tarot & Astrology)",
+      "Esotericism",
     ],
   },
   {
     number: "02",
     title: "Campus & Community",
-    description: "I value student work, teamwork, and the quiet craft of making a community more welcoming and effective.",
+    layout: "wide",
+    description: "Student leadership and community work that have shaped my life beyond the classroom.",
+    experiences: [
+      {
+        period: "2025.9-now",
+        department: "Academic and Innovation Department, Peking University Youth League Committee",
+        role: "Staff member",
+      },
+      {
+        period: "2025.9-2026.6",
+        department: "Culture and Sports Department of the Student Union, School of Life Sciences, Peking University",
+        role: "Staff member",
+      },
+    ],
   },
   {
     number: "03",
     title: "Writing & Reflection",
+    layout: "compact",
     description: "Beyond technical notes, I write about campus life, personal growth, and ideas that are worth remembering.",
   },
 ];
@@ -79,10 +94,10 @@ const educationAndExperience = [
 
 const awards = [
   {
-    year: "20XX",
-    title: "Award or Honor",
-    issuer: "Issuing Organization",
-    description: "Add the level, ranking, or a short note about this achievement.",
+    year: "2026",
+    title: "Excellent Award in IJCAI 2026 Mahjong AI Competition",
+    issuer: "School of Computer Science, Peking University",
+    description: "With presentation at IJCAI 2026",
   },
 ];
 ---
@@ -302,10 +317,25 @@ const awards = [
     </header>
     <div class="beyond-grid">
       {beyondCode.map((item) => (
-        <article class="beyond-card">
+        <article class:list={["beyond-card", `beyond-card-${item.layout}`]}>
           <span>{item.number}</span>
           <h3>{item.title}</h3>
-          {"items" in item ? (
+          {"experiences" in item ? (
+            <>
+              <p class="campus-intro">{item.description}</p>
+              <ol class="campus-experience-list">
+                {item.experiences.map((experience) => (
+                  <li>
+                    <time>{experience.period}</time>
+                    <div>
+                      <strong>{experience.department}</strong>
+                      <span>{experience.role}</span>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </>
+          ) : "items" in item ? (
             <ul class="interest-list">
               {item.items.map((interest) => <li>{interest}</li>)}
             </ul>
