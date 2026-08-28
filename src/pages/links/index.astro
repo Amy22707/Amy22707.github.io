@@ -48,13 +48,13 @@ const myFriendLink = `{
     <div class="link-grid">
       {personalLinks.map((link) => link.type === "copy" ? (
         <div class="link-card copy-card">
-          <span class="link-icon">{link.icon}</span>
+          <span class:list={["link-icon", { "link-icon-compact": link.icon === "BLOG" }]}>{link.icon}</span>
           <div><h3>{link.title}</h3><p class="copy-value">{link.description}</p></div>
           <button class="copy-contact" type="button" data-copy-value={link.description} aria-label={`Copy ${link.title}`}>Copy</button>
         </div>
       ) : (
         <a class="link-card" href={link.href} target="_blank" rel="noreferrer">
-          <span class="link-icon">{link.icon}</span>
+          <span class:list={["link-icon", { "link-icon-compact": link.icon === "BLOG" }]}>{link.icon}</span>
           <div><h3>{link.title}</h3><p>{link.description}</p></div>
           <span class="arrow">↗</span>
         </a>
