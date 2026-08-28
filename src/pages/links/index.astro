@@ -4,7 +4,9 @@ import GiscusComments from "../../components/GiscusComments.astro";
 
 const personalLinks = [
   { title: "GitHub", description: "Code, projects, and open-source work", href: "https://github.com/Amy22707", icon: "GH", type: "link" },
-  { title: "Email", description: "zhiyaoxue25@stu.pku.edu.cn", icon: "@", type: "email" },
+  { title: "Xiaohongshu", description: "Campus life, interests, and everyday moments", href: "https://www.xiaohongshu.com/user/profile/62f1d14c000000001f007ad6", icon: "RED", type: "link" },
+  { title: "Email", description: "zhiyaoxue25@stu.pku.edu.cn", icon: "@", type: "copy" },
+  { title: "WeChat", description: "_Amy_xue_", icon: "WX", type: "copy" },
 ];
 
 const friendLinks = [
@@ -40,11 +42,11 @@ const myFriendLink = `{
   <section class="link-section">
     <h2>Find Me</h2>
     <div class="link-grid">
-      {personalLinks.map((link) => link.type === "email" ? (
-        <div class="link-card email-card">
+      {personalLinks.map((link) => link.type === "copy" ? (
+        <div class="link-card copy-card">
           <span class="link-icon">{link.icon}</span>
-          <div><h3>{link.title}</h3><p class="email-address">{link.description}</p></div>
-          <button class="copy-email" type="button" data-email={link.description} aria-label="Copy email address">Copy</button>
+          <div><h3>{link.title}</h3><p class="copy-value">{link.description}</p></div>
+          <button class="copy-contact" type="button" data-copy-value={link.description} aria-label={`Copy ${link.title}`}>Copy</button>
         </div>
       ) : (
         <a class="link-card" href={link.href} target="_blank" rel="noreferrer">
@@ -133,12 +135,12 @@ Note:</code></pre>
     window.setTimeout(() => { button.textContent = resetText; }, 1600);
   };
 
-  document.querySelectorAll<HTMLButtonElement>(".copy-email").forEach((button) => {
+  document.querySelectorAll<HTMLButtonElement>(".copy-contact").forEach((button) => {
     button.addEventListener("click", async () => {
-      const email = button.dataset.email;
-      if (!email) return;
+      const value = button.dataset.copyValue;
+      if (!value) return;
       try {
-        await copyText(email);
+        await copyText(value);
         showCopyStatus(button, "Copied", "Copy");
       } catch {
         showCopyStatus(button, "Copy failed", "Copy");
