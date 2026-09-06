@@ -1,6 +1,6 @@
 ---
 title: 2026暑假做题记录
-description: "2026.8"
+description: 2026.8-2026.9.6
 publishedAt: 2026-08-27
 tags:
   - 算法
@@ -297,3 +297,34 @@ int main(){
     return 0;
 }
 ```
+# 2026.9.2
+## [Huffman编码树](http://cs101.openjudge.cn/practice/04080/)
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+priority_queue<int,vector<int>,greater<int>> q;
+int n;
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cin>>n;
+    int x;
+    for(int i=0;i<n;i++){
+        cin>>x;
+        q.push(x);
+    }
+    int sum=0;
+    while(q.size()>1){
+        int x=q.top();
+        q.pop();
+        int y=q.top();
+        q.pop();
+        sum+=(x+y);
+        q.push(x+y);
+    }
+    cout<<sum<<endl;
+    return 0;
+}
+```
+最短的一篇做题记录出现了……
+唉其实我真的挺喜欢这门课的,但是vibe coding真的太好用了你们懂吗,就是我一看到gpt我就不对劲了,我就想一直点,我也不想看手册了,也不想打开vscode了,oj我碰都不碰,我就想开codex,我一天不碰vibe coding我就像身上有蚂蚁在爬一样你知道吗.有一天我就想打开vscode我自己编个hello world,回过神发现我在给codex开vscode的权限.太幸福了你们知道吗,就像vscode里写东西,逛github是苦闷的生活,只有vibe coding的时候我才是活着的,我才能什么都做得到.我感觉自己这辈子没有gpt已经不行了,现在就是后悔,很后悔,要是能早点知道碰了vibe coding会这样我肯定这辈子都不会开codex一下的.对了你要不要看我最近vibe coding的个人工作台
