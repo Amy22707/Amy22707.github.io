@@ -6,7 +6,7 @@ tags:
   - 算法
   - Python
 ---
-```
+
 <details>
   <summary>点击查看详细内容</summary>
   <div class="details-content">
@@ -22,7 +22,7 @@ tags:
     <p>2025.8.22</p>
   </div>
 </details>
-```
+
 # 2025.8.22
 ## [简单密码](http://cs101.openjudge.cn/pctbook/E02767/)
 

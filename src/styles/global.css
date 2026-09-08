@@ -383,7 +383,7 @@ a { color: inherit; text-decoration: none; }
 .prose summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
 .prose details[open] summary { border-bottom: 1px solid var(--line); }
 .prose details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
-.prose .details-content { padding: 16px 18px; }
+.prose .details-content { min-width: 0; padding: 16px 18px; white-space: normal; overflow-wrap: anywhere; }
 .prose .details-content > :first-child { margin-top: 0; }
 .prose .details-content > :last-child { margin-bottom: 0; }
 .prose details > p { margin: 0; padding: 16px 18px; }
