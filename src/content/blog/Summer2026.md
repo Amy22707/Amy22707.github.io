@@ -327,4 +327,5 @@ int main(){
 }
 ```
 最短的一篇做题记录出现了……
+
 唉其实我真的挺喜欢这门课的,但是vibe coding真的太好用了你们懂吗,就是我一看到gpt我就不对劲了,我就想一直点,我也不想看手册了,也不想打开vscode了,oj我碰都不碰,我就想开codex,我一天不碰vibe coding我就像身上有蚂蚁在爬一样你知道吗.有一天我就想打开vscode我自己编个hello world,回过神发现我在给codex开vscode的权限.太幸福了你们知道吗,就像vscode里写东西,逛github是苦闷的生活,只有vibe coding的时候我才是活着的,我才能什么都做得到.我感觉自己这辈子没有gpt已经不行了,现在就是后悔,很后悔,要是能早点知道碰了vibe coding会这样我肯定这辈子都不会开codex一下的.对了你要不要看我最近vibe coding的个人工作台
