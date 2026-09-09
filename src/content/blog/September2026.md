@@ -207,3 +207,181 @@ int main(){
     return 0;
 }
 ```
+# 2026.9.9
+## [颠倒二进制位](https://leetcode.cn/problems/reverse-bits/)
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    int reverseBits(int n) {
+        int ans=0;
+        for(int i=0;i<32;i++){
+            ans<<=1;
+            ans|=(n&1);
+            n>>=1;
+        }
+        return ans;
+    }
+};
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    Solution sol;
+    cout << sol.reverseBits(43261596)<<endl;
+    return 0;
+}
+
+```
+## [根据数字二进制下 1 的数目排序](https://leetcode.cn/problems/sort-integers-by-the-number-of-1-bits/)
+已放弃思考使用库函数。
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    static bool cmp(int a,int b){
+        if(__builtin_popcount(a)==__builtin_popcount(b)) return a<b;
+        else return __builtin_popcount(a)<__builtin_popcount(b);
+    }
+    vector<int> sortByBits(vector<int>& arr) {
+        sort(arr.begin(),arr.end(),Solution::cmp);
+        return arr;
+    }
+};
+```
+## [兔子与樱花](http://cs101.openjudge.cn/practice/05443/)
+依旧复健最短路。喜提本班第一个提交。
+Dijkstra：单源最短路，贪心(堆优化)+松弛。记录前一个节点以及离它的距离。
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int p,q,r;
+string name[30];
+map<string,int> id;
+vector<vector<pair<int,int>>> a;
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cin>>p;
+    a.resize(p);
+    for(int i=0;i<p;i++){
+        cin>>name[i];
+        id[name[i]]=i;
+    }
+    cin>>q;
+    for(int i=0;i<q;i++){
+        string x,y;
+        int w;
+        cin>>x>>y>>w;
+        a[id[x]].push_back({id[y],w});
+        a[id[y]].push_back({id[x],w});
+    }
+    cin>>r;
+    for(int i=0;i<r;i++){
+        string x,y;
+        cin>>x>>y;
+        int start=id[x],end=id[y];
+        vector<int> dist(p,INT_MAX);
+        vector<int> pre(p,-1);
+        vector<int> predist(p,0);
+        vector<bool> vis(p,false);
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        dist[start]=0;
+        pq.push({0,start});
+        while(!pq.empty()){
+            auto [d,u]=pq.top();
+            pq.pop();
+            if(vis[u]) continue;
+            vis[u]=true;
+            for(auto [x,w]:a[u]){
+                if(dist[x]>dist[u]+w){
+                    dist[x]=dist[u]+w;
+                    pq.push({dist[x],x});
+                    pre[x]=u;
+                    predist[x]=w;
+                }
+            }
+        }
+        vector<int> path;
+        for(int j=end;j!=-1;j=pre[j]){
+            path.push_back(j);
+        }
+        reverse(path.begin(),path.end());
+        cout<<name[path[0]];
+        for(int i=1;i<path.size();i++){
+            int v=path[i];
+            cout<<"->("<<predist[v]<<")->"<<name[v];
+        }
+        cout<<endl;
+    }
+    return 0;
+}
+```
+
+Floyd:全图最短路，邻接矩阵+更新距离。同时更新某点到终点的下一步。
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int p,q,r;
+string name[30];
+map<string,int> id;
+int a[30][30],nxt[30][30];
+const int INF=1e9;
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cin>>p;
+    for(int i=0;i<p;i++){
+        cin>>name[i];
+        id[name[i]]=i;
+    }
+    for(int i=0;i<p;i++){
+        for(int j=0;j<p;j++){
+            a[i][j]=INF;
+        }
+    }
+    for(int i=0;i<p;i++){
+        a[i][i]=0;
+        nxt[i][i]=i;
+    }
+    cin>>q;
+    for(int i=0;i<q;i++){
+        string x,y;
+        int w;
+        cin>>x>>y>>w;
+        int u=id[x],v=id[y];
+        a[u][v]=min(a[u][v],w);
+        a[v][u]=min(a[v][u],w);
+        nxt[u][v]=v;//从i到j的下一步
+        nxt[v][u]=u;
+    }
+
+    for(int k=0;k<p;k++){
+        for(int i=0;i<p;i++){
+            for(int j=0;j<p;j++){
+                if(a[i][k]==INF||a[k][j]==INF) continue;
+                if(a[i][k]+a[k][j]<a[i][j]){
+                    a[i][j]=a[i][k]+a[k][j];
+                    nxt[i][j]=nxt[i][k];
+                }
+            }
+        }
+    }
+    cin>>r;
+    for(int i=0;i<r;i++){
+        string x,y;
+        cin>>x>>y;
+        int start=id[x],end=id[y];
+        cout<<x;
+        int cur=start;
+        while(cur!=end){
+            int z=nxt[cur][end];
+            cout<<"->("<<a[cur][z]<<")->"<<name[z];
+            cur=z;
+        }
+        cout<<endl;
+    }
+    return 0;
+}
+```
