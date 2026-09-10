@@ -8,10 +8,10 @@ tags:
   - 数据结构
 ---
 <details>
-  <summary>点击查看详细内容</summary>
-  <div class="details-content">
-    <p>第三个学期上yhf的课，依旧将复健作为一个学期的开始。自入校以来的几乎每一天，每日选做都始终在Chrome的待办区，大部分时候打开电脑也都有一个或好几个尚未完成的题目窗口。有时思考缓慢，有时急于求成，也不总是在此取得满意的成绩，但总会痴迷于学习一个新的算法，每一次AC弹出时都万分欣喜。总觉得作为一个ai专业的学生我还不够合格，就算vibe其他工作也要古法手搓每一道算法题，也更偏爱算法课程——上了大学依旧像一个oier。当然，作为一个oier，曾经的我更是不够合格。不过以前的事情倒也不再重要，做点虽然很累，但是有用，并且开心的事情，也挺好的。于是享受这一刻——独自一人，随时随地打开电脑，就是一个完整的世界。</p>
-  </div>
+<summary>点击查看详细内容</summary>
+
+第三个学期上yhf的课，依旧将复健作为一个学期的开始。自入校以来的几乎每一天，每日选做都始终在Chrome的待办区，大部分时候打开电脑也都有一个或好几个尚未完成的题目窗口。有时思考缓慢，有时急于求成，也不总是在此取得满意的成绩，但总会痴迷于学习一个新的算法，每一次AC弹出时都万分欣喜。总觉得作为一个ai专业的学生我还不够合格，就算vibe其他工作也要古法手搓每一道算法题，也更偏爱算法课程——上了大学依旧像一个oier。当然，作为一个oier，曾经的我更是不够合格。不过以前的事情倒也不再重要，做点虽然很累，但是有用，并且开心的事情，也挺好的。于是享受这一刻——独自一人，随时随地打开电脑，就是一个完整的世界。
+
 </details>
 
 # 2026.9.8
@@ -382,6 +382,35 @@ int main(){
         }
         cout<<endl;
     }
+    return 0;
+}
+```
+# 2026.9.10
+## [完美的爱](http://cs101.openjudge.cn/practice/27141/)
+哈希表的妙用。
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int a[100005];
+int pre[100005];
+map<int,vector<int>> s;
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int n;
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        cin>>a[i];
+        a[i]-=520;
+    }
+    int ans=0;
+    s[0].push_back(0);
+    for(int i=1;i<=n;i++){
+        pre[i]=pre[i-1]+a[i];
+        if(!s[pre[i]].empty()) ans=max(ans,i-s[pre[i]].front());
+        s[pre[i]].push_back(i);
+    }
+    cout<<ans*520<<endl;
     return 0;
 }
 ```

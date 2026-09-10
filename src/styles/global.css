@@ -386,7 +386,10 @@ a { color: inherit; text-decoration: none; }
 .prose .details-content { min-width: 0; padding: 16px 18px; white-space: normal; overflow-wrap: anywhere; }
 .prose .details-content > :first-child { margin-top: 0; }
 .prose .details-content > :last-child { margin-bottom: 0; }
-.prose details > p { margin: 0; padding: 16px 18px; }
+.prose details > :not(summary):not(.details-content) { margin-right: 18px; margin-left: 18px; }
+.prose details > :nth-child(2):not(.details-content) { margin-top: 16px; }
+.prose details > :last-child:not(summary):not(.details-content) { margin-bottom: 16px; }
+.prose details > img { max-width: calc(100% - 36px); }
 .prose hr { margin: 2.4em 0; border: 0; border-top: 1px solid var(--line); }
 .comments-section { margin-top: 72px; padding-top: 38px; border-top: 1px solid var(--line); }
 .comments-heading { margin-bottom: 28px; }
