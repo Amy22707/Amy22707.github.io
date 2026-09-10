@@ -5,6 +5,7 @@ kind: notes
 technologies:
   - Course Notes
   - Spring 2026
+  - Algorithms
 featured: false
 repository: https://github.com/Amy22707/26spring-programming-practice
 ---

@@ -5,6 +5,7 @@ kind: notes
 technologies:
   - Course Notes
   - Fall 2025
+  - Algorithms
 featured: false
 repository: https://github.com/Amy22707/25fall-CS101-Study_note
 ---
