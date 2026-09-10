@@ -28,6 +28,8 @@ tags:
 
 受到小红书用户[@呱命由我不由服](https://www.xiaohongshu.com/user/profile/5f8d8ac30000000001004b2d?xsec_token=ABoxzBu1ug8ZGpDDOzupST-TQQ8ZY_9InqQtJ_xnc_GNg=&xsec_source=pc_user)这篇备份游戏数据的[文章](https://www.xiaohongshu.com/explore/6aa16e1d000000002802ad82?xsec_token=ABs5_53BGyrZKd-7ixgcsQ6nS5pXXlrE_4WHMEtLw5rw8=&xsec_source=pc_user)的启发，决定开启《旅行青蛙·中国之旅》的离线保存项目，希望可以保留原客户端、资源和自己的存档，在2026.12.8停服后，让原来的客户端可以在本地服务器上运行。
 
+(质疑图恒宇->理解图恒宇->成为图恒宇)
+
 该日志将持续更新该项目的进度与技术实现。由于版权原因，项目内容不公开。
 
 # 2026.9.10
