@@ -414,3 +414,76 @@ int main(){
     return 0;
 }
 ```
+# 2026.9.13
+## [拼写检查](http://cs101.openjudge.cn/practice/01035/)
+两个字符串一长一短，就用双指针同时跑，遇到不一样的长的那个多走一个。
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+bool check(string a,string b){
+    int n=a.size(),m=b.size();
+    if(n>m){
+        swap(a,b);
+        swap(n,m);
+    }
+    if(m-n>1) return false;
+    else if(m-n==1){
+        int i=0,j=0,cnt=0;
+        while(i<n && j<m){
+            if(a[i]==b[j]){
+                i++;
+                j++;
+            }
+            else{
+                j++;
+                cnt++;
+            }
+        }
+        if(cnt>1) return false;
+        else return true;
+    }
+    else{
+        int cnt=0;
+        for(int i=0;i<n;i++){
+            if(a[i]!=b[i]) cnt++;
+        }
+        if(cnt>1) return false;
+        else return true;
+    }
+}
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    string word;
+    vector<string> dict;
+    while(true){
+        cin>>word;
+        if(word=="#") break;
+        dict.push_back(word);
+    }
+    int n=dict.size();
+    while(true){
+        cin>>word;
+        if(word=="#") break;
+        int status=0;
+        vector<string> ans;
+        for(string s:dict){
+            if(s==word){
+                status=1;
+                break;
+            }
+            else if(check(s,word)){
+                ans.push_back(s);
+                status=2;
+            }
+        }
+        if(status==1) cout<<word<<" is correct\n";
+        else{
+            cout<<word<<":";
+            for(string s:ans) cout<<" "<<s;
+            cout<<"\n";
+        }
+    }
+    return 0;
+}
+```
