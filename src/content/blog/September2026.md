@@ -487,3 +487,33 @@ int main(){
     return 0;
 }
 ```
+
+# 2026.9.15
+## [这也是逆序对?](http://cs101.openjudge.cn/practice/31202/)
+移项，也就是求两数之和大于零的组数。因此排序，然后双指针，一旦相加大于零那么就说明左指针之后的都大于零，移动右指针。否则移动左指针。
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int n;
+long long ans=0;
+int a[200005],b[200005],c[200005];
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cin>>n;
+    for(int i=1;i<=n;i++) cin>>a[i];
+    for(int i=1;i<=n;i++) cin>>b[i];
+    for(int i=1;i<=n;i++) c[i]=a[i]-b[i];
+    int l=1,r=n;
+    sort(c+1,c+n+1);
+    while(l<r){
+        if(c[l]+c[r]>0){
+            ans+=r-l;
+            r--;
+        }
+        else l++;
+    }
+    cout<<ans<<endl;
+    return 0;
+}
+```
