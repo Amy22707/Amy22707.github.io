@@ -7,7 +7,7 @@ tags:
   - Python
 ---
 <details>
-<summary>点击查看详细内容</summary>
+<summary>折叠区小作文</summary>
 
 命数如织，阴差阳错。
 
