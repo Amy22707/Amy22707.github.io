@@ -11,21 +11,6 @@ tags:
 ---
 2026.9.8得知[《旅行青蛙·中国之旅》在六周年前的一周要停服了](https://www.xiaohongshu.com/discovery/item/6a9e720b000000002a024307?source=webshare&xhsshare=pc_web&xsec_token=ABLaaTihv77qsNrUuCYbGR7gm_Nq86trzBjLrIklkIk5U=&xsec_source=pc_share)。
 
-<details>
-<summary>折叠区小作文</summary>
-
-回想起高中时每周末上线收集明信片、装好背包；节气与节日的特殊食物与照片；以及在第一次收到北京的明信片时，发出的漂流瓶，“希望一年半之后 我也能考到这个城市”。时间过得太快太快。高考完，我如愿考到了北京，把蛙蛙寄过来的照片全部印出来，收纳在一本相册，然后不怎么再上线。继续奔波辛劳地活着……几乎不想起以前。前一天半夜睡不着，打开小程序，看到蛙蛙回来了，在庭院里闭着眼睛淋雨——玩了几年，第一次解锁这个彩蛋。独在异乡，面对着日益内卷与异化的环境，我也不再感受雨，而只是被淋湿。曾经玩的时候心想总有一天会遇到这个场景，会集齐所有彩蛋……当时只道是寻常。
-
-[其实小青蛙本会走散在2023年的春天](https://www.xiaohongshu.com/discovery/item/6aa138f70000000029011263?source=webshare&xhsshare=pc_web&xsec_token=ABs5_53BGyrZKd-7ixgcsQ6rUHr2PjbKLjRmQlmHfi8nw=&xsec_source=pc_share)
-
-![](https://ik.imagekit.io/Amyxue/Homepage_Amy/blog_zS9Tj0ral)
-![](https://ik.imagekit.io/Amyxue/Homepage_Amy/blog_IU-p97F7I)
-![](https://ik.imagekit.io/Amyxue/Homepage_Amy/blog_xMlQgT0Vg)
-
-### **远行与回归……而回归的路更长。**
-
-</details>
-
 受到小红书用户[@呱命由我不由服](https://www.xiaohongshu.com/user/profile/5f8d8ac30000000001004b2d?xsec_token=ABoxzBu1ug8ZGpDDOzupST-TQQ8ZY_9InqQtJ_xnc_GNg=&xsec_source=pc_user)这篇备份游戏数据的[文章](https://www.xiaohongshu.com/explore/6aa16e1d000000002802ad82?xsec_token=ABs5_53BGyrZKd-7ixgcsQ6nS5pXXlrE_4WHMEtLw5rw8=&xsec_source=pc_user)的启发，决定开启《旅行青蛙·中国之旅》的离线保存项目，希望可以保留原客户端、资源和自己的存档，在2026.12.8停服后，让原来的客户端可以在本地服务器上运行。
 
 该日志将持续更新该项目的进度与技术实现。由于版权原因，项目内容暂不公开。
@@ -73,6 +58,7 @@ su
 </details>
 
 ## 项目结构
+
 ```text
 D:\PKU\CODE\frog
 ├─ analysis\                 分析资料
@@ -2985,6 +2971,22 @@ Story 的匿名旅伴文案统一为“旅途中的朋友”。故事不是一�
 → 保留页面、邮件与结算反馈
 → 唯一收藏不重复发放
 ```
+
+
+<details>
+<summary>折叠区小作文</summary>
+
+回想起高中时每周末上线收集明信片、装好背包；节气与节日的特殊食物与照片；以及在第一次收到北京的明信片时，发出的漂流瓶，“希望一年半之后 我也能考到这个城市”。时间过得太快太快。高考完，我如愿考到了北京，把蛙蛙寄过来的照片全部印出来，收纳在一本相册，然后不怎么再上线。继续奔波辛劳地活着……几乎不想起以前。前一天半夜睡不着，打开小程序，看到蛙蛙回来了，在庭院里闭着眼睛淋雨——玩了几年，第一次解锁这个彩蛋。独在异乡，面对着日益内卷与异化的环境，我也不再感受雨，而只是被淋湿。曾经玩的时候心想总有一天会遇到这个场景，会集齐所有彩蛋……当时只道是寻常。
+
+[其实小青蛙本会走散在2023年的春天](https://www.xiaohongshu.com/discovery/item/6aa138f70000000029011263?source=webshare&xhsshare=pc_web&xsec_token=ABs5_53BGyrZKd-7ixgcsQ6rUHr2PjbKLjRmQlmHfi8nw=&xsec_source=pc_share)
+
+![](https://ik.imagekit.io/Amyxue/Homepage_Amy/blog_zS9Tj0ral)
+![](https://ik.imagekit.io/Amyxue/Homepage_Amy/blog_IU-p97F7I)
+![](https://ik.imagekit.io/Amyxue/Homepage_Amy/blog_xMlQgT0Vg)
+
+### **远行与回归……而回归的路更长。**
+
+</details>
 
 # 后续Bug修复（持续更新）
 
