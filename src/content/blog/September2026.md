@@ -517,3 +517,107 @@ int main(){
     return 0;
 }
 ```
+
+# 2026.9.20
+## [字符串插入](http://dsa.openjudge.cn/2026dsachapter2/A/)
+
+`.insert(pos,substr)`
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    string a,b;
+    while(cin>>a>>b){
+        char x=0;
+        int pos,n=a.size();
+        for(int i=0;i<n;i++){
+            if(a[i]>x){
+                x=a[i];
+                pos=i;
+            }
+        }
+        a.insert(pos+1,b);
+        cout<<a<<endl;
+
+    }
+    return 0;
+}
+```
+
+## [多项式加法](http://dsa.openjudge.cn/2026dsachapter2/B/)
+
+`map<int,int,greater<int>`可实现按key降序排列。
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int n;
+    cin>>n;
+    for(int qaq=0;qaq<n;qaq++){
+        map<int,int,greater<int>> a;
+        int x,y;
+        while(cin>>x>>y && y>=0){
+            a[y]+=x;
+        }
+        while(cin>>x>>y && y>=0){
+            a[y]+=x;
+        }
+        for(auto [key,val]:a){
+            if(val!=0){
+                cout<<"[ "<<val<<" "<<key<<" ] ";
+            }
+        }
+        cout<<endl;
+    }
+
+    return 0;
+}
+```
+
+## [神奇的幻方](http://dsa.openjudge.cn/2026dsachapter2/C/)
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int n;
+    cin>>n;
+    int a[2*n][2*n];
+    int x=0,y=n-1;
+    for(int i=0;i<2*n-1;i++){
+        for(int j=0;j<2*n-1;j++){
+            a[i][j]=0;
+        }
+    }
+    for(int i=1;i<=(2*n-1)*(2*n-1);i++){
+        a[x][y]=i;
+        x--;
+        y++;
+        if(x<0&&y>=2*n-1){
+            x+=2;
+            y--;
+        }
+        else if(x<0) x=2*n-2;
+        else if(y>=2*n-1) y=0;
+        else if(a[x][y]!=0){
+            x+=2;
+            y--;
+        }
+    }
+    for(int i=0;i<2*n-1;i++){
+        for(int j=0;j<2*n-1;j++){
+            cout<<a[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    return 0;
+}
+```
