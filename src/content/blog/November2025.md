@@ -1,5 +1,5 @@
 ---
-title: 25fall做题记录 - November
+title: 25fall计概做题记录 - November
 description: 2025.11做题记录及11月计概月考
 publishedAt: 2025-11-01
 tags:

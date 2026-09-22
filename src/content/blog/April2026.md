@@ -1,5 +1,5 @@
 ---
-title: 26spring做题记录 - April
+title: 26spring程设数算做题记录 - April
 description: 2026.4做题记录及4月数算月考
 publishedAt: 2026-04-01
 tags:

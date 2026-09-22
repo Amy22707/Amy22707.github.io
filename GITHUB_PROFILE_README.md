@@ -14,14 +14,13 @@
 
 I am an undergraduate student at the School of Electronics Engineering and Computer Science, Peking University, studying computer science and artificial intelligence.
 
-I enjoy understanding why systems work and turning vague ideas into things that actually run. My current interests lie in **machine learning**, **reinforcement learning**, **intelligent agents**, and **embodied AI**.
-
+I enjoy understanding how algorithms and systems work, and turning ideas into working implementations. My current interests include **machine learning systems**, **large language models**, **intelligent agents**, and **AI systems**. I am particularly interested in problems at the intersection of algorithms and software systems, and I am actively exploring research through coursework and hands-on projects.
 
 ## Technical Toolkit
 
 - **Languages:** C++, Python, TypeScript
-- **AI & Data:** PyTorch, NumPy, Machine Learning, Reinforcement Learning
-- **Tools:** Git, Linux, Astro, LaTeX
+- **AI & Data:** PyTorch, NumPy, Machine Learning
+- **Tools:** Git, Linux, LaTeX, Astro
 
 ## Selected Projects
 
@@ -60,26 +59,20 @@ Replace the placeholder below and remove this comment wrapper when ready.
 
 ## Awards & Honors
 
-<!--
-Add one line for each award, for example:
 
-- **Award or Honor** — Issuing Organization, 20XX
--->
+- **Silver medal in the 3rd National Girls' Olympiad in Informatics** — China Computer Federation, 2023
 
-This section is being updated.
 
 ## Beyond Code
 
 - Interested in classical and contemporary Chinese poetry
-- Curious about esotericism and the ways people make sense of the world, especially tarot and astrology
 - Interested in campus life, community work, writing, and reflection
 
 ## Currently Exploring
 
-- Reinforcement learning and intelligent agents
-- Chinese Standard Mahjong AI
-- Interesting data structures and randomized algorithms
-- New possibilities at the intersection of AI and the web
+- Machine learning systems and AI infrastructure
+- Large language models and intelligent agents
+- Data structures, algorithms, and software systems
 
 ## Connect
 

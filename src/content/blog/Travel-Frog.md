@@ -1,6 +1,6 @@
 ---
-title: 蛙蛙复活计划-日志
-description: 《旅行青蛙·中国之旅》游戏保存
+title: 《旅行青蛙·中国之旅》数据保存与游戏逆向
+description: 蛙蛙复活计划-日志
 publishedAt: 2026-09-10
 tags:
   - 游戏
@@ -9,7 +9,7 @@ tags:
   - Android
   - 本地服务器
 ---
-2026.9.8得知[《旅行青蛙·中国之旅》在六周年前的一周要停服了](https://www.xiaohongshu.com/discovery/item/6a9e720b000000002a024307?source=webshare&xhsshare=pc_web&xsec_token=ABLaaTihv77qsNrUuCYbGR7gm_Nq86trzBjLrIklkIk5U=&xsec_source=pc_share)。
+2026.9.8得知《旅行青蛙·中国之旅》在六周年前的一周要[停服了](https://www.xiaohongshu.com/discovery/item/6a9e720b000000002a024307?source=webshare&xhsshare=pc_web&xsec_token=ABLaaTihv77qsNrUuCYbGR7gm_Nq86trzBjLrIklkIk5U=&xsec_source=pc_share)。
 
 受到小红书用户[@呱命由我不由服](https://www.xiaohongshu.com/user/profile/5f8d8ac30000000001004b2d?xsec_token=ABoxzBu1ug8ZGpDDOzupST-TQQ8ZY_9InqQtJ_xnc_GNg=&xsec_source=pc_user)这篇备份游戏数据的[文章](https://www.xiaohongshu.com/explore/6aa16e1d000000002802ad82?xsec_token=ABs5_53BGyrZKd-7ixgcsQ6nS5pXXlrE_4WHMEtLw5rw8=&xsec_source=pc_user)的启发，决定开启《旅行青蛙·中国之旅》的离线保存项目，希望可以保留原客户端、资源和自己的存档，在2026.12.8停服后，让原来的客户端可以在本地服务器上运行。
 
@@ -3060,3 +3060,17 @@ dry_fw @ (258,0)
 ```
 
 普通版与图鉴版已有的同类照片均已同步迁移，新旅行生成的 dry 场景也会直接使用正确坐标。
+
+### 7.花圃堆肥与土地肥力
+
+检查两个版本的存档后发现，六格堆肥虽然会依次发酵，土地肥力却只由正在发酵的单格材料临时决定。材料吸收后，效果没有累计到土地上；长时间不登录时也只结算一格，玩家很难看到“土地肥力”增加。
+
+现在每份材料完成发酵后都会累加肥力和持续时间。六格按照放置时间依次吸收；即使隔了一整天才进入游戏，服务端也会把期间已完成的材料逐项结算。花朵的生长按每段实际生效的肥力计算，不会把刚得到的加成追溯到之前的时间。肥力花朵沿用客户端原有的三档显示。服务端持续时间没有在客户端资源中给出，离线版采用本地规则：普通肥料与特产每份延长一天，长效肥料每份延长三天，避免隔天登录时材料已消耗、肥力却已归零。
+
+### 8.图鉴版奖励数量同步
+
+图鉴版任务奖励曾出现“抽奖券实际保持999张，客户端却收到1000张”的数字不一致。现在任务领奖结果和抽奖券推送都使用图鉴版的固定数量；重复物品与日历奖励的返回结果也读取最终库存值。普通版继续按实际获得数量增加。
+
+### 9.青蛙返家后的家具进度
+
+青蛙旅行回家会推进被砸工作台的修复次数，也会累计可能自行换家具的返家次数。此前只有真正修好工作台或换上家具时才保存这两个计数；如果这一趟没有可见变化，重启游戏可能丢失进度。现在每次返家都会保存计数，工作台在达到设定的旅行次数后可以稳定恢复。

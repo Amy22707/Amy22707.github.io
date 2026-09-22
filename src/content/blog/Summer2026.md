@@ -1,5 +1,5 @@
 ---
-title: 2026暑假做题记录
+title: 2026暑假数算做题记录
 description: 2026.8-2026.9.6
 publishedAt: 2026-08-27
 tags:
