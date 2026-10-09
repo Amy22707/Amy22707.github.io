@@ -1,6 +1,6 @@
 ---
 title: 《旅行青蛙·中国之旅》数据保存与游戏逆向
-description: 蛙蛙复活计划-日志
+description: 蛙蛙复活计划：项目成果、关键技术与开发日志
 publishedAt: 2026-09-10
 tags:
   - 游戏
@@ -9,117 +9,48 @@ tags:
   - Android
   - 本地服务器
 ---
+# 项目成果概览
+
+本项目围绕《旅行青蛙·中国之旅》的 Android 客户端、静态资源和个人历史存档，搭建了可在本地运行的游戏保存环境。开发从登录快照回放开始，逐步扩展到可写存档、日常玩法、相册与地图，并形成普通版和图鉴版两套独立运行的版本。
+
+## 已完成的主要内容
+
+- **资源与存档保存**：备份 APK、应用私有数据和热更新资源，抓取正式服初始化状态，并区分原始记录与可分享的脱敏数据。
+- **本地服务器与持久化**：使用 Python WebSocket 服务器接入原客户端，将静态快照回放扩展为可读写的本地状态，保存历史备份并处理旧存档迁移。
+- **普通版日常循环**：接入旅行、背包与餐桌、商店、家具、花圃、庭院旅友、日历及活动奖励等流程；后续持续修正状态同步与结算时机。
+- **照片与相册**：恢复历史照片图层，支持照片保存、删除、回收站、恢复与 Android 相册导出，并继续校准旅行照片、动态照片和构图坐标。
+- **地图与旅行日记**：将依赖在线 H5 的旅行地图改为本地 Egret 静态地图，保留 35 个目的地、城市相册和打卡进度；将漂流瓶入口改为可新建、编辑、删除和持久化的个人旅行日记。
+- **独立图鉴版**：使用独立应用包、端口和存档，预置全收集内容，并保留庭院、旅行、制作和活动交互，处理无限资源与重复奖励之间的边界。
+
+## 关键技术与验证方式
+
+开发涉及 Python、WebSocket、JavaScript / Egret / EUI、ADB，以及客户端补丁与 JSON 状态管理。工作重点包括协议分析、状态持久化、存档迁移、照片图层恢复和在线功能的本地替代。
+
+日志中的验收沿着“客户端操作 → 协议请求与响应 → 状态落盘 → 重启后恢复”展开，而不仅检查界面能否显示。旅行日记保存、相册分页、奖励同步和旅友回礼等问题，都通过这条链路定位和修正。
+
+## 还原范围与当前边界
+
+客户端源码和静态配置、正式服实际观测，以及为了离线运行补充的本地规则，分别记录。无法从现有证据确认的服务端概率与参数放入 `offline_policy.json`；单次抓包结果不作为完整官方算法的证明。
+
+普通版已具备日志中记录的日常循环，图鉴版也已形成独立运行方案，文末继续记录后续修复。这是个人离线保存项目，部分依赖在线服务的功能采用本地替代；由于版权原因，项目内容暂不公开。
+
+下文保留项目背景、开发总结和按日期记录的实现过程。“进行中”“未完成”等标注反映当时的状态，后续进展见较晚日期的日志；启动命令和目录结构集中在文末。
+
+# 项目背景
+
 2026.9.8得知《旅行青蛙·中国之旅》在六周年前的一周要[停服了](https://www.xiaohongshu.com/discovery/item/6a9e720b000000002a024307?source=webshare&xhsshare=pc_web&xsec_token=ABLaaTihv77qsNrUuCYbGR7gm_Nq86trzBjLrIklkIk5U=&xsec_source=pc_share)。
 
 受到小红书用户[@呱命由我不由服](https://www.xiaohongshu.com/user/profile/5f8d8ac30000000001004b2d?xsec_token=ABoxzBu1ug8ZGpDDOzupST-TQQ8ZY_9InqQtJ_xnc_GNg=&xsec_source=pc_user)这篇备份游戏数据的[文章](https://www.xiaohongshu.com/explore/6aa16e1d000000002802ad82?xsec_token=ABs5_53BGyrZKd-7ixgcsQ6nS5pXXlrE_4WHMEtLw5rw8=&xsec_source=pc_user)的启发，决定开启《旅行青蛙·中国之旅》的离线保存项目，希望可以保留原客户端、资源和自己的存档，在2026.12.8停服后，让原来的客户端可以在本地服务器上运行。
 
 该日志将持续更新该项目的进度与技术实现。由于版权原因，项目内容暂不公开。
 
-<details>
-<summary>自用备忘</summary>
-
-在 CMD 中运行。普通版和图鉴版可独立启动，只玩其中一个时只开对应服务器即可。
-
-启动普通版：
-
-```
-start "旅行青蛙·中国之旅" /D "D:\PKU\CODE\frog\server" cmd /k python server.py --port 52352
-"D:\leidian\LDPlayer14\adb.exe" -s emulator-5554 reverse tcp:8080 tcp:52352
-```
-
-启动图鉴版：
-
-```
-start "旅行青蛙·中国之旅图鉴版" /D "D:\PKU\CODE\frog\server" cmd /k python server.py --gallery --port 52353
-"D:\leidian\LDPlayer14\adb.exe" -s emulator-5554 reverse tcp:8081 tcp:52353
-```
-
-关闭时，优先在对应服务器窗口按 `Ctrl+C`。若窗口找不到，可在 CMD 强制关闭：
-
-```
-for /f "tokens=5" %a in ('netstat -ano ^| findstr :52352 ^| findstr LISTENING') do taskkill /PID %a /F
-```
-
-图鉴版则是：
-
-```
-for /f "tokens=5" %a in ('netstat -ano ^| findstr :52353 ^| findstr LISTENING') do taskkill /PID %a /F
-```
-
-模拟器重启后需要重新执行一次对应的 `adb reverse`；服务器重启本身不需要重新安装游戏或清理任何数据。
-
-访问模拟器
-
-```bat
-"D:\leidian\LDPlayer14\adb.exe" shell
-su
-```
-
-</details>
-
-
-# 项目结构
-
-```text
-D:\PKU\CODE\frog
-├─ analysis\                 分析资料
-├─ apk\
-│  ├─ base.apk
-│  └─ gallery-unsigned.apk
-├─ backup\                   本地备份与热更新镜像
-├─ cache\
-├─ capture\
-│  ├─ initial_sync\
-│  ├─ weekend_party_travel_20260919\
-│  ├─ album_anim_20260912\
-│  ├─ travelmap\
-│  └─ raw\
-├─ client\
-│  ├─ config\
-│  └─ js\
-│     ├─ main.offline.stage6i2.js       普通版客户端补丁
-│     ├─ main.gallery.js                图鉴版客户端补丁
-│     ├─ main.min.js
-│     └─ calendar.offline.js
-├─ hotfix\
-│  └─ c1_client\
-├─ picture\
-│  └─ photo_reference_104\
-├─ server\
-│  ├─ server.py                         两版本共用服务端
-│  ├─ offline_policy.json
-│  ├─ config\
-│  │  ├─ Picture_json.json
-│  │  ├─ picture_official_variants.json
-│  │  ├─ picture_resource_positions_json.json
-│  │  ├─ furnitureData_json.json
-│  │  ├─ Item_json.json
-│  │  ├─ animpictureData_json.json
-│  │  └─ ...
-│  ├─ data\
-│  │  ├─ state.json                     普通版存档
-│  │  ├─ gallery_state.json             图鉴版存档
-│  │  └─ backups\
-│  ├─ archive\
-│  └─ travelmap\
-├─ tools\
-│  ├─ build_gallery_client.py
-│  ├─ build_gallery_state.py
-│  ├─ complete_gallery_state.py
-│  ├─ patch_album_pages.py
-│  └─ prepare_gallery_apk.py
-├─ tmp\
-├─ AGENTS.md
-└─ frog_desktop_handoff_2026-09-13.md
-```
-
 # 开发总结
 
-从开启这个项目到完成每一个细节总共花了十天、两次codex重置（也就是Chatgpt plus的三个周额度）。此前从来没有接触过游戏逆向，甚至于说是第一次尝试完成一个游戏工程。将一个相对来说很简单的游戏作为第一个小练手，一是为了情怀，二是觉得很好玩。plus的额度少得可怜，于是一直和时笨时聪明的5.6Terra斗智斗勇（如果我是富姐，也许用6Astra就能两天搞定所有开发呢），一周里同时做后端和测试和一点点前端（地图系统的开发）。
+从开启这个项目到完成每一个细节总共花了十天、两次codex重置（也就是Chatgpt plus的三个周额度）。此前从来没有接触过游戏逆向，甚至于说是第一次尝试完成一个游戏工程。将一个相对来说很简单的游戏作为第一个小练手，一是为了情怀，二是觉得很好玩。plus的额度少得可怜，于是一直和时笨时聪明的5.6Terra斗智斗勇，一周里同时做后端和测试和一点点前端（地图系统的开发）。
 
 一开始做的时候没想过能不能成功，只是怀着忐忑的心情去官方包里抓代码，去分析，然后一步一步考察把游戏逆向出来的可能性。幸运的是大部分逻辑可以直接爬出来，于是就进行下去了。开发到第三天其实已经有其他人把离线版做出来了（尽管细节与功能尚不齐全），也会感慨自己的水平仍需精进。在做的过程中所有需要收集的东西其实都已经显现出来了，对于一个主要玩法为收集的放置游戏来说，游玩的意义还存在吗？我继续做这个项目的意义是什么呢？
 
-做了几天之后目标已经不再是把这个游戏留下来（或许也是因为第二天的时候这个游戏就已经留下来了），而是完成我的第一个游戏项目。到了大二上仍然踟蹰不前，没有进组也没有找实习，因为并没有特别感兴趣的方向，也没有足以证明自己实力的项目。当然，这个项目并没有多困难，由于版权原因也无法公开。但是在大学期间为数不多的宝贵的清闲时间中，还能找到一点激起自己热情的事情，也是幸运的。
+做了几天之后目标已经不再是把这个游戏留下来（或许也是因为第二天的时候这个游戏就已经留下来了），而是完成我的第一个游戏项目。本项目由于版权原因无法完全公开，但是在大学期间为数不多的宝贵的清闲时间中，还能找到一点激起自己热情的事情，也是幸运的。
 
 最开始玩旅行青蛙的日服，功能十分简单，没有会砸家具台的青蛙，没有各种传统节气的活动。后来玩国服，再到现在做逆向，才意识到游戏本身是开发者爱的体现。项目完成的过程中尽可能忠实于原游戏的表现，但与其他玩家互动的功能不得不删除。于是突发奇想，在搓完地图系统（原地图系统使用H5，由于权限原因难以复刻）之后将漂流瓶功能改成了旅行日记。也许某日再次点开，看到几年前的明信片与文字，仿若拾起曾经向大海诉说的心愿——以及漂泊多年之后，终于回到岸边，然后再次出发。
 
@@ -3074,3 +3005,111 @@ dry_fw @ (258,0)
 ### 9.青蛙返家后的家具进度
 
 青蛙旅行回家会推进被砸工作台的修复次数，也会累计可能自行换家具的返家次数。此前只有真正修好工作台或换上家具时才保存这两个计数；如果这一趟没有可见变化，重启游戏可能丢失进度。现在每次返家都会保存计数，工作台在达到设定的旅行次数后可以稳定恢复。
+
+# 附录：运行备忘与项目目录
+
+## 本地运行备忘
+
+<details>
+<summary>自用备忘</summary>
+
+在 CMD 中运行。普通版和图鉴版可独立启动，只玩其中一个时只开对应服务器即可。
+
+先设置项目目录和 ADB 路径；以下为通用示例，请替换为自己的安装位置：
+
+```bat
+set "FROG_HOME=C:\path\to\frog"
+set "ADB=C:\path\to\adb.exe"
+```
+
+启动普通版：
+
+```
+start "旅行青蛙·中国之旅" /D "%FROG_HOME%\server" cmd /k python server.py --port 52352
+"%ADB%" -s emulator-5554 reverse tcp:8080 tcp:52352
+```
+
+启动图鉴版：
+
+```
+start "旅行青蛙·中国之旅图鉴版" /D "%FROG_HOME%\server" cmd /k python server.py --gallery --port 52353
+"%ADB%" -s emulator-5554 reverse tcp:8081 tcp:52353
+```
+
+关闭时，优先在对应服务器窗口按 `Ctrl+C`。若窗口找不到，可在 CMD 强制关闭：
+
+```
+for /f "tokens=5" %a in ('netstat -ano ^| findstr :52352 ^| findstr LISTENING') do taskkill /PID %a /F
+```
+
+图鉴版则是：
+
+```
+for /f "tokens=5" %a in ('netstat -ano ^| findstr :52353 ^| findstr LISTENING') do taskkill /PID %a /F
+```
+
+模拟器重启后需要重新执行一次对应的 `adb reverse`；服务器重启本身不需要重新安装游戏或清理任何数据。新开 CMD 窗口时，需要先重新设置上述两个变量。
+
+访问模拟器
+
+```bat
+"%ADB%" shell
+su
+```
+
+</details>
+
+## 项目结构
+
+```text
+frog\
+├─ analysis\                 分析资料
+├─ apk\
+│  ├─ base.apk
+│  └─ gallery-unsigned.apk
+├─ backup\                   本地备份与热更新镜像
+├─ cache\
+├─ capture\
+│  ├─ initial_sync\
+│  ├─ weekend_party_travel_20260919\
+│  ├─ album_anim_20260912\
+│  ├─ travelmap\
+│  └─ raw\
+├─ client\
+│  ├─ config\
+│  └─ js\
+│     ├─ main.offline.stage6i2.js       普通版客户端补丁
+│     ├─ main.gallery.js                图鉴版客户端补丁
+│     ├─ main.min.js
+│     └─ calendar.offline.js
+├─ hotfix\
+│  └─ c1_client\
+├─ picture\
+│  └─ photo_reference_104\
+├─ server\
+│  ├─ server.py                         两版本共用服务端
+│  ├─ offline_policy.json
+│  ├─ config\
+│  │  ├─ Picture_json.json
+│  │  ├─ picture_official_variants.json
+│  │  ├─ picture_resource_positions_json.json
+│  │  ├─ furnitureData_json.json
+│  │  ├─ Item_json.json
+│  │  ├─ animpictureData_json.json
+│  │  └─ ...
+│  ├─ data\
+│  │  ├─ state.json                     普通版存档
+│  │  ├─ gallery_state.json             图鉴版存档
+│  │  └─ backups\
+│  ├─ archive\
+│  └─ travelmap\
+├─ tools\
+│  ├─ build_gallery_client.py
+│  ├─ build_gallery_state.py
+│  ├─ complete_gallery_state.py
+│  ├─ patch_album_pages.py
+│  └─ prepare_gallery_apk.py
+├─ tmp\
+├─ AGENTS.md
+└─ frog_desktop_handoff_2026-09-13.md
+```

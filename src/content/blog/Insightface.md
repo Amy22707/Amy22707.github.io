@@ -150,14 +150,14 @@ if __name__=='__main__':
 
 ### 2.buffalo_l模型安装
 调了一些bug之后程序跑起来了，然后……
-![](https://img2023.cnblogs.com/blog/2669443/202311/2669443-20231105115131584-81467049.jpg)
+![buffalo_l 模型下载报错（个人目录已遮黑）](/images/insightface/buffalo-download-error-redacted.png)
 看起来因为没有仔细阅读官方文档，忘记装buffalo_l模型了，于是程序开始自动帮我下载。推测一大串报错可能是因为下载网络错误导致的。因此我决定沿着前两行的下载地址进行手动下载。
 
 自动跳转到了[这个网页](https://sourceforge.net/projects/insightface.mirror/)开始下载。下载了两三个小时后终于下下来了。（然后突然想到其实可以找国内资源的，哭qaq）
 
 ### 3.inswapper128模型安装
 再跑了一遍程序，然后……
-![](https://img2023.cnblogs.com/blog/2669443/202311/2669443-20231105121052909-1768457412.jpg)
+![inswapper_128 模型缺失报错（个人目录已遮黑）](/images/insightface/inswapper-model-error-redacted.png)
 还忘记装inswapper128模型了。参考这篇博客，这是他的[官方网站](https://huggingface.co/henryruhs/roop/resolve/main/inswapper_128.onnx)。
 
 但是我不想再挂一个梯子龟速下载了。于是我找到了[这个](https://www.123pan.com/s/sKd9-YxIc.html)。快速又高效！
