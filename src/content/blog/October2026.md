@@ -2,6 +2,7 @@
 title: 26fall数算做题记录 - October
 description: 2026.10做题记录
 publishedAt: 2026-10-01
+updatedAt: 2026-10-30
 tags:
   - 算法
   - Cpp
@@ -199,5 +200,191 @@ int main(){
     cout<<ans<<endl;
     return 0;
 }
+```
+
+# 2026.10.21
+## [全在其中](http://dsa.openjudge.cn/2026dsachapter4/A/)
+双指针
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    string s,t;
+    while(cin>>s>>t){
+        int n=s.size(),m=t.size(),i=0,j=0;
+        while(i<n&&j<m){
+            if(s[i]==t[j]){
+                i++;
+                j++;
+            }
+            else j++;
+        }
+        if(i==n) cout<<"Yes"<<endl;
+        else cout<<"No"<<endl;
+    }
+    return 0;
+}
+```
+## [字符串乘方](http://dsa.openjudge.cn/2026dsachapter4/B/)
+
+备注：next数组使用这一版教材定义，next[i]表示字符串下标0-i-1的最长公共前后缀长度
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    string s;
+    while(cin>>s&&s!="."){
+        int n=s.size();
+        int next[n+1];
+        next[0]=-1;
+        int i=0,j=-1;
+        while(i<n){
+            if(j==-1||s[i]==s[j]){
+                i++;
+                j++;
+                next[i]=j;
+            }
+            else j=next[j];
+        }
+        int len=n-next[n];
+        if(n%len==0) cout<<n/len<<endl;
+        else cout<<1<<endl;
+    }
+    return 0;
+}
+```
+
+## [合格的字符串](http://dsa.openjudge.cn/2026dsachapter4/C/)
+1.`to_string()`数字->字符串，`string(1,c)`字符->字符串
+2.`tolower()`大写char->小写char，`toupper()`小写char->大写char
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int n;
+    cin>>n;
+    string s;
+    string a[n];
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    cin>>s;
+    vector<string> st;
+    int i=0,m=s.size();
+    while(i<m){
+        if(s[i]=='['){
+            string temp="";
+            i++;
+            while(i<m&&s[i]!=']'){
+                temp+=tolower(s[i]);
+                i++;
+            }
+            st.push_back(temp);
+        }
+        else{
+            st.push_back(string(1,tolower(s[i])));
+        }
+        i++;
+    }
+    m=st.size();
+    for(int i=0;i<m;i++){
+        cerr<<st[i]<<" ";
+    }
+    for(int i=0;i<n;i++){
+        if(a[i].size()!=m) continue;
+        bool flag=true;
+        for(int j=0;j<m;j++){
+            if(st[j].find(tolower(a[i][j]))==string::npos){
+                flag=false;
+                break;
+            }
+        }
+        if(flag) cout<<i+1<<" "<<a[i]<<endl;
+    }
+    return 0;
+}
+```
+
+# 2026.10.29
+## [最小覆盖子串](https://leetcode.cn/problems/minimum-window-substring/)
+滑动窗口。建立数组记录需要的字母数量。
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    string minWindow(string s, string t) {
+       int n=s.size(),m=t.size();
+       int need[128]={0},window[128]={0};
+        for(int i=0;i<m;i++){
+              need[t[i]]++;
+        }
+        int l=0,count=0,ans=INT_MAX,start=0;
+        for(int r=0;r<n;r++){
+            char c=s[r];
+            window[c]++;
+            if(need[c]>0&&window[c]<=need[c]) count++;
+            while(count==m){
+                if(r-l+1<ans){
+                    ans=r-l+1;
+                    start=l;
+                }
+                char d=s[l];
+                window[d]--;
+                if(need[d]>0&&window[d]<need[d]) count--;
+                l++;
+            }
+        }
+        if(ans==INT_MAX) return "";
+        return s.substr(start,ans);
+    }
+};
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    string s="ADOBECODEBANC",t="ABC";
+    Solution sol;
+    cout<<sol.minWindow(s,t)<<endl;
+}
+```
+
+## [找出字符串中第一个匹配项的下标](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/)
+KMP
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        int n=haystack.size(),m=needle.size();
+        int next[m+1];
+        next[0]=-1;
+        int i=0,j=-1;
+        while(i<m){
+            if(j==-1||needle[i]==needle[j]){
+                i++;
+                j++;
+                next[i]=j;
+            }
+            else j=next[j];
+        }
+        i=0,j=0;
+        while(i<n&&j<m){
+            if(j==-1||haystack[i]==needle[j]){
+                i++;
+                j++;
+            }
+            else j=next[j];
+        }
+        if(j==m) return i-m;
+        return -1;
+    }
+};
 ```
 

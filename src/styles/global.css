@@ -279,6 +279,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .post-card:hover { padding-left: 18px; padding-right: 18px; background: rgba(255,255,255,.75); }
 .post-index { color: #a0a9b8; font-family: ui-monospace, monospace; font-size: 13px; }
 .post-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; font-weight: 550; }
+.post-dates { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; min-width: 0; }
+.post-dates > span { white-space: nowrap; }
+.post-updated { color: var(--accent-dark); }
 .post-card h2 { margin: 8px 0; font-size: 25px; letter-spacing: -.03em; }
 .post-title-link::after { content: ""; position: absolute; inset: 0; }
 .post-card p { margin: 0; color: var(--muted); line-height: 1.7; }

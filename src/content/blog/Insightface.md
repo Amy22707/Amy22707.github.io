@@ -2,6 +2,7 @@
 title: Insightface换脸——安装到实现全过程
 description: 复导项目记录
 publishedAt: 2023-11-05
+updatedAt: 2023-11-05
 tags:
   - InsightFace
   - Python

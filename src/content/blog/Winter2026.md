@@ -2,6 +2,7 @@
 title: 2026寒假做题记录
 description: 2026.1-2026.2
 publishedAt: 2026-01-12
+updatedAt: 2026-02-25
 tags:
   - 算法
   - Python
@@ -460,7 +461,8 @@ int main(){
 ```
 ## [除了自身以外数组的乘积](https://leetcode.cn/problems/product-of-array-except-self/description/?envType=study-plan-v2&envId=top-100-liked)
 前缀后缀。
-vector<int> ans(n);
+`vector<int> ans(n);`
+
 ```cpp
 #include<bits/stdc++.h>
 using namespace std;
@@ -1484,7 +1486,7 @@ int main(){
     return 0;
 }
 ```
-#2026.2.25
+# 2026.2.25
 ## [跳跃游戏 II](https://leetcode.cn/problems/jump-game-ii/description/?envType=study-plan-v2&envId=top-100-liked)
 选择当前位置一直到上一次设定的边界中能够跳得最远的值作为新的边界。碰到边界就代表要加一步。
 ```cpp

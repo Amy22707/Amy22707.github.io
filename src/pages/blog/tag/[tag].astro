@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PostDates from "../../../components/PostDates.astro";
 import { getTagHref, getTagSlug } from "../../../utils/blogTags";
 
 export async function getStaticPaths() {
@@ -33,11 +34,7 @@ const posts = (await getCollection("blog", ({ data }) =>
         <div class="post-index">{String(index + 1).padStart(2, "0")}</div>
         <div class="post-main">
           <div class="post-meta">
-            <time datetime={post.data.publishedAt.toISOString()}>
-              {post.data.publishedAt.toLocaleDateString("en-US", {
-                year: "numeric", month: "long", day: "numeric"
-              })}
-            </time>
+            <PostDates publishedAt={post.data.publishedAt} updatedAt={post.data.updatedAt} />
             <span aria-hidden="true">·</span>
             <div class="post-tags">
               {post.data.tags.map((postTag) => (

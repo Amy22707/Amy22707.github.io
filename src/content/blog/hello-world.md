@@ -2,6 +2,7 @@
 title: Hello World
 description: 建站杂谈
 publishedAt: 2026-07-06
+updatedAt: 2026-07-06
 tags:
   - Astro
   - 前端

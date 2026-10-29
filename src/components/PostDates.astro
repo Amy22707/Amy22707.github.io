@@ -1,0 +1,27 @@
+---
+interface Props {
+  publishedAt: Date;
+  updatedAt?: Date;
+}
+
+const { publishedAt, updatedAt } = Astro.props;
+const formatDate = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+  timeZone: "UTC",
+});
+const publishedDay = publishedAt.toISOString().slice(0, 10);
+const updatedDay = updatedAt?.toISOString().slice(0, 10);
+const showUpdated = updatedDay && updatedDay > publishedDay;
+---
+
+<span class="post-dates">
+  <span>Published <time datetime={publishedAt.toISOString()}>{formatDate.format(publishedAt)}</time></span>
+  {showUpdated && updatedAt && (
+    <>
+      <span aria-hidden="true">·</span>
+      <span class="post-updated">Updated <time datetime={updatedAt.toISOString()}>{formatDate.format(updatedAt)}</time></span>
+    </>
+  )}
+</span>

@@ -2,6 +2,7 @@
 title: CF Hello 2026
 description: 愿新的一年如花绚烂。
 publishedAt: 2026-01-08
+updatedAt: 2026-01-08
 tags:
   - 算法
   - Python

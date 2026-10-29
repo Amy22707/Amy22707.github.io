@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostDates from "../../components/PostDates.astro";
 import GiscusComments from "../../components/GiscusComments.astro";
 import { getTagHref } from "../../utils/blogTags";
 
@@ -42,11 +43,7 @@ const tocHeadings = headings.filter((heading) => heading.depth >= 1 && heading.d
       <a class="back-link" href="/blog/">← Back to Blog</a>
       <header class="article-header">
         <div class="post-meta">
-          <time datetime={post.data.publishedAt.toISOString()}>
-            {post.data.publishedAt.toLocaleDateString("en-US", {
-              year: "numeric", month: "long", day: "numeric"
-            })}
-          </time>
+          <PostDates publishedAt={post.data.publishedAt} updatedAt={post.data.updatedAt} />
           <span aria-hidden="true">·</span>
           <div class="post-tags">
             {post.data.tags.map((tag) => <a href={getTagHref(tag)}>#{tag}</a>)}
