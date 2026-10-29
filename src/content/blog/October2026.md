@@ -388,3 +388,29 @@ public:
 };
 ```
 
+## [重复的子字符串](https://leetcode.cn/problems/repeated-substring-pattern/)
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    bool repeatedSubstringPattern(string s) {
+        int n=s.size();
+        int next[n+1];
+        next[0]=-1;
+        int i=0,j=-1;
+        while(i<n){
+            if(j==-1||s[i]==s[j]){
+                i++;
+                j++;
+                next[i]=j;
+            }
+            else j=next[j];
+        }
+        int len=n-next[n];
+        if(n%len==0&&len<n) return true;
+        return false;
+    } 
+};
+```

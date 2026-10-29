@@ -383,9 +383,17 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .prose pre { overflow-x: auto; margin: 1.35em 0; padding: 20px 22px; border: 1px solid var(--line); border-radius: 16px; color: var(--code-text); background: var(--code-bg) !important; box-shadow: 0 12px 30px rgba(39, 53, 89, .06); }
 .prose pre code { display: block; padding: 0; border: 0; color: inherit; background: transparent; font-size: 14px; line-height: 1.75; }
 .prose pre code span { background: transparent !important; }
-.prose table { display: block; overflow-x: auto; width: 100%; margin: 1.6em 0; border-collapse: collapse; }
-.prose th, .prose td { padding: 10px 12px; border: 1px solid var(--line); }
-.prose th { background: var(--accent-soft); text-align: left; }
+.prose table { display: block; overflow-x: auto; width: 100%; max-width: 100%; margin: 1.6em 0; border-collapse: separate; border-spacing: 0; font-size: 15px; line-height: 1.65; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--accent) var(--accent-soft); }
+.prose th, .prose td { min-width: 8.5rem; max-width: 22rem; padding: 12px 14px; border: 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; overflow-wrap: break-word; }
+.prose tr > :first-child { border-left: 1px solid var(--line); }
+.prose thead tr:first-child > * { border-top: 1px solid var(--line); }
+.prose th { background: color-mix(in srgb, var(--accent) 9%, var(--surface-solid)); font-weight: 700; white-space: nowrap; }
+.prose th:first-child, .prose td:first-child { position: sticky; left: 0; z-index: 1; min-width: 11rem; background: var(--surface-solid); box-shadow: 1px 0 0 var(--line); }
+.prose th:first-child { z-index: 2; background: color-mix(in srgb, var(--accent) 9%, var(--surface-solid)); }
+.prose tbody tr:hover td { background: color-mix(in srgb, var(--accent) 5%, var(--surface-solid)); }
+.prose table:has(tr > :nth-child(7)) { max-height: min(70vh, 42rem); }
+.prose table:has(tr > :nth-child(7)) thead th { position: sticky; top: 0; z-index: 2; }
+.prose table:has(tr > :nth-child(7)) thead th:first-child { z-index: 3; }
 .prose img { max-width: 100%; height: auto; margin: 1.4em auto; border: 1px solid var(--line); border-radius: 14px; background: var(--surface-solid); box-shadow: 0 12px 30px rgba(39, 53, 89, .06); }
 .prose blockquote { margin: 1.5em 0; padding: 14px 18px; border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; color: var(--muted); background: var(--accent-soft); }
 .prose details { margin: 1.4em 0; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: var(--surface-elevated); }
