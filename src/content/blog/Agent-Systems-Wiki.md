@@ -2,7 +2,7 @@
 title: Agent Systems 研究笔记
 description: Survey on Inference/Context/Memory/Scheduling/KV
 publishedAt: 2026-10-22
-updatedAt: 2026-10-28
+updatedAt: 2026-10-30
 tags:
   - Agents
   - AI_systems
@@ -624,8 +624,96 @@ AgentKV 按 think、act、tool、others 分别保存少量代表 Query，用它�
 - 跨块复用可以扩大缓存机会，但复用的状态需要适应新的前文。
 - 选择性重算连接“全部复用”和“全部重算”，提供可调的近似修补路径。
 - 算法节省还要与缓存搬运、流水线一起设计；原论文的任务质量结果不代表所有持续运行场景都保持输出不变。
-<a id="topic-reliability"></a>
+<a id="paper-fast26-cacheslide"></a>
 
+### 5.9 CacheSlide：固定片段顺序不变时，怎样跨位置复用 KV
+
+论文：[CacheSlide: Unlocking Cross Position-Aware KV Cache Reuse for Accelerating LLM Serving](https://www.usenix.org/conference/fast26/presentation/liu-yang) · [原始 PDF](https://www.usenix.org/system/files/fast26-liu-yang.pdf) · [代码](https://github.com/SJTU-Storage-Lab/CacheSlide)。
+
+**主张与研究方法：** Agent 提示常由固定片段和变化片段交错组成。固定片段的先后顺序可以不变，但中间内容增长后，它们的绝对位置和前文都会变化。CacheSlide 将这种场景称为 RPDC（相对位置依赖缓存）。它同时处理位置对齐、上下文修补和缓存 I/O。
+
+教学例子：输入从 `[固定规则 A][旧观察][固定规则 B][问题]` 变成 `[固定规则 A][更长的新观察][固定规则 B][问题]`。B 的文字相同，但不能直接认定旧 KV 与新计算等价。
+
+1. **CCPE：先降低位置变化的影响。** 按 Agent 提示模板划分复用块与重算块。任务相关的编码配置建立在 CoPE（上下文相关位置编码）上，使复用块使用较稳定的编码范围；变化块采用当前编码。论文通过冻结骨干、训练 CoPE/注意力 LoRA 适配来支持这一机制。
+2. **WCA：再修补变化前文的影响。** 较早层比较缓存与重算 K 的偏差，选一部分位置；后续层对选中位置进行修补，以偏差相关权重融合新旧 KV，并阶段性调整选择集合。它仍是近似计算，修正位置不自动恢复全部上下文关系。
+3. **SLIDE：让节省落到存储路径。** 将选中 KV 的写入重定位到新页，增加加载与修补的重叠机会；标记被修改的脏页，在 SSD 溢出时优先处理干净页，并合并写回，减少随机 I/O。算法减少计算后，新增的读写仍可能决定实际等待。
+
+**主要结论：**
+
+- 原文在所测任务上报告了质量与 TTFT/吞吐的改进，核心认识是位置编码、近似修补与存储路径需要配合。
+- 实验使用 Mistral-7B、MPT-30B、Llama-3 70B（精确 checkpoint 未核实），任务包含 Reflexion/HotPotQA、MemGPT/Multi-Session Chat、SWE-Agent/SWE-Agent-Bench。论文运行于 vLLM 0.8.5，主要为 A100 设置。
+
+**研究启发：** 与 CacheBlend 比较“修补什么”，与 ContextPilot 比较“是否改变输入组织”。它补充了一个应先查清的问题：我们希望保持原模型和原编码，还是允许训练配套适配？这个约束会改变可选方法。
+
+<a id="paper-2609-33762"></a>
+### 5.10 EfficientAgent：缓存要活到下一轮，卸载才可能划算
+
+论文：[EfficientAgent: What Makes KV Cache Offloading Work for Concurrent Agents?](https://arxiv.org/abs/2609.33762v1) · [原文](https://arxiv.org/html/2609.33762v1) · [代码](https://github.com/KunmingSHAO/efficientagent_release)。
+**主张与研究方法：** CPU 加载一次 KV 比重新 prefill 便宜，并不保证卸载能加速。一个 Agent 等工具时，其他任务不断读写缓存；旧状态如果在下次使用前已被淘汰，系统就反复重算、写入、再淘汰。作者把这理解为复用工作集超出 CPU 缓存后的 thrashing（抖动）。
+
+教学例子：A 的历史刚写进 CPU，B、C 的大历史又把它挤走；A 回来后重算并写入，接着又挤走 B。问题是状态没有活到复用时刻，单次搬运速度无法解释它。
+
+方法分成三个决策：
+
+1. **一次命中值多少。** 比较恢复与重算的代价，并扣除暴露的写入/调度开销。算力相对 CPU–GPU 带宽越强，重算的相对吸引力可能越高。
+2. **状态能否活到下次使用。** 用 stack distance / reuse distance（两次使用之间经过多少不同缓存块）估计容量—命中关系。精确前缀还要求从开头连续可用，不能把任意命中块简单相加。在任务积压、上下文长度相近且共享较弱时，工作集尺度约为 `(活跃任务数−1)×平均上下文长度×每 token KV 字节数`；这是尺度估计，实际顺序与共享由轨迹模型处理。
+3. **CPU 缓存压力大时少写哪些内容。** 同时观察工作集是否超过容量、缓存是否已满并在淘汰。压力下保留已有前缀的小幅增量，拒绝会挤掉其他状态的大规模 refill（被淘汰历史的整段重新写入）；容量足够时恢复正常写入。这里的 admission 是 **KV 写入准入**，不等于拒绝用户任务或自动减少活跃任务数。
+
+**主要结论：**
+
+- 卸载同时受“命中价值”和“状态存活概率”控制。只比较带宽与重算速度会遗漏并发任务间的容量竞争。
+- 写得更少只在某些容量区间有利；容量足够时继续过滤写入会丢掉本来能复用的状态。该论文强调的是部署条件与准入规则，而不是一种处处更好的淘汰顺序。
+
+主模型为 Qwen3-Coder-30B-A3B-Instruct BF16，OpenHands CodeActAgent、SWE-bench Verified，vLLM 0.13.0 + LMCache 0.3.12；另测 Qwen2.5-Coder-32B-Instruct 与 H20/H800/RTX 3090 部署。主要容量/策略比较是依赖保持回放：固定每次输入和输出 token、记录工具间隔，但服务时间可改变后续发起时刻和任务交错；makespan（整批任务完成耗时）计入这些间隔。这些结果不证明任务成功率提高，硬件与轨迹范围仍有限。
+
+**研究启发：** 与 MORI 比较“整份状态放哪里”，与 AgentKV/ActKV 比较“每任务保留什么”，它补上了“共享 CPU 层是否真的容得下复用集合”。Appendix G 还明确分析了上下文编辑怎样破坏前缀身份，因此“更短输入可能更多 fresh prefill”已是相关工作。可追问的是哪种实际任务/负载下，容量竞争或前缀重建成为主要代价。
+
+<a id="paper-2601-22705"></a>
+
+### 5.11 CONCUR：控制同时推进的 Agent 数，减少缓存抖动
+
+[论文](https://arxiv.org/abs/2601.22705) · [全文](https://arxiv.org/html/2601.22705v1)
+
+**主张与研究方法：** 批量运行长程 Agent 时，每个任务在生成和工具调用之间切换，历史不断增长。等待工具的任务暂时不发请求，其 KV 容易被其他任务挤走；返回后重算历史，又挤走别人的 KV。论文把批量执行中间阶段持续出现的驱逐—重算循环称为 **middle-phase thrashing（中段缓存抖动）**。此时增加并发，可能使整批任务更慢。
+
+CONCUR 在 Agent 框架与推理引擎之间加入控制器，维护 **活跃 Agent 窗口 W**。一个已准入任务在等待工具时仍属于这个活跃集合；新任务可能留在集合外等待。这样可以减少同时竞争 KV 的任务数量，保护已有任务连续推进。引擎内部的 batching 和 LRU 继续工作，控制器没有直接把所有活跃任务的 KV 锁定在显存里。
+
+控制器读取两个反馈：KV 使用率 U 和缓存命中率 H，再按 AIMD（加性增加、乘性减少）调整窗口：
+
+1. **U 低于下阈值：** W 增加一个固定步长，逐渐尝试更多并发。
+2. **U 高于上阈值，且 H 低于命中率阈值：** W 乘一个小于 1 的系数，快速降低压力。高占用仍保持良好命中时，无须立即缩窗。
+3. **其余情况：** 保持 W，避免频繁改变活跃集合。
+
+admit、pause、resume 分别允许任务继续、暂停后续请求、重新激活；暂停在生成与工具之间的边界执行，保留任务执行状态，不打断正在计算的 forward。例如显存适合容纳 A、B 的历史时，先让两者推进，C 暂缓进入；A 完成后再让 C 进入，能减少三者互相驱逐。这个例子说明准入粒度，窗口在实际方法中会动态调整。
+
+**主要结论：** 并发上限应覆盖任务跨轮积累的状态。只限制正在处理的请求数，仍可能让大量等待工具的任务轮流进入，造成缓存工作集过大。作者在 Qwen3-32B、DeepSeek-V3 的离线批量服务中报告整批完成时间下降，并通过命中率与占用曲线解释收益；固定窗口则容易在利用不足和缓存抖动之间失衡。
+
+**研究启发：** 与 Continnum/MORI 决定已进入系统的状态如何保留相比，CONCUR 控制进入竞争的任务规模；与 EfficientAgent 的 CPU 缓存写入准入相比，它控制 Agent 执行准入。三者可以放在同一条因果链上理解：活跃任务数量与历史长度决定复用工作集，工作集和容量共同决定状态能否留到下次使用。研究不同长度、不同工具等待时间的任务混合时，需要先检查“按任务个数限流”是否能准确反映压力；这仍是待验证的问题。
+
+<a id="paper-2602-21548"></a>
+
+### 5.12 DualPath：借用 Decode 机器的网卡读取 KV
+
+[论文](https://arxiv.org/abs/2602.21548) · [全文](https://arxiv.org/html/2602.21548v2) · [会议版](https://conferences.sigcomm.org/sigcomm/2026/program/papers/)
+
+**主张与研究方法：** 长程 Agent 每轮通常只新增少量内容，却要继续使用很长的历史。当历史 KV 已存到外部存储，命中可以省掉重算，但仍要把 KV 读回来。在 Prefill/Decode 分离的集群里，原有路径集中使用 Prefill 机器的存储网卡，Decode 机器的存储网卡可能闲置，导致 GPU 等数据。
+
+先区分两种网卡：**SNIC（存储网卡）** 连接计算机器与外部存储，**CNIC（计算网卡）** 用于 GPU 所在机器之间的高速通信。论文利用计算网络相对充裕的带宽，增加第二条读取路径：
+
+- **PE 路径：** 存储 → Prefill 机器的 CPU 内存 → 按层送入 Prefill GPU；每层计算完成后，把命中与新增 token 的完整 KV 送到 Decode 机器的 CPU 缓冲区。
+- **DE 路径：** 存储 → Decode 机器的 CPU 缓冲区 → 经 RDMA 按层送到 Prefill GPU；计算后只把新增 token 的 KV 传回，与 Decode 侧已有历史合并。
+
+两条路径都会在 prompt 的 KV 准备好后，将其装入 Decode GPU 开始生成。DE 路径中的 Decode 机器先承担读取与暂存，Prefill 计算仍由 Prefill GPU 完成。存储侧按跨全部层的块读写，Prefill 侧按单层块流式搬运，让传输与计算重叠，减少 Prefill 端显存占用。
+
+新增路径要避免影响模型通信，因此还需要两个配套机制：
+
+1. **统一流量控制。** KV 在 CPU 与 GPU 之间的搬运也经过配对 CNIC，通过 RDMA（远程直接内存访问）传输。这样本地搬运与跨机器传输都能受网卡的流量优先级控制。模型的专家通信、集合通信使用高优先级队列；KV 流量使用低优先级队列，利用空闲带宽并保留最低服务份额。绕行网卡增加了路径，但提供了普通 CUDA 拷贝难以实现的统一隔离。
+2. **联合选择执行机器与读路径。** 调度器参考各引擎尚未处理完的 token、请求数量、Decode 剩余显存和节点读取队列，平衡计算与 I/O。为请求选好 Prefill/Decode 引擎后，优先从读取队列较短的一侧加载 KV。当前实现为每个请求选择一条路径；把同一请求拆到两侧同时读是作者提出的后续工作。
+
+Prefill 内部还采用 **compute quota（计算时间额度）**：根据已缓存长度和本轮新增 token，估计 attention 的运行时间。装入请求达到时间预算后停止，超预算请求切成更小的 chunk，减少不同 GPU 在同步点互相等待。相同新增 token 数对应的历史长度不同，attention 工作量也会不同，因此单纯平衡 token 数仍不够。
+
+**主要结论：** 高 KV 命中率会把一部分工作从重算转移到读取。此时性能可能受读取路径和网卡分配限制，扩大 Prefill 算力未必解决问题。DualPath 通过汇聚两侧存储带宽、隔离 KV 流量、平衡批次计算时间改善服务能力；上下文追加或生成变长、计算占比上升时，收益条件也会变化。
+<a id="topic-reliability"></a>
 ## 6. Reliability and Training
 
 长程任务会积累错误。这里分别研究当前理解是否一致、训练是否适应执行过程、环境怎样回退，以及第一次错误在哪里。
@@ -757,6 +845,10 @@ CM-GSPO 将这件事显式化：
 | [Glasseek](https://arxiv.org/html/2610.16998v1)                      | 开放网页搜索             | 单用户型            | 单 Agent，兼搜索/摘要 | 长程          | 策略训练 / 评测         | 任务模型 SFT＋RL | 搜索闭环＋训练/泄漏审计         | 质量↑；评测可信度↑   | Acc./pass@1；泄漏分析              |
 | [AgentRewind](https://arxiv.org/html/2608.14380v1)                   | 编码 / 工程任务          | 单用户型            | 主 Agent＋恢复模块   | 长程          | 检查点 / 环境恢复        | 无需          | 工程闭环＋恢复比较            | 质量↑；可恢复性↑    | 成功率；验收进度；轨迹长度                 |
 | [Traverse / Scout](https://arxiv.org/html/2609.17930v1)              | 编码 / 终端 / 科学任务     | 单用户型（多候选）       | 任务 Agent＋验证器   | 长程（轨迹）      | 验证器 / 轨迹选择        | 验证器 SFT＋RL  | 离线轨迹＋候选选择            | 检测质量↑；任务质量↑  | 首错定位准确率；检测 F1；best-of-N 成功率   |
+| [CacheSlide](https://www.usenix.org/conference/fast26/presentation/liu-yang) | 搜索 / 对话 / 编码 | 兼有 | 单 Agent / 并行候选 | 多轮 / 长程 | 位置编码 / KV / I/O | CoPE/LoRA 适配 | Agent 基准＋服务实测 | 延迟↓；吞吐↑；质量保持 | TTFT；QPS；F1/ROUGE/成功率 |
+| [EfficientAgent](https://arxiv.org/html/2609.33762v1) | 编码 | 多用户型（回放为主） | 独立 Agent 程序 | 长程（轨迹） | CPU KV 写入准入 | 无需 | 依赖保持回放＋实跑采集 | 完成耗时↓；重算/搬运↓ | makespan；computed prefill；CPU 读写量 |
+| [CONCUR](https://arxiv.org/html/2601.22705v1) | 批量 Agent rollout | 多用户型（独立程序） | 独立 ReAct Agent | 长程 | Agent 执行准入 / 活跃窗口 | 无需 | 离线批量服务实测 | 完成耗时↓；吞吐↑ | batch latency；KV 命中率/占用 |
+| [DualPath](https://arxiv.org/html/2602.21548v2) | 编码 / RL rollout | 多用户型（回放） | 独立 Agent 程序 | 长程（轨迹） | KV 读取路径 / 网络 / 批调度 | 无需 | 生产轨迹回放＋服务实测 | 吞吐↑；SLO 内延迟控制 | JCT；APS；TTFT/TTST/TPOT |
 
 **分类口径：** 单用户型指主要研究一个用户任务内部的能力或效率；多用户型指多个独立会话/程序共享推理资源的服务设置，实验可能用合成请求或回放代替真人；兼有指同时包含两类设置。多 Agent、多个候选或 batch 本身不构成多用户证据，无法判定的保留“未明确”。这列描述研究设置，不声称论文报告了真实用户人数。
 
@@ -826,3 +918,7 @@ CM-GSPO 将这件事显式化：
 | [Traverse / Scout](https://arxiv.org/abs/2609.17930v1)              | 人工标注首错位置，训练小验证器辅助选择轨迹        | [§6.4](#paper-2609-17930)     |
 | [CacheBlend](https://arxiv.org/abs/2405.16444v3)                    | 独立块 KV + 选择性重算 + 加载计算流水线     | [§5.8](#paper-2405-16444)     |
 | [ContextPilot（MLSys）](https://arxiv.org/abs/2511.03475v4)           | 上下文索引 + 共同前缀对齐 + 去重与语义注释     | [§4.7](#paper-2511-03475)     |
+| [CacheSlide](https://www.usenix.org/conference/fast26/presentation/liu-yang) | 相对顺序约束 + 编码适配 + KV 修补与存储流水线 | [§5.9](#paper-fast26-cacheslide) |
+| [EfficientAgent](https://arxiv.org/abs/2609.33762v1) | 复用工作集决定状态能否存活，压力下拒绝大规模回填 | [§5.10](#paper-2609-33762) |
+| [CONCUR](https://arxiv.org/abs/2601.22705) | 按 KV 占用与命中率调整活跃 Agent 窗口，减少跨轮抖动 | [§5.11](#paper-2601-22705) |
+| [DualPath](https://arxiv.org/abs/2602.21548) | 两侧机器共同读取历史 KV，用流量隔离与调度保护模型执行 | [§5.12](#paper-2602-21548) |
