@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { publications, presentations } from "../data/publications";
 
 const projects = await getCollection("projects");
 const posts = (await getCollection("blog", ({ data }) => !data.draft))
@@ -11,6 +12,9 @@ const selectedProjects = projects
   .sort((a, b) => Number(b.data.featured) - Number(a.data.featured))
   .slice(0, 3);
 const recentPosts = posts.slice(0, 2);
+const selectedOutputs = [...publications, ...presentations]
+  .sort((a, b) => Number(b.year) - Number(a.year))
+  .slice(0, 2);
 
 const focuses = [
   { label: "LEARNING", value: "Reinforcement Learning & Agents" },
@@ -56,19 +60,6 @@ const beyondCode = [
     title: "Writing & Reflection",
     layout: "compact",
     description: "Beyond technical notes, I write about campus life, personal growth, and ideas that are worth remembering.",
-  },
-];
-
-// Add your papers, preprints, workshop papers, or technical reports here.
-const publications = [
-  {
-    year: "20XX",
-    title: "Your Paper Title",
-    authors: "Xue Zhiyao, Coauthor Name",
-    venue: "Conference, Journal, Workshop, or arXiv",
-    description: "A one-sentence summary of the problem and your contribution.",
-    href: "",
-    tags: ["tag1", "tag2"],
   },
 ];
 
@@ -220,32 +211,31 @@ const awards = [
     </div>
   </section>
 
-{/* 暂时隐藏publications
-  <section class="home-section publications-section">
+  <section class="home-section home-presentations">
     <header class="home-section-header">
       <div>
-        <p class="eyebrow">PUBLICATIONS</p>
-        <h2>Research and writing</h2>
+        <p class="eyebrow">PUBLICATIONS & PRESENTATIONS</p>
+        <h2>Selected presentations</h2>
       </div>
-      <p class="section-note">Papers, preprints, and technical reports.</p>
+      <a href="/publications/">All publications & presentations →</a>
     </header>
-    <div class="publication-list">
-      {publications.map((publication, index) => (
-        <article class="publication-card">
-          <div class="publication-index">{String(index + 1).padStart(2, "0")}</div>
-          <div class="publication-main">
-            <div class="publication-meta"><span>{publication.year}</span><span>{publication.venue}</span></div>
-            <h3>{publication.title}</h3>
-            <p class="publication-authors">{publication.authors}</p>
-            <p>{publication.description}</p>
-            <div class="tag-row">{publication.tags.map((tag) => <span>{tag}</span>)}</div>
+    <div class="home-presentation-list">
+      {selectedOutputs.map((entry) => (
+        <article class:list={["home-presentation-card", { "without-preview": !entry.image }]}>
+          {entry.image && <a class="home-presentation-preview" href="/publications/" aria-label={`View presentation: ${entry.title}`}><img src={entry.image} alt={`Title slide: ${entry.title}`} width="1200" height="675" loading="lazy" /></a>}
+          <div class="home-presentation-copy">
+            <div class="publication-meta"><span>{entry.year}</span><span>{entry.type}</span></div>
+            <h3><a href="/publications/">{entry.title}</a></h3>
+            <p>{entry.venue}</p>
+            <p>{entry.description}</p>
+            <div class="home-presentation-resources">
+              {entry.resources.map((resource) => <a href={resource.href} target="_blank" rel="noreferrer">{resource.label} ↗</a>)}
+            </div>
           </div>
-          {publication.href && <a class="publication-link" href={publication.href} target="_blank" rel="noreferrer" aria-label={`Open ${publication.title}`}>↗</a>}
         </article>
       ))}
     </div>
   </section>
-*/}
 
   <section class="home-section awards-section">
     <header class="home-section-header">

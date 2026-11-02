@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { publications, presentations } from "../../data/publications";
+const groups = [
+  { id: "publications", title: "Publications", entries: publications },
+  { id: "presentations", title: "Presentations", entries: presentations },
+].filter((group) => group.entries.length > 0);
+---
+
+<BaseLayout title="Publications & Presentations" description="Publications, slides, and presentation materials by Xue Zhiyao">
+  <section class="page-intro research-intro">
+    <p class="eyebrow">PAPERS, SLIDES & POSTERS</p>
+    <h1>Publications & Presentations</h1>
+    <p>Selected contributions and the materials behind them.</p>
+  </section>
+
+  {groups.map((group) => (
+    <section class="research-section" aria-labelledby={group.id}>
+      <div class="research-section-heading"><h2 id={group.id}>{group.title}</h2></div>
+      <div class="research-list">
+        {group.entries.map((entry) => (
+          <article class:list={["research-entry", { "research-entry-illustrated": entry.image }]}>
+            <div class="research-entry-date"><span>{entry.year}</span><span>{entry.type}</span></div>
+            {entry.image && (
+              <a class="research-preview" href={entry.resources[0]?.href} target="_blank" rel="noreferrer" aria-label={`View slides: ${entry.title}`}>
+                <img src={entry.image} alt={`Title slide: ${entry.title}`} width="1200" height="675" loading="lazy" />
+              </a>
+            )}
+            <div class="research-entry-main">
+              <h3>{entry.title}</h3>
+              <p class="research-authors">{entry.authors}</p>
+              <p class="research-venue">{entry.venue}</p>
+              <p>{entry.description}</p>
+              {entry.resources.map((resource) => (
+                <a class="research-resource" href={resource.href} target="_blank" rel="noreferrer">{resource.label} <span aria-hidden="true">↗</span></a>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  ))}
+</BaseLayout>
