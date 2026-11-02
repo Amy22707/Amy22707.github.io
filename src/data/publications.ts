@@ -4,7 +4,7 @@ interface Resource {
 }
 
 interface ResearchOutput {
-  year: string;
+  date: string; // YYYY-MM
   title: string;
   authors: string;
   venue: string;
@@ -19,7 +19,7 @@ export const publications: ResearchOutput[] = [];
 
 export const presentations: ResearchOutput[] = [
   {
-    year: "2026",
+    date: "2026-08",
     title: "Outcome-Weighted Risk-Aware Supervised Learning for Chinese Standard Mahjong",
     authors: "Zhiyao Xue",
     venue: "IJCAI 2026 Mahjong AI Competition",
@@ -32,3 +32,11 @@ export const presentations: ResearchOutput[] = [
     ],
   },
 ];
+
+export function formatOutputDate(date: string) {
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    timeZone: "UTC",
+  }).format(new Date(`${date}-01T00:00:00Z`));
+}

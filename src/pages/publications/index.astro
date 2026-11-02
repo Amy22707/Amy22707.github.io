@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { publications, presentations } from "../../data/publications";
+import { publications, presentations, formatOutputDate } from "../../data/publications";
 const groups = [
   { id: "publications", title: "Publications", entries: publications },
   { id: "presentations", title: "Presentations", entries: presentations },
@@ -20,7 +20,7 @@ const groups = [
       <div class="research-list">
         {group.entries.map((entry) => (
           <article class:list={["research-entry", { "research-entry-illustrated": entry.image }]}>
-            <div class="research-entry-date"><span>{entry.year}</span><span>{entry.type}</span></div>
+            <div class="research-entry-date"><time datetime={entry.date}>{formatOutputDate(entry.date)}</time><span>{entry.type}</span></div>
             {entry.image && (
               <a class="research-preview" href={entry.resources[0]?.href} target="_blank" rel="noreferrer" aria-label={`View slides: ${entry.title}`}>
                 <img src={entry.image} alt={`Title slide: ${entry.title}`} width="1200" height="675" loading="lazy" />

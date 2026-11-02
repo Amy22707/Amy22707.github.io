@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { publications, presentations } from "../data/publications";
+import { publications, presentations, formatOutputDate } from "../data/publications";
 
 const projects = await getCollection("projects");
 const posts = (await getCollection("blog", ({ data }) => !data.draft))
@@ -13,7 +13,7 @@ const selectedProjects = projects
   .slice(0, 3);
 const recentPosts = posts.slice(0, 2);
 const selectedOutputs = [...publications, ...presentations]
-  .sort((a, b) => Number(b.year) - Number(a.year))
+  .sort((a, b) => b.date.localeCompare(a.date))
   .slice(0, 2);
 
 const focuses = [
@@ -44,14 +44,19 @@ const beyondCode = [
     description: "Campus activities and student organizations I have participated in alongside my academic work.",
     experiences: [
       {
+        period: "2026.10 — Present",
+        department: "Academic Affairs Department · Zhi Class Student Union, PKU",
+        role: "Member",
+      },
+      {
         period: "2025.9-now",
         department: "Academic & Innovation · PKU Youth League Committee",
-        role: "Staff member",
+        role: "Member",
       },
       {
         period: "2025.9-2026.6",
         department: "Culture & Sports · Life Sciences Student Union, PKU",
-        role: "Staff member",
+        role: "Member",
       },
     ],
   },
@@ -224,7 +229,7 @@ const awards = [
         <article class:list={["home-presentation-card", { "without-preview": !entry.image }]}>
           {entry.image && <a class="home-presentation-preview" href="/publications/" aria-label={`View presentation: ${entry.title}`}><img src={entry.image} alt={`Title slide: ${entry.title}`} width="1200" height="675" loading="lazy" /></a>}
           <div class="home-presentation-copy">
-            <div class="publication-meta"><span>{entry.year}</span><span>{entry.type}</span></div>
+            <div class="publication-meta"><time datetime={entry.date}>{formatOutputDate(entry.date)}</time><span>{entry.type}</span></div>
             <h3><a href="/publications/">{entry.title}</a></h3>
             <p>{entry.venue}</p>
             <p>{entry.description}</p>
