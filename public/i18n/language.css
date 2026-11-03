@@ -1,0 +1,26 @@
+.language-switch { position: relative; display: inline-flex; align-items: center; flex: 0 0 auto; gap: 6px; color: var(--muted, #647085); }
+.language-label { font-size: 16px; }
+.language-switch select { max-width: 118px; min-height: 36px; padding: 5px 7px; border: 1px solid var(--line, #dedfd3); border-radius: 9px; background: var(--surface-solid, var(--paper, #fff)); color: var(--text, var(--ink, #243c32)); font: inherit; font-size: 11px; cursor: pointer; }
+.language-switch select:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.language-status { position: absolute; top: calc(100% + 9px); right: 0; width: 230px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; color: var(--text, var(--ink)); background: var(--surface-solid, var(--paper)); font-size: 11px; line-height: 1.6; box-shadow: var(--shadow); }
+:root[data-language="zh"] :is(.hero-quote, .page-intro h1, .home-section-header h2, .home-split h2, .recent-heading h2, .link-section > h2, .research-section-heading h2, .section-heading h2, .about-card h2, .dialog-body h2, #hero-heading, h1 > span) { font-family: "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif; font-style: normal; letter-spacing: .015em; }
+:root[data-language="zh"] :is(.eyebrow, .project-topline, .publication-meta, .tag-browser-label) { letter-spacing: .07em; }
+:root[data-language="zh"] .page-intro h1 { font-size: clamp(32px, 4.5vw, 46px); }
+:root[data-language="zh"] .hero-quote .quote-accent { font-style: normal; }
+:root[data-language="en"] :is(.prose p, .project-copy h3, .project-card h2, .research-entry-main h3, .link-card p) { overflow-wrap: break-word; }
+.nav-links, .project-copy, .post-main { min-width: 0; }
+.top .shell nav { align-items: center; }
+/* The game's English subtitle duplicates its title in translated modes. */
+:root:is([data-language="zh"], [data-language="en"]) .hero > div > p[lang="en"] { display: none; }
+@media (max-width: 1000px) and (min-width: 761px) { .nav-links { gap: 2px; }.nav-links a { padding-inline: 8px; }.nav-actions { gap: 7px; }.nav-wrap { padding-inline: 18px; } }
+@media (max-width: 760px) {
+  .nav-wrap { grid-template-columns: minmax(0, 1fr) auto auto; }
+  .nav-wrap .language-switch { grid-column: 2; grid-row: 1; }
+  .nav-wrap .theme-toggle { grid-column: 3; grid-row: 1; }
+  .language-switch select { max-width: 98px; min-height: 34px; font-size: 10px; }
+  .language-label { display: none; }
+  .top .shell { flex-wrap: wrap; padding-block: 12px; }
+  .top .shell nav { flex-wrap: wrap; justify-content: end; }
+  .header-inner > .language-switch { margin-left: 0; }
+}
+@media (max-width: 360px) { .nav-wrap .brand { font-size: 15px; gap: 7px; }.nav-wrap .brand-mark { width: 30px; height: 30px; } }

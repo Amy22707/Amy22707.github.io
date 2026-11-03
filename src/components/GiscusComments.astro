@@ -12,6 +12,8 @@
       const siteTheme = savedTheme === "light" || savedTheme === "dark" ? savedTheme : systemTheme;
       const giscusTheme = siteTheme === "dark" ? "transparent_dark" : "light";
       document.currentScript?.nextElementSibling?.setAttribute("data-theme", giscusTheme);
+      const language = localStorage.getItem("amy.site-language");
+      document.currentScript?.nextElementSibling?.setAttribute("data-lang", language === "en" ? "en" : "zh-CN");
     })();
   </script>
 

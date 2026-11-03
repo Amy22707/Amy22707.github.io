@@ -62,7 +62,7 @@ const myFriendLink = `{
     <h2>Friends</h2>
     <div class="link-grid">
       {friendLinks.map((link) => (
-        <a class="link-card" href={link.href} target="_blank" rel="noreferrer">
+        <a class="link-card" href={link.href} target="_blank" rel="noreferrer" translate="no">
           <img class="friend-avatar" src={link.avatar} alt={`${link.title}'s avatar`} loading="lazy" />
           <div><h3>{link.title}</h3><p>{link.description}</p></div>
           <span class="arrow">↗</span>

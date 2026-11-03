@@ -31,6 +31,7 @@ const active = (href: string) =>
     <meta name="color-scheme" content="light dark" />
     <meta name="referrer" content="no-referrer" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/i18n/language.css" />
     <title>{title} | Amy</title>
     <script is:inline>
       (() => {
@@ -134,5 +135,6 @@ const active = (href: string) =>
         paint();
       })();
     </script>
+    <script is:inline src="/i18n/runtime.js"></script>
   </body>
 </html>
