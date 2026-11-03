@@ -3,11 +3,13 @@ interface Resource {
   href: string;
 }
 
-interface ResearchOutput {
+export interface ResearchOutput {
   date: string; // YYYY-MM
   title: string;
-  authors: string;
-  venue: string;
+  authors: string[];
+  conference?: string;
+  journal?: string;
+  awards?: string[];
   type: string;
   description: string;
   image?: string;
@@ -17,12 +19,15 @@ interface ResearchOutput {
 // Add papers here with their actual publication or preprint status.
 export const publications: ResearchOutput[] = [];
 
+export const ownerAuthorNames = ["Zhiyao Xue", "Xue Zhiyao", "薛之瑶"];
+
 export const presentations: ResearchOutput[] = [
   {
     date: "2026-08",
     title: "Outcome-Weighted Risk-Aware Supervised Learning for Chinese Standard Mahjong",
-    authors: "Zhiyao Xue",
-    venue: "IJCAI 2026 Mahjong AI Competition",
+    authors: ["Zhiyao Xue"],
+    conference: "IJCAI 2026 Mahjong AI Competition",
+    awards: ["Excellent Award — The 6th International Mahjong AI Competition, IJCAI 2026"],
     type: "Competition presentation",
     description: "Improving offense-defense trade-offs under reproducible paired evaluation.",
     image: "/images/presentations/mahjong-slides.png",

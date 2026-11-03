@@ -1,14 +1,16 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ResearchMetadata from "../components/ResearchMetadata.astro";
 import { publications, presentations, formatOutputDate } from "../data/publications";
 
 const projects = await getCollection("projects");
 const posts = (await getCollection("blog", ({ data }) => !data.draft))
   .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 
+const homepageProjectIds = new Set(["focusbloom", "travel-frog"]);
 const selectedProjects = projects
-  .filter((project) => project.data.kind === "project" && project.data.repository)
+  .filter((project) => project.data.kind === "project" && project.data.repository && homepageProjectIds.has(project.id))
   .sort((a, b) => Number(b.data.featured) - Number(a.data.featured))
   .slice(0, 3);
 const recentPosts = posts.slice(0, 2);
@@ -87,12 +89,6 @@ const educationAndExperience = [
 
 
 const awards = [
-  {
-    year: "2026",
-    title: "Excellent Award — The 6th International Mahjong AI Competition, IJCAI 2026",
-    issuer: "School of Computer Science, Peking University",
-    description: "Presented at IJCAI 2026",
-  },
   {
     year: "2023",
     title: "Silver medal in the 3rd National Girls' Olympiad in Informatics (NGOI2024)",
@@ -203,7 +199,7 @@ const awards = [
         <a class="featured-work" href={project.data.repository} target="_blank" rel="noreferrer">
           <div class="work-number">{String(index + 1).padStart(2, "0")}</div>
           <div class="work-copy">
-            <div class="work-kicker">{project.data.featured ? "FEATURED PROJECT" : "OPEN SOURCE"}</div>
+            <div class="work-kicker">{project.data.featured ? "FEATURED PROJECT" : "PROJECT"}</div>
             <h3>{project.data.title}</h3>
             <p>{project.data.description}</p>
             <div class="tag-row">
@@ -231,7 +227,7 @@ const awards = [
           <div class="home-presentation-copy">
             <div class="publication-meta"><time datetime={entry.date}>{formatOutputDate(entry.date)}</time><span>{entry.type}</span></div>
             <h3><a href="/publications/">{entry.title}</a></h3>
-            <p>{entry.venue}</p>
+            <ResearchMetadata entry={entry} />
             <p>{entry.description}</p>
             <div class="home-presentation-resources">
               {entry.resources.map((resource) => <a href={resource.href} target="_blank" rel="noreferrer">{resource.label} ↗</a>)}

@@ -45,6 +45,8 @@ test('nested lists and fenced code split runs rather than being reparented', () 
 });
 test('scoped technical terminology is normalized without changing source facts', () => {
   assert.equal(normalizeTerms('长程 Agent 与显存、缓存抖动', 'Long-range agents, VRAM, and cache jitter'), 'Long-horizon agents, GPU memory, and cache thrashing');
+  assert.equal(normalizeTerms('显存、状压dp、扭蛋机', 'Video memory, State Compression DP, and Gacha Machine'), 'GPU memory, Bitmask DP, and Gashapon machine');
+  assert.equal(normalizeTerms('正式服与实机测试', 'The formal server and live testing'), 'The official server and real-device testing');
   assert.equal(normalizeTerms('状压dp', 'State-compressed dp.'), 'Bitmask DP.');
   assert.equal(normalizeTerms('攻略截图', 'strategy screenshots and guide screenshots'), 'walkthrough screenshots and walkthrough screenshots');
   assert.equal(normalizeTerms('漂流瓶功能', 'a drifting bottle feature and drift bottles'), 'a message bottle feature and message bottles');

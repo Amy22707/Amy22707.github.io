@@ -24,17 +24,21 @@ I enjoy understanding how algorithms and systems work, and turning ideas into wo
 
 ## Selected Projects
 
-### [Chinese Standard Mahjong AI](https://github.com/Amy22707/Chinese-Standard-Mahjong)
+### [FocusBloom](https://github.com/Amy22707/FocusBloom)
 
-An intelligent agent for Chinese Standard Mahjong built with supervised learning and reinforcement learning, including training, evaluation, and model-management workflows.
+A Windows focus and study-management app that connects project-based timers, tasks, study planning, and daily reviews.
 
-`Python` `PyTorch` `Reinforcement Learning`
+*In development.*
 
-### [Personal Homepage](https://github.com/Amy22707/Amy22707.github.io)
+`C#` `WPF` `SQLite`
 
-My personal website for sharing projects, technical writing, and interests, built with Astro and Markdown.
+### [Travel Frog: A Journey to China — Local Reverse-Engineered Edition](https://github.com/Amy22707/Travel-Frog)
 
-`Astro` `TypeScript` `Tailwind CSS`
+An unofficial local preservation project for Travel Frog: A Journey to China, with offline gameplay, photo collections, and save import/export.
+
+*Source code is not public yet. The repository link will become accessible when the source is released.*
+
+`Python` `WebSocket` `Offline`
 
 ## Education
 

@@ -1,0 +1,10 @@
+---
+import { ownerAuthorNames } from "../data/publications";
+interface Props { authors: string[]; }
+const { authors } = Astro.props;
+const normalizeName = (name: string) => name.replace(/[＊*†‡]+$/u, "").trim().replace(/\s+/g, " ").toLowerCase();
+const ownNames = new Set(ownerAuthorNames.map(normalizeName));
+---
+{authors.map((author, index) => (
+  <span class="research-author" translate="no">{index > 0 && ", "}{ownNames.has(normalizeName(author)) ? <strong>{author}</strong> : <span>{author}</span>}</span>
+))}

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import ResearchMetadata from "../../components/ResearchMetadata.astro";
 import { publications, presentations, formatOutputDate } from "../../data/publications";
 const groups = [
   { id: "publications", title: "Publications", entries: publications },
@@ -28,8 +29,7 @@ const groups = [
             )}
             <div class="research-entry-main">
               <h3>{entry.title}</h3>
-              <p class="research-authors">{entry.authors}</p>
-              <p class="research-venue">{entry.venue}</p>
+              <ResearchMetadata entry={entry} />
               <p>{entry.description}</p>
               {entry.resources.map((resource) => (
                 <a class="research-resource" href={resource.href} target="_blank" rel="noreferrer">{resource.label} <span aria-hidden="true">↗</span></a>

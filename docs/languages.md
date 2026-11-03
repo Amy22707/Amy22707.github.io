@@ -9,8 +9,9 @@ The language selector has three modes:
 The choice is saved locally under `amy.site-language`. The personal website, Studio, and the game introduction share it when hosted on the same `amy22707.github.io` origin. Previews on different ports do not share browser storage.
 
 The globe selector is rendered directly in the shared header, including on
-Publications, and enhanced by the browser runtime. The centered native selector
-uses “默认 / Default” on wide screens and a compact label when space is limited.
+Publications, and enhanced by the browser runtime. The compact menu centers its
+button and options on the same axis, using “默认 / Default” on wide screens and a
+short label when space is limited. Without JavaScript, the native selector remains.
 
 ## What stays unchanged
 

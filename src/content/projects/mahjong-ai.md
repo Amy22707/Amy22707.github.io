@@ -7,5 +7,5 @@ technologies:
   - Python
   - PyTorch
   - Supervised Learning
-featured: true
+featured: false
 ---

@@ -1,18 +1,46 @@
 {
-  "《旅行青蛙·中国之旅》[[A0]][[O1]]本地逆向版[[C1]]": { "en": "Travel Frog: A Journey to China[[A0]][[O1]]Local Reverse-Engineered Edition[[C1]]" },
-  "标准版双击 [[A0]]；图鉴版双击 [[A1]]。请保留整个文件夹，不要只拿走 EXE。": { "en": "For the Standard Edition, double-click [[A0]]; for the Gallery Edition, double-click [[A1]]. Keep the entire folder together rather than moving only the EXE." },
-  "等待本地运行环境启动，选择“导入存档”，在系统文件选择器中选中 [[A0]]、兼容 JSON 或完整初始化协议 JSONL；没有备份则点击“开始新的旅程”。": { "en": "Wait for the local runtime to start, choose “Import Save,” and use the system file picker to select a [[A0]] file, a compatible JSON file, or a protocol JSONL file containing complete initialization data. If you have no backup, choose “Start a New Journey.”" },
-  "已有 [[A0]]、兼容 JSON 存档或完整初始化 JSONL 的玩家，直接在本地版中导入，不需要安装模拟器，也不需要登录官服。": { "en": "If you already have a [[A0]] file, a compatible JSON save, or a JSONL file containing complete initialization data, import it directly into the local edition. You do not need an emulator or an official-server login." },
-  "已有本项目备份的玩家直接使用上方导入功能。还只有官服账号时，需要在[[O0]]官服仍能正常登录[[C0]]的设备上先保存完整登录数据；离线版不接收你的手机号、验证码或官服密码，也不能凭账号信息从已经关闭的服务器找回进度。": { "en": "If you already have a backup from this project, use the import feature above. If you only have an official-server account, first capture the complete login initialization data on a device where [[O0]]you can still log in to the official game[[C0]]. The offline version does not ask for your phone number, verification code, or official-server password, and cannot recover progress from a closed server using account details alone." },
-  "[[O0]]采集后再导入本地版：[[C0]]解析日志得到 [[A1]]，在标准版中选择“导入存档”。本地版不要求手机号、验证码或官服密码。": { "en": "[[O0]]Capture first, then import into the local edition:[[C0]] parse the log to obtain [[A1]], then choose “Import Save” in the Standard Edition. The local edition does not require a phone number, verification code, or official-server password." },
-  "记下当前已运行版本的[[O0]]完整文件路径[[C0]]。如果有多个结果，对照最近运行的资源版本，不要随便选第一个；如果没有此路径，当前客户端结构不适用本教程。": { "en": "Record the running version's [[O0]]full file path[[C0]]. If several results appear, identify the resource version that most recently ran rather than choosing the first result at random. If this path does not exist, this guide does not apply to your client's structure." },
-  "打开一个[[O0]]单独的 CMD 窗口[[C0]]开始记录，再启动官服应用：": { "en": "Open a [[O0]]separate CMD window[[C0]] to start logging, then launch the official game:" },
-  "将 [[A0]] 复制到目标设备，在[[O1]]标准版[[C1]]中“导入存档”。核对青蛙、库存、照片与日记后，导出一份 [[A2]] 长期保存。": { "en": "Copy [[A0]] to the target device, then choose “Import Save” in the [[O1]]Standard Edition[[C1]]. After checking the frog, inventory, photos, and diary, export a [[A2]] file for long-term safekeeping." },
-  "在新设备打开[[O0]]同一版本[[C0]]，点击“导入存档”。确认后进入游戏，核对青蛙名字、相册和物品。": { "en": "On the new device, open the [[O0]]same edition[[C0]] and choose “Import Save.” After confirming, enter the game and check the frog's name, album, and items." },
-  "针对Steam上的[[O0]]Bongo Cat[[C0]]，刷点击次数与成就。": { "en": "For [[O0]]Bongo Cat[[C0]] on Steam, to build up the click count and unlock achievements." },
-  "参考[[O0]]这篇博客[[C0]]": { "en": "See [[O0]]this blog post[[C0]]." },
-  "受到小红书用户[[O0]]@呱命由我不由服[[C0]]这篇备份游戏数据的[[O1]]文章[[C1]]的启发，决定开启《旅行青蛙·中国之旅》的离线保存项目，希望可以保留原客户端、资源和自己的存档，在2026.12.8停服后，让原来的客户端可以在本地服务器上运行。": { "en": "Inspired by Xiaohongshu user [[O0]]@呱命由我不由服[[C0]] and their [[O1]]article[[C1]] about backing up game data, I decided to start an offline preservation project for Travel Frog: A Journey to China. I hoped to preserve the original client, assets, and my own save so the original client could run on a local server after the scheduled shutdown on December 8, 2026." },
-  "[[O0]]研究启发：[[C0]] ACON 展示的是“用下游任务反馈优化上游表示”。与 CoMem 连起来看，一个研究怎样压缩，另一个研究压缩何时执行。 [[O1]][[C1]]": { "en": "[[O0]]Research implications:[[C0]] ACON demonstrates how feedback from downstream tasks can optimize upstream representations. Viewed alongside CoMem, one studies how to compress, while the other studies when compression should take place. [[O1]][[C1]]" },
+  "《旅行青蛙·中国之旅》[[A0]][[O1]]本地逆向版[[C1]]": {
+    "en": "Travel Frog: A Journey to China[[A0]][[O1]]Local Reverse-Engineered Edition[[C1]]"
+  },
+  "标准版双击 [[A0]]；图鉴版双击 [[A1]]。请保留整个文件夹，不要只拿走 EXE。": {
+    "en": "For the Standard Edition, double-click [[A0]]; for the Gallery Edition, double-click [[A1]]. Keep the entire folder together rather than moving only the EXE."
+  },
+  "等待本地运行环境启动，选择“导入存档”，在系统文件选择器中选中 [[A0]]、兼容 JSON 或完整初始化协议 JSONL；没有备份则点击“开始新的旅程”。": {
+    "en": "Wait for the local runtime to start, choose “Import Save,” and use the system file picker to select a [[A0]] file, a compatible JSON file, or a protocol JSONL file containing complete initialization data. If you have no backup, choose “Start a New Journey.”"
+  },
+  "已有 [[A0]]、兼容 JSON 存档或完整初始化 JSONL 的玩家，直接在本地版中导入，不需要安装模拟器，也不需要登录官服。": {
+    "en": "If you already have a [[A0]] file, a compatible JSON save, or a JSONL file containing complete initialization data, import it directly into the local edition. You do not need an emulator or an official-server login."
+  },
+  "已有本项目备份的玩家直接使用上方导入功能。还只有官服账号时，需要在[[O0]]官服仍能正常登录[[C0]]的设备上先保存完整登录数据；离线版不接收你的手机号、验证码或官服密码，也不能凭账号信息从已经关闭的服务器找回进度。": {
+    "en": "If you already have a backup from this project, use the import feature above. If you only have an official-server account, first capture the complete login initialization data on a device where [[O0]]you can still log in to the official game[[C0]]. The offline version does not ask for your phone number, verification code, or official-server password, and cannot recover progress from a closed server using account details alone."
+  },
+  "[[O0]]采集后再导入本地版：[[C0]]解析日志得到 [[A1]]，在标准版中选择“导入存档”。本地版不要求手机号、验证码或官服密码。": {
+    "en": "[[O0]]Capture first, then import into the local edition:[[C0]] parse the log to obtain [[A1]], then choose “Import Save” in the Standard Edition. The local edition does not require a phone number, verification code, or official-server password."
+  },
+  "记下当前已运行版本的[[O0]]完整文件路径[[C0]]。如果有多个结果，对照最近运行的资源版本，不要随便选第一个；如果没有此路径，当前客户端结构不适用本教程。": {
+    "en": "Record the running version's [[O0]]full file path[[C0]]. If several results appear, identify the resource version that most recently ran rather than choosing the first result at random. If this path does not exist, this guide does not apply to your client's structure."
+  },
+  "打开一个[[O0]]单独的 CMD 窗口[[C0]]开始记录，再启动官服应用：": {
+    "en": "Open a [[O0]]separate CMD window[[C0]] to start logging, then launch the official game:"
+  },
+  "将 [[A0]] 复制到目标设备，在[[O1]]标准版[[C1]]中“导入存档”。核对青蛙、库存、照片与日记后，导出一份 [[A2]] 长期保存。": {
+    "en": "Copy [[A0]] to the target device, then choose “Import Save” in the [[O1]]Standard Edition[[C1]]. After checking the frog, inventory, photos, and diary, export a [[A2]] file for long-term safekeeping."
+  },
+  "在新设备打开[[O0]]同一版本[[C0]]，点击“导入存档”。确认后进入游戏，核对青蛙名字、相册和物品。": {
+    "en": "On the new device, open the [[O0]]same edition[[C0]] and choose “Import Save.” After confirming, enter the game and check the frog's name, album, and items."
+  },
+  "针对Steam上的[[O0]]Bongo Cat[[C0]]，刷点击次数与成就。": {
+    "en": "For [[O0]]Bongo Cat[[C0]] on Steam, to build up the click count and unlock achievements."
+  },
+  "参考[[O0]]这篇博客[[C0]]": {
+    "en": "See [[O0]]this blog post[[C0]]."
+  },
+  "受到小红书用户[[O0]]@呱命由我不由服[[C0]]这篇备份游戏数据的[[O1]]文章[[C1]]的启发，决定开启《旅行青蛙·中国之旅》的离线保存项目，希望可以保留原客户端、资源和自己的存档，在2026.12.8停服后，让原来的客户端可以在本地服务器上运行。": {
+    "en": "Inspired by Xiaohongshu user [[O0]]@呱命由我不由服[[C0]] and their [[O1]]article[[C1]] about backing up game data, I decided to start an offline preservation project for Travel Frog: A Journey to China. I hoped to preserve the original client, assets, and my own save so the original client could run on a local server after the scheduled shutdown on December 8, 2026."
+  },
+  "[[O0]]研究启发：[[C0]] ACON 展示的是“用下游任务反馈优化上游表示”。与 CoMem 连起来看，一个研究怎样压缩，另一个研究压缩何时执行。 [[O1]][[C1]]": {
+    "en": "[[O0]]Research implications:[[C0]] ACON demonstrates how feedback from downstream tasks can optimize upstream representations. Viewed alongside CoMem, one studies how to compress, while the other studies when compression should take place. [[O1]][[C1]]"
+  },
   "GDB 中，若 [[A0]] 是节点地址，[[A1]] 看两个整数，[[A2]] 看 [[A3]] 指针。[[O4]]节点编号、节点地址、节点值和 next 地址要分别记录。[[C4]] Bomb Lab 第六关按输入编号选节点，重接 next，再比较相邻节点的 value；最终排序方向由 [[A5]] 的操作数顺序和 [[A6]] 等条件决定。": {
     "en": "In GDB, if [[A0]] is a node address, [[A1]] displays two integers and [[A2]] displays the [[A3]] pointer. [[O4]]Record the node number, node address, node value, and next address separately.[[C4]] Bomb Lab Phase 6 selects nodes by the input numbers, reconnects next pointers, and compares adjacent nodes' values. The final sort direction depends on the operand order of [[A5]] and conditions such as [[A6]]."
   },
@@ -27,5 +55,77 @@
   },
   "“差分数组”和“扫描线（sweep line）”这两个算法思想非常常用，尤其在处理[[O0]]区间修改、区间计数、区间重叠[[C0]]等问题时。 下面我会逐步讲清楚它们的[[O1]]原理、区别、联系[[C1]]，并附上[[O2]]清晰的 Python 示例[[C2]]。": {
     "en": "Difference arrays and sweep lines are widely used, particularly for [[O0]]range updates, interval counting, and interval overlap[[C0]]. Below, I explain their [[O1]]principles, differences, and connections[[C1]] step by step, with [[O2]]clear Python examples[[C2]]."
+  },
+  "例如 [[A0]]，编码 [[A1]]。最小正规格化正数是 [[A2]]；最小正非规格化数是 [[A3]]。非规格化区域相邻值间距恒为 [[A4]]，使数值平滑靠近零。[[A5]] 和 [[A6]] 数值比较相等，但符号位不同；[[A7]] 与 [[A8]] 可得到不同符号的无穷。这里需要注意的是[[O9]]规格化数的有效数字 [[A10]] 有一个隐含的前导 [[A11]][[C9]]，因此实际精度会高一位；非规格化数没有这个前导 [[A12]]。": {
+    "en": "For example, [[A0]], encoded as [[A1]]. The smallest normalized positive number is [[A2]]; the smallest positive subnormal number is [[A3]]. The spacing between adjacent values in the subnormal region is always [[A4]], allowing values to approach zero smoothly. [[A5]] and [[A6]] compare as equal numerically but have different sign bits; [[A7]] and [[A8]] yield infinities with different signs. It should be noted that the significant digits of a [[O9]] normalized number [[A10]] have an implicit leading [[A11]] [[C9]], so the actual precision is one bit higher; subnormal numbers do not have this leading [[A12]]."
+  },
+  "设小数字段有 [[A0]] 位，其编码作为无符号整数读出为 [[A1]]。[[O2]]规格化数使用 [[A3]]，非规格化数使用 [[A4]]：[[C2]]": {
+    "en": "Suppose a small field has [[A0]] bits, its encoding as an unsigned integer is [[A1]]. [[O2]] normalized numbers use [[A3]], subnormal numbers use [[A4]]: [[C2]]"
+  },
+  "[[O0]]指数域为零时，实际指数取 [[A1]][[C0]]，不能直接套用 [[A2]]。 因而非规格化数与最小规格化数使用同一个实际指数，只是前导位从 [[A3]] 变为 [[A4]]。": {
+    "en": "When the exponent field [[O0]] is zero, the actual exponent is [[A1]] [[C0]], and [[A2]] cannot be applied directly. Therefore, subnormal numbers and the smallest normalized numbers use the same actual exponent, except that the leading bit changes from [[A3]] to [[A4]]."
+  },
+  "以最大正非规格化数为例，符号为 [[A0]]，指数为八个 [[A1]]，小数为二十三个 [[A2]]。它的有效数字及数值为：": {
+    "en": "Taking the largest positive subnormal number as an example, the sign is [[A0]], the exponent is eight [[A1]]s, and the fraction has twenty-three [[A2]] bits. Its significand and value are:"
+  },
+  "这与非规格化区域内部的间距一致，使表示的数值可以逐步接近零，称为[[O0]]渐进下溢（gradual underflow）[[C0]]。非规格化数的小数前部可能出现越来越多的零，有效精度也随之降低；规格化数的隐含前导 [[A1]] 不适用于它们。": {
+    "en": "This is consistent with the spacing within the subnormal range, allowing represented values to gradually approach zero, called [[O0]] gradual underflow [[C0]]. The leading part of the fraction in subnormal numbers may have an increasing number of zeros, and the effective precision decreases accordingly; the implicit leading [[A1]] of normalized numbers does not apply to them."
+  },
+  "一般格式若阶码 [[A0]] 位、小数字段 [[A1]] 位，则 [[A2]]。规格化数用 [[A3]]、[[A4]]；非规格化数用 [[A5]]、[[A6]]，数值均为 [[A7]]。": {
+    "en": "In the general format, if the exponent has [[A0]] bits and the fraction field has [[A1]] bits, then [[A2]]. Normalized numbers use [[A3]] and [[A4]]; subnormal numbers use [[A5]] and [[A6]], with values all being [[A7]]."
+  },
+  "单精度特殊值：正零 [[A0]]，负零 [[A1]]，正无穷 [[A2]]，负无穷 [[A3]]；指数全 [[A4]] 且小数字段非零是 NaN。最小正规格化正数 [[A5]]，最小正非规格化数 [[A6]]。向偶数舍入在[[O7]]被舍弃位恰为 [[A8]] 时[[C7]]，选择保留位末位为 [[A9]] 的结果；浮点转整数按 C 的规则向零截断。": {
+    "en": "Single-precision special values: positive zero [[A0]], negative zero [[A1]], positive infinity [[A2]], negative infinity [[A3]]; exponent all [[A4]] and non-zero fraction field is NaN. The smallest normalized positive number [[A5]], the smallest positive subnormal number [[A6]]. Rounding to even, when the discarded bits at [[O7]] are exactly [[A8]], [[C7]], choose the result with the last bit of the retained part as [[A9]]; floating-point to integer conversion truncates toward zero according to C rules."
+  },
+  "位模式 [[A0]]，数值为最小正非规格化数 [[A1]]。": {
+    "en": "Bit pattern [[A0]], numeric value is the smallest positive subnormal number [[A1]]."
+  },
+  "[[A0]] 直接构造 [[A1]]：[[A2]] 返回正无穷；[[A3]] 生成阶码 [[A4]]、小数为零的规格化数；[[A5]] 生成 [[A6]] 的非规格化编码；[[A7]] 返回零。先判断区间再计算指数，避免直接对整个输入范围取负。": {
+    "en": "[[A0]] directly constructs [[A1]]: [[A2]] returns positive infinity; [[A3]] generates a normalized number with exponent [[A4]] and zero fraction; [[A5]] generates a subnormal encoding of [[A6]]; [[A7]] returns zero. First determine the interval before calculating the exponent to avoid taking the negative across the entire input range."
+  },
+  "先写数学关系或目标位模式，再替换成合法操作，最后数运算符。验证时选零、正负数、最高／最低位、题目允许的移位边界，以及浮点零、非规格化边界、最大有限指数、无穷和 NaN。用 [[A0]] 检查运算符与数量，[[A1]] 对照结果，整数题可用 BDD 工具验证；[[A2]] 汇总这些检查。正确结果、合法表达式和操作数限制都要满足。": {
+    "en": "First write the mathematical relationship or target bit pattern, then replace it with legal operations, and finally count the operators. During verification, choose zero, positive and negative numbers, most/least significant bits, shift boundaries allowed by the problem, as well as floating-point zero, subnormal boundary, maximum finite exponent, infinity, and NaN. Use [[A0]] to check operators and quantity, [[A1]] to compare results, for integer problems BDD tools can be used to verify; [[A2]] summarizes these checks. Correct results, legal expressions, and operand restrictions must all be met."
+  },
+  "[[O0]]指标口径：[[C0]] 延迟区分 TTFT（首 token 等待）、生成耗时和任务完成时间；吞吐注明 token/s、turn/s、task/s 或 program/s。Acc. 是准确率，pass@1 是一次尝试的通过率，Util 是资源利用率；fidelity 是相对参考输出的一致程度。峰值 token、KV 容量、接受长度和命中率用于解释机制，不自动等于任务加速或质量提高。表中列主要指标，不罗列全部实验数字。": {
+    "en": "[[O0]] Metric definitions: [[C0]] Distinguish delays for TTFT (time to first token), generation time, and task completion time; throughput should specify token/s, turn/s, task/s, or program/s. Acc. is accuracy, pass@1 is the success rate on a single attempt, Util is resource utilization; fidelity is the degree of agreement with a reference output. Peak token count, KV capacity, accepted length, and hit rate explain mechanisms and do not automatically equal any of the above."
+  },
+  "Shunting Yard调度场算法。建立答案栈和符号栈，根据运算规则存入弹出符号。 [[A0]]": {
+    "en": "Shunting-yard algorithm. Build an answer stack and an operator stack, pushing and popping operators according to the precedence rules. [[A0]]"
+  },
+  "连续的块->笛卡尔积，逗号连接的块->并集。递归解析表达式，[[A0]]解析小块，而[[A1]]解析连续的表达式，通过递归调用将已完成的结果与新解析的块作笛卡尔积。[[A2]]解析由逗号连接的块，由于拼接的优先级比逗号高，因此先调用[[A3]]。作笛卡尔积时，第一个块使用空串占位，相当于乘法的1。": {
+    "en": "Consecutive blocks -> Cartesian product; comma-separated blocks -> union. Expressions are parsed recursively: [[A0]] parses a small block, while [[A1]] parses a consecutive expression, taking the Cartesian product of the completed result and the newly parsed block via recursive calls. [[A2]] parses comma-separated blocks; because concatenation binds tighter than the comma operator, it calls [[A3]] first. For the Cartesian product, the first block uses an empty string as a placeholder, equivalent to the multiplicative identity 1."
+  },
+  "辅助栈存放未被删除的字母，当前字母与栈顶比较。C++的string自带[[A0]]、[[A1]]等属性。": {
+    "en": "An auxiliary stack stores letters that have not been deleted, and the current letter is compared with the top of the stack. C++ strings provide [[A0]], [[A1]], and other methods."
+  },
+  "[[A0]]+[[A1]]读取不定长行；[[A2]]保存树；通过保存所有子节点来确定根节点。": {
+    "en": "Use [[A0]] + [[A1]] to read lines of variable length; [[A2]] stores the tree; the root is determined by recording all child nodes."
+  },
+  "[[A0]]+[[A1]]分隔逗号；dfs前序遍历序列化，遇到空节点用井号占位；反序列化同样递归进行。": {
+    "en": "Use [[A0]] + [[A1]] to split on commas; serialize with a preorder DFS, using a hash sign (#) as a placeholder for empty nodes; deserialization is recursive as well."
+  },
+  "3.getline()输入一整行，但如果与cin混用，在getline之前需要[[A0]]": {
+    "en": "3. getline() reads an entire line, but when mixed with cin, you need to call [[A0]] before getline"
+  },
+  "于是经过一番搜索与辗转之后，我找到了[[O0]]github[[C0]]和[[O1]]stackoverflow[[C1]]上的解决方法—— [[A2]] [[A3]] 点击[[O4]]这个网站[[C4]]下载vs": {
+    "en": "After much searching and backtracking, I found solutions on [[O0]] GitHub [[C0]] and [[O1]] Stack Overflow [[C1]]—[[A2]] [[A3]] Click on [[O4]] this website [[C4]] to download VS."
+  },
+  "然后…… [[A0]] 没有轮子……那怎么办呢？": {
+    "en": "Then... [[A0]] there is no wheel... so what now?"
+  },
+  "在 [[A0]] 时，单纯按键持续时间就将总吞吐量的理论上限限制在约 33 次/秒，实际通常还会更低。不建议通过无限提高 RATE 来加速，这样不一定增加有效计数，反而可能造成线程竞争。": {
+    "en": "With [[A0]], the key-press duration alone caps the theoretical maximum total throughput at about 33 presses per second, and in practice it is usually even lower. Do not try to speed things up by raising RATE indefinitely; doing so does not necessarily increase the effective count and may instead cause thread contention."
+  },
+  "单位为秒，[[A0]] 即 30ms。这个参数影响每次模拟按键从按下到释放的时间。持续时间太短可能无法被 Bongo Cat 正常记录，太长则会限制发送频率。本机测试中，30ms 是能够正常计数的配置。": {
+    "en": "The unit is seconds, so [[A0]] means 30 ms. This parameter controls how long each simulated key press lasts from press to release. Too short and Bongo Cat may not register it; too long and it limits the sending rate. In local tests, 30 ms was a setting that counted reliably."
+  },
+  "最初参考[[O0]]这一实现[[C0]]，使用的是数字和字母：": {
+    "en": "The initial implementation was based on [[O0]]this approach[[C0]], using digits and letters:"
+  },
+  "在误接 [[A0]] 系统的过程中还顺带确认了省花收藏和旅行地图是完全独立的。": {
+    "en": "During the process of mistakenly connecting to the [[A0]] system, it was also confirmed that the provincial-flower collection and the Travel Map are completely independent."
+  },
+  "[[O0]]主要结论：[[C0]] 工具运行中的进度，能提供历史统计和引擎占用率看不到的信息。它的价值尤其体现在“是否还来得及恢复”这一决策点；精确知道百分比仍不等于可以精确预测完成时间。长远程请求、未知脚本、非均匀阶段和环境突变都会限制信号效果。": {
+    "en": "[[O0]] Main conclusions: [[C0]]  Progress during tool execution can provide information not visible from historical statistics and engine utilization rates. Its value is especially evident at the decision point of \"whether there is still time to recover\"; knowing the exact percentage still does not allow precise prediction of completion time. Long-running remote requests, unknown scripts, uneven stages, and environmental changes all limit the effectiveness of the signals."
   }
 }

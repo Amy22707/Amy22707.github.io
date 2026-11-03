@@ -1,0 +1,16 @@
+---
+import AuthorList from "./AuthorList.astro";
+import type { ResearchOutput } from "../data/publications";
+interface Props { entry: ResearchOutput; }
+const { entry } = Astro.props;
+---
+<div class="research-metadata">
+  <p class="research-authors"><AuthorList authors={entry.authors} /></p>
+  {(entry.conference || entry.journal || entry.awards?.length) && (
+    <dl class="research-facts">
+      {entry.conference && <div><dt>Conference</dt><dd>{entry.conference}</dd></div>}
+      {entry.journal && <div><dt>Journal</dt><dd>{entry.journal}</dd></div>}
+      {entry.awards?.length ? <div><dt>Awards</dt><dd><ul class="research-awards">{entry.awards.map(award => <li>{award}</li>)}</ul></dd></div> : null}
+    </dl>
+  )}
+</div>

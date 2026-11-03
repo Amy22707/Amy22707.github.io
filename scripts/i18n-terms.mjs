@@ -9,9 +9,20 @@ export function normalizeTerms(source, english) {
   };
   if (!/\blong[- ]range\b/i.test(source)) replace(/长程/, /\blong[- ]range\b/gi, 'long-horizon');
   replace(/显存/, /\bVRAM\b/g, 'GPU memory');
+  replace(/显存/, /\bvideo[- ]memory\b/gi, 'GPU memory');
   replace(/缓存抖动/, /\bcache jitter\b/gi, 'cache thrashing');
   replace(/状压|状态压缩/, /\bstate[- ]compressed\s+dp\b/gi, 'bitmask DP');
+  replace(/状压|状态压缩/, /\bstate[- ]compress(?:ed|ion)\s+dp\b/gi, 'bitmask DP');
   replace(/攻略截图/, /\b(?:strategy|guide) screenshots\b/gi, 'walkthrough screenshots');
+  replace(/扭蛋机/, /\bgacha(?:pon)?[ -]machine\b/gi, 'gashapon machine');
+  replace(/扭蛋机/, /\bgachapon\b/gi, 'gashapon');
+  replace(/正式服/, /\bformal servers\b/gi, 'official servers');
+  replace(/正式服/, /\bformal server\b/gi, 'official server');
+  replace(/正式服/, /\blive servers\b/gi, 'official servers');
+  replace(/正式服/, /\blive server\b/gi, 'official server');
+  replace(/实机/, /\bactual[- ]device testing\b/gi, 'real-device testing');
+  replace(/实机/, /\blive testing\b/gi, 'real-device testing');
+  replace(/实机/, /\bactual[- ]device\b/gi, 'real device');
   if (/漂流瓶/.test(source)) result = result
     .replace(/\bmessage in a drifting bottle\b/gi, 'message in a bottle')
     .replace(/\b(?:drift(?:ing)?[ -]+|message-in-a-)bottle(s?)\b/gi, (match, plural) => (/^[A-Z]/.test(match) ? 'Message' : 'message') + ' bottle' + plural);

@@ -94,5 +94,30 @@ or set it to false to return an entry to date ordering.
 Blog Markdown supports the same `pinned` and `pinOrder` fields. Unpinned posts still
 sort by `publishedAt`, not `updatedAt`. Pinning applies to the Blog/Projects lists
 and tag lists; it does not change article dates, chronological Previous/Next links,
-homepage Recent Writing, or homepage featured-project selection. `featured` remains
-the separate homepage-selection setting and no longer controls the Projects list.
+homepage Recent Writing, or homepage selected projects. `featured` controls the
+highlight badge and homepage priority, not date ordering in the Projects list.
+
+The homepage's current selected projects are FocusBloom and Travel Frog. The IDs
+are listed in `homepageProjectIds` in `src/pages/index.astro`; `featured` chooses
+their badge and display priority. Other project entries remain in the full list.
+
+# Publications and presentations
+
+Edit `src/data/publications.ts`. Write `authors` as an array in the original
+authorship order; the site never rearranges authors. Names listed in
+`ownerAuthorNames` are shown in bold automatically on the homepage and Publications
+page. A trailing `*`, `†`, or `‡` may be included without losing the name highlight.
+
+```ts
+authors: ["First Author", "Zhiyao Xue", "Third Author"],
+conference: "Conference name",
+journal: "Journal name",
+awards: ["Award name"],
+```
+
+The conference, journal, and awards fields are optional and shown only when provided.
+Conference and journal are separate rows when both exist. Papers
+belong in `publications`; slides, posters and competition presentations belong in
+`presentations`. Keep their actual status and do not label a competition presentation
+as an accepted conference paper. The Mahjong competition award is recorded with its
+presentation, rather than repeated in the homepage's general honors list.
