@@ -73,20 +73,30 @@ These integration tests use disposable local worktrees and local bare remotes on
 # Project dates and pins
 
 The Projects page and tag pages split entries into Projects and Course Notes. In
-each section, pinned entries come first; normal entries are ordered by `date`,
+each section, pinned entries come first; normal entries are ordered by `publishedAt`,
 newest first. Equal dates use the content ID for stable ordering. Entries without
 a date go last: no creation/publication dates are invented for existing entries.
 
 Add these fields to a project's Markdown frontmatter:
 
 ```yaml
-date: 2026-11-03
+publishedAt: 2026-11-03
+updatedAt: 2026-11-03
 pinned: true
 pinOrder: 1
 ```
 
-`date` is the entry date you want the site to use, not the current file modification
-time. Pinned entries with smaller `pinOrder` values appear earlier. The default is
+`publishedAt` is the entry's publication/reference date, not its update date or file
+modification time. `updatedAt` is display-only and never changes ordering. Existing
+`date` fields remain supported as a legacy publication-date fallback. ISO timestamps
+are also accepted; dates are displayed in the Asia/Shanghai time zone. Initial dates
+were checked against GitHub repository creation and latest code-push timestamps;
+the user's explicit dates take priority. Repository creation is a reference date,
+not proof of the current project's first release or the date a private repository
+became public. In particular, reusing an older repository for a rebuilt website
+does not make the repository's creation date that website's publication date.
+
+Pinned entries with smaller `pinOrder` values appear earlier. The default is
 100, so `pinned: true` alone works, and adding `pinOrder: 1`, `2`, etc. lets you arrange
 chosen cards like GitHub pins. All entries are unpinned by default; remove `pinned`
 or set it to false to return an entry to date ordering.

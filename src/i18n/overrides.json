@@ -1,4 +1,6 @@
 {
+  "A personal website built with Astro and Markdown for sharing my writing, projects, and links. The current version has been developed and maintained since July 7, 2026.": { "zh": "使用 Astro 和 Markdown 搭建的个人网站，用于分享文章、项目和链接。当前版本自 2026 年 7 月 7 日开始建设并持续维护。" },
+  "Follow your device theme": { "zh": "跟随系统主题" },
   "Conference": { "zh": "会议" },
   "Journal": { "zh": "期刊" },
   "Venue": { "zh": "会议／平台" },
@@ -6,7 +8,19 @@
   "FocusBloom": { "zh": "一刻专注 · FocusBloom" },
   "A Windows focus and study-management app with project-based timers, tasks, planning, and daily reviews. Currently in development.": { "zh": "面向 Windows 的专注与学习管理软件，整合项目计时、待办、计划与每日复盘。目前仍在开发中。" },
   "An unofficial local preservation project for Travel Frog: A Journey to China, with offline gameplay, photo collections, and save import/export. Source code is not public yet.": { "zh": "《旅行青蛙·中国之旅》的非官方本地保存项目，支持离线游玩、照片收藏与存档导入导出。源码尚未公开。" },
-  "Offline": { "zh": "离线运行" },
+  "Offline": { "zh": "本地服务器" },
+  "Agents": { "zh": "智能体" },
+  "AI_systems": { "zh": "人工智能系统" },
+  "LLM_Inference": { "zh": "大语言模型推理" },
+  "Android": { "zh": "安卓" },
+  "ICS": { "zh": "计算机系统导论" },
+  "OOP": { "zh": "面向对象编程" },
+  "圣诞老人的礼物-Santa Claus's Gifts": { "en": "Santa Claus's Gifts" },
+  "，无符号解释 B2U（Binary to Unsigned）和补码解释 B2T（Binary to Two's-complement）分别为：": { "en": ", unsigned interpretation B2U (Binary to Unsigned) and two's complement interpretation B2T (Binary to Two's-complement) are respectively:" },
+  "2.f-string f\"{a}output{b:.2f}\" #保留两位小数 3.必须参数：调用时必须提供的参数 默认参数：定义函数时已提供默认值，必须在必须函数后面": { "en": "2. f-string f\"{a}output{b:.2f}\" # keep two decimal places 3. Required parameter: must be provided when calling the function Default parameter: has a default value defined in the function, must come after required parameters" },
+  "二进制存储每行、列与九宫格的状态。 mask & (-mask)：取出最低位的1，从最低位开始尝试。 digit = bin(digitMask).count(\"0\") - 1：获得最低位的1是第几位。 mask &= (mask - 1)：去掉最低位的1 启发式搜索：先把能唯一确定的格子填好，再对不确定的格子dfs. 注意dfs的时候如果成功了要传递状态并return掉，避免把好的结果覆盖掉。": { "en": "Use binary to store the state of each row, column, and 3x3 grid. mask & (-mask): extract the lowest bit set to 1, try from the lowest bit. digit = bin(digitMask).count(\"0\") - 1: find which bit the lowest 1 is. mask &= (mask - 1): remove the lowest 1. Heuristic search: first fill cells that can be uniquely determined, then DFS on uncertain cells. Note: during DFS, if successful, pass the state and return to avoid overwriting a correct result." },
+  "采用Warnsdorff's Rule进行启发式搜索。即在后续格子中选择出路最少、离边界最近的，可以减少后续走了很长的路然后进入死胡同的可能性。": { "en": "Use Warnsdorff's Rule for heuristic search. That is, choose the cell with the fewest exit options closest to the boundary among the subsequent cells, which can reduce the possibility of traveling a long path and then entering a dead end." },
+  "maxm=float(\"-inf\") minm=float(\"inf\") 最大值有可能为负。": { "en": "maxm = float(\"-inf\") minm = float(\"inf\") The maximum value could be negative." },
   "C#": { "zh": "C#" },
   "WPF": { "zh": "WPF" },
   "SQLite": { "zh": "SQLite" },
@@ -710,7 +724,7 @@
     "en": "Existing progress is backed up automatically before it is overwritten. On Windows, this backup is in"
   },
   "中找到它；安卓和网页增加“导出上次导入前的备份”，让玩家不需要 root 或访问应用私有目录，也能取回刚被覆盖的存档。": {
-    "en": "; Android and the web provide an “Export backup from before the last import” option, so players can recover the overwritten save without root access or opening the app's private storage."
+    "en": "; Android and the web provide an \"Export backup from before the last import\" option, so players can recover the overwritten save without root access or opening the app's private storage."
   },
   "官服账号密码本身不是存档。官服备份仍需要先保存完整初始化数据，并额外加载相册详情；只有照片索引不能保证还原历史构图。介绍页把开启采集日志、浏览各模块、解析数据、导入普通版及恢复原脚本的过程整理成独立教程。": {
     "en": "An official-server username and password are not a save file. Backing up official progress still requires capturing the full initialization data and loading album details separately; photo indexes alone cannot guarantee reconstruction of the original compositions. The project page provides a separate guide to enabling capture logs, browsing each module, parsing the data, importing it into the Standard Edition, and restoring the original script."
@@ -761,7 +775,7 @@
     "en": "Another inspection of the official client revealed a separate visiting-frog system:"
   },
   "现在将它作为单独的本地系统接入。模拟来访者统一叫“过路旅蛙”，不带真实玩家账号或个人信息。省份、吃饭动作、垫子与回礼沿用正式客户端可识别的数据结构，不消耗礼品盒里的照片、特产或自己的旅行背包。": {
-    "en": "It is now integrated as a separate local system. Simulated visitors are all named “Passing Traveler Frog,” with no real player accounts or personal information. Provinces, eating animations, mats, and thank-you gifts use structures recognized by the official client. Visits do not consume gift-box photos, souvenirs, or items in the player's travel bag."
+    "en": "It is now integrated as a separate local system. Simulated visitors are all named \"Passing Traveler Frog,\" with no real player accounts or personal information. Provinces, eating animations, mats, and thank-you gifts use structures recognized by the official client. Visits do not consume gift-box photos, souvenirs, or items in the player's travel bag."
   },
   "首次领取某个省份的回礼会收录对应省花；再次遇到该省份则按正式配置获得普通回礼。省花是串门收藏。青蛙离开后，礼物保留到领取；重复点击不会重复发奖，也不会被下一只来访青蛙覆盖。": {
     "en": "The first thank-you gift claimed from a province adds its provincial flower to the collection. Later visits from the same province award ordinary gifts according to the official configuration. Provincial flowers are a collection associated with visits. After a frog leaves, its gift stays until claimed; repeated clicks neither duplicate the reward nor allow the next visitor to overwrite it."
@@ -776,7 +790,7 @@
     "en": "Both editions share this implementation across Windows, Android, and web/PWA builds. Test packages have been updated to"
   },
   "。两个 Windows 版本都验证了“来访动画 → 信息窗 → 到期回礼 → 领取省花 → 存档落盘”；手机本地运行环境则在 Chromium 与 WebKit 中实际显示了过路旅蛙。专门的串门回归与原有状态测试合计25项通过，个人存档未修改。": {
-    "en": ". Both Windows editions were tested through the sequence “visit animation → information panel → gift after departure → provincial flower claimed → save written to disk.” The mobile local runtime also displayed a visiting frog in Chromium and WebKit. The dedicated visiting-system regression tests and existing state tests passed all 25 checks; personal saves were not modified."
+    "en": ". Both Windows editions were tested through the sequence \"visit animation → information panel → gift after departure → provincial flower claimed → save written to disk.\" The mobile local runtime also displayed a visiting frog in Chromium and WebKit. The dedicated visiting-system regression tests and existing state tests passed all 25 checks; personal saves were not modified."
   },
   "今后的可见交互测试放在新建的独立 Windows 桌面中，避免打断正在做的事情。本轮使用后台命令和独立无头浏览器，不打开可见游戏或模拟器窗口。": {
     "en": "Future visible interaction tests will run on a newly created, separate Windows desktop to avoid interrupting ongoing work. This round used background commands and a separate headless browser, without opening visible game or emulator windows."
@@ -809,7 +823,7 @@
     "en": ", but the server has no corresponding offline ranking handler. The single-player edition has no other real players and does not present invented data as an official leaderboard."
   },
   "旅行、聚会返程、礼品盒旅友、庭院邻居、花圃、花瓶、家具与手工品均有实际运行调用点。旧日志中记录过“未实现”的指令，也需要与当前代码对照，不能把历史报错直接当作今天仍未修好的问题。": {
-    "en": "Travel, returns from gatherings, gift-box travel companions, courtyard neighbors, flowerbeds, vases, furniture, and crafts all have active runtime call sites. Commands once logged as “not implemented” must be checked against the current code; a historical error alone does not prove that the feature is still broken today."
+    "en": "Travel, returns from gatherings, gift-box travel companions, courtyard neighbors, flowerbeds, vases, furniture, and crafts all have active runtime call sites. Commands once logged as \"not implemented\" must be checked against the current code; a historical error alone does not prove that the feature is still broken today."
   },
   "这次补全的是独立庭院串门流程；周末后续期数、漂流瓶新内容和排行榜继续作为明确待办，不混入同一个补丁。": {
     "en": "This update completes the separate courtyard-visiting flow. Later weekend event rounds, new message bottle content, and leaderboards remain explicit TODOs rather than being folded into the same patch."
@@ -817,11 +831,8 @@
   "About | Amy": {
     "zh": "关于我 | Amy"
   },
-  "#Agents": {
-    "zh": "#智能体"
-  },
-  "#LLM_Inference": {
-    "zh": "#LLM_Inference"
+  "Survey on Inference/Context/Memory/Scheduling/KV": {
+    "zh": "推理 / 上下文 / 记忆 / 调度 / KV 缓存 综述"
   },
   "Light": {
     "zh": "浅色"
@@ -932,7 +943,7 @@
     "en": "dfs. Python's built-in permutations returns a list of tuples."
   },
   "从上学期就开始说的打比赛不要急是什么意思！ 就是T2被卡了，以及T6交的前两发输出格式都不对。": {
-    "en": "What did I mean by “don't rush” in contests, a point I have been making since last semester? It is that I got stuck on T2, and my first two submissions for T6 had the wrong output format."
+    "en": "What did I mean by \"don't rush\" in contests, a point I have been making since last semester? It is that I got stuck on T2, and my first two submissions for T6 had the wrong output format."
   },
   "直接开三次根再取整会产生进度问题。预存每个数的三次方。枚举三个加和的数避免重复运算。": {
     "en": "Taking the cube root directly and rounding can cause precision issues. Precompute the cube of each number. Enumerate three numbers and sum them to avoid repeated calculations."
@@ -998,7 +1009,7 @@
     "en": "and writes it to the save. The daily calendar lucky-gift flow is now complete end to end."
   },
   "聚会返程虽然已有本地逻辑，但我仍把它和已经多次实机闭环的普通旅行区分开，不把“代码存在”直接等同于“完全还原官方算法”。": {
-    "en": "Although the return from a gathering now has local logic, I still distinguish it from ordinary trips that have passed repeated real-device end-to-end tests, and I do not equate “code exists” with “fully reproduces the official algorithm.”"
+    "en": "Although the return from a gathering now has local logic, I still distinguish it from ordinary trips that have passed repeated real-device end-to-end tests, and I do not equate \"code exists\" with \"fully reproduces the official algorithm.\""
   },
   "能够完整闭环。": {
     "en": "can run end to end."
@@ -1025,7 +1036,7 @@
     "en": "Matching photos already present in the Standard and Gallery editions have been migrated, and dry scenes generated by new trips will use the correct coordinates directly."
   },
   "完结撒花🎉": {
-    "en": "That’s a wrap 🎉"
+    "en": "That's a wrap 🎉"
   },
   "节日内容的差异则保持明确：": {
     "en": "The festival content differences remain explicit:"
@@ -1037,7 +1048,7 @@
     "en": "Continuously appending history within a turn helps prefix reuse; pauses between turns, model switches, and context rewrites cause different forms of cold start. Short waits for tools within a turn and long waits for the user between turns call for different retention policies."
   },
   "5.2 Continnum：工具还没返回，KV 值得保留多久": {
-    "en": "5.2 Continnum: How long is KV worth retaining while tools haven’t returned"
+    "en": "5.2 Continnum: How long is KV worth retaining while tools haven't returned"
   },
   "主模型为 Qwen3-Coder-30B-A3B-Instruct BF16，OpenHands CodeActAgent、SWE-bench Verified，vLLM 0.13.0 + LMCache 0.3.12；另测 Qwen2.5-Coder-32B-Instruct 与 H20/H800/RTX 3090 部署。主要容量/策略比较是依赖保持回放：固定每次输入和输出 token、记录工具间隔，但服务时间可改变后续发起时刻和任务交错；makespan（整批任务完成耗时）计入这些间隔。这些结果不证明任务成功率提高，硬件与轨迹范围仍有限。": {
     "en": "The main model is Qwen3-Coder-30B-A3B-Instruct BF16 using OpenHands CodeActAgent on SWE-bench Verified, with vLLM 0.13.0 + LMCache 0.3.12; Qwen2.5-Coder-32B-Instruct was also tested on H20/H800/RTX 3090 deployments. The main capacity/strategy comparison uses dependency-preserving replay: input and output token counts are fixed and tool intervals are recorded, while service time can shift later request start times and task interleaving; makespan (time to finish the whole batch) includes these intervals. These results do not prove higher task success rates, and the hardware and trajectory coverage remain limited."
@@ -1064,10 +1075,10 @@
     "en": ": First group by memory form, then compare across columns such as Task, Type, and Memory Form; the Optimization column in Table 2 marks integration/training strategies such as SFT, FT, and PE. Following their practice of giving training strategy its own column, do not misread Optimization as a latency/throughput target. Multi in Table 1 means multimodal, not multi-user."
   },
   "编排器标出系统提示、用户查询、工具结果、最终回答和部分 prefill 等类别，引擎结合类别设置驱逐优先级，同级使用 LRU。本文策略优先回收最终回答、再到工具输出与用户查询，较晚回收系统提示，优先保护等待续接的部分 prefill。最终回答低复用是本文工作流的假设；多轮聊天中它可能进入下一轮历史，不能直接照搬固定排序。调度同时保留整个 Agent 请求的到达顺序。": {
-    "en": "The orchestrator marks categories such as system prompts, user queries, tool results, final answers, and partial prefill; the engine assigns eviction priorities by category and uses LRU within the same priority. This paper’s policy reclaims final answers first, then tool outputs and user queries, keeps system prompts longer, and preferentially protects partial prefill waiting to be continued. Low reuse of final answers is an assumption of this paper’s workload; in multi-turn chat they may enter the next turn’s history, so the fixed order cannot be copied directly. Scheduling also preserves the arrival order of whole agent requests."
+    "en": "The orchestrator marks categories such as system prompts, user queries, tool results, final answers, and partial prefill; the engine assigns eviction priorities by category and uses LRU within the same priority. This paper's policy reclaims final answers first, then tool outputs and user queries, keeps system prompts longer, and preferentially protects partial prefill waiting to be continued. Low reuse of final answers is an assumption of this paper's workload; in multi-turn chat they may enter the next turn's history, so the fixed order cannot be copied directly. Scheduling also preserves the arrival order of whole agent requests."
   },
   "KV 在 CPU 与 GPU 之间的搬运也经过配对 CNIC，通过 RDMA（远程直接内存访问）传输。这样本地搬运与跨机器传输都能受网卡的流量优先级控制。模型的专家通信、集合通信使用高优先级队列；KV 流量使用低优先级队列，利用空闲带宽并保留最低服务份额。绕行网卡增加了路径，但提供了普通 CUDA 拷贝难以实现的统一隔离。": {
-    "en": "KV transfers between CPU and GPU also go through paired CNICs and are transmitted via RDMA (Remote Direct Memory Access). This places both local transfers and cross-machine transfers under NIC traffic-priority control. The model’s expert-parallel and collective communication use high-priority queues; KV traffic uses low-priority queues, using spare bandwidth while reserving a minimum service share. Routing through the NIC adds a path but provides unified isolation that ordinary CUDA copies cannot achieve."
+    "en": "KV transfers between CPU and GPU also go through paired CNICs and are transmitted via RDMA (Remote Direct Memory Access). This places both local transfers and cross-machine transfers under NIC traffic-priority control. The model's expert-parallel and collective communication use high-priority queues; KV traffic uses low-priority queues, using spare bandwidth while reserving a minimum service share. Routing through the NIC adds a path but provides unified isolation that ordinary CUDA copies cannot achieve."
   },
   "5.14 Sutradhara：提前 prefill、流式派发工具与语义缓存提示": {
     "en": "5.14 Sutradhara: Early prefill, streaming dispatch of tools, and semantic-cache hints"
@@ -1259,7 +1270,7 @@
     "en": "→ 14 official themes, regular furniture, all roly-polies, compost bins, pouches, and related design plans"
   },
   "Stage23.从“漂流瓶”改造成个人旅行日记": {
-    "en": "Stage 23. Turning the “drift bottle” into a personal travel diary"
+    "en": "Stage 23. Turning the \"drift bottle\" into a personal travel diary"
   },
   "漂流瓶的处理": {
     "en": "Handling drift bottles"
@@ -1277,13 +1288,13 @@
     "en": "In real-device testing, this flow finally ran through completely once:"
   },
   "所以之前做的“离线期间自动加三叶草”被改成了真正的挂兜库存。": {
-    "en": "So the earlier “automatically add clovers while offline” behavior was changed to a real pouch inventory."
+    "en": "So the earlier \"automatically add clovers while offline\" behavior was changed to a real pouch inventory."
   },
   "节气食品系统之前已经确认有三个任务条件：": {
     "en": "The seasonal food system had previously confirmed three task conditions:"
   },
   "但之前已经错过日期的节气食品仍然不能领取，这说明“幸运日礼物”和“节气料理”仍是两套不同流程。": {
-    "en": "But seasonal foods whose dates had already passed still cannot be claimed, which shows that “Lucky Day gifts” and “seasonal dishes” are still two separate flows."
+    "en": "But seasonal foods whose dates had already passed still cannot be claimed, which shows that \"Lucky Day gifts\" and \"seasonal dishes\" are still two separate flows."
   },
   "26fall数算做题记录 - October | Amy": {
     "en": "26fall Data Structures and Algorithms problem-solving record - October | Amy"
@@ -1352,13 +1363,13 @@
     "en": "This is the shortest problem-solving record yet..."
   },
   "没怎么打，把简单题写了": {
-    "en": "Didn’t participate much; just solved the easy problems."
+    "en": "Didn't participate much; just solved the easy problems."
   },
   "期末机考游记。": {
     "en": "Final computer-based exam diary."
   },
   "双dp。yhf考前明示最有用的一集。": {
-    "en": "Two DPs. YHF’s pre-exam hint was the most useful one."
+    "en": "Two DPs. YHF's pre-exam hint was the most useful one."
   },
   "Shunting-Yard调度场算法。": {
     "en": "Shunting-yard algorithm."
@@ -1403,10 +1414,10 @@
     "en": "The furniture system continues to complete outputs for special materials and all craftable styles. Materials such as Zhengdan paper, which can correspond to multiple themes, will randomly select among the allowed official themes; ribbons can produce different festive furniture; plant fruits, handcrafted hinges, and colorful woven cords cover all styles of roly-poly toys, compost boxes, and pouches, respectively."
   },
   "春节贺卡的首包免费、背景首次免费、贴纸组合、红箱与金箱奖励规则仍然存在；中秋贺卡的寄送、购买和奖励流程也未被删去。图鉴版只是解除日历窗口，让这些页面可以随时查看和操作。嘟嘟商人的普通商品、联动家具、幸运物、半价正丹纸和重复购买返还逻辑仍按各自物品规则处理。": {
-    "en": "The first pack of Spring Festival cards is still free, the background is free the first time, the sticker combinations, and the rules for red and gold box rewards still exist; the sending, purchasing, and reward process for Mid-Autumn Festival cards has also not been deleted. The Gallery Edition only unlocks the calendar window, allowing these pages to be viewed and operated at any time. Dudu Merchant’s regular items, collaboration furniture, lucky items, half-price Zhengdan paper, and the logic for refunds on repeat purchases are still handled according to each item’s rules."
+    "en": "The first pack of Spring Festival cards is still free, the background is free the first time, the sticker combinations, and the rules for red and gold box rewards still exist; the sending, purchasing, and reward process for Mid-Autumn Festival cards has also not been deleted. The Gallery Edition only unlocks the calendar window, allowing these pages to be viewed and operated at any time. Dudu Merchant's regular items, collaboration furniture, lucky items, half-price Zhengdan paper, and the logic for refunds on repeat purchases are still handled according to each item's rules."
   },
   "正式服的": {
-    "en": "the official server’s"
+    "en": "the official server's"
   },
   "原版漂流瓶本质上是社交功能。收到 Drift 邮件后，客户端会显示": {
     "en": "The original message bottle is essentially a social feature. After receiving a Drift mail, the client will display"
@@ -1416,5 +1427,30 @@
   },
   "分隔逗号；dfs前序遍历序列化，遇到空节点用井号占位；反序列化同样递归进行。": {
     "en": "Split on commas; serialize with a preorder DFS, using a hash sign (#) as a placeholder for empty nodes; deserialization is recursive as well."
-  }
+  },
+  "3.6 Compact-Bench：在同一修复进度上测摘要造成的损失": {
+    "en": "3.6 Compact-Bench: Measuring Summary-Induced Loss at the Same Repair Progress"
+  },
+  "数据": {
+    "en": "Data"
+  },
+  "编码 Agent 压缩历史后，仓库里的修改还在，但此前排除过的假设、测试约束和下一步计划可能丢失。论文从同一段历史、同一仓库快照出发，分别给同一个续跑 Agent 完整历史或仅给摘要，比较后续修复能否通过测试。该设计把压缩前已经发生的工作固定下来，减少两条完整轨迹天然不同带来的干扰。": {
+    "en": "After a coding Agent compresses its history, the repository changes remain, but previously ruled-out hypotheses, test constraints, and next-step plans may be lost. Starting from the same history and the same repository snapshot, the paper gives the same continuation Agent the full history or only a summary, and compares whether subsequent repairs can pass the tests. This design fixes the work completed before compression, reducing interference from the natural differences between two full trajectories."
+  },
+  "评测分三部分：配对续跑测任务保留；用后续交互中再次出现的细节测摘要覆盖；在记录下来的生产会话里追踪细节能否跨多次压缩保留。三个指标分别回答“能否继续修复”“具体信息是否留下”和“多次压缩后是否仍可见”。": {
+    "en": "Evaluation has three parts: paired continuation measures task retention; details that reappear in later interactions measure summary coverage; and recorded production sessions track whether details survive multiple rounds of compression. The three metrics answer, respectively, \"can the repair continue,\" \"is the specific information retained,\" and \"is it still visible after multiple compressions.\""
+  },
+  "在 35 个 SWE-bench 修复中，作者以完整历史可通过的 22 个任务计算损伤率。固定 Claude Code 摘要提示与 Kimi-K3 续跑模型时，14 个摘要模型的稳定损伤率为 5%–64%；有的任务跨多种摘要方法仍容易失败。固定 Kimi-K3 比较摘要提示时，保留更多字面细节的提示与保留最多修复结果的提示不同。结果受仓库任务、模型和预算限制；字面重复不等于语义保留，生产链观察也不能直接证明修复失败。": {
+    "en": "Among 35 SWE-bench repairs, the authors computed the damage rate on the 22 tasks that the full history could pass. With the Claude Code summarization prompt and the Kimi-K3 continuation model fixed, the stable damage rate across 14 summarization models ranged from 5% to 64%; some tasks remained failure-prone across multiple summarization methods. With Kimi-K3 fixed to compare summarization prompts, the prompt that preserved more literal detail differed from the one that preserved the most repair outcomes. The results are limited by the repository tasks, models, and budget; literal repetition does not equal semantic retention, and production-chain observations cannot directly prove that a repair failed."
+  },
+  "用配对续跑设计比较压缩策略时，可以同时记录修复通过、摘要生成开销和压缩后首轮新增 prefill。这样能把“保住任务进度”和“省下推理计算”放到同一次干预中比较；本文主要提供前者的测量设计。": {
+    "en": "When comparing compression strategies with a paired-continuation design, one can record repair pass rates, summarization overhead, and the additional prefill in the first round after compression together. This places \"preserving task progress\" and \"saving inference compute\" in the same intervention for comparison; this paper mainly provides the measurement design for the former."
+  },
+  "编码修复": { "en": "Code repair" },
+  "编码 Agent＋摘要模型": { "en": "Encoding Agent + summarization model" },
+  "历史压缩测量": { "en": "History compression measurement" },
+  "配对任务续跑＋生产链观察": { "en": "Paired-task continuation + production-chain observation" },
+  "质量测量": { "en": "Quality measurement" },
+  "修复通过；稳定损伤率；细节保留率": { "en": "Repair pass rate; stable damage rate; detail retention rate" },
+  "固定仓库状态，比较完整历史与摘要的修复续跑": { "en": "Fixed repository state; compare repair continuation with full history vs. summary" }
 }

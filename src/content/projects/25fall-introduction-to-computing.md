@@ -1,5 +1,7 @@
 ---
 title: Introduction to Computing
+publishedAt: 2026-01-10
+updatedAt: 2026-01-10
 description: Course notes, exercises, and learning materials for Introduction to Computing in Fall 2025.
 kind: notes
 technologies:

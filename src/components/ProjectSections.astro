@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { getProjectTagHref } from "../utils/projectTags";
-import { compareProjects } from "../utils/contentOrder.mjs";
+import { compareProjects, projectPublishedAt, formatProjectDate } from "../utils/contentOrder.mjs";
 interface Props { projects: CollectionEntry<"projects">[]; activeTag?: string; }
 const { projects, activeTag } = Astro.props;
 const groups = [
@@ -18,8 +18,11 @@ const groups = [
     <div class="project-grid">
       {group.entries.map(project => {
         const href = project.data.repository ?? project.data.demo;
+        const publishedAt = projectPublishedAt(project);
+        const updatedAt = project.data.updatedAt;
+        const showUpdated = updatedAt && (!publishedAt || formatProjectDate(updatedAt) !== formatProjectDate(publishedAt));
         return (
-          <article class:list={["project-card", { "is-pinned": project.data.pinned }]}>
+          <article class:list={["project-card", { "is-pinned": project.data.pinned }]} data-project-id={project.id}>
             <div class="project-topline">
               <div class="project-categories">
                 {project.data.pinned && <span class="pin-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m10 1 5 5-3 1-2 4-2-2-5 5 5-5-2-2 4-2z" /></svg>Pinned</span>}
@@ -29,7 +32,10 @@ const groups = [
               <span class="arrow">{href ? "↗" : "—"}</span>
             </div>
             <h3>{href ? <a class="project-title-link" href={href} target="_blank" rel="noreferrer">{project.data.title}</a> : project.data.title}</h3>
-            {project.data.date && <time class="project-date" datetime={project.data.date.toISOString().slice(0,10)}>{project.data.date.toISOString().slice(0,10).replaceAll("-", ".")}</time>}
+            {(publishedAt || showUpdated) && <div class="project-dates">
+              {publishedAt && <span><span>Published</span> <time datetime={publishedAt.toISOString()}>{formatProjectDate(publishedAt)}</time></span>}
+              {showUpdated && <span><span>Updated</span> <time datetime={updatedAt.toISOString()}>{formatProjectDate(updatedAt)}</time></span>}
+            </div>}
             <p>{project.data.description}</p>
             <div class="tag-row">{project.data.technologies.map(technology => <a class:list={{ active: technology === activeTag }} href={getProjectTagHref(technology)}>{technology}</a>)}</div>
           </article>

@@ -47,6 +47,10 @@ test('scoped technical terminology is normalized without changing source facts',
   assert.equal(normalizeTerms('长程 Agent 与显存、缓存抖动', 'Long-range agents, VRAM, and cache jitter'), 'Long-horizon agents, GPU memory, and cache thrashing');
   assert.equal(normalizeTerms('显存、状压dp、扭蛋机', 'Video memory, State Compression DP, and Gacha Machine'), 'GPU memory, Bitmask DP, and Gashapon machine');
   assert.equal(normalizeTerms('正式服与实机测试', 'The formal server and live testing'), 'The official server and real-device testing');
+  assert.equal(normalizeTerms('没怎么打，把简单题写了', 'Didn’t participate much; just solved the easy problems.'), "Didn't participate much; just solved the easy problems.");
+  assert.equal(normalizeTerms('测试：数值，结果。', 'Test：value，result。'), 'Test: value, result.');
+  assert.equal(normalizeTerms('题解 P1434', 'Solution P1434 【[SHOI2002] Skiing】'), 'Solution P1434 [SHOI2002] Skiing');
+  assert.equal(normalizeTerms('英文引号', 'She said “hello”; it’s fine.'), 'She said "hello"; it\'s fine.');
   assert.equal(normalizeTerms('状压dp', 'State-compressed dp.'), 'Bitmask DP.');
   assert.equal(normalizeTerms('攻略截图', 'strategy screenshots and guide screenshots'), 'walkthrough screenshots and walkthrough screenshots');
   assert.equal(normalizeTerms('漂流瓶功能', 'a drifting bottle feature and drift bottles'), 'a message bottle feature and message bottles');

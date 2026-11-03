@@ -515,7 +515,7 @@ if(ans==0):
     print("\n")
 ```
 # 2025.10.10
-## [圣诞老人的礼物-Santa Clau’s Gifts](http://cs101.openjudge.cn/pctbook/M04110/)
+## [圣诞老人的礼物-Santa Claus's Gifts](http://cs101.openjudge.cn/pctbook/M04110/)
 ```python
 n,w=map(int,input().split())
 a=[]

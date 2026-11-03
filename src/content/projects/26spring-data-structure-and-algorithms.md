@@ -1,5 +1,7 @@
 ---
 title: Data Structures and Algorithms-B
+publishedAt: 2026-06-03
+updatedAt: 2026-06-03
 description: Course notes, implementations, and problem-solving records for Data Structures and Algorithms in Spring 2026.
 kind: notes
 technologies:

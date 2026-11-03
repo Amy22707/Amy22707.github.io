@@ -1,5 +1,7 @@
 ---
 title: Programming Practice(Honor Track)
+publishedAt: 2026-07-08
+updatedAt: 2026-09-10
 description: Course notes, exercises, and learning materials for IProgramming Practice(Honor Track) in Spring 2026.
 kind: notes
 technologies:

@@ -1,8 +1,33 @@
 // Only normalize English translations of explicit Chinese terms, never original
 // English paper titles, identifiers, code, or numerical ranges such as long long.
 export const isAddress = value => /^(https?:\/\/|[\w.+-]+@[\w-]+(?:\.[\w-]+)+$)/i.test(value);
+const normalizePunctuation = value => value
+  .replace(/[\u2018\u2019]/g, "'")
+  .replace(/[\u201c\u201d]/g, '"')
+  .replace(/\u00a0|\u3000/g, ' ')
+  .replace(/【([^【】]*)】/g, (_, inner) => {
+    const text = inner.trim();
+    return (text.startsWith('[') ? text.replace(/^\[+/, '[') : `[${text}]`) + ' ';
+  })
+  .replace(/【/g, '[')
+  .replace(/】/g, ']')
+  .replace(/，/g, ', ')
+  .replace(/、/g, ', ')
+  .replace(/。/g, '. ')
+  .replace(/！/g, '! ')
+  .replace(/？/g, '? ')
+  .replace(/；/g, '; ')
+  .replace(/：/g, ': ')
+  .replace(/（/g, ' (')
+  .replace(/）/g, ') ')
+  .replace(/\s+([,.;:!?])/g, '$1')
+  .replace(/\(\s+/g, '(')
+  .replace(/\s{2,}/g, ' ')
+  .trim();
 export function normalizeTerms(source, english) {
-  if (!/[\u3400-\u9fff]/.test(source) || typeof english !== 'string') return english;
+  if (typeof english !== 'string') return english;
+  english = normalizePunctuation(english);
+  if (!/[\u3400-\u9fff]/.test(source)) return english;
   let result = english;
   const replace = (context, pattern, target) => {
     if (context.test(source)) result = result.replace(pattern, match => /^[A-Z]/.test(match) ? target[0].toUpperCase() + target.slice(1) : target);

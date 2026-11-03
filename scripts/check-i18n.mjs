@@ -5,6 +5,7 @@ import { parse } from 'parse5';
 import { isAddress } from './i18n-terms.mjs';
 
 const readJson = async path => JSON.parse(await readFile(path, 'utf8'));
+const nonAsciiPunctuation = /[\u2018\u2019\u201c\u201d，。！？；：、【】《》（）\u3000]/;
 const normalize = value => value.replace(/\s+/g, ' ').trim();
 const shared = await readJson('public/i18n/site.json');
 const manifest = await readJson('public/i18n/pages.json');
@@ -55,6 +56,20 @@ async function inspect(directory, isStudio = false) {
     walk(parse(await readFile(path, 'utf8')));
   }
 }
+async function scanEnglishPunctuation(directory, label) {
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const path = resolve(directory, entry.name);
+    if (entry.isDirectory()) { await scanEnglishPunctuation(path, label); continue; }
+    if (!entry.name.endsWith('.json')) continue;
+    for (const [key, value] of Object.entries(await readJson(path))) {
+      if (typeof value?.en !== 'string') continue;
+      const found = value.en.match(nonAsciiPunctuation);
+      if (found) errors.add(`${label}/${relative(directory, path).replaceAll('\\', '/')}: English punctuation must be ASCII, found "${found[0]}" in ${key.slice(0, 60)}`);
+    }
+  }
+}
+await scanEnglishPunctuation(resolve('public/i18n'), 'public/i18n');
+await scanEnglishPunctuation(resolve('.studio-workspace/amy-studio/site/i18n'), 'studio/i18n');
 await inspect(resolve('dist'));
 await inspect(resolve('.studio-workspace/amy-studio/site'), true);
 const data = await readJson('.studio-workspace/amy-studio/site/data/studio.json');

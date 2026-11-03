@@ -6,7 +6,7 @@
     "en": "For the Standard Edition, double-click [[A0]]; for the Gallery Edition, double-click [[A1]]. Keep the entire folder together rather than moving only the EXE."
   },
   "等待本地运行环境启动，选择“导入存档”，在系统文件选择器中选中 [[A0]]、兼容 JSON 或完整初始化协议 JSONL；没有备份则点击“开始新的旅程”。": {
-    "en": "Wait for the local runtime to start, choose “Import Save,” and use the system file picker to select a [[A0]] file, a compatible JSON file, or a protocol JSONL file containing complete initialization data. If you have no backup, choose “Start a New Journey.”"
+    "en": "Wait for the local runtime to start, choose \"Import Save,\" and use the system file picker to select a [[A0]] file, a compatible JSON file, or a protocol JSONL file containing complete initialization data. If you have no backup, choose \"Start a New Journey.\""
   },
   "已有 [[A0]]、兼容 JSON 存档或完整初始化 JSONL 的玩家，直接在本地版中导入，不需要安装模拟器，也不需要登录官服。": {
     "en": "If you already have a [[A0]] file, a compatible JSON save, or a JSONL file containing complete initialization data, import it directly into the local edition. You do not need an emulator or an official-server login."
@@ -15,7 +15,7 @@
     "en": "If you already have a backup from this project, use the import feature above. If you only have an official-server account, first capture the complete login initialization data on a device where [[O0]]you can still log in to the official game[[C0]]. The offline version does not ask for your phone number, verification code, or official-server password, and cannot recover progress from a closed server using account details alone."
   },
   "[[O0]]采集后再导入本地版：[[C0]]解析日志得到 [[A1]]，在标准版中选择“导入存档”。本地版不要求手机号、验证码或官服密码。": {
-    "en": "[[O0]]Capture first, then import into the local edition:[[C0]] parse the log to obtain [[A1]], then choose “Import Save” in the Standard Edition. The local edition does not require a phone number, verification code, or official-server password."
+    "en": "[[O0]]Capture first, then import into the local edition:[[C0]] parse the log to obtain [[A1]], then choose \"Import Save\" in the Standard Edition. The local edition does not require a phone number, verification code, or official-server password."
   },
   "记下当前已运行版本的[[O0]]完整文件路径[[C0]]。如果有多个结果，对照最近运行的资源版本，不要随便选第一个；如果没有此路径，当前客户端结构不适用本教程。": {
     "en": "Record the running version's [[O0]]full file path[[C0]]. If several results appear, identify the resource version that most recently ran rather than choosing the first result at random. If this path does not exist, this guide does not apply to your client's structure."
@@ -24,10 +24,10 @@
     "en": "Open a [[O0]]separate CMD window[[C0]] to start logging, then launch the official game:"
   },
   "将 [[A0]] 复制到目标设备，在[[O1]]标准版[[C1]]中“导入存档”。核对青蛙、库存、照片与日记后，导出一份 [[A2]] 长期保存。": {
-    "en": "Copy [[A0]] to the target device, then choose “Import Save” in the [[O1]]Standard Edition[[C1]]. After checking the frog, inventory, photos, and diary, export a [[A2]] file for long-term safekeeping."
+    "en": "Copy [[A0]] to the target device, then choose \"Import Save\" in the [[O1]]Standard Edition[[C1]]. After checking the frog, inventory, photos, and diary, export a [[A2]] file for long-term safekeeping."
   },
   "在新设备打开[[O0]]同一版本[[C0]]，点击“导入存档”。确认后进入游戏，核对青蛙名字、相册和物品。": {
-    "en": "On the new device, open the [[O0]]same edition[[C0]] and choose “Import Save.” After confirming, enter the game and check the frog's name, album, and items."
+    "en": "On the new device, open the [[O0]]same edition[[C0]] and choose \"Import Save.\" After confirming, enter the game and check the frog's name, album, and items."
   },
   "针对Steam上的[[O0]]Bongo Cat[[C0]]，刷点击次数与成就。": {
     "en": "For [[O0]]Bongo Cat[[C0]] on Steam, to build up the click count and unlock achievements."
@@ -127,5 +127,20 @@
   },
   "[[O0]]主要结论：[[C0]] 工具运行中的进度，能提供历史统计和引擎占用率看不到的信息。它的价值尤其体现在“是否还来得及恢复”这一决策点；精确知道百分比仍不等于可以精确预测完成时间。长远程请求、未知脚本、非均匀阶段和环境突变都会限制信号效果。": {
     "en": "[[O0]] Main conclusions: [[C0]]  Progress during tool execution can provide information not visible from historical statistics and engine utilization rates. Its value is especially evident at the decision point of \"whether there is still time to recover\"; knowing the exact percentage still does not allow precise prediction of completion time. Long-running remote requests, unknown scripts, uneven stages, and environmental changes all limit the effectiveness of the signals."
+  },
+  "[[O0]]论文[[C0]] · [[O1]]代码[[C1]] · [[O2]]数据[[C2]]": {
+    "en": "[[O0]]Paper[[C0]] · [[O1]]Code[[C1]] · [[O2]]Data[[C2]]"
+  },
+  "[[O0]]主张与研究方法：[[C0]] 编码 Agent 压缩历史后，仓库里的修改还在，但此前排除过的假设、测试约束和下一步计划可能丢失。论文从同一段历史、同一仓库快照出发，分别给同一个续跑 Agent 完整历史或仅给摘要，比较后续修复能否通过测试。该设计把压缩前已经发生的工作固定下来，减少两条完整轨迹天然不同带来的干扰。": {
+    "en": "[[O0]]Claims and research methods:[[C0]] After a coding Agent compresses its history, the repository changes remain, but previously ruled-out hypotheses, test constraints, and next-step plans may be lost. Starting from the same history and the same repository snapshot, the paper gives the same continuation Agent the full history or only a summary, and compares whether subsequent repairs can pass the tests. This design fixes the work completed before compression, reducing interference from the natural differences between two full trajectories."
+  },
+  "[[O0]]主要结论：[[C0]] 在 35 个 SWE-bench 修复中，作者以完整历史可通过的 22 个任务计算损伤率。固定 Claude Code 摘要提示与 Kimi-K3 续跑模型时，14 个摘要模型的稳定损伤率为 5%–64%；有的任务跨多种摘要方法仍容易失败。固定 Kimi-K3 比较摘要提示时，保留更多字面细节的提示与保留最多修复结果的提示不同。结果受仓库任务、模型和预算限制；字面重复不等于语义保留，生产链观察也不能直接证明修复失败。": {
+    "en": "[[O0]]Main conclusions:[[C0]] Among 35 SWE-bench repairs, the authors computed the damage rate on the 22 tasks that the full history could pass. With the Claude Code summarization prompt and the Kimi-K3 continuation model fixed, the stable damage rate across 14 summarization models ranged from 5% to 64%; some tasks remained failure-prone across multiple summarization methods. With Kimi-K3 fixed to compare summarization prompts, the prompt that preserved more literal detail differed from the one that preserved the most repair outcomes. The results are limited by the repository tasks, models, and budget; literal repetition does not equal semantic retention, and production-chain observations cannot directly prove that a repair failed."
+  },
+  "[[O0]]研究启发：[[C0]] 用配对续跑设计比较压缩策略时，可以同时记录修复通过、摘要生成开销和压缩后首轮新增 prefill。这样能把“保住任务进度”和“省下推理计算”放到同一次干预中比较；本文主要提供前者的测量设计。": {
+    "en": "[[O0]]Research insights:[[C0]] When comparing compression strategies with a paired-continuation design, one can record repair pass rates, summarization overhead, and the additional prefill in the first round after compression together. This places \"preserving task progress\" and \"saving inference compute\" in the same intervention for comparison; this paper mainly provides the measurement design for the former."
+  },
+  "对 [[A0]] 位串 [[A1]]，无符号解释 B2U（Binary to Unsigned）和补码解释 B2T（Binary to Two's-complement）分别为：": {
+    "en": "For the [[A0]] bit string [[A1]], the unsigned interpretation B2U (Binary to Unsigned) and the two's complement interpretation B2T (Binary to Two's-complement) are:"
   }
 }

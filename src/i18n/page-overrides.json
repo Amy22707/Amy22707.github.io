@@ -1,4 +1,20 @@
 {
+  "blog/tag/agents/index.html": {
+    "Blog posts tagged Agents": { "zh": "标签为“智能体”的博客文章" },
+    "Posts tagged Agents | Amy": { "zh": "标记为“智能体”的文章 | Amy" }
+  },
+  "blog/tag/ai_systems/index.html": {
+    "Blog posts tagged AI_systems": { "zh": "标签为“人工智能系统”的博客文章" },
+    "Posts tagged AI_systems | Amy": { "zh": "标记为“人工智能系统”的文章 | Amy" }
+  },
+  "blog/tag/llm_inference/index.html": {
+    "Blog posts tagged LLM_Inference": { "zh": "标签为“大语言模型推理”的博客文章" },
+    "Posts tagged LLM_Inference | Amy": { "zh": "标记为“大语言模型推理”的文章 | Amy" }
+  },
+  "projects/tag/offline/index.html": {
+    "Offline · Projects & Notes | Amy": { "zh": "本地服务器 · 项目与笔记 | Amy" },
+    "Projects and notes tagged Offline": { "zh": "标记为本地服务器的项目与笔记" }
+  },
   "studio/travel-frog/index.html": {
     "LOCAL REVERSE-ENGINEERED EDITION": { "zh": "本地逆向版" },
     "GALLERY EDITION": { "zh": "图鉴版" },
