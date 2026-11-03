@@ -1,6 +1,6 @@
 ---
 title: Computer Vision
-publishedAt: 2026-09-07
+publishedAt: 2026-09-10
 updatedAt: 2026-10-16
 description: Visible after end of course.
 kind: notes

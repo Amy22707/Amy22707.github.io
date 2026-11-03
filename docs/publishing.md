@@ -90,11 +90,29 @@ pinOrder: 1
 modification time. `updatedAt` is display-only and never changes ordering. Existing
 `date` fields remain supported as a legacy publication-date fallback. ISO timestamps
 are also accepted; dates are displayed in the Asia/Shanghai time zone. Initial dates
-were checked against GitHub repository creation and latest code-push timestamps;
-the user's explicit dates take priority. Repository creation is a reference date,
+follow GitHub repository creation (`created_at`) and latest code-push (`pushed_at`)
+timestamps. By default, these GitHub dates are used for every
+project and course-note entry. Repository creation is a reference date,
 not proof of the current project's first release or the date a private repository
 became public. In particular, reusing an older repository for a rebuilt website
 does not make the repository's creation date that website's publication date.
+
+Refresh all entry dates from GitHub with one command, then commit/push normally:
+
+```powershell
+npm.cmd run sync:project-dates
+```
+
+Use `npm.cmd run sync:project-dates -- --check` for a read-only preview. This uses
+the existing GitHub login to read private repositories; credentials are never printed
+or saved. Dates are saved in Beijing calendar time. Only `publishedAt` and `updatedAt`
+are replaced; descriptions, version-history notes, pins, and other metadata stay intact.
+The command makes no commits or pushes and is not run automatically during a build.
+
+For an explicitly chosen publication date, add `preservePublishedAt: true` next to
+`publishedAt: YYYY-MM-DD`. Synchronization then keeps that publication date while
+still refreshing `updatedAt` from GitHub. Fundamentals of Artificial Intelligence
+uses this exception for its publication date of 2026-07-08.
 
 Pinned entries with smaller `pinOrder` values appear earlier. The default is
 100, so `pinned: true` alone works, and adding `pinOrder: 1`, `2`, etc. lets you arrange

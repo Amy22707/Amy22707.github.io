@@ -32,6 +32,7 @@ const projects = defineCollection({
     kind: z.enum(["project", "notes"]).default("project"),
     featured: z.boolean().default(false),
     publishedAt: projectDate.optional(),
+    preservePublishedAt: z.boolean().default(false),
     updatedAt: projectDate.optional(),
     date: projectDate.optional(),
     pinned: z.boolean().default(false),

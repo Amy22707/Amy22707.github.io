@@ -3,6 +3,8 @@ title: ICS学习笔记
 description: 计算机系统概论
 publishedAt: 2026-10-03
 updatedAt: 2026-10-28
+pinned: true
+pinOrder: 2
 tags:
   - ICS
   - 计算机系统

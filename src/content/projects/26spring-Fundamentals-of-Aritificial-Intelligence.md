@@ -1,6 +1,7 @@
 ---
 title: Fundamentals of Artificial Intelligence
-publishedAt: 2026-09-10
+publishedAt: 2026-07-08
+preservePublishedAt: true
 updatedAt: 2026-09-10
 description: Labs(Mahjong excluded) for Fundamentals of AI in Spring 2026.
 kind: notes

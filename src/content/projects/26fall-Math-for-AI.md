@@ -1,6 +1,6 @@
 ---
 title: Math for AI
-publishedAt: 2026-09-07
+publishedAt: 2026-09-10
 updatedAt: 2026-09-10
 description: Visible after end of course.
 kind: notes
