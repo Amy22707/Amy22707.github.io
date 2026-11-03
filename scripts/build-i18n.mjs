@@ -1,8 +1,11 @@
 import { readFile, readdir, writeFile, mkdir, copyFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { normalizeTerms } from './i18n-terms.mjs';
 const directory = resolve('.studio-workspace/i18n');
 const inventory = JSON.parse(await readFile(resolve(directory, 'inventory.json'), 'utf8'));
 const cache = Object.create(null);
+const currentEntries = [];
+let currentShared = {};
 // Reuse committed dictionaries on fresh checkouts where the local draft cache
 // is absent. A generation run must not replace existing translations with source.
 const previousCatalogs = [resolve('public/i18n/site.json'), resolve('.studio-workspace/amy-studio/site/i18n/site.json')];
@@ -11,8 +14,10 @@ try {
 } catch (error) { if (error.code !== 'ENOENT') throw error; }
 for (const path of previousCatalogs) {
   try {
-    for (const [source, entry] of Object.entries(JSON.parse(await readFile(path, 'utf8')))) {
-      cache[source] ??= { ...entry, completed: ['en', 'zh'] };
+    const entries = JSON.parse(await readFile(path, 'utf8'));
+    if (path === previousCatalogs[0]) currentShared = entries;
+    for (const [source, entry] of Object.entries(entries)) {
+      currentEntries.push([source, entry]);
     }
   } catch (error) { if (error.code !== 'ENOENT') throw error; }
 }
@@ -26,13 +31,16 @@ for (const file of (await readdir(directory)).filter(name => /^translations(?:-w
     }
   }
 }
+// Reviewed dictionaries are newer than disposable machine-draft worker caches.
+for (const [source, entry] of currentEntries) cache[source] = { ...entry, completed: ['en', 'zh'] };
 const overrides = JSON.parse(await readFile('src/i18n/overrides.json', 'utf8'));
 const pageOverrides = JSON.parse(await readFile('src/i18n/page-overrides.json', 'utf8'));
 const mainShared = {}, studioShared = {}, pageCatalogs = new Map();
 const incomplete = [];
 for (const row of inventory) {
   const source = row.text;
-  const entry = { zh: cache[source]?.zh ?? source, en: cache[source]?.en ?? source, ...overrides[source], ...(overrides[source]?.en ? { reviewedEn: true } : {}) };
+  const entry = { zh: currentShared[source]?.zh ?? cache[source]?.zh ?? source, en: currentShared[source]?.en ?? cache[source]?.en ?? source, ...overrides[source], ...(overrides[source]?.en ? { reviewedEn: true } : {}) };
+  entry.en = normalizeTerms(source, entry.en);
   if (/[\u3400-\u9fff]/.test(source) && !cache[source]?.completed.includes('en') && !overrides[source]?.en) incomplete.push(row);
   const studio = row.pages.some(page => page.startsWith('studio:'));
   const shared = row.pages.includes('shared');
@@ -47,6 +55,7 @@ for (const row of inventory) {
 }
 for (const [key, entry] of Object.entries(overrides)) {
   mainShared[key] = { zh: key, en: key, ...entry, ...(entry.en ? { reviewedEn: true } : {}) };
+  mainShared[key].en = normalizeTerms(key, mainShared[key].en);
   // Only common interface labels go into Studio assets.
   if (Object.hasOwn(studioShared, key) || !/[\u3400-\u9fff]/.test(key) && key.length < 90) studioShared[key] = { zh: key, en: key, ...entry };
 }
@@ -55,6 +64,7 @@ for (const [page, entries] of Object.entries(pageOverrides)) {
   if (!pageCatalogs.has(page)) pageCatalogs.set(page, {});
   for (const [source, entry] of Object.entries(entries)) {
     pageCatalogs.get(page)[source] = { zh: cache[source]?.zh ?? source, en: cache[source]?.en ?? source, ...overrides[source], ...entry, ...(entry.en || overrides[source]?.en ? { reviewedEn: true } : {}) };
+    pageCatalogs.get(page)[source].en = normalizeTerms(source, pageCatalogs.get(page)[source].en);
   }
 }
 const output = resolve('public/i18n');
@@ -72,7 +82,7 @@ const studioOutput = resolve('.studio-workspace/amy-studio/site/i18n');
 await mkdir(studioOutput, { recursive: true });
 await writeFile(resolve(studioOutput, 'site.json'), JSON.stringify(studioShared));
 await writeFile(resolve(studioOutput, 'pages.json'), '{}');
-for (const file of ['runtime.js', 'language.css']) await copyFile(resolve(output, file), resolve(studioOutput, file));
+for (const file of ['runtime.js', 'language.css', 'inline-blocks.mjs']) await copyFile(resolve(output, file), resolve(studioOutput, file));
 await writeFile(resolve(directory, 'review-pending.json'), JSON.stringify(incomplete, null, 2));
 await writeFile(resolve(directory, 'merged-translations.json'), JSON.stringify(cache, null, 2));
 console.log(`Built language assets: ${inventory.length} strings; ${incomplete.length} English draft translations pending.`);

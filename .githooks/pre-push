@@ -1,0 +1,11 @@
+#!/bin/sh
+# Studio synchronization. The installed Git hook delegates here; other hooks stay intact.
+repo_root="$(git rev-parse --show-toplevel)" || exit 1
+if command -v node >/dev/null 2>&1; then
+  exec node "$repo_root/scripts/sync-studio.mjs" --pre-push "$@"
+elif [ -x '/c/Program Files/nodejs/node.exe' ]; then
+  exec '/c/Program Files/nodejs/node.exe' "$repo_root/scripts/sync-studio.mjs" --pre-push "$@"
+else
+  echo 'Studio sync requires Node.js. Homepage push stopped.' >&2
+  exit 1
+fi

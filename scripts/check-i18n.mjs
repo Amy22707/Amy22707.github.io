@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { resolve, relative } from 'node:path';
 import { parse } from 'parse5';
+import { isAddress } from './i18n-terms.mjs';
 
 const readJson = async path => JSON.parse(await readFile(path, 'utf8'));
 const normalize = value => value.replace(/\s+/g, ' ').trim();
@@ -11,7 +12,7 @@ const studio = await readJson('.studio-workspace/amy-studio/site/i18n/site.json'
 const errors = new Set();
 let pages = 0, strings = 0, protectedBlocks = 0;
 const skip = new Set(['script', 'style', 'pre', 'code', 'math', 'svg', 'noscript', 'textarea']);
-const properNames = new Set(['薛之瑶']);
+const properNames = new Set(['薛之瑶', '@呱命由我不由服']);
 
 async function inspect(directory, isStudio = false) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
@@ -25,7 +26,7 @@ async function inspect(directory, isStudio = false) {
     if (!isStudio && manifest[route]) Object.assign(catalog, await readJson(resolve('public/i18n', manifest[route])));
     function check(value) {
       const source = normalize(value);
-      if (!/[A-Za-z\u3400-\u9fff]/.test(source) || /^(https?:\/\/|[^\s@]+@[^\s@]+$)/.test(source)) return;
+      if (!/[A-Za-z\u3400-\u9fff]/.test(source) || isAddress(source)) return;
       strings++;
       const translation = catalog[source];
       if (!translation || typeof translation.en !== 'string' || typeof translation.zh !== 'string') {

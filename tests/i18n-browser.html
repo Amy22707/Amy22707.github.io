@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Inline translation regression tests</title>
+<style>body{font:16px system-ui;padding:36px;line-height:1.8}button{padding:10px 18px}pre{white-space:pre-wrap}.fixture{padding:20px;border:1px solid #ccd;margin-block:20px}</style>
+<h1>Inline translation regression tests</h1><button id="run">Run tests</button><pre id="result">Not run</pre>
+<section id="fixtures"></section>
+<script type="module">
+import { describeRun, domAdapter, createBlockTranslator } from '/i18n/inline-blocks.mjs';
+document.querySelector('#run').onclick = () => {
+  const host = document.querySelector('#fixtures'); host.replaceChildren();
+  const p = document.createElement('p'); p.className='fixture';
+  p.innerHTML='把 <code id="x">x &lt; 2</code> 代入 <span class="katex" id="formula"><math><mi>x</mi></math></span>，参见<a href="#paper" id="link"><strong>论文</strong></a>。';
+  host.append(p);
+  const original = [...p.childNodes], originalText=p.textContent, code=p.querySelector('code'), formula=p.querySelector('.katex'), link=p.querySelector('a');
+  const codeHtml=code.outerHTML, mathHtml=formula.outerHTML;
+  let clicks=0; link.addEventListener('click',event=>{event.preventDefault();clicks++});
+  const description=describeRun(original,domAdapter), failures=[];
+  const translator=createBlockTranslator({document,catalog:{[description.key]:{en:'In [[A1]], substitute [[A0]]; see the [[O2]][[O3]]paper[[C3]][[C2]].'}}});
+  const check=(condition,label)=>{if(!condition)failures.push(label)};
+  try {
+    for(let i=0;i<5;i++) {
+      translator.apply('en');
+      check(p.textContent==='In x, substitute x < 2; see the paper.','whole sentence and reordered atoms');
+      check(p.querySelector('code')===code&&p.querySelector('.katex')===formula,'original protected node identity');
+      check(code.outerHTML===codeHtml&&formula.outerHTML===mathHtml,'protected HTML unchanged');
+      check(link.getAttribute('href')==='#paper','href unchanged'); link.click();
+      translator.apply('zh'); check(p.textContent===originalText,'Chinese original restored');
+      translator.apply('default'); check(p.textContent===originalText,'Default original restored');
+    }
+    check(clicks===5,'link event listener preserved');
+    translator.apply('en'); p.textContent='替换后的原文'; translator.apply('default');
+    check(p.textContent==='替换后的原文','external replacement not overwritten');
+    document.querySelector('#result').textContent=failures.length?'FAIL: '+failures.join(', '):'PASS: 5 repeated language cycles; code/math identity, href, event listeners, source restoration, and external replacement preserved.';
+  } catch(error) { document.querySelector('#result').textContent='FAIL: '+error.stack; }
+};
+</script></html>

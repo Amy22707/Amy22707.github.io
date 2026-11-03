@@ -10,6 +10,8 @@ const blog = defineCollection({
     updatedAt: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    pinned: z.boolean().default(false),
+    pinOrder: z.number().int().nonnegative().default(100),
   }),
 });
 
@@ -24,6 +26,9 @@ const projects = defineCollection({
     technologies: z.array(z.string()).default([]),
     kind: z.enum(["project", "notes"]).default("project"),
     featured: z.boolean().default(false),
+    date: z.union([z.date(), z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use YYYY-MM-DD for project date.")]).pipe(z.coerce.date()).optional(),
+    pinned: z.boolean().default(false),
+    pinOrder: z.number().int().nonnegative().default(100),
   }),
 });
 

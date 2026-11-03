@@ -1,12 +1,13 @@
 import { parse } from 'parse5';
 import { readFile, readdir, mkdir, writeFile } from 'node:fs/promises';
 import { resolve, relative } from 'node:path';
+import { isAddress } from './i18n-terms.mjs';
 
 const records = new Map();
 const skip = new Set(['script', 'style', 'pre', 'code', 'math', 'svg', 'noscript', 'textarea']);
 const add = (value, page) => {
   const text = value.replace(/\s+/g, ' ').trim();
-  if (!/[A-Za-z\u3400-\u9fff]/.test(text) || /^(https?:\/\/|[^\s@]+@[^\s@]+$)/.test(text)) return;
+  if (!/[A-Za-z\u3400-\u9fff]/.test(text) || isAddress(text)) return;
   if (!records.has(text)) records.set(text, { text, pages: [] });
   if (!records.get(text).pages.includes(page)) records.get(text).pages.push(page);
 };

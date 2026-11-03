@@ -7,7 +7,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "test:i18n": "node --test tests/i18n-inline.test.mjs",
+    "preview:i18n": "node scripts/preview-i18n.mjs",
+    "studio:check": "node scripts/sync-studio.mjs --check",
+    "setup:studio-sync": "node scripts/install-studio-sync.mjs",
+    "push:all": "node scripts/sync-studio.mjs --all",
+    "test:studio-sync": "node --test tests/studio-sync.test.mjs"
   },
   "keywords": [],
   "author": "",

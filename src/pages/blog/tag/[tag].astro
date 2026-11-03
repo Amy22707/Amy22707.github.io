@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import PostDates from "../../../components/PostDates.astro";
 import { getTagHref, getTagSlug } from "../../../utils/blogTags";
+import { comparePosts } from "../../../utils/contentOrder.mjs";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
@@ -17,7 +18,7 @@ export async function getStaticPaths() {
 const { tag } = Astro.props;
 const posts = (await getCollection("blog", ({ data }) =>
   !data.draft && data.tags.includes(tag)
-)).sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+)).sort(comparePosts);
 ---
 
 <BaseLayout title={`Posts tagged ${tag}`} description={`Blog posts tagged ${tag}`}>
@@ -30,10 +31,11 @@ const posts = (await getCollection("blog", ({ data }) =>
 
   <section class="post-list">
     {posts.map((post, index) => (
-      <article class="post-card">
+      <article class:list={["post-card", { "is-pinned": post.data.pinned }]}>
         <div class="post-index">{String(index + 1).padStart(2, "0")}</div>
         <div class="post-main">
           <div class="post-meta">
+            {post.data.pinned && <span class="pin-badge">Pinned</span>}
             <PostDates publishedAt={post.data.publishedAt} updatedAt={post.data.updatedAt} />
             <span aria-hidden="true">·</span>
             <div class="post-tags">

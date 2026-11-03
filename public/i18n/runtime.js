@@ -10,6 +10,8 @@
   let catalog = {};
   let loadFailed = false;
   let missing = false;
+  let ready = false;
+  let blockTranslator = null;
   const originals = new WeakMap();
   const attributes = new WeakMap();
   const giscusLanguages = new WeakMap();
@@ -17,13 +19,17 @@
   const excluded = 'pre,code,script,style,svg,math,.katex,textarea,noscript,[translate="no"],.language-switch';
   const normalize = text => text.replace(/\s+/g, ' ').trim();
 
-  const control = document.createElement('label');
-  control.className = 'language-switch';
-  control.setAttribute('translate', 'no');
-  control.innerHTML = '<span class="language-label" aria-hidden="true">◎</span><select aria-label="Language / 语言"><option value="default">默认 / Default</option><option value="zh">全中文</option><option value="en">English</option></select><span class="language-status" role="status"></span>';
-  const host = document.querySelector('.nav-actions') || document.querySelector('.theme-controls')?.parentElement || document.querySelector('.top .shell nav');
-  if (!host) return;
-  host.append(control);
+  let control = document.querySelector('[data-language-control]');
+  if (!control) {
+    const host = document.querySelector('.site-controls') || document.querySelector('.nav-actions') || document.querySelector('.theme-controls')?.parentElement || document.querySelector('.top .shell nav');
+    if (!host) return;
+    control = document.createElement('label');
+    control.className = 'language-switch';
+    control.setAttribute('translate', 'no');
+    control.setAttribute('data-language-control', '');
+    control.innerHTML = '<span class="language-label" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.3 2.5 3.5 5.5 3.5 9s-1.2 6.5-3.5 9c-2.3-2.5-3.5-5.5-3.5-9S9.7 5.5 12 3Z"/></svg></span><select aria-label="Language / 语言"><option value="default">Default</option><option value="zh">中文</option><option value="en">English</option></select><svg class="language-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg><span class="language-status" role="status" hidden></span>';
+    host.append(control);
+  }
   const selector = control.querySelector('select');
   const status = control.querySelector('.language-status');
   selector.value = mode;
@@ -97,11 +103,18 @@
   }
 
   function apply() {
+    // Do not observe our own DOM moves or text replacements.
+    observe.disconnect();
+    try {
     missing = false;
+    const defaultOption = selector.querySelector('option[value="default"]');
+    const defaultLabel = mode === 'zh' ? '默认' : 'Default';
+    if (defaultOption.textContent !== defaultLabel) defaultOption.textContent = defaultLabel;
     root.dataset.language = mode;
     root.lang = mode === 'zh' ? 'zh-CN' : mode === 'en' ? 'en' : originalLang;
+    if (blockTranslator?.apply(mode).pending) missing = true;
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
-      acceptNode: node => node.parentElement?.closest(excluded) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT,
+      acceptNode: node => node.parentElement?.closest(excluded) || blockTranslator?.manages(node) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT,
     });
     let node;
     while ((node = walker.nextNode())) changeText(node);
@@ -117,6 +130,9 @@
     status.hidden = !message;
     syncGiscusLanguage();
     window.dispatchEvent(new CustomEvent('site-language-change', { detail: { language: mode } }));
+    } finally {
+      observe.observe(document.body, { childList: true, subtree: true, characterData: true });
+    }
   }
 
   let queued = false;
@@ -128,28 +144,35 @@
   selector.addEventListener('change', () => {
     mode = selector.value;
     try { localStorage.setItem(preferenceKey, mode); } catch {}
-    apply();
+    if (ready) apply();
   });
 
   async function start() {
     try {
-      const response = await fetch(new URL('site.json', base), { cache: 'no-cache' });
-      if (!response.ok) throw new Error('Missing shared language catalog');
-      catalog = await response.json();
-      const manifestResponse = await fetch(new URL('pages.json', base), { cache: 'no-cache' });
-      if (!manifestResponse.ok) throw new Error('Missing language manifest');
-      const manifest = await manifestResponse.json();
       const key = location.pathname.replace(/\/index\.html$/, '/').split('/').map(segment => {
         try { return encodeURIComponent(decodeURIComponent(segment)); } catch { return segment; }
       }).join('/').replace(/\/?$/, '/');
-      if (manifest[key]) {
-        const page = await fetch(new URL(manifest[key], base), { cache: 'no-cache' });
-        if (!page.ok) throw new Error('Missing page language catalog');
-        Object.assign(catalog, await page.json());
+      async function json(path, optional = false) {
+        const response = await fetch(new URL(path, base), { cache: 'no-cache' });
+        if (optional && response.status === 404) return {};
+        if (!response.ok) throw new Error('Missing language resource: ' + path);
+        return response.json();
       }
+      const moduleUrl = new URL('inline-blocks.mjs', base);
+      moduleUrl.search = new URL(script.src).search;
+      const [shared, manifest, blockManifest, { createBlockTranslator }] = await Promise.all([
+        json('site.json'), json('pages.json'), json('blocks/pages.json', true), import(moduleUrl.href),
+      ]);
+      const siteRoot = new URL('../', base).pathname;
+      const blockKey = key.startsWith(siteRoot) ? '/' + key.slice(siteRoot.length) : key;
+      const [page, blocks] = await Promise.all([
+        manifest[key] ? json(manifest[key]) : {}, blockManifest[blockKey] ? json(blockManifest[blockKey]) : {},
+      ]);
+      catalog = { ...shared, ...page };
+      blockTranslator = createBlockTranslator({ document, catalog: blocks, onInvalid: () => { missing = true; } });
     } catch { loadFailed = true; }
+    ready = true;
     apply();
-    observe.observe(document.body, { childList: true, subtree: true, characterData: true });
   }
   start();
 })();

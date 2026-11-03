@@ -2,10 +2,10 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TagBrowser from "../../components/TagBrowser.astro";
+import ProjectSections from "../../components/ProjectSections.astro";
 import { getProjectTagHref, getProjectTags } from "../../utils/projectTags";
 
-const projects = (await getCollection("projects"))
-  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured));
+const projects = await getCollection("projects");
 const tagCounts = projects.flatMap((project) => getProjectTags(project.data)).reduce((counts, tag) => {
   counts.set(tag, (counts.get(tag) ?? 0) + 1);
   return counts;
@@ -24,27 +24,5 @@ const tags = [...tagCounts]
 
   <TagBrowser tags={tags} />
 
-  <section class="project-grid">
-    {projects.map((project) => {
-      const href = project.data.repository ?? project.data.demo;
-      return (
-        <article class="project-card">
-          <div class="project-topline">
-            <div class="project-categories">
-              {project.data.featured && <a href={getProjectTagHref("Featured")}>FEATURED</a>}
-              <a href={getProjectTagHref(project.data.kind === "notes" ? "Notes" : "Projects")}>
-                {project.data.kind === "notes" ? "NOTES" : "PROJECT"}
-              </a>
-            </div>
-            <span class="arrow">{href ? "↗" : "—"}</span>
-          </div>
-          <h2>{href ? <a class="project-title-link" href={href} target="_blank" rel="noreferrer">{project.data.title}</a> : project.data.title}</h2>
-          <p>{project.data.description}</p>
-          <div class="tag-row">
-            {project.data.technologies.map((technology) => <a href={getProjectTagHref(technology)}>{technology}</a>)}
-          </div>
-        </article>
-      );
-    })}
-  </section>
+  <ProjectSections projects={projects} />
 </BaseLayout>

@@ -1,0 +1,40 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getProjectTagHref } from "../utils/projectTags";
+import { compareProjects } from "../utils/contentOrder.mjs";
+interface Props { projects: CollectionEntry<"projects">[]; activeTag?: string; }
+const { projects, activeTag } = Astro.props;
+const groups = [
+  { id: "projects", title: "Projects", kind: "project" },
+  { id: "course-notes", title: "Course Notes", kind: "notes" },
+].map(group => ({ ...group, entries: projects.filter(project => project.data.kind === group.kind).sort(compareProjects) })).filter(group => group.entries.length);
+---
+<nav class="project-sections-nav" aria-label="Project categories">
+  {groups.map(group => <a href={`#${group.id}`}>{group.title}<span>{group.entries.length}</span></a>)}
+</nav>
+{groups.map(group => (
+  <section id={group.id} class="project-category-section" aria-labelledby={`${group.id}-title`}>
+    <div class="project-category-heading"><h2 id={`${group.id}-title`}>{group.title}</h2><span>{group.entries.length}</span></div>
+    <div class="project-grid">
+      {group.entries.map(project => {
+        const href = project.data.repository ?? project.data.demo;
+        return (
+          <article class:list={["project-card", { "is-pinned": project.data.pinned }]}>
+            <div class="project-topline">
+              <div class="project-categories">
+                {project.data.pinned && <span class="pin-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="m10 1 5 5-3 1-2 4-2-2-5 5 5-5-2-2 4-2z" /></svg>Pinned</span>}
+                {project.data.featured && <a href={getProjectTagHref("Featured")}>FEATURED</a>}
+                <a href={getProjectTagHref(project.data.kind === "notes" ? "Notes" : "Projects")}>{project.data.kind === "notes" ? "NOTES" : "PROJECT"}</a>
+              </div>
+              <span class="arrow">{href ? "↗" : "—"}</span>
+            </div>
+            <h3>{href ? <a class="project-title-link" href={href} target="_blank" rel="noreferrer">{project.data.title}</a> : project.data.title}</h3>
+            {project.data.date && <time class="project-date" datetime={project.data.date.toISOString().slice(0,10)}>{project.data.date.toISOString().slice(0,10).replaceAll("-", ".")}</time>}
+            <p>{project.data.description}</p>
+            <div class="tag-row">{project.data.technologies.map(technology => <a class:list={{ active: technology === activeTag }} href={getProjectTagHref(technology)}>{technology}</a>)}</div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+))}
