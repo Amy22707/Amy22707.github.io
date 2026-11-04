@@ -35,7 +35,7 @@ await inspect(resolve('dist'), '');
 await inspect(resolve('.studio-workspace/amy-studio/site'), 'studio:');
 const studio = JSON.parse(await readFile('.studio-workspace/amy-studio/site/data/studio.json', 'utf8'));
 for (const project of studio.projects) {
-  for (const key of ['title', 'description', 'details', 'imageAlt']) add(project[key] || '', 'studio:data');
+  for (const key of ['title', 'description', 'details', 'imageAlt', 'notice', 'version']) add(project[key] || '', 'studio:data');
   for (const item of project.highlights || []) add(item, 'studio:data');
 }
 for (const update of studio.updates || []) {

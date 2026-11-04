@@ -2,7 +2,7 @@
 title: Jizhi Enhanced
 publishedAt: 2026-11-04
 updatedAt: 2026-11-04
-description: An unofficial enhancement of Jizhi, a Chinese-poetry new-tab extension with traditional-color animations, offline poems, and customizable fonts. Currently in development.
+description: An unofficial enhancement of Jizhi, a Chinese-poetry new-tab extension with traditional-color animations, offline poems, and customizable fonts. Preview packages are available on GitHub.
 repository: https://github.com/Amy22707/jizhi
 kind: project
 technologies:
