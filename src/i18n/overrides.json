@@ -1452,5 +1452,13 @@
   "配对任务续跑＋生产链观察": { "en": "Paired-task continuation + production-chain observation" },
   "质量测量": { "en": "Quality measurement" },
   "修复通过；稳定损伤率；细节保留率": { "en": "Repair pass rate; stable damage rate; detail retention rate" },
-  "固定仓库状态，比较完整历史与摘要的修复续跑": { "en": "Fixed repository state; compare repair continuation with full history vs. summary" }
+  "固定仓库状态，比较完整历史与摘要的修复续跑": { "en": "Fixed repository state; compare repair continuation with full history vs. summary" },
+  "Jizhi Enhanced": { "zh": "几枝·增强版" },
+  "An unofficial enhancement of Jizhi, a Chinese-poetry new-tab extension with traditional-color animations, offline poems, and customizable fonts. Currently in development.": { "zh": "基于几枝的非官方增强版古诗词新标签页扩展，提供传统色动态背景、离线诗句和字体个性化。目前仍在开发中。" },
+  "Based on the original Jizhi extension by Unicar and its contributors. Features include offline poems, animated wave and Blobs backgrounds, poem search and pinning, and bundled fonts including Nüshu Fengqi.": { "zh": "基于 Unicar 及其贡献者开发的原版几枝扩展。功能包括离线诗句、波浪与 Blobs 动态背景、诗句搜索与固定，以及包含女书凤栖在内的内置字体。" },
+  "Offline Chinese poetry with search and pinning": { "zh": "离线古诗词，支持搜索与固定" },
+  "Traditional-color waves and Blobs animations": { "zh": "传统色波浪与 Blobs 动画" },
+  "Bundled fonts, including Nüshu Fengqi": { "zh": "内置多款字体，含女书凤栖" },
+  "Browser Extension": { "zh": "浏览器扩展" },
+  "Jizhi Enhanced: Chinese poetry over traditional-color waves": { "zh": "几枝·增强版：传统色波浪背景上的古诗词" }
 }
