@@ -27,6 +27,7 @@ export function allowedStudioPath(path) {
   if (/\.(?:exe|msi|apk|aab|ipa|dmg|pkg|zip|7z|rar|tar|gz|frogsave|jsonl|wasm|pt|pth|onnx)$/i.test(path)) return false;
   if (/(^|\/)(?:\.env(?:\..*)?|downloads?|releases?|saves?|user-data|backups?|captures?|node_modules|dist)(\/|$)/i.test(path)) return false;
   return ['README.md', 'package.json', 'package-lock.json', '.gitignore', 'scripts/build.mjs', 'scripts/serve.mjs', 'site/index.html', 'site/styles.css', 'site/app.js', 'site/favicon.svg'].includes(path)
+    || /^site\/jizhi\/(?:index\.html|guide\.(?:css|js))$/.test(path)
     || /^\.github\/workflows\/[^/]+\.ya?ml$/.test(path)
     || /^site\/(?:data\/.*\.json|i18n\/.*\.(?:json|js|mjs|css)|images\/.*\.(?:png|jpe?g|webp|svg|gif|ico|avif))$/i.test(path);
 }
