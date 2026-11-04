@@ -14,6 +14,6 @@ featured: false
 
 Jizhi Enhanced builds on the original Jizhi extension, bringing classical Chinese poetry and traditional colors to the browser's new-tab page. Features include offline poems, animated wave and Blobs backgrounds, poem search and pinning, and bundled fonts including Nüshu Fengqi.
 
-Browsers: Chrome, Firefox, Edge, and Safari.
+Browsers: Chrome, Firefox, and Edge.
 
 Original project: https://github.com/liminalpurr/jizhi
