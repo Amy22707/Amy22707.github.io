@@ -2,7 +2,7 @@
 title: Agent Systems 研究笔记
 description: Survey on Inference/Context/Memory/Scheduling/KV
 publishedAt: 2026-10-22
-updatedAt: 2026-11-03
+updatedAt: 2026-11-04
 pinned: true
 pinOrder: 1
 tags:
@@ -266,9 +266,7 @@ $$
 - 构建模型过小，可能无法正确生成工具调用或结构化记忆，省下计算却破坏后续可用性。
 - 异步写入要权衡新鲜度：等写完再回答会增加延迟，直接回答可能读到旧状态。
 
-
 <a id="paper-2608-00101"></a>
-
 ### 3.5 Copilot in the Wild：从生产会话看缓存失效、压缩和空闲
 
 [论文](https://arxiv.org/abs/2608.00101) · [全文](https://arxiv.org/html/2608.00101v1) · [公开数据与分析代码](https://github.com/Azure/AzurePublicDataset/blob/master/GitHubCopilotCodingAgentDataset2026.md)
@@ -293,7 +291,6 @@ $$
 **研究启发：** CoMem/ACON 讨论怎样整理上下文，Continnum/MORI 讨论怎样跨间隔保留状态；这篇补上了真实会话中哪些事件、哪些用户行为触发代价的证据。可以先按“轮内工具等待、轮间用户等待、压缩之后”分组，判断各自的恢复负担，再考虑是否值得设计统一或分阶段策略。公开元数据可用于调查时间与负载现象；语义损失和 Qwen/DeepSeek 上的实际收益仍需另行验证。
 
 <a id="paper-2610-31710"></a>
-
 ### 3.6 Compact-Bench：在同一修复进度上测摘要造成的损失
 
 [论文](https://arxiv.org/html/2610.31710v2) · [代码](https://github.com/cai-jianfeng/compact-bench) · [数据](https://huggingface.co/datasets/caijanfeng/compact-bench)
@@ -482,7 +479,6 @@ Agent 通过 `exec` 写代码检索日志、展开片段、筛选数据和做计
 **研究启发：** 与 CacheBlend 的区别是改变哪一层：ContextPilot 改文本组织，CacheBlend 修补不完全匹配的 KV。可进一步讨论，在长程 Agent 中怎样区分可重排证据、版本约束和必须保持顺序的执行历史。
 
 <a id="paper-2602-13594"></a>
-
 ### 4.8 Hippocampus：用紧凑索引找片段，再还原完整原文
 
 [论文](https://proceedings.mlsys.org/paper_files/paper/2026/hash/a1d04870cf83a0f29819d66f1dfdbfcb-Abstract-Conference.html) · [全文](https://proceedings.mlsys.org/paper_files/paper/2026/file/a1d04870cf83a0f29819d66f1dfdbfcb-Paper-Conference.pdf)
@@ -537,8 +533,6 @@ Agent 通过 `exec` 写代码检索日志、展开片段、筛选数据和做计
 
 **主要结论：** 计划有规律时，部分逐步推理可以由缓存承担，把 LLM 从每一步的必经路径移到后台。单纯按固定模式行动会丢失环境适应性，状态过滤、在线校正和查询抑制共同决定效果。
 
-作者在 TDW-MAT、TDW-COOK、TDW-GAME、BEHAVIOR-1K 的模拟/图环境任务中，使用 GPT-5、GPT-5-mini、GPT-5-nano，测量任务成功率、执行耗时、token 与成本。论文报告多数设置的效率收益；并非所有配置都提高成功率，主结果也包含 GPT-5 轨迹预填充，另有空缓存对照。仓库固定的 API 模型版本均为 2025-08-07，未验证 DeepSeek/Qwen。
-
 主要局限是计划局部性依赖任务：开放式编码、探索未必具有同样的转移规律；多 Agent 的局部选择还可能争抢资源、错过交接，后台校正可能来得太晚。作者提出更高阶转移、子过程缓存与协调机制作为后续方向。
 
 **研究启发：** CoMem 让记忆整理与执行重叠，这里让计划校验与执行重叠。共同需要明确后台结果到达时，主流程已经前进多远、哪些操作仍能修改。迁移到编码 Agent 前，应先确认是否存在可复用的计划片段，以及误执行后需要付出多少恢复代价。
@@ -564,9 +558,6 @@ APC 与 AgenticCache 的复用单位不同：APC 在相似任务间复用并适�
 
 **主要结论：** 计划模板把可复用的方法与本次数据分开，允许小模型借用大模型过去的规划经验。作者报告成本与延迟改善，但质量相对始终使用大规划模型的基线仍有损失，不能视为无损缓存。完整日志作为示例可能过长，小模型不一定能有效使用；过滤后的模板更易适配。
 
-主实验使用 GPT-4o 规划、Llama-3.1-8B 执行与适配、GPT-4o-mini 抽关键词和提炼；附录包括 Qwen2.5-7B-Instruct-Turbo 的小规划模型/执行模型对照。任务涵盖 FinanceBench、TabMWP、QASPER、AIME 2024/2025 和 GAIA，其中 GAIA 接入 Open Deep Research；主 Plan–Act 设置最多十轮，不能把全部结果归为长程环境任务。实验经第三方 API 调用，延迟包含远程服务波动。
-
-效益依赖任务重复度和命中质量。冷启动、关键词抽取、模板生成和适配都有开销；缺少重复意图时收益有限。模板随工具与任务变化而失效，以及如何可靠验收并写入成功经验，仍值得进一步检查。完整作者代码和额外实验材料发布未核实。
 
 <a id="topic-scheduling"></a>
 ## 5. Scheduling and KV
@@ -797,7 +788,6 @@ AgentKV 按 think、act、tool、others 分别保存少量代表 Query，用它�
 **研究启发：** 与 MORI 比较“整份状态放哪里”，与 AgentKV/ActKV 比较“每任务保留什么”，它补上了“共享 CPU 层是否真的容得下复用集合”。Appendix G 还明确分析了上下文编辑怎样破坏前缀身份，因此“更短输入可能更多 fresh prefill”已是相关工作。可追问的是哪种实际任务/负载下，容量竞争或前缀重建成为主要代价。
 
 <a id="paper-2601-22705"></a>
-
 ### 5.11 CONCUR：控制同时推进的 Agent 数，减少缓存抖动
 
 [论文](https://arxiv.org/abs/2601.22705) · [全文](https://arxiv.org/html/2601.22705v1)
@@ -819,7 +809,6 @@ admit、pause、resume 分别允许任务继续、暂停后续请求、重新激
 **研究启发：** 与 Continnum/MORI 决定已进入系统的状态如何保留相比，CONCUR 控制进入竞争的任务规模；与 EfficientAgent 的 CPU 缓存写入准入相比，它控制 Agent 执行准入。三者可以放在同一条因果链上理解：活跃任务数量与历史长度决定复用工作集，工作集和容量共同决定状态能否留到下次使用。研究不同长度、不同工具等待时间的任务混合时，需要先检查“按任务个数限流”是否能准确反映压力；这仍是待验证的问题。
 
 <a id="paper-2602-21548"></a>
-
 ### 5.12 DualPath：借用 Decode 机器的网卡读取 KV
 
 [论文](https://arxiv.org/abs/2602.21548) · [全文](https://arxiv.org/html/2602.21548v2) · [会议版](https://conferences.sigcomm.org/sigcomm/2026/program/papers/)
@@ -867,14 +856,9 @@ Prefill 内部还采用 **compute quota（计算时间额度）**：根据已缓
 
 **主要结论：** 工具运行中的进度，能提供历史统计和引擎占用率看不到的信息。它的价值尤其体现在“是否还来得及恢复”这一决策点；精确知道百分比仍不等于可以精确预测完成时间。长远程请求、未知脚本、非均匀阶段和环境突变都会限制信号效果。
 
-作者通过 mini-SWE-agent、OpenHands、自行运行的 SWE-bench Verified，以及扩展工具语料检查信号与开销；自身 Agent 使用 Qwen 3.8 Flash，并对其他开源/闭源模型作比较。系统层在 4×H100 上用 vLLM 做会话回放，分别测试 GPU-only 与 GPU＋DRAM，报告工具结束后的 p90 TTFT、吞吐、重载量改善。回放端的精确模型 checkpoint、vLLM 版本和完整公开复现入口未充分披露。插桩的任务分数对照用于检查干扰，不证明缓存控制提高了任务成功率。
-
-进度报告还可能不准确或被伪造，论文提出会话信用预算作为保护，但相关评估只是初步模拟。对“历史预测完全无用”的宽泛判断也应谨慎：论文更直接支持的是，在所测长工具调用与环境变化下，运行中信号能补充甚至超过调用前估计。
-
-**研究启发：** Continnum 使用工具历史分布，昨天的 Copilot 研究预测轮间用户空闲；这里读取轮内工具的实时状态。值得讨论的是哪些工具信号足以覆盖真实 KV 恢复预算、缺失时如何回退。进度通道与保留策略已有具体工作覆盖，新题需要进一步定位到未解决的工具类型、负载或接口问题。
+**研究启发：** 值得讨论的是哪些工具信号足以覆盖真实 KV 恢复预算、缺失时如何回退。进度通道与保留策略已有具体工作覆盖，新题需要进一步定位到未解决的工具类型、负载或接口问题。
 
 <a id="paper-2601-12967"></a>
-
 ### 5.14 Sutradhara：提前 prefill、流式派发工具与语义缓存提示
 
 [论文](https://arxiv.org/abs/2601.12967) · [全文](https://arxiv.org/html/2601.12967v3)
@@ -889,11 +873,7 @@ Prefill 内部还采用 **compute quota（计算时间额度）**：根据已缓
 
 **主要结论：** 提升一次 Agent 请求的速度，可以来自缩短其依赖链上的串行等待，而无需改变模型参数。prompt splitting、流式工具派发和缓存提示相互配合；提前计算也会占 GPU 与显存，收益取决于工具时延、可提前处理的前缀和并发压力。
 
-实现基于 vLLM 0.11.0，主模型 Qwen3-14B、BF16、A100-80GB，另有 Gemma 27B 泛化实验。评测使用生产子集和 BFCL v4 Web Search、SWE-bench 轨迹回放，部分工具时延按原比例归一化；不能据此认定提高了真实闭环任务成功率。公开轨迹实验为追加式历史，生产模板可能改变前缀。具体模型 checkpoint 修订、完整生产数据与可复现代码状态仍需核实。
-
 论文的 **FTR（First Token Rendered）** 指从用户请求到最终回答第一个可见 token，包含此前模型—工具多轮执行；它与某一次内部 LLM 调用的 TTFT 计时范围不同。论文用 FTR、端到端延迟、承载请求率及缓存行为评价系统。
-
-**研究启发：** 与 Ask the Tool 的实时进度相比，这里主要共享已知的结构信息：哪些输入已确定、哪些工具调用已完整生成、哪些状态马上会用。进一步研究应先测这些信息在实际 Qwen/DeepSeek 工作流中能暴露多少并行机会，以及提前计算对其他请求带来多少竞争。
 
 <a id="topic-reliability"></a>
 ## 6. Reliability and Training
@@ -996,48 +976,66 @@ CM-GSPO 将这件事显式化：
 
 **研究启发：** 从“给最终结果打分”转向“提供可行动的错误位置”。与 AgentRewind 联合思考时，要判断定位信息怎样真正减少重做。
 
+<a id="paper-flashprove"></a>
+### 6.5 FlashProve：用密码学证明核查指定模型的输出
+
+[官方发布](https://www.anthropic.com/research/provable-inference) · [技术报告](https://www.anthropic.com/document/flashprove-technical-report) · [开源代码](https://github.com/anthropics/FlashProve)
+
+**主张与研究方法：** 第三方网关可能把请求发给不同模型，API 返回的模型名由服务端声明。FlashProve 让客户端核查一个具体的计算命题。给定请求的 token、指定模型和解码规则，回复中被检查的位置是否符合该模型的计算结果？
+
+1. **锁定模型。** 发布方用密码学承诺绑定权重与配置，客户端从独立可信渠道获取承诺 ID。服务商无需公开私有权重。
+2. **生成证明。** 证明器把推理写成可以检查的数学约束，包括矩阵运算、MoE 专家选择和输出比较。严格匹配时，需要证明被检查的 token 在对应前缀下取得模型最高分。zkSNARK（简洁零知识证明）把这些约束的检查压缩成一份证明，协议设计以隐藏权重与内部计算为目标。
+3. **客户端验收。** CPU 验证器用承诺、请求 token、回复、验收规则及证明文件检查结果。客户端还要确认 tokenizer、覆盖区间与回复结束位置。仓库的严格匹配结果是 `YES`。允许与最高分存在差距的策略返回 `WITHIN LIMITS`，表示输出满足设定的分数限制。
+
+**为什么采用事后验证。** 生成时后一个 token 依赖前一个。事后已经知道完整序列，证明器可以像 prefill 一样并行算各位置的表示，并按因果掩码检查指定位置。多条请求可成批分摊权重承诺的检查开销。MoE 每个 token 只运行少数专家，证明器也围绕实际参与计算的专家组织工作。
+
+**主要结论：** 原型在 4-bit 权重转换的整数版 Llama 4 Maverick 400B MoE 上验证。主基准用 1,024 token 窗口检查一个后继 token，单 H100 的约 110 token/s 统计处理过的窗口 token。技术报告另测逐个检查回复 token，按实际检查位置计约 39.1 token/s。对照 vLLM prefill，作者报告证明生成约需 70–95 倍 GPU 时间。严格模式针对整数模型的贪心选择，浮点和随机采样服务需要另行对齐验证规则。
+
+事后证明核查的是输出与承诺模型的一致性。若路由到模型 B 但它碰巧在受检位置给出与模型 A 相同的 token，事后用 A 重算仍可能通过。追踪原始请求走过的路由、在哪台机器执行，是另一项需要额外记录的审计任务。
+
 <a id="topic-synthesis"></a>
 ## 7. Survey
 
 ### 论文分类对照
 
-| 论文                                                                   | 任务类型               | 单/多用户设置         | Agent 形态       | 长程/短程设置     | 优化对象              | 训练要求        | 评测方式                 | 优化目标         | 主要评估指标                        |
-| -------------------------------------------------------------------- | ------------------ | --------------- | -------------- | ----------- | ----------------- | ----------- | -------------------- | ------------ | ----------------------------- |
-| [DLite](https://arxiv.org/html/2610.23787v1)                         | 生成 / 编码 / 工具       | 单用户型（含 batch）   | 主模型＋草稿         | 兼有          | 解码 / 草稿 KV        | 草稿模型训练      | 固定提示＋BFCL 闭环         | 延迟↓          | 生成加速比；接受长度                    |
-| [AgentSysBench](https://arxiv.org/html/2608.15127v1)                 | 混合 Agent 工作流       | 兼有              | 混合工作流          | 兼有          | 全栈测量              | 无需（测量）      | 工作流实测＋生产观察           | 瓶颈测量         | 任务耗时；Util；内存；token/费用         |
-| [OpenDS-World](https://arxiv.org/html/2610.30181v1)                  | 开放网页搜索             | 单用户型            | 单 Agent        | 长程          | 工具 / 评测           | 无需（基准）      | 开放 Web 闭环            | 质量 / 成本评测    | Acc.；工具调用；搜索成本                |
-| [Request Order Matters](https://arxiv.org/html/2610.05833v1)         | 滚动文档 QA            | 未明确（串行请求）       | 固定请求，无行动闭环     | 单轮 + 持久缓存   | KV 复用 / 重算        | 无需          | 固定请求序列               | 一致性↑；延迟↓     | 输出变化率；fidelity；TTFT           |
-| [Agent Memory Characterization](https://arxiv.org/html/2606.06448v2) | 记忆 QA / 跨会话任务      | 兼有              | 依记忆系统而异        | 单轮 QA + 跨会话 | 记忆构建 / 检索         | 无需（测量）      | 记忆 QA＋时序回放/共置        | 成本 / 新鲜度测量   | 构建/查询耗时；Acc.；J/correct；更新滞后   |
-| [CoMem](https://arxiv.org/html/2605.30842v1)                         | 编码                 | 单用户型（含 batch）   | 主 Agent＋记忆模型   | 长程          | 上下文 / 记忆流水线       | 辅助模型训练      | 编码闭环＋batch 实测        | 延迟↓；质量保持     | 任务延迟；成功率；上下文/内存               |
-| [LongSeeker](https://arxiv.org/html/2605.05191v1)                    | 搜索                 | 单用户型            | 单 Agent        | 长程          | 上下文编辑             | 任务模型 SFT    | 搜索闭环                 | 质量↑；上下文↓     | Acc.；上下文/生成 token             |
-| [ACM](https://arxiv.org/html/2607.23809v1)                           | 搜索 / 编码            | 单用户型            | 主 Agent＋辅助 LLM | 长程          | 上下文 / 外部记忆        | 可选；增强版蒸馏    | 搜索/编码闭环              | 质量↑；上下文↓     | pass@1；峰值 token；工具调用          |
-| [Scroll](https://arxiv.org/html/2608.21690v1)                        | 记忆 QA / 环境操作       | 单用户型            | 单 Agent＋运行时    | 单轮 QA + 长程  | 日志 / 程序运行时        | 无需          | 记忆 QA＋LOCA 闭环        | 质量↑；输入规模↓    | Acc./任务分数；输入输出 token          |
-| [ReCAP](https://arxiv.org/html/2609.40118v1)                         | 编码 / 多轮反馈          | 单用户型            | 单 Agent        | 长程 / 多轮     | 历史选择 / 依赖图        | 无需          | 编码闭环＋开销估算            | 质量保持；开销↓     | 任务分数/Acc.；历史 token；冷恢复开销（含估算） |
-| [ACON](https://arxiv.org/html/2510.00615v3)                          | 办公 / 工具 / QA       | 单用户型            | 主 Agent＋压缩器    | 兼有          | 历史 / 观察压缩         | 无需；可选蒸馏     | 工具闭环＋QA              | 质量保持；成本↓     | 成功率；峰值 token；API 费用           |
-| [ContextPilot](https://arxiv.org/html/2511.03475v4)                  | RAG / 记忆 / 多 Agent | 兼有              | 混合，含协作多 Agent  | 兼有          | 输入组织 / 前缀 KV      | 无需          | RAG/Agent 应用/edge 实测 | 延迟↓；质量保持     | Prefill/TTFT；任务质量；复用率         |
-| [Agentix](https://www.usenix.org/system/files/nsdi26-luo.pdf)        | 对话 / 工具 / 树搜索      | 多用户型            | 串行/并行 Agent 程序 | 兼有          | 程序调度 / 路由         | 无需          | 程序实验，含对话回放           | 延迟↓；吞吐↑      | 程序时延/token；program/s；p95/p99  |
-| [Continnum](https://arxiv.org/html/2511.02230v7)                     | 编码 / 工具            | 多用户型            | 独立 Agent 程序    | 长程          | KV 驻留 / 续接调度      | 无需          | 轨迹回放＋SWE 闭环          | 延迟↓；吞吐↑      | 任务完成时间；job/s；尾延迟              |
-| [MORI](https://arxiv.org/html/2606.00866v1)                          | 编码轨迹               | 多用户型（回放）        | 独立 Agent 程序    | 长程（轨迹）      | KV 驻留 / 卸载        | 无需          | 轨迹回放                 | 吞吐↑；延迟↓      | token/s、step/s；TTFT；Util      |
-| [CacheScout](https://arxiv.org/html/2608.14624v1)                    | QA / 对话 / 搜索 / 编码  | 未明确（多 Agent 服务） | 多 Agent（六角色）   | 兼有          | 固定前缀 KV / 预取      | 无需；在线统计     | 多 Agent 服务实验         | 延迟↓；吞吐↑      | TTFT；每轮延迟；turn/s；命中率          |
-| [Vesta](https://arxiv.org/html/2610.14686v1)                         | 在线 Agent 服务轨迹      | 多用户型（回放）        | 未明确（会话轨迹）      | 长程（轨迹）      | 路由 / KV 迁移        | 无需          | 生产轨迹回放               | 延迟↓；吞吐↑      | 平均/p99 TTFT；吞吐；排队时间           |
-| [AgentKV](https://arxiv.org/html/2609.14872v1)                       | 工具交互               | 单用户型（含 batch）   | 单 Agent        | 长程 / 多轮     | token KV 淘汰 / 页回收 | 无需          | 工具闭环＋服务实测            | 容量↓；质量保持；吞吐↑ | 固定 KV 预算下任务分数；token/s         |
-| [ActKV](https://arxiv.org/html/2609.31395v1)                         | 环境操作 / QA / 购物     | 单用户型（离线 batch）  | 单 Agent        | 长程          | KV 淘汰 / 预算 / 页回收  | 无需          | 工具闭环＋离线 batch        | 容量↓；质量保持；吞吐↑ | 峰值 KV；Acc.；token/s、task/s     |
-| [CacheBlend](https://arxiv.org/html/2405.16444v3)                    | RAG / QA / 摘要      | 多用户型（请求服务）      | 固定请求，无行动闭环     | 单轮（长输入）     | 非前缀 KV 复用 / 重算    | 无需          | QA/摘要＋请求服务实测         | 延迟↓；吞吐↑；质量保持 | TTFT；推理吞吐；F1 / ROUGE-L        |
-| [PoS](https://arxiv.org/html/2610.01415v1)                           | 环境操作 / 诊断          | 单用户型            | 主 Agent＋检查模块   | 长程          | 任务状态 / 检查         | 无需          | 执行/诊断闭环              | 质量↑；可靠性↑     | 成功率/诊断指标；token 成本             |
-| [Glasseek](https://arxiv.org/html/2610.16998v1)                      | 开放网页搜索             | 单用户型            | 单 Agent，兼搜索/摘要 | 长程          | 策略训练 / 评测         | 任务模型 SFT＋RL | 搜索闭环＋训练/泄漏审计         | 质量↑；评测可信度↑   | Acc./pass@1；泄漏分析              |
-| [AgentRewind](https://arxiv.org/html/2608.14380v1)                   | 编码 / 工程任务          | 单用户型            | 主 Agent＋恢复模块   | 长程          | 检查点 / 环境恢复        | 无需          | 工程闭环＋恢复比较            | 质量↑；可恢复性↑    | 成功率；验收进度；轨迹长度                 |
-| [Traverse / Scout](https://arxiv.org/html/2609.17930v1)              | 编码 / 终端 / 科学任务     | 单用户型（多候选）       | 任务 Agent＋验证器   | 长程（轨迹）      | 验证器 / 轨迹选择        | 验证器 SFT＋RL  | 离线轨迹＋候选选择            | 检测质量↑；任务质量↑  | 首错定位准确率；检测 F1；best-of-N 成功率   |
-| [CacheSlide](https://www.usenix.org/conference/fast26/presentation/liu-yang) | 搜索 / 对话 / 编码 | 兼有 | 单 Agent / 并行候选 | 多轮 / 长程 | 位置编码 / KV / I/O | CoPE/LoRA 适配 | Agent 基准＋服务实测 | 延迟↓；吞吐↑；质量保持 | TTFT；QPS；F1/ROUGE/成功率 |
-| [EfficientAgent](https://arxiv.org/html/2609.33762v1) | 编码 | 多用户型（回放为主） | 独立 Agent 程序 | 长程（轨迹） | CPU KV 写入准入 | 无需 | 依赖保持回放＋实跑采集 | 完成耗时↓；重算/搬运↓ | makespan；computed prefill；CPU 读写量 |
-| [CONCUR](https://arxiv.org/html/2601.22705v1) | 批量 Agent rollout | 多用户型（独立程序） | 独立 ReAct Agent | 长程 | Agent 执行准入 / 活跃窗口 | 无需 | 离线批量服务实测 | 完成耗时↓；吞吐↑ | batch latency；KV 命中率/占用 |
-| [DualPath](https://arxiv.org/html/2602.21548v2) | 编码 / RL rollout | 多用户型（回放） | 独立 Agent 程序 | 长程（轨迹） | KV 读取路径 / 网络 / 批调度 | 无需 | 生产轨迹回放＋服务实测 | 吞吐↑；SLO 内延迟控制 | JCT；APS；TTFT/TTST/TPOT |
-| [Copilot in the Wild](https://arxiv.org/html/2608.00101v1) | 生产编码 Agent | 多用户（生产观察） | 编码 Agent＋工具 | 长程 / 多轮会话 | 会话测量 / 空闲预测 | 辅助预测器训练 | 生产观察＋离线预测 | 瓶颈测量 / 回收机会 | 调用耗时；缓存率；token；空闲分布；预测 AUC |
-| [Hippocampus](https://proceedings.mlsys.org/paper_files/paper/2026/hash/a1d04870cf83a0f29819d66f1dfdbfcb-Abstract-Conference.html) | 对话历史 QA | 单用户型 | 回答模型＋记忆模块 | 跨会话记忆（离线 QA） | 记忆存储 / 索引 / 检索 | 无需（随机索引） | 固定历史 QA＋检索微测 | 延迟↓；存储↓；质量保持 | 检索耗时；输入 token；存储；F1/Acc. |
-| [Ask the Tool](https://arxiv.org/html/2609.18849v1) | 编码 / 工具执行 | 多用户型（服务回放） | Agent＋进度包装层 | 长程（轨迹） | KV 保留 / 卸载 / 恢复 | 无需新增模型训练 | 工具重跑＋任务对照＋服务回放 | 尾延迟↓；搬运/重算↓ | post-tool p90 TTFT；吞吐；重载量；ETA 误差 |
-| [AgenticCache](https://proceedings.mlsys.org/paper_files/paper/2026/hash/c66a9db149261435664284a20b6f1d42-Abstract-Conference.html) | 具身协作 / 运输 / 烹饪 | 单用户型（多 Agent 协作） | 2–5 Agent＋后台规划器 | 长程（模拟环境） | 高层计划复用 / 异步校正 | 无需新增训练；可选轨迹预填充 | 任务闭环（3D/图环境） | 延迟↓；成本↓；任务质量 | 成功率；执行耗时；token；费用；缓存命中 |
-| [APC](https://arxiv.org/html/2506.14852v2) | 文档/数学推理；开放调查 | 单用户型 | 规划模型＋执行模型 | 兼有（限轮 Plan–Act/GAIA） | 计划模板复用 / 小模型适配 | 无需 | 数据推理＋工具任务评测 | 成本↓；延迟↓；质量取舍 | 准确率；费用；延迟；命中率 |
-| [Sutradhara](https://arxiv.org/html/2601.12967v3) | 工具查询 / 编码 | 多用户型（回放） | 单 Agent＋多工具调用 | 兼有（短链/长轨迹） | 编排—引擎接口 / 并行 / KV | 无需 | 生产及公开轨迹回放 | 延迟↓；吞吐↑ | FTR；E2E；QPS；缓存命中 |
-| [Compact-Bench](https://arxiv.org/html/2610.31710v2) | 编码修复 | 单用户型 | 编码 Agent＋摘要模型 | 长程 | 历史压缩测量 | 无需 | 配对任务续跑＋生产链观察 | 质量测量 | 修复通过；稳定损伤率；细节保留率 |
+| 论文                                                                                                                                  | 任务类型               | 单/多用户设置          | Agent 形态        | 长程/短程设置              | 优化对象               | 训练要求           | 评测方式                 | 优化目标          | 主要评估指标                            |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ------------------ | ---------------- | --------------- | -------------------- | ------------------ | -------------- | -------------------- | ------------- | --------------------------------- |
+| [DLite](https://arxiv.org/html/2610.23787v1)                                                                                        | 生成 / 编码 / 工具       | 单用户型（含 batch）    | 主模型＋草稿          | 兼有                   | 解码 / 草稿 KV         | 草稿模型训练         | 固定提示＋BFCL 闭环         | 延迟↓           | 生成加速比；接受长度                        |
+| [AgentSysBench](https://arxiv.org/html/2608.15127v1)                                                                                | 混合 Agent 工作流       | 兼有               | 混合工作流           | 兼有                   | 全栈测量               | 无需（测量）         | 工作流实测＋生产观察           | 瓶颈测量          | 任务耗时；Util；内存；token/费用             |
+| [OpenDS-World](https://arxiv.org/html/2610.30181v1)                                                                                 | 开放网页搜索             | 单用户型             | 单 Agent         | 长程                   | 工具 / 评测            | 无需（基准）         | 开放 Web 闭环            | 质量 / 成本评测     | Acc.；工具调用；搜索成本                    |
+| [Request Order Matters](https://arxiv.org/html/2610.05833v1)                                                                        | 滚动文档 QA            | 未明确（串行请求）        | 固定请求，无行动闭环      | 单轮 + 持久缓存            | KV 复用 / 重算         | 无需             | 固定请求序列               | 一致性↑；延迟↓      | 输出变化率；fidelity；TTFT               |
+| [Agent Memory Characterization](https://arxiv.org/html/2606.06448v2)                                                                | 记忆 QA / 跨会话任务      | 兼有               | 依记忆系统而异         | 单轮 QA + 跨会话          | 记忆构建 / 检索          | 无需（测量）         | 记忆 QA＋时序回放/共置        | 成本 / 新鲜度测量    | 构建/查询耗时；Acc.；J/correct；更新滞后       |
+| [CoMem](https://arxiv.org/html/2605.30842v1)                                                                                        | 编码                 | 单用户型（含 batch）    | 主 Agent＋记忆模型    | 长程                   | 上下文 / 记忆流水线        | 辅助模型训练         | 编码闭环＋batch 实测        | 延迟↓；质量保持      | 任务延迟；成功率；上下文/内存                   |
+| [LongSeeker](https://arxiv.org/html/2605.05191v1)                                                                                   | 搜索                 | 单用户型             | 单 Agent         | 长程                   | 上下文编辑              | 任务模型 SFT       | 搜索闭环                 | 质量↑；上下文↓      | Acc.；上下文/生成 token                 |
+| [ACM](https://arxiv.org/html/2607.23809v1)                                                                                          | 搜索 / 编码            | 单用户型             | 主 Agent＋辅助 LLM  | 长程                   | 上下文 / 外部记忆         | 可选；增强版蒸馏       | 搜索/编码闭环              | 质量↑；上下文↓      | pass@1；峰值 token；工具调用              |
+| [Scroll](https://arxiv.org/html/2608.21690v1)                                                                                       | 记忆 QA / 环境操作       | 单用户型             | 单 Agent＋运行时     | 单轮 QA + 长程           | 日志 / 程序运行时         | 无需             | 记忆 QA＋LOCA 闭环        | 质量↑；输入规模↓     | Acc./任务分数；输入输出 token              |
+| [ReCAP](https://arxiv.org/html/2609.40118v1)                                                                                        | 编码 / 多轮反馈          | 单用户型             | 单 Agent         | 长程 / 多轮              | 历史选择 / 依赖图         | 无需             | 编码闭环＋开销估算            | 质量保持；开销↓      | 任务分数/Acc.；历史 token；冷恢复开销（含估算）     |
+| [ACON](https://arxiv.org/html/2510.00615v3)                                                                                         | 办公 / 工具 / QA       | 单用户型             | 主 Agent＋压缩器     | 兼有                   | 历史 / 观察压缩          | 无需；可选蒸馏        | 工具闭环＋QA              | 质量保持；成本↓      | 成功率；峰值 token；API 费用               |
+| [ContextPilot](https://arxiv.org/html/2511.03475v4)                                                                                 | RAG / 记忆 / 多 Agent | 兼有               | 混合，含协作多 Agent   | 兼有                   | 输入组织 / 前缀 KV       | 无需             | RAG/Agent 应用/edge 实测 | 延迟↓；质量保持      | Prefill/TTFT；任务质量；复用率             |
+| [Agentix](https://www.usenix.org/system/files/nsdi26-luo.pdf)                                                                       | 对话 / 工具 / 树搜索      | 多用户型             | 串行/并行 Agent 程序  | 兼有                   | 程序调度 / 路由          | 无需             | 程序实验，含对话回放           | 延迟↓；吞吐↑       | 程序时延/token；program/s；p95/p99      |
+| [Continnum](https://arxiv.org/html/2511.02230v7)                                                                                    | 编码 / 工具            | 多用户型             | 独立 Agent 程序     | 长程                   | KV 驻留 / 续接调度       | 无需             | 轨迹回放＋SWE 闭环          | 延迟↓；吞吐↑       | 任务完成时间；job/s；尾延迟                  |
+| [MORI](https://arxiv.org/html/2606.00866v1)                                                                                         | 编码轨迹               | 多用户型（回放）         | 独立 Agent 程序     | 长程（轨迹）               | KV 驻留 / 卸载         | 无需             | 轨迹回放                 | 吞吐↑；延迟↓       | token/s、step/s；TTFT；Util          |
+| [CacheScout](https://arxiv.org/html/2608.14624v1)                                                                                   | QA / 对话 / 搜索 / 编码  | 未明确（多 Agent 服务）  | 多 Agent（六角色）    | 兼有                   | 固定前缀 KV / 预取       | 无需；在线统计        | 多 Agent 服务实验         | 延迟↓；吞吐↑       | TTFT；每轮延迟；turn/s；命中率              |
+| [Vesta](https://arxiv.org/html/2610.14686v1)                                                                                        | 在线 Agent 服务轨迹      | 多用户型（回放）         | 未明确（会话轨迹）       | 长程（轨迹）               | 路由 / KV 迁移         | 无需             | 生产轨迹回放               | 延迟↓；吞吐↑       | 平均/p99 TTFT；吞吐；排队时间               |
+| [AgentKV](https://arxiv.org/html/2609.14872v1)                                                                                      | 工具交互               | 单用户型（含 batch）    | 单 Agent         | 长程 / 多轮              | token KV 淘汰 / 页回收  | 无需             | 工具闭环＋服务实测            | 容量↓；质量保持；吞吐↑  | 固定 KV 预算下任务分数；token/s             |
+| [ActKV](https://arxiv.org/html/2609.31395v1)                                                                                        | 环境操作 / QA / 购物     | 单用户型（离线 batch）   | 单 Agent         | 长程                   | KV 淘汰 / 预算 / 页回收   | 无需             | 工具闭环＋离线 batch        | 容量↓；质量保持；吞吐↑  | 峰值 KV；Acc.；token/s、task/s         |
+| [CacheBlend](https://arxiv.org/html/2405.16444v3)                                                                                   | RAG / QA / 摘要      | 多用户型（请求服务）       | 固定请求，无行动闭环      | 单轮（长输入）              | 非前缀 KV 复用 / 重算     | 无需             | QA/摘要＋请求服务实测         | 延迟↓；吞吐↑；质量保持  | TTFT；推理吞吐；F1 / ROUGE-L            |
+| [PoS](https://arxiv.org/html/2610.01415v1)                                                                                          | 环境操作 / 诊断          | 单用户型             | 主 Agent＋检查模块    | 长程                   | 任务状态 / 检查          | 无需             | 执行/诊断闭环              | 质量↑；可靠性↑      | 成功率/诊断指标；token 成本                 |
+| [Glasseek](https://arxiv.org/html/2610.16998v1)                                                                                     | 开放网页搜索             | 单用户型             | 单 Agent，兼搜索/摘要  | 长程                   | 策略训练 / 评测          | 任务模型 SFT＋RL    | 搜索闭环＋训练/泄漏审计         | 质量↑；评测可信度↑    | Acc./pass@1；泄漏分析                  |
+| [AgentRewind](https://arxiv.org/html/2608.14380v1)                                                                                  | 编码 / 工程任务          | 单用户型             | 主 Agent＋恢复模块    | 长程                   | 检查点 / 环境恢复         | 无需             | 工程闭环＋恢复比较            | 质量↑；可恢复性↑     | 成功率；验收进度；轨迹长度                     |
+| [Traverse / Scout](https://arxiv.org/html/2609.17930v1)                                                                             | 编码 / 终端 / 科学任务     | 单用户型（多候选）        | 任务 Agent＋验证器    | 长程（轨迹）               | 验证器 / 轨迹选择         | 验证器 SFT＋RL     | 离线轨迹＋候选选择            | 检测质量↑；任务质量↑   | 首错定位准确率；检测 F1；best-of-N 成功率       |
+| [CacheSlide](https://www.usenix.org/conference/fast26/presentation/liu-yang)                                                        | 搜索 / 对话 / 编码       | 兼有               | 单 Agent / 并行候选  | 多轮 / 长程              | 位置编码 / KV / I/O    | CoPE/LoRA 适配   | Agent 基准＋服务实测        | 延迟↓；吞吐↑；质量保持  | TTFT；QPS；F1/ROUGE/成功率             |
+| [EfficientAgent](https://arxiv.org/html/2609.33762v1)                                                                               | 编码                 | 多用户型（回放为主）       | 独立 Agent 程序     | 长程（轨迹）               | CPU KV 写入准入        | 无需             | 依赖保持回放＋实跑采集          | 完成耗时↓；重算/搬运↓  | makespan；computed prefill；CPU 读写量 |
+| [CONCUR](https://arxiv.org/html/2601.22705v1)                                                                                       | 批量 Agent rollout   | 多用户型（独立程序）       | 独立 ReAct Agent  | 长程                   | Agent 执行准入 / 活跃窗口  | 无需             | 离线批量服务实测             | 完成耗时↓；吞吐↑     | batch latency；KV 命中率/占用           |
+| [DualPath](https://arxiv.org/html/2602.21548v2)                                                                                     | 编码 / RL rollout    | 多用户型（回放）         | 独立 Agent 程序     | 长程（轨迹）               | KV 读取路径 / 网络 / 批调度 | 无需             | 生产轨迹回放＋服务实测          | 吞吐↑；SLO 内延迟控制 | JCT；APS；TTFT/TTST/TPOT            |
+| [Copilot in the Wild](https://arxiv.org/html/2608.00101v1)                                                                          | 生产编码 Agent         | 多用户（生产观察）        | 编码 Agent＋工具     | 长程 / 多轮会话            | 会话测量 / 空闲预测        | 辅助预测器训练        | 生产观察＋离线预测            | 瓶颈测量 / 回收机会   | 调用耗时；缓存率；token；空闲分布；预测 AUC        |
+| [Hippocampus](https://proceedings.mlsys.org/paper_files/paper/2026/hash/a1d04870cf83a0f29819d66f1dfdbfcb-Abstract-Conference.html)  | 对话历史 QA            | 单用户型             | 回答模型＋记忆模块       | 跨会话记忆（离线 QA）         | 记忆存储 / 索引 / 检索     | 无需（随机索引）       | 固定历史 QA＋检索微测         | 延迟↓；存储↓；质量保持  | 检索耗时；输入 token；存储；F1/Acc.          |
+| [Ask the Tool](https://arxiv.org/html/2609.18849v1)                                                                                 | 编码 / 工具执行          | 多用户型（服务回放）       | Agent＋进度包装层     | 长程（轨迹）               | KV 保留 / 卸载 / 恢复    | 无需新增模型训练       | 工具重跑＋任务对照＋服务回放       | 尾延迟↓；搬运/重算↓   | post-tool p90 TTFT；吞吐；重载量；ETA 误差  |
+| [AgenticCache](https://proceedings.mlsys.org/paper_files/paper/2026/hash/c66a9db149261435664284a20b6f1d42-Abstract-Conference.html) | 具身协作 / 运输 / 烹饪     | 单用户型（多 Agent 协作） | 2–5 Agent＋后台规划器 | 长程（模拟环境）             | 高层计划复用 / 异步校正      | 无需新增训练；可选轨迹预填充 | 任务闭环（3D/图环境）         | 延迟↓；成本↓；任务质量  | 成功率；执行耗时；token；费用；缓存命中            |
+| [APC](https://arxiv.org/html/2506.14852v2)                                                                                          | 文档/数学推理；开放调查       | 单用户型             | 规划模型＋执行模型       | 兼有（限轮 Plan–Act/GAIA） | 计划模板复用 / 小模型适配     | 无需             | 数据推理＋工具任务评测          | 成本↓；延迟↓；质量取舍  | 准确率；费用；延迟；命中率                     |
+| [Sutradhara](https://arxiv.org/html/2601.12967v3)                                                                                   | 工具查询 / 编码          | 多用户型（回放）         | 单 Agent＋多工具调用   | 兼有（短链/长轨迹）           | 编排—引擎接口 / 并行 / KV  | 无需             | 生产及公开轨迹回放            | 延迟↓；吞吐↑       | FTR；E2E；QPS；缓存命中                  |
+| [Compact-Bench](https://arxiv.org/html/2610.31710v2)                                                                                | 编码修复               | 单用户型             | 编码 Agent＋摘要模型   | 长程                   | 历史压缩测量             | 无需             | 配对任务续跑＋生产链观察         | 质量测量          | 修复通过；稳定损伤率；细节保留率                  |
+| [FlashProve](https://www.anthropic.com/research/provable-inference)                                                                 | 模型推理证明             | 多请求批处理（基准）       | 无 Agent 闭环      | 固定 token 窗口          | 推理完整性验证            | 无需             | 证明与验证基准              | 可靠性；证明效率      | 处理/核查 token/s、证明大小、验证耗时           |
 
 **分类口径：** 单用户型指主要研究一个用户任务内部的能力或效率；多用户型指多个独立会话/程序共享推理资源的服务设置，实验可能用合成请求或回放代替真人；兼有指同时包含两类设置。多 Agent、多个候选或 batch 本身不构成多用户证据，无法判定的保留“未明确”。这列描述研究设置，不声称论文报告了真实用户人数。
 
@@ -1118,3 +1116,4 @@ CM-GSPO 将这件事显式化：
 | [APC](https://arxiv.org/abs/2506.14852) | 成功日志提炼模板，关键词匹配后由小模型适配 | [§4.10](#paper-2506-14852) |
 | [Sutradhara](https://arxiv.org/abs/2601.12967) | 确定前缀先算、完整工具调用先发，角色提示指导 KV 管理 | [§5.14](#paper-2601-12967) |
 | [Compact-Bench](https://arxiv.org/abs/2610.31710v2) | 固定仓库状态，比较完整历史与摘要的修复续跑 | [§3.6](#paper-2610-31710) |
+| [FlashProve](https://www.anthropic.com/document/flashprove-technical-report) | 绑定模型权重与规则，事后证明指定回复位置的计算结果 | [§6.5](#paper-flashprove) |
