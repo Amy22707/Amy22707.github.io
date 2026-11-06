@@ -131,6 +131,14 @@ their badge and display priority. Other project entries remain in the full list.
 
 # Studio card layout checks
 
+The Travel Frog development log under Studio Notes is a rendered copy of the
+personal blog post, excluding its final “折叠区小作文” details block. The blog
+original remains unchanged. To refresh the copy after editing the blog or rebuilding
+translation assets, run `npm.cmd run build:studio-notes` from the homepage folder,
+then build Studio. This reuses matching existing translations, rather than sending
+the article to a translation service. Studio can deploy the generated HTML on its
+own without depending on the homepage checkout.
+
 Keep each Studio card's artwork, content, and actions as three direct children.
 The card grid shares those rows with CSS subgrid so separators stay aligned even
 when notices are omitted, descriptions differ, or buttons wrap. Do not put the

@@ -39,7 +39,7 @@ for (const project of studio.projects) {
   for (const item of project.highlights || []) add(item, 'studio:data');
 }
 for (const update of studio.updates || []) {
-  for (const key of ['title', 'description']) add(update[key] || '', 'studio:data');
+  for (const key of ['title', 'description', 'imageAlt']) add(update[key] || '', 'studio:data');
 }
 for (const label of ['PLACEHOLDER ART', 'Email the studio ↗', 'Send feedback ↗']) add(label, 'shared');
 for (const label of ['Copy', 'Copied', 'Copy failed', 'Copy snippet', 'Published', 'Updated', 'Switch to dark mode', 'Switch to light mode', 'Dark', 'Light', 'Project page', 'Project preview ↗', 'View details', 'Download ↓', 'Play ↗', 'Download', 'Play online', 'Release notes', 'Source code', 'GAME', 'TOOL', 'AVAILABLE', 'PREVIEW · TESTING', 'ON THE WORKBENCH', 'A game, coming soon', 'A tool, coming soon', 'A new space on the workbench. More details will be shared when it is ready.', 'Testing in progress. Downloads and online play are not yet available.', 'This space is waiting for its first release. Check back soon.', 'A LITTLE PLAY', 'AN EVERYDAY TOOL', 'Nothing here yet. Come back soon.', 'The collection could not be loaded. Please refresh or try again later.']) add(label, 'shared');

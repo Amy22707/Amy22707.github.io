@@ -15,6 +15,7 @@
     "push:all": "node scripts/sync-studio.mjs --all",
     "test:studio-sync": "node --test tests/studio-sync.test.mjs",
     "test:studio-layout": "node --test tests/studio-card-layout.test.mjs",
+    "build:studio-notes": "node scripts/build-studio-notes.mjs",
     "sync:project-dates": "node scripts/sync-project-dates.mjs"
   },
   "keywords": [],
