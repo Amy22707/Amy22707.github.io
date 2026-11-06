@@ -37,6 +37,7 @@ const groups = [
               {showUpdated && <span><span>Updated</span> <time datetime={updatedAt.toISOString()}>{formatProjectDate(updatedAt)}</time></span>}
             </div>}
             <p>{project.data.description}</p>
+            {project.data.repository && project.data.demo && <p><a href={project.data.demo} target="_blank" rel="noreferrer">Guide and downloads</a></p>}
             <div class="tag-row">{project.data.technologies.map(technology => <a class:list={{ active: technology === activeTag }} href={getProjectTagHref(technology)}>{technology}</a>)}</div>
           </article>
         );
