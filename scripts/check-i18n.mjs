@@ -81,8 +81,9 @@ for (const project of data.projects) {
 const links = await readFile('dist/links/index.html', 'utf8');
 assert.match(links, /class="link-card"[^>]*translate="no"/);
 const frog = await readFile('dist/studio/travel-frog/index.html', 'utf8');
-assert.match(frog, /src="\/i18n\/runtime\.js"/);
-assert.match(frog, /aria-disabled="true"/);
+assert.match(frog, /href="en\.html"[^>]*hreflang="en"/);
+assert.match(frog, /href="play\/index\.html\?edition=normal"/);
+assert.match(frog, /href="play\/index\.html\?edition=gallery"/);
 for (const error of errors) console.error(error);
 assert.equal(errors.size, 0, `Language validation found ${errors.size} issues.`);
 console.log(`Language validation passed: ${pages} pages, ${strings} text occurrences, ${protectedBlocks} protected code/math/friend blocks.`);

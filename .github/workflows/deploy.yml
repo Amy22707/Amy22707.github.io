@@ -20,6 +20,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Prepare Travel Frog web game
+        run: |
+          curl --fail --location --retry 3 --output "$RUNNER_TEMP/TravelFrogWeb.zip" https://github.com/Amy22707/Travel-Frog/releases/download/v0.2.3/TravelFrogWeb.zip
+          unzip -q "$RUNNER_TEMP/TravelFrogWeb.zip" 'play/*' -d public/studio/travel-frog
+
       - uses: withastro/action@v4
 
   deploy:
