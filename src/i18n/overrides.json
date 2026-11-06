@@ -1660,5 +1660,9 @@
   "Traditional-color waves and Blobs animations": { "zh": "传统色波浪与 Blobs 动画" },
   "Bundled fonts, including Nüshu Fengqi": { "zh": "内置多款字体，含女书凤栖" },
   "Browser Extension": { "zh": "浏览器扩展" },
-  "Jizhi Enhanced: Chinese poetry over traditional-color waves": { "zh": "几枝·增强版：传统色波浪背景上的古诗词" }
+  "Jizhi Enhanced: Chinese poetry over traditional-color waves": { "zh": "几枝·增强版：传统色波浪背景上的古诗词" },
+  "A Windows focus and study planner with customizable app restrictions, task and planning lists, and offline focus history.": {"zh": "Windows 专注与学习管理软件，支持自定义应用限制、待办、计划本和离线专注记录。"},
+  "FocusBloom brings timers, task lists, and a class calendar together. In Strict Mode, you can choose which Windows apps to restrict. Core features work offline without an account.": {"zh": "一刻专注把计时、待办和课表放在一起。严格模式下，可以自行选择限制哪些 Windows 应用。核心功能无需联网或注册。"},
+  "Features, Windows installation, and browser extension setup": {"zh": "功能介绍、Windows 安装与浏览器扩展设置"},
+  "Guide and downloads": {"zh":"使用指南与下载"}
 }
