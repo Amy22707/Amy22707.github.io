@@ -5,14 +5,19 @@ import { access } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { parse } from 'parse5';
 
-test('Studio copy omits only the final essay and keeps navigable technical content', async () => {
+test('Studio note keeps player-facing history without developer operation notes', async () => {
   const source = await readFile('src/content/blog/Travel-Frog.md', 'utf8');
   const html = await readFile('.studio-workspace/amy-studio/site/notes/travel-frog/index.html', 'utf8');
   assert(source.includes('<summary>折叠区小作文</summary>'));
   assert(!html.includes('折叠区小作文'));
   assert(!html.includes('远行与回归……而回归的路更长'));
-  assert(html.includes('自用备忘'));
-  assert(html.includes('astro-code'));
+  for (const text of ['自用备忘','本地运行备忘','项目结构','adb reverse','127.0.0.1','<pre','关键技术与验证方式']) assert(!html.includes(text), text);
+  assert(html.includes('旅行日记'));
+  assert(html.includes('2026.09.10'));
+  assert(html.includes('>Work</a>'));
+  assert(html.includes('>Auto</button>'));
+  assert(!html.includes('>作品</a>'));
+  assert(!html.includes('>跟随系统</button>'));
   assert(html.includes('travel-frog-diary.png'));
   assert(html.includes('id="year"'));
   const ids = new Set(), anchors = [], assets = [];
@@ -30,6 +35,5 @@ test('Studio copy omits only the final essay and keeps navigable technical conte
   const page = resolve('.studio-workspace/amy-studio/site/notes/travel-frog/index.html');
   for (const asset of assets) if (!/^(https?:|data:)/.test(asset)) await access(resolve(dirname(page), asset.split('?')[0]));
   const blocks = JSON.parse(await readFile('.studio-workspace/amy-studio/site/i18n/blocks/notes--travel-frog.json', 'utf8'));
-  assert(Object.keys(blocks).length > 0);
   assert(!JSON.stringify(blocks).includes('回想起高中时每周末上线收集明信片'));
 });

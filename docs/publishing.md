@@ -131,9 +131,10 @@ their badge and display priority. Other project entries remain in the full list.
 
 # Studio card layout checks
 
-The Travel Frog development log under Studio Notes is a rendered copy of the
-personal blog post, excluding its final “折叠区小作文” details block. The blog
-original remains unchanged. To refresh the copy after editing the blog or rebuilding
+The player-facing Travel Frog development log is maintained separately in
+`src/studio-notes/travel-frog.md`. It keeps the development story but excludes
+developer commands, protocol dumps, local-directory notes and the personal essay.
+The original technical blog post remains unchanged. After editing the Studio text or rebuilding
 translation assets, run `npm.cmd run build:studio-notes` from the homepage folder,
 then build Studio. This reuses matching existing translations, rather than sending
 the article to a translation service. Studio can deploy the generated HTML on its
