@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Studio card layout regression</title>
+<link rel="stylesheet" href="/amy-studio/styles.css">
+<main class="shell" style="padding-block:30px">
+  <h2>Studio card layout regression</h2>
+  <p id="result" role="status">Checking…</p>
+  <div class="project-grid" id="fixtures"></div>
+</main>
+<script>
+const container = document.querySelector('#fixtures');
+const cases = [
+  { title:'A short project title', notice:true, actions:3, lines:3, label:'User guide ↗' },
+  { title:'A longer title that wraps across several lines in a compact card', notice:false, actions:3, lines:5, label:'User guide ↗' },
+  { title:'没有提示框的项目', notice:false, actions:2, lines:1, label:'使用指南 ↗' },
+  { title:'带有多行提示文字的项目', notice:true, actions:3, lines:4, label:'查看使用说明 ↗' },
+  { title:'Different actions can wrap', notice:false, actions:3, lines:1, label:'Read the complete user guide ↗' },
+  { title:'Short actions', notice:false, actions:2, lines:2, label:'Guide ↗' },
+];
+function el(tag, className, text) {
+  const node=document.createElement(tag);node.className=className;
+  if(text)node.textContent=text;return node;
+}
+for(const item of cases) {
+  const card=el('article','project-card');
+  const art=el('div','project-art tool');
+  const copy=el('div','project-copy');
+  copy.append(el('div','project-topline','PROJECT'),el('h3','',item.title),el('p','','A realistic project description with enough text to wrap in both desktop and narrow layouts.'));
+  const list=el('ul','project-highlights');
+  for(let i=0;i<item.lines;i++)list.append(el('li','','Feature '+(i+1)+' — a short feature description.'));
+  const meta=el('div','project-meta');meta.append(el('span','','Windows'),el('span','','Firefox'),el('span','','2.5.2 · Preview'));
+  copy.append(list,meta);
+  if(item.notice)copy.append(el('p','project-notice','An optional notice that wraps to several lines. The other card intentionally has no notice. The footer must still align.'));
+  const actions=el('div','project-actions');actions.append(el('button','detail-button','View details ↗'));
+  if(item.actions===3)actions.append(el('button','button','GitHub ↗'));
+  actions.append(el('button','button primary',item.label));
+  card.append(art,copy,actions);container.append(card);
+}
+function check() {
+  const rows=new Map();const errors=[];
+  for(const card of container.children) {
+    const rect=card.getBoundingClientRect();const key=Math.round(rect.top);
+    if(!rows.has(key))rows.set(key,[]);
+    rows.get(key).push({footer:card.querySelector('.project-actions').getBoundingClientRect().top,bottom:rect.bottom});
+  }
+  for(const [row,items] of rows) {
+    for(const item of items)if(Math.abs(item.footer-items[0].footer)>1||Math.abs(item.bottom-items[0].bottom)>1)errors.push('Row '+row+' has misaligned footers.');
+  }
+  if(document.documentElement.scrollWidth>innerWidth)errors.push('Horizontal overflow.');
+  const result=document.querySelector('#result');
+  result.dataset.status=errors.length?'fail':'pass';
+  result.textContent=errors.length?errors.join(' '):'PASS — separators align with/without notices, unequal content, and wrapped action labels at '+innerWidth+'px.';
+}
+const queue=()=>requestAnimationFrame(()=>requestAnimationFrame(check));
+document.fonts.ready.then(queue);addEventListener('resize',queue);
+</script>
+</html>

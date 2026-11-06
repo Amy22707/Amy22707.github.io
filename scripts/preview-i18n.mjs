@@ -7,6 +7,7 @@ createServer(async (request,response) => {
     const pathname=decodeURIComponent(new URL(request.url,'http://127.0.0.1:4347').pathname);
     let file;
     if(pathname==='/__tests__/inline')file=resolve('tests/i18n-browser.html');
+    else if(pathname==='/__tests__/studio-cards')file=resolve('tests/studio-cards-browser.html');
     else {
       const studio=pathname.startsWith('/amy-studio/');
       const root=resolve(studio?'.studio-workspace/amy-studio/dist':'dist');

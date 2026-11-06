@@ -129,6 +129,20 @@ The homepage's current selected projects are FocusBloom and Travel Frog. The IDs
 are listed in `homepageProjectIds` in `src/pages/index.astro`; `featured` chooses
 their badge and display priority. Other project entries remain in the full list.
 
+# Studio card layout checks
+
+Keep each Studio card's artwork, content, and actions as three direct children.
+The card grid shares those rows with CSS subgrid so separators stay aligned even
+when notices are omitted, descriptions differ, or buttons wrap. Do not put the
+actions back inside `.project-copy` or use an optional notice as the spacer.
+
+Run `npm.cmd run test:studio-layout` to guard the card structure and shared-row
+rules against regressions. This is a source check, not a browser geometry test.
+After changing card rendering or styles, build Studio, run `npm.cmd run preview:i18n`,
+and open `http://127.0.0.1:4347/__tests__/studio-cards`. The page checks the actual
+Studio stylesheet against mixed card content and reports PASS/FAIL. Check desktop
+and compact two-column widths (e.g. 1280px and 700px), plus a mobile width (390px).
+
 # Publications and presentations
 
 Edit `src/data/publications.ts`. Write `authors` as an array in the original

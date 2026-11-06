@@ -14,6 +14,7 @@
     "setup:studio-sync": "node scripts/install-studio-sync.mjs",
     "push:all": "node scripts/sync-studio.mjs --all",
     "test:studio-sync": "node --test tests/studio-sync.test.mjs",
+    "test:studio-layout": "node --test tests/studio-card-layout.test.mjs",
     "sync:project-dates": "node scripts/sync-project-dates.mjs"
   },
   "keywords": [],
