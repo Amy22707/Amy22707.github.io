@@ -26,7 +26,7 @@ export const presentations: ResearchOutput[] = [
     date: "2026-08",
     title: "Outcome-Weighted Risk-Aware Supervised Learning for Chinese Standard Mahjong",
     authors: ["Zhiyao Xue"],
-    conference: "IJCAI 2026 Mahjong AI Competition",
+    conference: "IJCAI2026",
     awards: ["Excellent Award — The 6th International Mahjong AI Competition, IJCAI 2026"],
     type: "Competition presentation",
     description: "Improving offense-defense trade-offs under reproducible paired evaluation.",

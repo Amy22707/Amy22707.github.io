@@ -2,7 +2,7 @@
 title: Multi-Agent Systems 研究笔记
 description: 多 Agent 知识共享、协作评测与推理效率
 publishedAt: 2026-11-05
-updatedAt: 2026-11-06
+updatedAt: 2026-11-07
 tags:
   - Agents
   - Multi_Agent
@@ -104,6 +104,40 @@ tags:
 
 **主要结论：** 角色执行顺序能为缓存调度提供复用信号，提前准备也需要与前台请求竞争资源。论文关注固定前缀服务效率。问答、对话、搜索和编码场景的实验主要比较 TTFT、每轮延迟、吞吐和缓存命中。harness 与引擎的具体版本暂列未核实。
 
+<a id="paper-2610-08647"></a>
+
+### 4.3 SquidAgent：继承规划上下文，按预计协调成本选择并行
+
+[论文](https://arxiv.org/html/2610.08647v1) · [代码](https://github.com/tmllab/2026_NeurIPS_SquidAgent)
+
+**主张与研究方法：** 并行 worker 节省的执行时间，需要覆盖重新探索上下文和最终对齐产物的开销。SquidAgent 在规划时同时生成子任务依赖图、各任务预计输出 token 数和每层预计协调 token 数。依赖图按拓扑层分组，同层任务满足依赖后可以并行。
+
+1. **继承上下文。** Worker 从负责人的会话分叉，获得已有架构决策、约束和计划，减少重新理解任务。当前仓库的 worktree 模式使用会话分叉与独立分支，agent-tool 模式向子 Agent 交付计划和约定。
+2. **提前统一约定。** 启动并行层前，负责人写出命名、接口、格式及跨文件引用规则，降低产物完成后的对齐开销。
+3. **逐层决定串并行。** 设任务预计输出长度为 $\tau_i$，协调开销为 $\widehat C$，调度器比较 $\sum_i\tau_i$ 与 $\max_i\tau_i+\widehat C$。只有前者与后者的比值超过阈值才并行，否则由负责人串行完成。这个最大值估计的是并行关键路径，不是所有 worker 的总 token 消耗。
+
+例如两项任务各预计输出 1,000 token，协调约定需要 100 token，比值为 $2000/1100\approx1.82$。主实验阈值为 1.9，这层会串行执行。
+
+**主要结论：** 在九个自建编码、技术写作和规划任务上，作者报告相较 Claude Code 的平均墙钟加速约为 2.6 倍，交付词数／秒提高约为 2.2 倍。该吞吐定义同时受产物长度和完成时间影响，质量另由 Claude Opus 4.6 对任务条目评分。实验执行模型为 Claude Sonnet 4.6。生成长度对模型生成主导的任务有预测价值，工具执行、外部 API 和服务排队还需要单独计时。当前评测以自建产物任务为主。
+
+系统基于 Claude Agent SDK，公开代码支持 Git worktree 隔离。底层推理引擎和服务器硬件未披露。论文提示词及任务描述公开，无需训练新模型。
+
+<a id="paper-2602-01053"></a>
+
+### 4.4 LRAgent：共享基础缓存，用低秩缓存保留角色差异
+
+[论文](https://arxiv.org/html/2602.01053v2) · [会议](https://proceedings.mlr.press/v306/jeon26b.html) · [代码](https://github.com/hjeon2k/LRAgent)
+
+**主张与研究方法：** 多个角色共享一个基础模型，并用各自的 LoRA 适配器专门化后，对相同历史仍会产生不同 KV。LoRA 用两个小矩阵 $A_i,B_i$ 表示权重更新，投影为 $X_iW_0+(X_iA_i)B_i$。LRAgent 利用基础投影高度相似的观察，把缓存拆成可共享部分和适配器相关部分。
+
+1. **BaseShared。** 对相同历史共享基础 value 缓存，角色差异以低秩中间量 $X_iA_i$ 保存，使用时通过 $B_i$ 恢复。主设置在 Q、V 投影上使用 LoRA，并共享 key 缓存。它主要节省存储，各角色仍需计算自己的低秩历史。
+2. **BaseLRShared。** 训练各角色共用下投影 $A$、保留各自上投影 $B_i$。基础缓存和低秩缓存都共享，后继角色复用历史，只为新追加内容执行 prefill。不同角色的层输入存在差异，跨角色缓存复用依赖相似性近似。
+3. **Flash-LoRA-Attention。** 设注意力权重为 $P$，低秩 value 为 $V_{lr}$，通过 $P(V_{base}+V_{lr}B_i)=PV_{base}+(PV_{lr})B_i$ 改变运算顺序。先在低秩空间做加权求和，再升维，避免为全部历史 token 展开完整角色 value 缓存。
+
+**主要结论：** 作者在 LLaMA-3.1-8B-Instruct、Ministral-8B-Instruct 的规划／行动／反思三角色问答中，观察到该拆分比直接共享整个缓存更好地保留准确率，同时降低显存与重复 prefill 开销。BaseLRShared 需要共享 $A$ 的适配器训练。主系统加速在相同长度轨迹上测量，准确率在 HotpotQA、ScienceQA 上测量，另有实际 HotpotQA 延迟结果。
+
+执行框架沿用 AutoAct 角色划分，公开实现修改 FastChat、Transformers、PEFT 和 FlashAttention。实验硬件为单张 NVIDIA A6000 48GB。训练与执行代码公开，完整预训练好角色权重的发布情况未核实。
+
 <a id="topic-synthesis"></a>
 
 ## 5. Survey
@@ -118,6 +152,8 @@ tags:
 | [AgenticCache](https://proceedings.mlsys.org/paper_files/paper/2026/hash/c66a9db149261435664284a20b6f1d42-Abstract-Conference.html) | 具身任务内多 Agent 协作 | 高层计划与状态条件 | 本地转移缓存，异步确认与校正 | TDW 三任务、BEHAVIOR-1K | CoELA、COMBO、COHERENT | API 后端，GPT-5 系列 | 模拟闭环，成功率、执行时间、token、费用 |
 | [Parrot](https://www.usenix.org/conference/osdi24/presentation/lin-chaofan) | 多请求应用，含多角色编码 | 动态文本产物与前缀 KV | 语义变量、依赖图、并行分组与前缀复用 | 多文件编程等应用负载 | Parrot API，编码负载采用 MetaGPT 式分工 | Parrot Engine，编码实验 LLaMA 13B／A100 | 服务实测，端到端时延与 KV 内存 |
 | [CacheScout](https://arxiv.org/html/2608.14624v1) | 多角色调用，用户并发设置未明确 | 固定角色前缀 KV | 调用转移预测、驱逐与预取 | QA／对话／搜索／编码负载 | 六角色服务工作流，版本未核实 | 版本未核实 | 服务实验，TTFT、轮延迟、turn/s、命中率 |
+| [SquidAgent](https://arxiv.org/abs/2610.08647) | 一个任务内负责人委派并行 worker | 规划上下文、接口与格式约定、文件 | 会话继承，逐层按 token 预算选择串并行 | 九个自建编码／写作／规划任务，另测 Flow 任务 | Claude Agent SDK，公开代码有 worktree／agent-tool 两模式 | Claude Sonnet 4.6，后端引擎未披露 | 闭环产物，墙钟时间、交付词数／秒、模型条目评分 |
+| [LRAgent](https://arxiv.org/abs/2602.01053) | 同任务内规划／行动／反思轮转，角色 LoRA | 基础 KV、低秩适配器缓存 | BaseShared／BaseLRShared，Flash-LoRA-Attention | HotpotQA／ScienceQA，另测受控长度轨迹 | AutoAct 式框架，角色 LoRA 训练 | 修改 FastChat／Transformers，LLaMA-3.1-8B／Ministral-8B，A6000 | 问答闭环及受控轨迹，准确率、TTFT、token/s、显存 |
 
 **分类口径：** 协作设置记录一个任务内有几个角色、怎样交接。共享对象区分消息、代码制品、计划与模型计算状态。Benchmark 决定任务和验收，harness 控制工作区、工具和消息，引擎执行模型推理。DRS 属于逻辑进度，TTFT 属于请求延迟，两者分别登记。
 
@@ -132,3 +168,5 @@ tags:
 | [AgenticCache](https://arxiv.org/abs/2604.24039) | 复用高层计划转移，后台模型确认与校正 | [§3.1](#paper-2604-24039) |
 | [Parrot](https://www.usenix.org/conference/osdi24/presentation/lin-chaofan) | 暴露文本产物的生产与消费关系，帮助调度和复用 | [§4.1](#paper-2405-19888) |
 | [CacheScout](https://arxiv.org/abs/2608.14624) | 学习角色转移，调度固定前缀 KV | [§4.2](#paper-2608-14624) |
+| [SquidAgent](https://arxiv.org/abs/2610.08647) | 继承上下文、提前写约定，按预计成本选择串并行 | [§4.3](#paper-2610-08647) |
+| [LRAgent](https://arxiv.org/abs/2602.01053) | 共享基础缓存与低秩历史，按角色重建适配器贡献 | [§4.4](#paper-2602-01053) |

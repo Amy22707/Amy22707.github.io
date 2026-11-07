@@ -25,6 +25,7 @@ function fixture(t) {
   return {root,studio,remote,temporary,options,head:()=>git(studio,['rev-parse','HEAD']).stdout.trim(),remoteHead:()=>git(temporary,['--git-dir',remote,'rev-parse','refs/heads/main']).stdout.trim()};
 }
 test('file scope excludes installers, saves, unrelated scripts and traversal',()=>{
+  for(const file of ['site/download-mirror.css','site/focusbloom/index.html','site/focusbloom/features.css'])assert.ok(allowedStudioPath(file));
   for(const file of ['site/jizhi/index.html','site/jizhi/guide.css','site/jizhi/guide.js'])assert.ok(allowedStudioPath(file));
   for(const file of ['site/i18n/blocks/blog.json','site/images/朋友 头像.webp','scripts/serve.mjs','site/data/studio.json'])assert.ok(allowedStudioPath(file));
   for(const file of ['game.apk','site/images/game.exe','site/games/client.js','backups/state.json','scripts/release-game.mjs','../secrets.txt','site/.env'])assert.equal(allowedStudioPath(file),false);

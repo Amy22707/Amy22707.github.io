@@ -27,6 +27,8 @@ export function allowedStudioPath(path) {
   if (/\.(?:exe|msi|apk|aab|ipa|dmg|pkg|zip|7z|rar|tar|gz|frogsave|jsonl|wasm|pt|pth|onnx)$/i.test(path)) return false;
   if (/(^|\/)(?:\.env(?:\..*)?|downloads?|releases?|saves?|user-data|backups?|captures?|node_modules|dist)(\/|$)/i.test(path)) return false;
   return ['README.md', 'package.json', 'package-lock.json', '.gitignore', 'scripts/build.mjs', 'scripts/serve.mjs', 'site/index.html', 'site/styles.css', 'site/app.js', 'site/favicon.svg'].includes(path)
+    || path === 'site/download-mirror.css'
+    || /^site\/focusbloom\/(?:index\.html|features\.css|screenshots\/[^/]+\.(?:png|jpe?g|webp))$/i.test(path)
     || /^site\/jizhi\/(?:index\.html|guide\.(?:css|js))$/.test(path)
     || /^site\/notes\/(?:article\.css|travel-frog\/index\.html)$/.test(path)
     || /^\.github\/workflows\/[^/]+\.ya?ml$/.test(path)
