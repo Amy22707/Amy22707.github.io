@@ -17,6 +17,8 @@ const escape = value => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').r
 const guide = await readFile(resolve(site, 'jizhi/index.html'), 'utf8');
 const prefix = guide.slice(0, guide.indexOf('  <main'))
   .replaceAll('../', '../../').replace('./guide.css', '../../jizhi/guide.css').replace('./guide.js', '../../jizhi/guide.js')
+  .replace(/<link rel="icon"[^>]*>/, '<link rel="icon" href="../../favicon.svg" type="image/svg+xml">')
+  .replace(/\s*<link rel="apple-touch-icon"[^>]*>/, '')
   .replace('title="跟随系统主题"', 'title="Follow your device theme"')
   .replace('>跟随系统</button>', '>Auto</button>')
   .replace(/<title>.*?<\/title>/, '<title>旅行青蛙开发日志 — Studio Notes</title>')

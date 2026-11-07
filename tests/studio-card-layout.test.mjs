@@ -4,6 +4,19 @@ import { readFile } from 'node:fs/promises';
 
 const studio = new URL('../.studio-workspace/amy-studio/site/', import.meta.url);
 
+test('Travel Frog card has two primary actions without redundant mirror UI', async () => {
+  const source = await readFile(new URL('app.js', studio), 'utf8');
+  const card = source.slice(source.indexOf('function card(project)'), source.indexOf('function renderProjects()'));
+  const playBranch = card.match(/if \(externalUrl\(project\.pageUrl\) && externalUrl\(project\.playUrl\)\) \{([\s\S]*?)\n  \}/)?.[1];
+  assert(playBranch);
+  for (const label of ['Play online', 'User guide ↗']) assert(playBranch.includes(`link('${label}', externalUrl(project.${label === 'Play online' ? 'playUrl' : 'pageUrl'}), true)`));
+  assert(!card.includes('project.mirrorUrl'));
+  const data = JSON.parse(await readFile(new URL('data/studio.json', studio), 'utf8'));
+  const frog = data.projects.find(p => p.id === 'travel-frog');
+  assert(!frog.notice);
+  assert(frog.mirrorUrl, 'Keep the actual backup download available from the details');
+});
+
 test('Studio actions remain outside optional card content', async () => {
   const source = await readFile(new URL('app.js', studio), 'utf8');
   assert.match(source, /node\.append\(artwork\(project\),\s*copy,\s*actions\)/);
