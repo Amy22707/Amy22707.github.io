@@ -1,65 +1,605 @@
 {
   "blog/tag/agents/index.html": {
-    "Blog posts tagged Agents": { "zh": "标签为“智能体”的博客文章" },
-    "Posts tagged Agents | Amy": { "zh": "标记为“智能体”的文章 | Amy" }
+    "Blog posts tagged Agents": {
+      "zh": "标签为“智能体”的博客文章"
+    },
+    "Posts tagged Agents | Amy": {
+      "zh": "标记为“智能体”的文章 | Amy"
+    }
   },
   "blog/tag/ai_systems/index.html": {
-    "Blog posts tagged AI_systems": { "zh": "标签为“人工智能系统”的博客文章" },
-    "Posts tagged AI_systems | Amy": { "zh": "标记为“人工智能系统”的文章 | Amy" }
+    "Blog posts tagged AI_systems": {
+      "zh": "标签为“人工智能系统”的博客文章"
+    },
+    "Posts tagged AI_systems | Amy": {
+      "zh": "标记为“人工智能系统”的文章 | Amy"
+    }
   },
   "blog/tag/llm_inference/index.html": {
-    "Blog posts tagged LLM_Inference": { "zh": "标签为“大语言模型推理”的博客文章" },
-    "Posts tagged LLM_Inference | Amy": { "zh": "标记为“大语言模型推理”的文章 | Amy" }
+    "Blog posts tagged LLM_Inference": {
+      "zh": "标签为“大语言模型推理”的博客文章"
+    },
+    "Posts tagged LLM_Inference | Amy": {
+      "zh": "标记为“大语言模型推理”的文章 | Amy"
+    }
   },
   "projects/tag/offline/index.html": {
-    "Offline · Projects & Notes | Amy": { "zh": "本地服务器 · 项目与笔记 | Amy" },
-    "Projects and notes tagged Offline": { "zh": "标记为本地服务器的项目与笔记" }
+    "Offline · Projects & Notes | Amy": {
+      "zh": "本地服务器 · 项目与笔记 | Amy"
+    },
+    "Projects and notes tagged Offline": {
+      "zh": "标记为本地服务器的项目与笔记"
+    }
   },
   "studio/travel-frog/index.html": {
-    "LOCAL REVERSE-ENGINEERED EDITION": { "zh": "本地逆向版" },
-    "GALLERY EDITION": { "zh": "图鉴版" },
-    "Travel Frog: A Journey to China": { "zh": "《旅行青蛙·中国之旅》" },
-    "04 / YOUR SAVE": { "zh": "04 / 你的存档" },
-    "上线状态": { "en": "Release status" },
-    "游玩与下载": { "en": "Play & Downloads" },
-    "全部作品 ↗": { "en": "All projects ↗" },
-    "安卓 APK · 暂未上线": { "en": "Android APK · Not yet released" },
-    "解锁装备、家具、故事、称号、友情绘本、图鉴与百科，预置固定照片和动态照片制作材料。三叶草、常用消耗品保持固定数量；中秋、新年和周年庆活动常驻。使用独立存档。": { "en": "Equipment, furniture, stories, titles, friendship picture books, collections, and the encyclopedia are unlocked, with preset fixed photos and materials for animated photos. Clover and common consumables are kept at fixed quantities; Mid-Autumn, New Year, and anniversary events remain available. This edition uses its own save." },
-    "标准版双击": { "en": "For the Standard Edition, double-click" },
-    "；图鉴版双击": { "en": "; for the Gallery Edition, double-click" },
-    "窗口左下角“存档”可打开管理窗口并导出备份。要导入另一份进度，先关闭游戏，再双击文件夹中的": { "en": "Click “Save” at the bottom left to open save management and export a backup. To import another save, close the game, then double-click the following file in the application folder:" },
-    "，点击“导入存档”。": { "en": ", then click “Import Save.”" },
-    "存档位于程序旁的": { "en": "Saves are stored beside the application in" },
-    "。升级时保留此文件夹，迁移电脑时优先使用“导出存档”。关闭游戏窗口后，本地服务会自动退出。": { "en": ". Keep this folder when upgrading. When moving to another computer, use “Export Save” where possible. Closing the game window also shuts down the local service." },
-    "等待本地运行环境启动，选择“导入存档”，在系统文件选择器中选中": { "en": "Wait for the local runtime to start, choose “Import Save,” and use the system file picker to select a" },
-    "、兼容 JSON 或完整初始化协议 JSONL；没有备份则点击“开始新的旅程”。": { "en": ", compatible JSON, or protocol JSONL file containing complete initialization data. If you have no backup, choose “Start a New Journey.”" },
-    "在新设备打开": { "en": "On the new device, open the" },
-    "同一版本": { "en": "same edition" },
-    "文件。": { "en": "file." },
-    "已有": { "en": "If you already have a" },
-    "、兼容 JSON 存档或完整初始化 JSONL 的玩家，直接在本地版中导入，不需要安装模拟器，也不需要登录官服。": { "en": "file, a compatible JSON save, or a JSONL file containing complete initialization data, import it directly into the local edition. You do not need an emulator or an official-server login." },
-    "当前下方命令针对": { "en": "The commands below target the" },
-    "客户端。其他安卓渠道、iOS，以及微信或淘宝小程序的账号，必须先确认能在受支持的安卓客户端中加载同一份进度；仅手机号相同不代表存档互通。无法登录并读取原进度时，不能靠本地版凭空恢复该账号的存档。": { "en": "client. For accounts from other Android distribution channels, iOS, or WeChat/Taobao mini-programs, first verify that the same progress can be loaded in the supported Android client. Using the same phone number does not establish save compatibility. If you cannot log in and read the original progress, the local edition cannot reconstruct that account's save from nothing." },
-    "从": { "en": "From the" },
-    "源码仓库（上线后开放）": { "en": "source repository (available after launch)," },
-    "下载源码 ZIP 并解压，在该目录打开 CMD。安装 Python 和 Android Platform Tools，让": { "en": "download and extract the source ZIP, then open CMD in that folder. Install Python and Android Platform Tools so that" },
-    "命令可用；连接多个设备时，每条 ADB 命令在": { "en": "are available as commands. With multiple devices connected, in every ADB command place the following immediately after" },
-    "后加": { "en": ":" },
-    "记下当前已运行版本的": { "en": "Record the running version's" },
-    "完整文件路径": { "en": "full file path" },
-    "。如果有多个结果，对照最近运行的资源版本，不要随便选第一个；如果没有此路径，当前客户端结构不适用本教程。": { "en": ". If several results appear, identify the resource version that most recently ran rather than choosing the first result at random. If this path does not exist, this guide does not apply to your client's structure." },
-    "打开一个": { "en": "Open a" },
-    "单独的 CMD 窗口": { "en": "separate CMD window" },
-    "开始记录，再启动官服应用：": { "en": "to start logging, then launch the official game:" },
-    "退出官服，在采集窗口按": { "en": "Close the official game, then press" },
-    "停止。回到源码目录的 CMD 执行：": { "en": "in the capture window to stop logging. Back in the source folder's CMD window, run:" },
-    "查看输出的": { "en": "Inspect the generated" },
-    "。分块缺失或 JSON 解析失败应重新采集；相册缺失详情应补采对应照片。不是完整登录初始化的日志，导入会提示缺少必要数据。": { "en": ". Capture again if chunks are missing or JSON parsing fails; capture the relevant photos again if album details are missing. Importing a log without complete login initialization data will report that required data is missing." },
-    "将": { "en": "Copy" },
-    "复制到目标设备，在": { "en": "to the target device, then choose “Import Save” in the" },
-    "标准版": { "en": "Standard Edition" },
-    "中“导入存档”。核对青蛙、库存、照片与日记后，导出一份": { "en": ". After checking the frog, inventory, photos, and diary, export a" },
-    "长期保存。": { "en": "file for long-term safekeeping." },
-    "原始日志和 LOCAL_ONLY 文件可能含账号凭据、设备标识与玩家互动数据，只留在自己设备上。用于恢复的是完整 LOCAL_ONLY 文件，不是脱敏的 SHARE_SAFE 文件。采集结束后恢复原脚本，避免持续记录账号信息。": { "en": "Raw logs and LOCAL_ONLY files may contain account credentials, device identifiers, and player interaction data. Keep them on your own device. Recovery requires the complete LOCAL_ONLY file, not the sanitized SHARE_SAFE file. Restore the original script after capture to avoid continually logging account information." }
+    "LOCAL REVERSE-ENGINEERED EDITION": {
+      "zh": "本地逆向版"
+    },
+    "GALLERY EDITION": {
+      "zh": "图鉴版"
+    },
+    "Travel Frog: A Journey to China": {
+      "zh": "《旅行青蛙·中国之旅》"
+    },
+    "04 / YOUR SAVE": {
+      "zh": "04 / 你的存档"
+    },
+    "上线状态": {
+      "en": "Release status"
+    },
+    "游玩与下载": {
+      "en": "Play & Downloads"
+    },
+    "全部作品 ↗": {
+      "en": "All projects ↗"
+    },
+    "安卓 APK · 暂未上线": {
+      "en": "Android APK · Not yet released"
+    },
+    "解锁装备、家具、故事、称号、友情绘本、图鉴与百科，预置固定照片和动态照片制作材料。三叶草、常用消耗品保持固定数量；中秋、新年和周年庆活动常驻。使用独立存档。": {
+      "en": "Equipment, furniture, stories, titles, friendship picture books, collections, and the encyclopedia are unlocked, with preset fixed photos and materials for animated photos. Clover and common consumables are kept at fixed quantities; Mid-Autumn, New Year, and anniversary events remain available. This edition uses its own save."
+    },
+    "标准版双击": {
+      "en": "For the Normal Edition, double-click"
+    },
+    "；图鉴版双击": {
+      "en": "; for the Gallery Edition, double-click"
+    },
+    "窗口左下角“存档”可打开管理窗口并导出备份。要导入另一份进度，先关闭游戏，再双击文件夹中的": {
+      "en": "Click “Save” at the bottom left to open save management and export a backup. To import another save, close the game, then double-click the following file in the application folder:"
+    },
+    "，点击“导入存档”。": {
+      "en": ", then click “Import Save.”"
+    },
+    "存档位于程序旁的": {
+      "en": "Saves are stored beside the application in"
+    },
+    "。升级时保留此文件夹，迁移电脑时优先使用“导出存档”。关闭游戏窗口后，本地服务会自动退出。": {
+      "en": ". Keep this folder when upgrading. When moving to another computer, use “Export Save” where possible. Closing the game window also shuts down the local service."
+    },
+    "等待本地运行环境启动，选择“导入存档”，在系统文件选择器中选中": {
+      "en": "Wait for the local runtime to start, choose “Import Save,” and use the system file picker to select a"
+    },
+    "、兼容 JSON 或完整初始化协议 JSONL；没有备份则点击“开始新的旅程”。": {
+      "en": ", compatible JSON, or protocol JSONL file containing complete initialization data. If you have no backup, choose “Start a New Journey.”"
+    },
+    "在新设备打开": {
+      "en": "On the new device, open the"
+    },
+    "同一版本": {
+      "en": "same edition"
+    },
+    "文件。": {
+      "en": "file."
+    },
+    "已有": {
+      "en": "If you already have a"
+    },
+    "、兼容 JSON 存档或完整初始化 JSONL 的玩家，直接在本地版中导入，不需要安装模拟器，也不需要登录官服。": {
+      "en": "file, a compatible JSON save, or a JSONL file containing complete initialization data, import it directly into the local edition. You do not need an emulator or an official-server login."
+    },
+    "当前下方命令针对": {
+      "en": "The commands below target the"
+    },
+    "客户端。其他安卓渠道、iOS，以及微信或淘宝小程序的账号，必须先确认能在受支持的安卓客户端中加载同一份进度；仅手机号相同不代表存档互通。无法登录并读取原进度时，不能靠本地版凭空恢复该账号的存档。": {
+      "en": "client. For accounts from other Android distribution channels, iOS, or WeChat/Taobao mini-programs, first verify that the same progress can be loaded in the supported Android client. Using the same phone number does not establish save compatibility. If you cannot log in and read the original progress, the local edition cannot reconstruct that account's save from nothing."
+    },
+    "从": {
+      "en": "From the"
+    },
+    "源码仓库（上线后开放）": {
+      "en": "source repository (available after launch),"
+    },
+    "下载源码 ZIP 并解压，在该目录打开 CMD。安装 Python 和 Android Platform Tools，让": {
+      "en": "download and extract the source ZIP, then open CMD in that folder. Install Python and Android Platform Tools so that"
+    },
+    "命令可用；连接多个设备时，每条 ADB 命令在": {
+      "en": "are available as commands. With multiple devices connected, in every ADB command place the following immediately after"
+    },
+    "后加": {
+      "en": ":"
+    },
+    "记下当前已运行版本的": {
+      "en": "Record the running version's"
+    },
+    "完整文件路径": {
+      "en": "full file path"
+    },
+    "。如果有多个结果，对照最近运行的资源版本，不要随便选第一个；如果没有此路径，当前客户端结构不适用本教程。": {
+      "en": ". If several results appear, identify the resource version that most recently ran rather than choosing the first result at random. If this path does not exist, this guide does not apply to your client's structure."
+    },
+    "打开一个": {
+      "en": "Open a"
+    },
+    "单独的 CMD 窗口": {
+      "en": "separate CMD window"
+    },
+    "开始记录，再启动官服应用：": {
+      "en": "to start logging, then launch the official game:"
+    },
+    "退出官服，在采集窗口按": {
+      "en": "Close the official game, then press"
+    },
+    "停止。回到源码目录的 CMD 执行：": {
+      "en": "in the capture window to stop logging. Back in the source folder's CMD window, run:"
+    },
+    "查看输出的": {
+      "en": "Inspect the generated"
+    },
+    "。分块缺失或 JSON 解析失败应重新采集；相册缺失详情应补采对应照片。不是完整登录初始化的日志，导入会提示缺少必要数据。": {
+      "en": ". Capture again if chunks are missing or JSON parsing fails; capture the relevant photos again if album details are missing. Importing a log without complete login initialization data will report that required data is missing."
+    },
+    "将": {
+      "en": "Copy"
+    },
+    "复制到目标设备，在": {
+      "en": "to the target device, then choose “Import Save” in the"
+    },
+    "标准版": {
+      "en": "Normal Edition"
+    },
+    "中“导入存档”。核对青蛙、库存、照片与日记后，导出一份": {
+      "en": ". After checking the frog, inventory, photos, and diary, export a"
+    },
+    "长期保存。": {
+      "en": "file for long-term safekeeping."
+    },
+    "原始日志和 LOCAL_ONLY 文件可能含账号凭据、设备标识与玩家互动数据，只留在自己设备上。用于恢复的是完整 LOCAL_ONLY 文件，不是脱敏的 SHARE_SAFE 文件。采集结束后恢复原脚本，避免持续记录账号信息。": {
+      "en": "Raw logs and LOCAL_ONLY files may contain account credentials, device identifiers, and player interaction data. Keep them on your own device. Recovery requires the complete LOCAL_ONLY file, not the sanitized SHARE_SAFE file. Restore the original script after capture to avoid continually logging account information."
+    },
+    "旅行青蛙·中国之旅：网页游玩、Windows、Mac 和安卓下载、存档教程。": {
+      "en": "Travel Frog: A Journey to China: web play, Windows, Mac, and Android downloads, and save guides."
+    },
+    "保留日常旅行、制作、库存与收集进度。可以导入自己的备份，也可以从新的旅程开始；物品仍按普通版规则获得与消耗。": {
+      "en": "Keeps daily travel, crafting, inventory, and collection progress. You can import your own backup or start a new journey; items are still obtained and used under Normal Edition rules."
+    },
+    "macOS（Apple 芯片）↓": {
+      "en": "macOS (Apple silicon) ↓"
+    },
+    "推荐已经游玩过《旅行青蛙·中国之旅》的玩家使用。解锁全部家具、道具、故事、称号、友情绘本、图鉴与百科，预置所有静态照片和动态照片制作材料。无限三叶草与常用消耗品。中秋、新年和周年庆等所有限时活动常驻。使用独立存档。": {
+      "en": "Recommended for players who have already played Travel Frog: A Journey to China. Unlocks all furniture, items, stories, titles, friendship books, collections, and encyclopedia entries. All static photos and materials for making animated photos are included. Clover and common consumables are unlimited. All limited-time events, including Mid-Autumn Festival, Lunar New Year, and the anniversary, are always available. The Gallery Edition uses a separate save."
+    },
+    "Windows 下载并运行安装器，无需模拟器或 Python。安卓安装后即可独立玩，不需要 root。iPhone / iPad 使用网页安装到主屏幕。网页首次完整离线下载约 320 MB，建议使用 Wi-Fi。": {
+      "en": "On Windows, download and run the installer, with no emulator or Python required. On Android, install the APK and play independently, with no root required. On iPhone/iPad, install the web version to the Home Screen. The first full offline download is about 320 MB; Wi-Fi is recommended."
+    },
+    "下载上方对应版本的 Windows 安装包，双击后选择安装目录，按需勾选桌面快捷方式。安装包内置游戏文件，安装时可离线操作，向导会显示进度，也可以取消。便携版请从": {
+      "en": "Download the Windows installer for your edition above, then double-click it, choose an install folder, and select a desktop shortcut if you want one. The installer includes the game files and runs offline, shows installation progress, and lets you cancel. For a portable copy, download it from the"
+    },
+    "下载 Windows ZIP，完整解压后再打开。": {
+      "en": "Download the Windows ZIP and extract it completely before opening it."
+    },
+    "。覆盖升级请选择原来的安装目录。换目录或换电脑时，先导出存档，再在新位置的同一版本中导入。关闭游戏窗口后，本地服务会自动退出。": {
+      "en": ". To upgrade in place, select the original install folder. When changing folders or computers, export a save first, then import it into the same edition at the new location. Closing the game window also shuts down the local service."
+    },
+    "需要 Windows 10 / 11 的 64 位系统与 Microsoft WebView2 Runtime。Windows v0.2.4 使用内嵌 WebView2 的独立游戏窗口。下载文件没有商业代码签名；若系统提示风险，请核实下载来源后自行决定是否继续。": {
+      "en": "Windows 10 or 11 (64-bit) and Microsoft WebView2 Runtime are required. Windows v0.2.4 runs in its own window with an embedded WebView2. The downloads are not commercially code-signed; if your system warns you, verify the download source and decide whether to continue."
+    },
+    "在「 → 关于本机」查看芯片。Apple 芯片选择 arm64，Intel 芯片选择 x86_64。需要 macOS 13 或更新版本。": {
+      "en": "Check the chip in Apple menu → About This Mac. Choose arm64 for Apple silicon or x86_64 for Intel. The game requires macOS 13 or later."
+    },
+    "打开 DMG，将应用拖到「应用程序」。首次启动若被系统拦截，在「系统设置 → 隐私与安全性」为该应用选择「仍要打开」。": {
+      "en": "Open the DMG and drag the app to Applications. If macOS blocks the first launch, open System Settings → Privacy & Security and choose Open Anyway for this app."
+    },
+    "首次打开可以开始新旅程或导入同版本存档。游戏中的「存档」按钮和应用菜单都可以导出备份。普通版与图鉴版分别保存进度。": {
+      "en": "On first launch, start a new journey or import a save for the same edition. The in-game Save button and the app menu can both export a backup. Normal and Gallery progress are stored separately."
+    },
+    "其他设备也可直接使用网页版本。普通版与图鉴版的进度分开保存；更换浏览器、无痕窗口或设备时不会自动出现原存档，需要手动导入。": {
+      "en": "You can also use the web version on other devices. Normal and Gallery progress are stored separately; changing browsers, using a private window, or switching devices does not bring the original save with you, so import it manually."
+    },
+    "兼容离线服务的状态文件，分别在普通版 / 图鉴版导入。": {
+      "en": "Compatible offline-service state files, imported into the Normal or Gallery Edition respectively."
+    },
+    "包含完整登录初始化的官服协议记录，导入普通版；同一文件中的照片详情会一并保留。": {
+      "en": "An official-server protocol log containing complete login initialization data, imported into the Normal Edition; photo details in the same file are preserved."
+    },
+    "覆盖已有进度前会自动建立导入前备份。安卓与网页可在起始页点击“导出上次导入前的备份”取回被覆盖的进度；Windows 可在存档文件夹中的 import-backups 目录找到它。日记与已保存的照片图层包含在存档包中。普通版和图鉴版存档不能直接混用；导入普通版存档不会自动变成图鉴版。": {
+      "en": "A backup is created automatically before overwriting existing progress. On Android and the web, click \"Export previous save\" on the start page to recover overwritten progress; on Windows, find it in the import-backups folder. The diary and saved photo layers are included in the save package. Normal and Gallery saves are not interchangeable; importing a Normal save does not turn it into Gallery."
+    },
+    "已验证 Windows、安卓模拟器及 Chromium / WebKit 的导入导出、进入游戏与网页离线恢复。实体手机的具体系统、存储回收与长期后台行为仍需实机验收，建议定期导出。问题请提交到": {
+      "en": "Import/export, entering the game, and web offline recovery have been verified on Windows, Android emulators, and Chromium/WebKit. The exact OS, storage reclamation, and long-term background behavior of physical phones still require real-device testing; export regularly. To report a problem, use"
+    },
+    "，写明设备、版本与操作，不要公开上传存档或原始日志。": {
+      "en": ", and include your device, version, and steps. Do not upload saves or raw logs publicly."
+    },
+    "普通版": {
+      "en": "Normal Edition"
+    },
+    "普通版双击": {
+      "en": "Double-click the Normal Edition"
+    },
+    "普通版 DMG": {
+      "en": "Normal DMG"
+    }
+  },
+  "blog/multi-agent-systems-wiki/index.html": {
+    "恢复。主设置在 Q、V 投影上使用 LoRA，并共享 key 缓存。它主要节省存储，各角色仍需计算自己的低秩历史。": {
+      "en": "to recover them. The main configuration applies LoRA to the Q and V projections and shares the key cache. It mainly saves storage; each role must still compute its own low-rank history."
+    },
+    "、保留各自上投影": {
+      "en": ", while retaining role-specific up-projections"
+    },
+    "。基础缓存和低秩缓存都共享，后继角色复用历史，只为新追加内容执行 prefill。不同角色的层输入存在差异，跨角色缓存复用依赖相似性近似。": {
+      "en": ". Both base and low-rank caches are shared, so later roles reuse history and only run prefill for newly appended content. Layer inputs differ across roles, so cross-role cache reuse relies on a similarity approximation."
+    },
+    "，低秩 value 为": {
+      "en": ", the low-rank value is"
+    },
+    "，通过": {
+      "en": ", through"
+    },
+    "改变运算顺序。先在低秩空间做加权求和，再升维，避免为全部历史 token 展开完整角色 value 缓存。": {
+      "en": "to change the computation order. It first performs a weighted sum in the low-rank space and then upscales, avoiding the need to expand full role-specific value caches for all historical tokens."
+    },
+    "作者在 LLaMA-3.1-8B-Instruct、Ministral-8B-Instruct 的规划／行动／反思三角色问答中，观察到该拆分比直接共享整个缓存更好地保留准确率，同时降低显存与重复 prefill 开销。BaseLRShared 需要共享": {
+      "en": "In three-role planning/action/reflection question answering with LLaMA-3.1-8B-Instruct and Ministral-8B-Instruct, the authors observe that this split preserves accuracy better than directly sharing the entire cache, while reducing GPU memory use and repeated prefill overhead. BaseLRShared requires shared"
+    },
+    "的适配器训练。主系统加速在相同长度轨迹上测量，准确率在 HotpotQA、ScienceQA 上测量，另有实际 HotpotQA 延迟结果。": {
+      "en": "adapter training. Main system speedups are measured on trajectories of equal length; accuracy is measured on HotpotQA and ScienceQA, with additional real HotpotQA latency results."
+    },
+    "执行框架沿用 AutoAct 角色划分，公开实现修改 FastChat、Transformers、PEFT 和 FlashAttention。实验硬件为单张 NVIDIA A6000 48GB。训练与执行代码公开，完整预训练好角色权重的发布情况未核实。": {
+      "en": "The execution framework follows the AutoAct role split, and the public implementation modifies FastChat, Transformers, PEFT, and FlashAttention. Experiments run on a single NVIDIA A6000 48GB. Training and execution code are public; the release of fully pretrained role weights was not verified."
+    },
+    "仓库级编码，单 Agent 对照与多角色协作": {
+      "en": "Repository-level coding; single-agent baseline and multi-role collaboration"
+    },
+    "补丁、依赖证据、管理反馈": {
+      "en": "Patches, dependency evidence, management feedback"
+    },
+    "串行交接、私有并行、只读／可写管理": {
+      "en": "Serial handoffs, private parallel work, read-only and write-enabled management"
+    },
+    "AsynCodeBench，仓库快照与 pytest": {
+      "en": "AsynCodeBench, repository snapshots and pytest"
+    },
+    "OpenHands，任务专用 Docker，角色私有工作区": {
+      "en": "OpenHands, task-specific Docker, role-private workspaces"
+    },
+    "引擎未核实，Qwen／DeepSeek 等": {
+      "en": "Engine unverified; Qwen/DeepSeek and others"
+    },
+    "任务闭环，测试通过率、ADPR、DRS、token 开销": {
+      "en": "Closed-loop tasks; test pass rate, ADPR, DRS, token cost"
+    },
+    "两个独立委托者，同仓库编码": {
+      "en": "Two independent requesters editing the same repository"
+    },
+    "消息、补丁、文件编辑历史": {
+      "en": "Messages, patches, file edit history"
+    },
+    "串行交接／并行私有工作区，文件或 Redis 通信": {
+      "en": "Serial handoffs/parallel private workspaces; file or Redis communication"
+    },
+    "SWE-Bench Pro 派生双需求，原任务 Docker 镜像": {
+      "en": "Dual requirements derived from SWE-Bench Pro; original task Docker images"
+    },
+    "Claude Code／Codex，独立改动后合并": {
+      "en": "Claude Code/Codex; merge after independent changes"
+    },
+    "vLLM，Qwen3.8 Flash Next／DeepSeek V4 Flash／GLM 5.3 Flash，另有 Opus 4.8": {
+      "en": "vLLM; Qwen3.8 Flash Next/DeepSeek V4 Flash/GLM 5.3 Flash, plus Opus 4.8"
+    },
+    "闭环，联合通过率、部分完成、相对加权 token 成本": {
+      "en": "Closed loop; joint pass rate, partial completion, relative weighted token cost"
+    },
+    "从规格生成仓库，负责人和并行 worker": {
+      "en": "Generate a repository from a specification; lead and parallel workers"
+    },
+    "范围化发现、可执行证据、接口契约": {
+      "en": "Scoped findings, executable evidence, interface contracts"
+    },
+    "按代码访问投递，接口桩与静态检查，改版通知": {
+      "en": "Delivered on code access; interface stubs, static checks, revision notices"
+    },
+    "Doc2Repo／NL2Repo／CodeProjectEval，空工作区": {
+      "en": "Doc2Repo/NL2Repo/CodeProjectEval, empty workspaces"
+    },
+    "AWS Strands，另测 mini-SWE-agent": {
+      "en": "AWS Strands; also tested with mini-SWE-agent"
+    },
+    "Bedrock／OpenRouter，底层引擎未披露，Claude／DeepSeek／GLM": {
+      "en": "Bedrock/OpenRouter; underlying engine undisclosed; Claude/DeepSeek/GLM"
+    },
+    "闭环，隐藏测试通过率、墙钟时间、输出 token": {
+      "en": "Closed loop; hidden test pass rate, wall-clock time, output tokens"
+    },
+    "本地转移缓存，异步确认与校正": {
+      "en": "Local transition cache; asynchronous confirmation and correction"
+    },
+    "TDW 三任务、BEHAVIOR-1K": {
+      "en": "Three TDW tasks, BEHAVIOR-1K"
+    },
+    "API 后端，GPT-5 系列": {
+      "en": "API backends; GPT-5 family"
+    },
+    "模拟闭环，成功率、执行时间、token、费用": {
+      "en": "Simulated closed loop; success rate, execution time, tokens, cost"
+    },
+    "多请求应用，含多角色编码": {
+      "en": "Multi-request applications, including multi-role coding"
+    },
+    "语义变量、依赖图、并行分组与前缀复用": {
+      "en": "Semantic variables, dependency graphs, parallel grouping, prefix reuse"
+    },
+    "Parrot API，编码负载采用 MetaGPT 式分工": {
+      "en": "Parrot API; coding workload uses MetaGPT-style role division"
+    },
+    "Parrot Engine，编码实验 LLaMA 13B／A100": {
+      "en": "Parrot Engine; coding experiments with LLaMA 13B/A100"
+    },
+    "服务实测，端到端时延与 KV 内存": {
+      "en": "Serving measurements; end-to-end latency and KV memory"
+    },
+    "多角色调用，用户并发设置未明确": {
+      "en": "Multi-role calls; user concurrency settings unspecified"
+    },
+    "调用转移预测、驱逐与预取": {
+      "en": "Call transition prediction, eviction, and prefetching"
+    },
+    "六角色服务工作流，版本未核实": {
+      "en": "Six-role serving workflow; version unverified"
+    },
+    "服务实验，TTFT、轮延迟、turn/s、命中率": {
+      "en": "Serving experiments; TTFT, turn latency, turn/s, hit rate"
+    },
+    "规划上下文、接口与格式约定、文件": {
+      "en": "Planning context, interface and format agreements, files"
+    },
+    "会话继承，逐层按 token 预算选择串并行": {
+      "en": "Session inheritance; serial/parallel choices per layer under a token budget"
+    },
+    "九个自建编码／写作／规划任务，另测 Flow 任务": {
+      "en": "Nine in-house coding/writing/planning tasks, plus Flow tasks"
+    },
+    "Claude Agent SDK，公开代码有 worktree／agent-tool 两模式": {
+      "en": "Claude Agent SDK; public code has worktree and agent-tool modes"
+    },
+    "Claude Sonnet 4.6，后端引擎未披露": {
+      "en": "Claude Sonnet 4.6; backend engine undisclosed"
+    },
+    "闭环产物，墙钟时间、交付词数／秒、模型条目评分": {
+      "en": "Closed-loop artifacts; wall-clock time, delivered words/s, model-rated task entries"
+    },
+    "同任务内规划／行动／反思轮转，角色 LoRA": {
+      "en": "Planning/action/reflection rotation within one task; role LoRA"
+    },
+    "基础 KV、低秩适配器缓存": {
+      "en": "Base KV, low-rank adapter caches"
+    },
+    "HotpotQA／ScienceQA，另测受控长度轨迹": {
+      "en": "HotpotQA/ScienceQA, plus controlled-length trajectories"
+    },
+    "AutoAct 式框架，角色 LoRA 训练": {
+      "en": "AutoAct-style framework; role LoRA training"
+    },
+    "修改 FastChat／Transformers，LLaMA-3.1-8B／Ministral-8B，A6000": {
+      "en": "Modified FastChat/Transformers; LLaMA-3.1-8B/Ministral-8B, A6000"
+    },
+    "问答闭环及受控轨迹，准确率、TTFT、token/s、显存": {
+      "en": "QA closed loop and controlled trajectories; accuracy, TTFT, token/s, GPU memory"
+    },
+    "协作设置记录一个任务内有几个角色、怎样交接。共享对象区分消息、代码制品、计划与模型计算状态。Benchmark 决定任务和验收，harness 控制工作区、工具和消息，引擎执行模型推理。DRS 属于逻辑进度，TTFT 属于请求延迟，两者分别登记。": {
+      "en": "The collaboration setup records how many roles a task has and how they hand off. Shared objects distinguish messages, code artifacts, plans, and model computation state. Benchmarks determine the task and acceptance criteria; the harness controls workspaces, tools, and messages; the engine executes model inference. DRS is logical progress, while TTFT is request latency; the two are recorded separately."
+    },
+    "Harness 按代码范围投递发现，并检查接口契约": {
+      "en": "The harness delivers findings according to code scope and checks interface contracts"
+    },
+    "复用高层计划转移，后台模型确认与校正": {
+      "en": "Reuse high-level plan transitions; background model confirmation and correction"
+    },
+    "暴露文本产物的生产与消费关系，帮助调度和复用": {
+      "en": "Expose the production and consumption relationships of text artifacts to aid scheduling and reuse"
+    },
+    "学习角色转移，调度固定前缀 KV": {
+      "en": "Learn role transitions and schedule fixed-prefix KV"
+    },
+    "继承上下文、提前写约定，按预计成本选择串并行": {
+      "en": "Inherit context, write agreements early, and choose serial or parallel execution based on estimated cost"
+    },
+    "共享基础缓存与低秩历史，按角色重建适配器贡献": {
+      "en": "Share base caches and low-rank histories; rebuild adapter contributions per role"
+    },
+    "知识产物。": {
+      "en": "Knowledge artifacts."
+    },
+    "契约产物。": {
+      "en": "Contract artifacts."
+    },
+    "论文 §8.4 在一张 A100 上用 LLaMA 13B 运行 MetaGPT 式的架构师、编码者、审查者工作流，观察到端到端时间与 KV 内存改善。共享前缀、调度批次和专门 attention 实现都贡献了收益。实测比较采用论文当时的 FastChat／vLLM 等基线，主要回答服务效率问题。该组结果没有用现代仓库修复闭环来验证代码正确率。代码公开为 ParrotServe，较大系统实验还包含其他应用与 LLaMA 7B。": {
+      "en": "Section 8.4 of the paper runs a MetaGPT-style architect, coder, and reviewer workflow with LLaMA 13B on an A100, observing improvements in end-to-end time and KV memory. Shared prefixes, scheduled batches, and dedicated attention implementations all contribute. The measurements compare against baselines such as FastChat/vLLM from the time of the paper and mainly address serving efficiency. This set of results does not verify code correctness with a modern repository closed-loop fix. The code is public as ParrotServe, and larger system experiments also include other applications and LLaMA 7B."
+    },
+    "角色执行顺序能为缓存调度提供复用信号，提前准备也需要与前台请求竞争资源。论文关注固定前缀服务效率。问答、对话、搜索和编码场景的实验主要比较 TTFT、每轮延迟、吞吐和缓存命中。harness 与引擎的具体版本暂列未核实。": {
+      "en": "The execution order of roles can provide reuse signals for cache scheduling, and prefetching must also compete with foreground requests for resources. The paper focuses on fixed-prefix serving efficiency. Experiments in Q&A, dialogue, search, and coding scenarios mainly compare TTFT, per-turn latency, throughput, and cache hits. The exact harness and engine versions remain unverified."
+    },
+    "在九个自建编码、技术写作和规划任务上，作者报告相较 Claude Code 的平均墙钟加速约为 2.6 倍，交付词数／秒提高约为 2.2 倍。该吞吐定义同时受产物长度和完成时间影响，质量另由 Claude Opus 4.6 对任务条目评分。实验执行模型为 Claude Sonnet 4.6。生成长度对模型生成主导的任务有预测价值，工具执行、外部 API 和服务排队还需要单独计时。当前评测以自建产物任务为主。": {
+      "en": "On nine in-house coding, technical writing, and planning tasks, the authors report an average wall-clock speedup of about 2.6x over Claude Code, with delivered words per second increasing by about 2.2x. This throughput definition depends on both artifact length and completion time, while quality is rated separately by Claude Opus 4.6 for each task entry. The execution model is Claude Sonnet 4.6. Generation length is predictive for model-generation-dominated tasks, while tool execution, external API calls, and service queuing still require separate timing. The current evaluation focuses mainly on in-house artifact tasks."
+    },
+    "具身任务内多 Agent 协作": {
+      "en": "Multi-agent collaboration within embodied tasks"
+    },
+    "高层计划与状态条件": {
+      "en": "High-level plans and state conditions"
+    },
+    "动态文本产物与前缀 KV": {
+      "en": "Dynamic text artifacts and prefix KV"
+    },
+    "区分单方补丁正确与两个独立需求联合验收": {
+      "en": "Distinguish a correct one-sided patch from joint acceptance of two independent requirements"
+    },
+    "多个编码 Agent 并行工作时，普通消息需要接收者自行记住何时使用某条发现，也需要上下游自行检查约定有没有落实。AECP 让一个负责人划分模块，再用两类结构化产物协调并行 worker。": {
+      "en": "When multiple coding Agents work in parallel, ordinary messages require receivers to remember when to use a finding, and upstream and downstream must also check whether agreements were implemented. AECP has a lead divide modules, then uses two types of structured artifacts to coordinate parallel workers."
+    },
+    "在 Doc2Repo、NL2Repo 和 CodeProjectEval 的从规格生成仓库任务中，作者报告 AECP 相比两种团队基线提高隐藏测试通过率、缩短墙钟时间。相比单 Agent，它平均使用更多输出 token。与集成者基线的第一步消融同时引入共享工作区和知识产物，因此该对比无法单独归因于知识投递。主实验使用 AWS Strands Agents SDK，另用 mini-SWE-agent 做一组复核。Claude Opus 4.8、Opus 4.6 与 Sonnet 5 通过 Bedrock 调用，DeepSeek-V4-Flash 与 GLM-5.2 通过 OpenRouter 调用。底层引擎和硬件未披露。": {
+      "en": "In repository generation from specifications on Doc2Repo, NL2Repo, and CodeProjectEval, the authors report that AECP improves hidden-test pass rates and shortens wall-clock time compared with two team baselines. Compared with a single Agent, it uses more output tokens on average. The first-step ablation against the integrator baseline introduces both a shared workspace and knowledge artifacts, so the comparison cannot be attributed to knowledge delivery alone. The main experiment uses the AWS Strands Agents SDK, with a separate verification run using mini-SWE-agent. Claude Opus 4.8, Opus 4.6, and Sonnet 5 are called through Bedrock, while DeepSeek-V4-Flash and GLM-5.2 are called through OpenRouter. The underlying engine and hardware are not disclosed."
+    },
+    "系统基于 Claude Agent SDK，公开代码支持 Git worktree 隔离。底层推理引擎和服务器硬件未披露。论文提示词及任务描述公开，无需训练新模型。": {
+      "en": "The system is based on the Claude Agent SDK, and the public code supports Git worktree isolation. The underlying inference engine and server hardware are not disclosed. The paper's prompts and task descriptions are public, and no new model training was required."
+    }
+  },
+  "blog/november2026/index.html": {
+    "先递归建树，同时以列表保存每个节点的左右孩子。这里需要注意递归的过程中会改变全局变量，因此使用局部变量保存下标避免修改。然后在bfs的过程中同时实现恢复多叉树和镜像。使用左孩子右sibling方法，遍历孩子的过程即为一直访问左孩子的右孩子，直到遇到-1为止。题目要求镜像，只需在bfs的时候，对当前层的所有节点（即前一个节点的孩子）倒一下顺序加入队列即可。": {
+      "en": "Build the tree recursively while storing each node's left and right children in a list. Note that recursion would modify global variables, so save the index in a local variable to avoid changes. Then, during BFS, restore the multi-way tree and mirror it at the same time. Using the left-child/right-sibling representation, iterating over children means repeatedly visiting the right sibling of the left child until reaching -1. The problem asks for a mirror image, so during BFS we only need to enqueue all nodes in the current level (the children of the previous node) in reverse order."
+    }
+  },
+  "blog/travel-frog/index.html": {
+    "Stage40.本地体验修正与旅行循环复核": {"en":"Stage 40. Local Gameplay Fixes and Travel-Cycle Verification"},
+    "屋顶照片的花枝与投影": {"en":"Branches and Shadows in Rooftop Photos"},
+    "日历入口与红点同步": {"en":"Synchronizing the Calendar Entry and Notification Dot"},
+    "肥料消耗与缓释肥": {"en":"Fertilizer Consumption and Slow-Release Fertilizer"},
+    "花瓶中的花苞、盛开与枯萎": {"en":"Buds, Blooms, and Wilting in the Vase"},
+    "图鉴版的花费任务与旅行返程": {"en":"Spending Tasks and Travel Returns in the Gallery Edition"},
+    "这一轮从实际游玩中遇到的照片、日历、花圃和花瓶问题继续修正。普通版与图鉴版共用同一套服务逻辑，修改先保存在本地，等下一次发布时再统一打包。": {"en":"This round continues fixing photo, calendar, flower-bed, and vase issues encountered during actual play. The Normal and Gallery Editions share the same server logic. The changes remain local and will be packaged together in the next release."},
+    "使用的花枝宽427，而明信片画布宽500。此前没有对应位置数据，树枝回退到左上角，右侧就留下了明显空隙；树枝的投影也出现在天空中。": {"en":"uses a 427-pixel-wide branch asset, while the postcard canvas is 500 pixels wide. Without position data, the branch defaulted to the upper-left corner, leaving an obvious gap on the right; its shadow also appeared in the sky."},
+    "现在按素材尺寸将花枝右移73像素，使它贴住画面右边缘。投影放回右侧瓦面。新生成的照片与相册详情共用这组位置，读取旧照片时校正返回的图层，保留原始存档内容。这组位置来自画布边界和素材形状的本地校准。": {"en":"The branch is now shifted 73 pixels to the right, based on the asset dimensions, so it meets the right edge of the canvas. Its shadow is placed back on the roof tiles on the right. Newly generated photos and album detail views use these positions. When loading older photos, the returned layers are corrected without changing the original save data. These positions are a local calibration based on the canvas boundaries and asset shapes."},
+    "特产选择页中的苹果、椰子等图标也对照了原始图集。原始裁切尺寸分别为187×189和208×206，缩小到物品格后会呈现相应的边缘和纹理，没有发现错图或额外降质的取图路径，因此保留原素材。": {"en":"The apple, coconut, and other icons on the souvenir selection page were also checked against the original texture atlas. The original crop sizes are 187x189 and 208x206, respectively; scaling them down to item slots produces the corresponding edges and textures. No incorrect images or additional quality loss in the image-loading path were found, so the original assets were retained."},
+    "日历的奖励判断、庭院入口和红点现在使用相同的可领取条件。当月已经到日期、尚未领取的幸运日礼物可以触发提示；节气料理仍需要完成对应任务。": {"en":"Calendar reward checks, the courtyard entry, and its notification dot now use the same eligibility conditions. Lucky-day gifts in the current month whose dates have arrived but that have not yet been claimed can trigger a notification; solar-term dishes still require completing their respective tasks."},
+    "除了加载日历时刷新，还在庭院界面创建、同步完成、网页回到前台及每分钟检查时更新。这样跨过日期或重新进入庭院后，不会只在日历内部看得到奖励，首页却没有入口。奖励领完后，庭院入口和红点一同消失，小仓库仍保留日历。": {"en":"Updates now occur not only when loading the calendar, but also when creating the courtyard view, after synchronization, when the web page returns to the foreground, and during the check each minute. After a date change or re-entering the courtyard, a reward should no longer appear only inside the calendar while its entry is missing from the home screen. Once all rewards have been claimed, the courtyard entry and notification dot disappear together; the calendar remains accessible in the small storehouse."},
+    "此前所有放入堆肥箱的物品都按两小时完成吸收，缓释肥虽然有较长的后续肥效，物品本身却同样很快消失。现在将吸收时长和肥效持续时间分别处理。": {"en":"Previously, all items placed in the compost bin finished being absorbed after two hours. Slow-release fertilizer had a longer subsequent effect, but the item itself disappeared just as quickly. Absorption time and the duration of the fertilizer effect are now handled separately."},
+    "当前离线时长设置为普通肥料一天、缓释肥三天、普通特产半天。新放入后的五分钟取回窗口保留，开始发酵后按队列依次吸收。普通肥料和缓释肥的后续肥效仍分别按一天、三天处理，已吸收材料的肥力继续累积到土地上。物品说明能确认缓释肥更慢、更持久，具体小时数属于可调整的本地规则。": {"en":"The current offline settings give regular fertilizer one day to be absorbed, slow-release fertilizer three days, and ordinary souvenirs half a day. The five-minute retrieval window after placing an item is retained; once fermentation begins, items are absorbed sequentially from the queue. The subsequent effects of regular and slow-release fertilizer still last one day and three days, respectively, and fertility from absorbed materials continues to accumulate in the soil. Item descriptions establish that slow-release fertilizer acts more slowly and lasts longer; the specific durations are adjustable local rules."},
+    "蜡梅的两张原始贴图是花苞和开花，不能统一解释为新鲜与枯萎。这次按花材种类拆开生命周期。": {"en":"The two original wintersweet textures depict buds and blooms, so they cannot both be interpreted as fresh and wilted stages. The life cycle is now handled separately for each type of flower."},
+    "花材": {"en":"Flowers and Grasses"},
+    "当前本地阶段": {"en":"Current Local Stages"},
+    "总保留时间": {"en":"Total Time Retained"},
+    "蜡梅、木槿等七种礼物花材": {"en":"Seven types of gift flowers, including wintersweet and hibiscus"},
+    "两天花苞，五天开花": {"en":"Two days in bud, five days in bloom"},
+    "七天": {"en":"Seven days"},
+    "狗尾草等小型野花野草": {"en":"Small wildflowers and grasses, including foxtail grass"},
+    "三天新鲜，两天第二阶段贴图": {"en":"Three days fresh, two days using the second-stage texture"},
+    "五天": {"en":"Five days"},
+    "花圃培育的花材": {"en":"Flowers grown in the flower bed"},
+    "五天新鲜，两天枯萎": {"en":"Five days fresh, two days wilted"},
+    "阶段切换沿用原本的贴图和客户端状态。时间以插花时记录的时间戳计算，重进不会重置；到期清理只发生一次。精确的官服时长未从保存资源中找到，这里按游玩反馈设置本地时长。已经清除且缺少原始记录的花材，需要重新插入后观察。": {"en":"Stage changes retain the original textures and client states. Timing is calculated from the timestamp recorded when the flowers were arranged and is not reset on re-entry; expiry cleanup happens only once. The precise official-server durations were not found in the preserved resources, so these local durations are based on play feedback. Flowers that have already been cleared and lack their original records need to be arranged again before their behavior can be observed."},
+    "图鉴版购买后保持9999三叶草，不能用余额下降来判断是否花过草。现在成功购买普通商店或嘟嘟的商品时，按实际标价推进扭蛋机的“花点三叶草”任务。被拦截、退款或免费操作不增加花费进度。": {"en":"The Gallery Edition keeps 9999 clover after purchases, so a falling balance cannot be used to determine whether clover was spent. A successful purchase from the regular shop or Dudu's shop now advances the gashapon machine's \"Spend Some Clover\" task by the actual listed price. Blocked, refunded, or free operations do not add spending progress."},
+    "另外使用隔离的图鉴版存档验证了完整旅行流程。": {"en":"The complete travel flow was also verified using an isolated Gallery Edition save."},
+    "花瓶阶段、不同肥料的吸收时长、图鉴版购买任务、旧照片图层读取和旅行返程的五组回归测试通过。日历还单独验证了跨日补领、庭院重新同步和奖励领完后的隐藏状态。测试使用专用数据，修改保留在本地待下一次发布。": {"en":"Five groups of regression tests passed: vase stages, absorption times for different fertilizers, Gallery Edition purchase tasks, loading older photo layers, and travel returns. Separate calendar checks covered claiming overdue rewards after a date change, courtyard resynchronization, and hiding the entry after all rewards are claimed. Testing used dedicated data; the changes remain local for the next release."},
+    "介绍页、下载与正式发布": {
+      "en": "Introduction page, downloads, and official release"
+    },
+    "2026 年 11 月 6 日发布 v0.2.3。Windows 可使用安装器或对应版本的压缩包，安卓提供两份签名 APK。主页在部署时从固定版本的 Release 取网页运行包，Amy Studio 的作品卡片可以进入普通版与图鉴版的选择页。": {
+      "en": "v0.2.3 was released on November 6, 2026. On Windows, use the installer or the ZIP for the corresponding version; on Android, two signed APKs are provided. At deploy time, the homepage fetches the web runtime package from a pinned release, and the Amy Studio project card opens a page for choosing the Normal or Gallery edition."
+    },
+    "日历按北京时间更新月份，节气料理排在每年的实际节气日期。离线版每月另外随机安排两到三份幸运日礼物，生成后随存档保存。当月错过的奖励可补领，庭院只在有奖励可领时显示日历，小仓库保留日历入口。补领的新手礼物与其他奖励共用日期格的布局，点击图标即可领取。": {
+      "en": "The calendar updates its month in Beijing time, and solar-term dishes are scheduled on each year's actual solar-term dates. In the offline edition, two or three lucky-day gifts are additionally scheduled at random each month and saved with the save file. Rewards missed that month can be claimed later; the courtyard shows the calendar only when a reward is available, while the small warehouse keeps a calendar entry. Reclaimable starter gifts share the layout of other rewards in date cells; click the icon to claim."
+    },
+    "动态照片1号位的过路照也进行了坐标修复。图鉴版以动态照片教程已完成的状态进入，玩家可直接打开制作页。": {
+      "en": "The coordinates of the passing photo in animated-photo slot 1 were also fixed. The Gallery Edition starts with the animated-photo tutorial already completed, so players can open the creation page directly."
+    },
+    "新存档预置正式配置中的默认称号「一只蛙的旅行」，旧档缺少这一项时会补齐。首次获得符合条件的旅行道具后，旅行百科会选中实际已解锁的展示项。植物百科则随玩家获得植物更新。": {
+      "en": "New saves are preset with the default title \"A Frog's Journey\" from the official configuration; older saves missing this entry will have it filled in. After obtaining the first qualifying travel item, the Travel Encyclopedia selects the exhibit that is actually unlocked. The Plant Encyclopedia updates as the player obtains plants."
+    },
+    "工具套装和材料套装可分别用一枚三叶草向嘟嘟购买。小摊的标题与首排商品之间留出空间。家具物什页按资源表的实际数量统计不倒翁，普通版新档的物什列表从玩家实际拥有的家具开始显示。": {
+      "en": "Tool sets and material sets can each be purchased from Dudu for one clover. Space is left between the stall title and the first row of goods. The furniture page counts roly-polys according to the actual quantity in the resource table, and the item list for new Normal Edition saves starts from the furniture the player actually owns."
+    },
+    "旅行返程使用基础 25% 的离线邂逅概率，部分幸运物另有加成。触发时从尚未收集的故事中选择。新档首次收到礼品盒回礼时也会认识旅友，并收到对应的初识笔记。": {
+      "en": "Return trips use a base 25% offline encounter chance, with additional bonuses from some lucky items. When triggered, a story is chosen from those not yet collected. When a new save receives a gift-box return gift for the first time, it also meets a travel friend and receives the corresponding first-meeting note."
+    },
+    "伴蛙前行会从已有旅行、收集和制作记录补进度。官服兑换码与在线小红心在离线版计为完成，「蛙蛙联合做大事」在确认离线回礼后可领取，奖励只发放一次。": {
+      "en": "Traveling with Frog backfills progress from existing travel, collection, and crafting records. Official-server redemption codes and online little red hearts count as completed in the offline edition; \"Frogs Doing Big Things Together\" can be claimed after confirming the offline return gift, and the reward is granted only once."
+    },
+    "许愿池保留最初四次机会。商店的许愿家具礼袋可以用 3000 草重复购买，每次补一件尚未收集的地板、餐桌或餐椅。这三件集齐后再次购买会返还当次花费。": {
+      "en": "The wishing pool keeps its original four chances. The stall's wishing-furniture gift bag can be repurchased for 3,000 clover, adding one floor, dining table, or dining chair not yet collected each time. Once all three are collected, buying it again refunds the amount spent."
+    },
+    "称号、工具栏的快速滚轮停在列表边界，也可以拖动滑块或按住鼠标中键滚动。游戏加载条只向前播放一次，横屏提示加大字号。照片分享会发放符合条件的离线奖励，保留可保存为 PNG 和关闭的明信片画面。": {
+      "en": "Titles and the toolbar's quick wheel stop at the list boundaries; you can also drag the scrollbar or hold the middle mouse button to scroll. The game loading bar plays forward only once, and the landscape-orientation hint uses a larger font. Photo sharing grants qualifying offline rewards and keeps a postcard screen that can be saved as PNG or closed."
+    },
+    "v0.2.3 接入了周末小插曲的后续期数。未提交的选择随期数结束，已提交的选择在次周结算，答谢可领取一次。": {
+      "en": "v0.2.3 added later episodes of the weekend vignettes. Unsubmitted choices end when the episode ends; submitted choices are settled the following week, and the thank-you gift can be claimed once."
+    },
+    "本项目围绕《旅行青蛙·中国之旅》的 Android 客户端、静态资源和个人历史存档，搭建了可在本地运行的游戏保存环境。开发从登录快照回放开始，逐步扩展到可写存档、日常玩法、相册与地图，并形成普通版和图鉴版两套独立运行的版本。": {
+      "en": "This project builds a locally runnable game save environment around the Android client, static resources, and personal history archives of Travel Frog: A Journey to China. Development started from login snapshot playback and gradually expanded to writable saves, daily gameplay, albums, and maps, forming two independently runnable versions: Normal and Gallery editions."
+    },
+    "普通版日常循环": {
+      "en": "Normal Edition daily cycle"
+    },
+    "普通版已具备日志中记录的日常循环，图鉴版也已形成独立运行方案，文末继续记录后续修复。这是个人离线保存项目，部分依赖在线服务的功能采用本地替代；由于版权原因，项目内容暂不公开。": {
+      "en": "The Normal Edition already includes the daily cycle recorded in the logs, and the Gallery Edition has formed an independent operation plan. Subsequent fixes are continued at the end of the text. This is a personal offline preservation project; some functions dependent on online services are replaced locally. Due to copyright reasons, the project content is not publicly available."
+    },
+    "这样两套游戏可以同时安装、切换和测试，普通版的旅行进度、庭院状态和活动记录不会被图鉴版覆盖。": {
+      "en": "In this way, both game versions can be installed, switched, and tested simultaneously, and the Normal Edition's travel progress, courtyard status, and event records will not be overwritten by the Gallery Edition."
+    },
+    "图鉴版的定位是“可查看、可试用、可继续互动的完整图鉴”，而不是把普通版的每一次获取流程都强行跳过。一次性收集内容在进入图鉴版时已解锁：旅行装备、家具、故事、称号、友情绘本、手工品、百科、地图、纪念品、特产、博物馆典藏和固定旅行照片都能直接查看。": {
+      "en": "The Gallery Edition is intended to be \"a complete illustrated guide that can be viewed, tried, and further interacted with,\" rather than forcibly skipping every acquisition process of the Normal Edition. Contents collected at once are unlocked when entering the Gallery Edition: travel gear, furniture, stories, titles, friendship storybooks, handicrafts, encyclopedia, maps, souvenirs, local specialties, museum collections, and fixed travel photos can all be viewed directly."
+    },
+    "普通版和图鉴版都将博物馆大冒险、扭蛋机、许愿池作为离线长期入口；它们不会因为原活动结束而消失。广告、分享类任务在两版中都保留按钮和奖励路径，离线环境下点击即可完成对应条件。": {
+      "en": "Both the Normal and Gallery editions offer the Museum Adventure, Gashapon machine, and Wishing Pool as long-term offline access points; they will not disappear when the original event ends. Advertisement and sharing-related tasks retain buttons and reward paths in both versions, and clicking offline will meet the corresponding conditions."
+    },
+    "普通版和图鉴版分别打包为": {
+      "en": "The Normal and Gallery editions are packaged as"
+    },
+    "普通版和图鉴版仍严格分开。不同玩家在自己的设备上保存自己的进度，不使用作者的个人存档，也没有共用的云端账号。每个版本目前只有一个活动存档；同一台电脑上的不同玩家可以分别解压到不同目录，手机或网页切换进度则先导出、再导入，不会自动同步。": {
+      "en": "The Normal and Gallery editions remain strictly separate. Each player keeps their own progress on their own device; neither the author's personal save nor a shared cloud account is used. Each edition currently has one active save. Players sharing a computer can extract separate copies into different folders. On phones or the web, export before importing another save; there is no automatic synchronization."
+    },
+    "官服账号密码本身不是存档。官服备份仍需要先保存完整初始化数据，并额外加载相册详情；只有照片索引不能保证还原历史构图。介绍页把开启采集日志、浏览各模块、解析数据、导入普通版及恢复原脚本的过程整理成独立教程。": {
+      "en": "An official-server username and password are not a save file. Backing up official progress still requires capturing the full initialization data and loading album details separately; photo indexes alone cannot guarantee reconstruction of the original compositions. The project page provides a separate guide to enabling capture logs, browsing each module, parsing the data, importing it into the Normal Edition, and restoring the original script."
+    },
+    "周年蛋糕的小问答同时核对了客户端实际提交的答案字段。问答现在会正确识别所选项、发放奖励并推进下一步；普通版仍保留材料消耗、分阶段等待、制作、分享和领取奖励的顺序。": {
+      "en": "The minor Q&A for the anniversary cake also cross-checks the answer fields actually submitted by the client. The Q&A now correctly recognizes the selected options, issues rewards, and advances to the next step; the Normal Edition still retains the sequence of material consumption, phased waiting, crafting, sharing, and claiming rewards."
+    },
+    "已有旅行历史的普通版与图鉴版不会被这条规则改写。": {
+      "en": "Normal and Gallery editions with existing travel history will not have this rule overwritten."
+    },
+    "图鉴版的抽奖券补齐为与三叶草一致的固定资源：数量始终显示999，商店抽奖不扣减，白球返券或其他获得途径也不会继续增加。普通版仍使用实际抽奖券数量与消耗规则。": {
+      "en": "The lottery tickets in Gallery Edition are filled to match Clover, as a fixed resource: the quantity always shows 999, lottery draws in the shop do not deduct tickets, and white ball returns or other acquisition methods will not further increase it. The Normal Edition still uses the actual number of tickets with consumption rules."
+    },
+    "普通版与图鉴版已有的同类照片均已同步迁移，新旅行生成的 dry 场景也会直接使用正确坐标。": {
+      "en": "Matching photos already present in the Normal and Gallery editions have been migrated, and dry scenes generated by new trips will use the correct coordinates directly."
+    },
+    "图鉴版任务奖励曾出现“抽奖券实际保持999张，客户端却收到1000张”的数字不一致。现在任务领奖结果和抽奖券推送都使用图鉴版的固定数量；重复物品与日历奖励的返回结果也读取最终库存值。普通版继续按实际获得数量增加。": {
+      "en": "The Gallery Edition task rewards previously had a numerical inconsistency where \"the lottery tickets actually remained at 999, but the client received 1000.\" Now, both the task reward results and lottery ticket push notifications use the fixed number for the Gallery Edition; the return results for duplicate items and calendar rewards also read the final inventory value. The Normal Edition continues to increase according to the actual quantity obtained."
+    },
+    "在 CMD 中运行。普通版和图鉴版可独立启动，只玩其中一个时只开对应服务器即可。": {
+      "en": "Run in CMD. Normal and Gallery editions can start independently, and if only playing one, only the corresponding server needs to be launched."
+    },
+    "启动普通版：": {
+      "en": "Launch Normal Edition:"
+    },
+    "10.伴蛙前行与许愿家具": {
+      "en": "10. Traveling with Frog and wishing furniture"
+    },
+    "11.电脑端操作与网页界面": {
+      "en": "11. Desktop controls and the web interface"
+    },
+    "安装包与网页包": {
+      "en": "Installers and web package"
+    },
+    "网页游玩与教程": {
+      "en": "Web play and tutorial"
+    },
+    "2. 提取客户端逻辑 main.min.js": {
+      "en": "2. Extract the client logic main.min.js"
+    },
+    "3.EAB 配置包与正式规则恢复": {
+      "en": "3. EAB configuration packages and official rule restoration"
+    }
+  },
+  "blog/ics/index.html": {
+    "分块例子换用每行 8 个 double 的模型。未分块的 ijk 每个输出元素重扫一行 A 和一列 B，约": {
+      "en": "The blocking example switches to a model with 8 doubles per line. The unblocked ijk accesses each output element by rescanning a row of A and a column of B, approximately"
+    },
+    "链接器主要看 section，加载器按 segment 建立进程的内存映像，一个 segment 可以包含多个 section。.bss 的零数据在运行时有空间，文件无需存下每一个零字节。": {
+      "en": "The linker mainly looks at sections, while the loader builds the process's memory image according to segments. A segment can contain multiple sections. Zero data in .bss has space at runtime, and the file does not need to store every zero byte."
+    },
+    "库插桩可以记录 malloc 的请求大小和返回地址。课件对比预处理宏替换、链接器 —wrap 和动态加载时的 LD_PRELOAD。采用哪一种取决于能否改源码、重新链接，以及被观察程序是否通过动态符号调用目标函数。": {
+      "en": "Library instrumentation can record the requested size of malloc and the return address. The courseware compares preprocessor macro replacement, linker --wrap, and LD_PRELOAD during dynamic loading. Which method to use depends on whether the source code can be modified or re-linked, and whether the observed program calls the target function through dynamic symbols."
+    }
   }
 }

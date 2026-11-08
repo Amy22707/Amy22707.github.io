@@ -1,6 +1,6 @@
 import { readFile, readdir, writeFile, mkdir, copyFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { normalizeTerms } from './i18n-terms.mjs';
+import { normalizeTerms, isSourceFallback, hasUntranslatedEnglish } from './i18n-terms.mjs';
 const directory = resolve('.studio-workspace/i18n');
 const inventory = JSON.parse(await readFile(resolve(directory, 'inventory.json'), 'utf8'));
 const cache = Object.create(null);
@@ -32,16 +32,25 @@ for (const file of (await readdir(directory)).filter(name => /^translations(?:-w
   }
 }
 // Reviewed dictionaries are newer than disposable machine-draft worker caches.
-for (const [source, entry] of currentEntries) cache[source] = { ...entry, completed: ['en', 'zh'] };
+for (const [source, entry] of currentEntries) {
+  const next = { ...entry, completed: ['en', 'zh'] };
+  // A published source-language fallback is not a reviewed English translation.
+  if (isSourceFallback(source, entry.en)) {
+    next.en = cache[source]?.en ?? source;
+    next.completed = next.completed.filter(language => language !== 'en' || !isSourceFallback(source, next.en));
+  }
+  cache[source] = next;
+}
 const overrides = JSON.parse(await readFile('src/i18n/overrides.json', 'utf8'));
 const pageOverrides = JSON.parse(await readFile('src/i18n/page-overrides.json', 'utf8'));
 const mainShared = {}, studioShared = {}, pageCatalogs = new Map();
 const incomplete = [];
 for (const row of inventory) {
   const source = row.text;
-  const entry = { zh: currentShared[source]?.zh ?? cache[source]?.zh ?? source, en: currentShared[source]?.en ?? cache[source]?.en ?? source, ...overrides[source], ...(overrides[source]?.en ? { reviewedEn: true } : {}) };
+  const sharedEn = currentShared[source]?.en;
+  const entry = { zh: currentShared[source]?.zh ?? cache[source]?.zh ?? source, en: sharedEn && !isSourceFallback(source, sharedEn) ? sharedEn : cache[source]?.en ?? source, ...overrides[source], ...(overrides[source]?.en ? { reviewedEn: true } : {}) };
   entry.en = normalizeTerms(source, entry.en);
-  if (/[\u3400-\u9fff]/.test(source) && !cache[source]?.completed.includes('en') && !overrides[source]?.en) incomplete.push(row);
+  if (hasUntranslatedEnglish(source, row.pages.map(page => pageOverrides[page]?.[source]?.en ?? entry.en))) incomplete.push(row);
   const studio = row.pages.some(page => page.startsWith('studio:'));
   const shared = row.pages.includes('shared');
   const mainPages = row.pages.filter(page => !page.startsWith('studio:') && page !== 'shared');

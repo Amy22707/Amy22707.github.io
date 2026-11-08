@@ -1,9 +1,52 @@
 {
+  "[[A0]] 使用的花枝宽427，而明信片画布宽500。此前没有对应位置数据，树枝回退到左上角，右侧就留下了明显空隙；树枝的投影也出现在天空中。": {"en":"[[A0]] uses a 427-pixel-wide branch asset, while the postcard canvas is 500 pixels wide. Without position data, the branch defaulted to the upper-left corner, leaving an obvious gap on the right; its shadow also appeared in the sky."},
+  "对应《深入理解计算机系统》§6.4–6.6。本讲把上一讲的局部性落实到两个问题：[[O0]]地址怎样映射到 Cache，程序的访问顺序怎样改变命中率。[[C0]]": {
+    "en": "Corresponding to \"Computer Systems: A Programmer's Perspective\" §6.4–6.6. This lecture applies the concept of locality from the previous lecture to two issues: [[O0]]how addresses map to the cache, and how the program's access order changes hit rates.[[C0]]"
+  },
+  "[[O0]]生成证明。[[C0]] 证明器把推理写成可以检查的数学约束，包括矩阵运算、MoE 专家选择和输出比较。严格匹配时，需要证明被检查的 token 在对应前缀下取得模型最高分。zkSNARK（简洁零知识证明）把这些约束的检查压缩成一份证明，协议设计以隐藏权重与内部计算为目标。": {
+    "en": "[[O0]]Generating a proof.[[C0]] The prover expresses inference as verifiable mathematical constraints, including matrix operations, MoE expert selection, and output comparisons. Strict matching requires proving that the checked token has the highest model score for its prefix. A zkSNARK (succinct zero-knowledge proof) compresses verification of these constraints into a proof; the protocol aims to hide the weights and internal computation."
+  },
+  "[[O0]]主要结论：[[C0]] 原型在 4-bit 权重转换的整数版 Llama 4 Maverick 400B MoE 上验证。主基准用 1,024 token 窗口检查一个后继 token，单 H100 的约 110 token/s 统计处理过的窗口 token。技术报告另测逐个检查回复 token，按实际检查位置计约 39.1 token/s。对照 vLLM prefill，作者报告证明生成约需 70–95 倍 GPU 时间。严格模式针对整数模型的贪心选择，浮点和随机采样服务需要另行对齐验证规则。": {
+    "en": "[[O0]]Main findings:[[C0]] The prototype is evaluated on an integer version of Llama 4 Maverick 400B MoE converted from 4-bit weights. The main benchmark checks one successor token using a 1,024-token window; the roughly 110 tokens/s on one H100 counts processed window tokens. A separate experiment in the technical report checks reply tokens individually, achieving about 39.1 tokens/s when counting checked positions. Relative to vLLM prefill, the authors report that proof generation requires about 70–95 times as much GPU time. Strict mode verifies greedy choices in the integer model; floating-point models and stochastic sampling require separately aligned verification rules."
+  },
+  "用 [[A0]] 描述 Cache。[[A1]] 是组数，[[A2]] 是每组的行数，[[A3]] 是每行的数据字节数，[[A4]] 是地址位数。容量 [[A5]] 只计数据。地址从高到低为：": {
+    "en": "Describe a cache using [[A0]]. [[A1]] is the number of sets, [[A2]] the lines per set, [[A3]] the data bytes per line, and [[A4]] the address width. Capacity [[A5]] counts data only. From high to low, the address fields are:"
+  },
+  "[[A0]] 路组相联": {
+    "en": "[[A0]]-way set associative"
+  },
+  "[[A0]] 是缺失后[[O1]]额外[[C1]]花的时间。命中时间为 1 周期、缺失惩罚为 100 周期时，[[A2]] 和 [[A3]] 缺失率分别得到 4、2 周期。多级 Cache 的局部缺失率要用实际到达这一层的访问作分母。": {
+    "en": "[[A0]] is the [[O1]]additional[[C1]] time incurred after a miss. With a hit time of 1 cycle and a miss penalty of 100 cycles, miss rates of [[A2]] and [[A3]] yield average access times of 4 and 2 cycles, respectively. For a multilevel cache, the denominator of a level's local miss rate is the accesses that actually reach that level."
+  },
+  "均匀使用 [[A0]] 个累加器时，链的延迟限制约为 [[A1]]。另外还要算功能部件和 load 的吞吐下限，取各种限制中较大的那个。内积每元素要读两个输入，课件的两路 load 即给出 1 CPE 下限。double 乘积可以提前算，内积的单累加器却仍被浮点加法的 3 周期延迟限制。展开 6×1 保留该链，6×6 或 6×1a 才能把依赖限制压到接近吞吐限制。": {
+    "en": "With work evenly distributed across [[A0]] accumulators, the dependency-chain latency bound is approximately [[A1]]. Also calculate the throughput bounds of functional units and loads; the largest bound dominates. A dot product reads two inputs per element, so the two load units in the slides impose a lower bound of 1 CPE. Products of doubles can be computed ahead of time, but a single-accumulator dot product remains limited by the 3-cycle latency of floating-point addition. A 6×1 unrolling retains that chain; 6×6 or 6×1a can bring the dependency bound close to the throughput bound."
+  },
+  "[[O0]]BaseShared。[[C0]] 对相同历史共享基础 value 缓存，角色差异以低秩中间量 [[A1]] 保存，使用时通过 [[A2]] 恢复。主设置在 Q、V 投影上使用 LoRA，并共享 key 缓存。它主要节省存储，各角色仍需计算自己的低秩历史。": {
+    "en": "[[O0]]BaseShared.[[C0]] For the same history, roles share the base value cache and store role-specific differences as low-rank intermediates [[A1]], reconstructing them with [[A2]] when needed. The main configuration applies LoRA to the Q and V projections and shares the key cache. This primarily saves storage; each role must still compute its own low-rank history."
+  },
+  "[[O0]]BaseLRShared。[[C0]] 训练各角色共用下投影 [[A1]]、保留各自上投影 [[A2]]。基础缓存和低秩缓存都共享，后继角色复用历史，只为新追加内容执行 prefill。不同角色的层输入存在差异，跨角色缓存复用依赖相似性近似。": {
+    "en": "[[O0]]BaseLRShared.[[C0]] Train the roles to share the down-projection [[A1]] while retaining role-specific up-projections [[A2]]. Both base and low-rank caches are shared, so subsequent roles reuse history and perform prefill only for newly appended content. Layer inputs differ across roles; cross-role cache reuse relies on a similarity approximation."
+  },
+  "[[O0]]主要结论：[[C0]] 作者在 LLaMA-3.1-8B-Instruct、Ministral-8B-Instruct 的规划／行动／反思三角色问答中，观察到该拆分比直接共享整个缓存更好地保留准确率，同时降低显存与重复 prefill 开销。BaseLRShared 需要共享 [[A1]] 的适配器训练。主系统加速在相同长度轨迹上测量，准确率在 HotpotQA、ScienceQA 上测量，另有实际 HotpotQA 延迟结果。": {
+    "en": "[[O0]]Main findings:[[C0]] In planning/action/reflection three-role question answering with LLaMA-3.1-8B-Instruct and Ministral-8B-Instruct, the authors observe that this decomposition preserves accuracy better than directly sharing the entire cache, while reducing GPU memory use and repeated prefill. BaseLRShared requires training adapters with shared [[A1]]. The main system speedups are measured on equal-length trajectories; accuracy is evaluated on HotpotQA and ScienceQA, with additional measured HotpotQA latencies."
+  },
+  "将 [[A0]] 复制到目标设备，在[[O1]]普通版[[C1]]中“导入存档”。核对青蛙、库存、照片与日记后，导出一份 [[A2]] 长期保存。": {
+    "en": "Copy [[A0]] to the target device and select Import Save in the [[O1]]Normal Edition[[C1]]. After checking the frog, inventory, photos, and diary, export a [[A2]] backup for long-term storage."
+  },
+  "普通版双击 [[A0]]；图鉴版双击 [[A1]]。请保留整个文件夹，不要只拿走 EXE。": {
+    "en": "For the Normal Edition, double-click [[A0]]; for the Gallery Edition, double-click [[A1]]. Keep the entire folder rather than copying only the EXE."
+  },
+  "[[O0]]两套独立进度[[C0]]：普通版保留日常收集过程；图鉴版使用另一份存档，方便查看和体验收集内容。": {
+    "en": "[[O0]]Two independent saves[[C0]]: the Normal Edition preserves everyday collection progress; the Gallery Edition uses a separate save for browsing and trying the collection."
+  },
+  "想实际游玩或了解安装方式，可以从 [[O0]]Studio 的旅行青蛙入口[[C0]] 进入对应版本的使用指南。": {
+    "en": "To play or learn how to install the game, open the appropriate edition's user guide from [[O0]]Studio's Travel Frog entry[[C0]]."
+  },
   "《旅行青蛙·中国之旅》[[A0]][[O1]]本地逆向版[[C1]]": {
     "en": "Travel Frog: A Journey to China[[A0]][[O1]]Local Reverse-Engineered Edition[[C1]]"
   },
   "标准版双击 [[A0]]；图鉴版双击 [[A1]]。请保留整个文件夹，不要只拿走 EXE。": {
-    "en": "For the Standard Edition, double-click [[A0]]; for the Gallery Edition, double-click [[A1]]. Keep the entire folder together rather than moving only the EXE."
+    "en": "For the Normal Edition, double-click [[A0]]; for the Gallery Edition, double-click [[A1]]. Keep the entire folder together rather than moving only the EXE."
   },
   "等待本地运行环境启动，选择“导入存档”，在系统文件选择器中选中 [[A0]]、兼容 JSON 或完整初始化协议 JSONL；没有备份则点击“开始新的旅程”。": {
     "en": "Wait for the local runtime to start, choose \"Import Save,\" and use the system file picker to select a [[A0]] file, a compatible JSON file, or a protocol JSONL file containing complete initialization data. If you have no backup, choose \"Start a New Journey.\""
@@ -15,7 +58,7 @@
     "en": "If you already have a backup from this project, use the import feature above. If you only have an official-server account, first capture the complete login initialization data on a device where [[O0]]you can still log in to the official game[[C0]]. The offline version does not ask for your phone number, verification code, or official-server password, and cannot recover progress from a closed server using account details alone."
   },
   "[[O0]]采集后再导入本地版：[[C0]]解析日志得到 [[A1]]，在标准版中选择“导入存档”。本地版不要求手机号、验证码或官服密码。": {
-    "en": "[[O0]]Capture first, then import into the local edition:[[C0]] parse the log to obtain [[A1]], then choose \"Import Save\" in the Standard Edition. The local edition does not require a phone number, verification code, or official-server password."
+    "en": "[[O0]]Capture first, then import into the local edition:[[C0]] parse the log to obtain [[A1]], then choose \"Import Save\" in the Normal Edition. The local edition does not require a phone number, verification code, or official-server password."
   },
   "记下当前已运行版本的[[O0]]完整文件路径[[C0]]。如果有多个结果，对照最近运行的资源版本，不要随便选第一个；如果没有此路径，当前客户端结构不适用本教程。": {
     "en": "Record the running version's [[O0]]full file path[[C0]]. If several results appear, identify the resource version that most recently ran rather than choosing the first result at random. If this path does not exist, this guide does not apply to your client's structure."
@@ -24,7 +67,7 @@
     "en": "Open a [[O0]]separate CMD window[[C0]] to start logging, then launch the official game:"
   },
   "将 [[A0]] 复制到目标设备，在[[O1]]标准版[[C1]]中“导入存档”。核对青蛙、库存、照片与日记后，导出一份 [[A2]] 长期保存。": {
-    "en": "Copy [[A0]] to the target device, then choose \"Import Save\" in the [[O1]]Standard Edition[[C1]]. After checking the frog, inventory, photos, and diary, export a [[A2]] file for long-term safekeeping."
+    "en": "Copy [[A0]] to the target device, then choose \"Import Save\" in the [[O1]]Normal Edition[[C1]]. After checking the frog, inventory, photos, and diary, export a [[A2]] file for long-term safekeeping."
   },
   "在新设备打开[[O0]]同一版本[[C0]]，点击“导入存档”。确认后进入游戏，核对青蛙名字、相册和物品。": {
     "en": "On the new device, open the [[O0]]same edition[[C0]] and choose \"Import Save.\" After confirming, enter the game and check the frog's name, album, and items."
@@ -142,5 +185,143 @@
   },
   "对 [[A0]] 位串 [[A1]]，无符号解释 B2U（Binary to Unsigned）和补码解释 B2T（Binary to Two's-complement）分别为：": {
     "en": "For the [[A0]] bit string [[A1]], the unsigned interpretation B2U (Binary to Unsigned) and the two's complement interpretation B2T (Binary to Two's-complement) are:"
+  },
+  "[\"[[O0]]语义共享[[C0]] 指 Agent 传递结论、约束、接口约定或原始证据，接收者可以据此改变自己的行动。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Semantic sharing[[C0]] refers to an Agent conveying conclusions, constraints, interface agreements, or raw evidence, based on which the receiver can change its actions."
+  },
+  "[\"[[O0]]制品共享[[C0]] 指 Agent 通过代码补丁、文件、测试日志或可检索记录交接工作。制品存在和另一位 Agent 已读取它是两个事件。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Artifact sharing[[C0]] refers to an Agent handing over work through code patches, files, test logs, or retrievable records. An artifact existing and another Agent having read it are two separate events."
+  },
+  "[\"[[O0]]计算复用[[C0]] 指引擎利用已处理的 token 前缀等状态省下重复计算。相同文本能否复用 KV 还取决于模型、前缀位置、token 化和缓存驻留。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Computation reuse[[C0]] refers to the engine avoiding repeated computation by reusing already processed token prefixes and other state. Whether the same text can reuse KV also depends on the model, prefix position, tokenization, and cache residency."
+  },
+  "[\"[[O0]]依赖就绪[[C0]] 指后续工作所需的产物已经可用。任务可以并发启动，但其中某些操作仍然需要等待前序 Agent 交付。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Dependency readiness[[C0]] means the outputs required for subsequent work are available. Tasks can start concurrently, but some operations still need to wait for an earlier Agent's delivery."
+  },
+  "[\"[[O0]]论文[[C0]] · [[O1]]代码与任务[[C1]]\",[[\"a\",null],[\"a\",null]]]": {
+    "en": "[[O0]]Paper[[C0]] · [[O1]]Code and task[[C1]]"
+  },
+  "[\"[[O0]]主张与研究方法：[[C0]] 一个子 Agent 完成自己的代码后，另一个子 Agent 仍可能按旧接口开发。仅看汇总测试通过率，很难定位哪一条交接出了问题。AsynCodeBench 把代码任务拆成具有实际依赖的实现单元，用显式有向图和可执行检查器记录上下游是否接通。数据来自 16 个公开仓库的 19 个任务，含 52 条人工核验的有向依赖。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Claims and research methods:[[C0]] After a subagent completes its own code, another subagent may still develop against the old interface. Looking only at the overall test pass rate makes it hard to locate which handoff went wrong. AsynCodeBench breaks coding tasks into implementation units with real dependencies, using an explicit directed graph and executable checkers to record whether upstream and downstream are connected. The data come from 19 tasks across 16 public repositories, including 52 manually verified directed dependencies."
+  },
+  "[\"[[O0]]论文[[C0]] · [[O1]]项目页[[C1]]\",[[\"a\",null],[\"a\",null]]]": {
+    "en": "[[O0]]Paper[[C0]] · [[O1]]Project page[[C1]]"
+  },
+  "[\"[[O0]]主张与研究方法：[[C0]] 两个开发者分别委托 Agent 改同一个仓库。每个 Agent 初始只知道自己的需求，因此即使两份补丁分别通过测试，集成后也可能因接口假设不一致而失败。ParallACT 从 SWE-Bench Pro 的需求和 Docker 镜像出发，加入独立的第二条需求、参考补丁和验收测试，得到 155 对任务。互补型任务要求接口对接，冲突型任务需要协调同一段代码上的两种修改，两个需求最终可以同时满足。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Claims and research methods:[[C0]] Two developers each assign an Agent to modify the same repository. Each Agent initially knows only its own requirements, so even if the two patches pass tests individually, they may fail after integration because their interface assumptions disagree. ParallACT starts from SWE-Bench Pro requirements and Docker images, adding a second independent requirement, a reference patch, and acceptance tests to obtain 155 task pairs. Complementary tasks require the interfaces to connect, while conflicting tasks require coordinating two changes to the same code; both requirements can ultimately be satisfied."
+  },
+  "[\"[[O0]]主要结论：[[C0]] 加入通信可以部分挽回并行执行的联合通过率，也增加 token 开销。作者观察到消息内容常与任务有关，但可能读得太晚，已经同意的设计也可能未落实。Redis 同步与共享文件同步的通过率差异未达到显著水平。实验覆盖两个 Agent，成本以各配置自己的单 Agent 全知对照为参照。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Main findings:[[C0]] Communication can partially recover the joint pass rate of parallel execution but also increases token usage. The authors observed that messages are often task-related but may be read too late, and that agreed designs may not be implemented. The pass-rate difference between Redis synchronization and shared-file synchronization was not significant. Experiments cover two Agents, with costs measured against each configuration's omniscient single-Agent control."
+  },
+  "[\"[[O0]]论文[[C0]] · [[O1]]代码与实验日志[[C1]]\",[[\"a\",null],[\"a\",null]]]": {
+    "en": "[[O0]]Paper[[C0]] · [[O1]]Code and experimental logs[[C1]]"
+  },
+  "[\"[[O0]]主张与研究方法：[[C0]] 具身协作任务里，相邻高层计划常反复出现，例如抓取后运输。每个 Agent 记录前一计划到后一计划的转移和适用状态范围，先用当前状态过滤候选，再结合历史次数与后台确认记录打分。命中后可立即行动，后台 LLM 根据发起时的上下文检查已执行轨迹。反馈到达后，系统强化确认的转移，或在新计划可执行时进行校正。缓存未命中时等待 LLM 规划。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Claims and research methods:[[C0]] In embodied collaborative tasks, adjacent high-level plans often recur, such as grasping followed by transporting. Each Agent records the transition from the previous plan to the next and the range of states where it applies, filters candidates by the current state, and then scores them using historical counts and background confirmation records. On a hit, it can act immediately while the background LLM checks the executed trajectory against the context at initiation. When feedback arrives, the system reinforces confirmed transitions or corrects them when a new plan becomes executable. On a cache miss, it waits for the LLM to plan."
+  },
+  "[\"[[O0]]主要结论：[[C0]] 有重复计划结构的任务可以减少逐步等待模型。后台校正有延迟，错过交接或争抢资源时，已经发生的环境变化仍需处理。评测使用 TDW-MAT、TDW-COOK、TDW-GAME 和 BEHAVIOR-1K 模拟或图环境，接入 CoELA、COMBO、COHERENT，调用 GPT-5、GPT-5-mini、GPT-5-nano 的 API。主结果包含轨迹预填充，另有空缓存对照。论文记录成功率、执行耗时、token 与费用。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Main findings:[[C0]] Tasks with repeated plan structures can spend less time waiting for the model step by step. Background correction is delayed, so when handoffs are missed or resources are contested, environmental changes that have already occurred still need to be handled. Evaluation uses TDW-MAT, TDW-COOK, TDW-GAME, and BEHAVIOR-1K simulated or visual environments with CoELA, COMBO, and COHERENT, calling the GPT-5, GPT-5-mini, and GPT-5-nano APIs. Main results include trajectory prefill, with an empty-cache control. The paper records success rate, execution time, tokens, and cost."
+  },
+  "[\"[[O0]]主张与研究方法：[[C0]] 多个编码 Agent 并行工作时，普通消息需要接收者自行记住何时使用某条发现，也需要上下游自行检查约定有没有落实。AECP 让一个负责人划分模块，再用两类结构化产物协调并行 worker。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Claims and research methods:[[C0]] When multiple coding Agents work in parallel, ordinary messages require receivers to remember when to use a finding, and upstream and downstream must also check whether agreements were implemented. AECP assigns a lead to divide modules, then uses two types of structured artifacts to coordinate parallel workers."
+  },
+  "[\"[[O0]]知识产物。[[C0]] Worker 提交发现、适用的函数或文件，以及可选的可执行证据。Harness 在其他 worker 读取相关代码时把发现随工具结果交付。证据检查失败的发现可以撤回。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Knowledge artifacts.[[C0]] Workers submit findings, applicable functions or files, and optional executable evidence. The harness delivers findings together with tool results when other workers read the relevant code. Findings that fail evidence checks can be withdrawn."
+  },
+  "[\"[[O0]]契约产物。[[C0]] 上游声明公开符号和签名。Harness 据此生成可导入的接口桩，让下游能先开发。上游提交实现时，harness 检查可静态判断的接口偏差。若契约改版，使用旧约定的下游需要重新检查自己的实现。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Contract artifacts.[[C0]] Upstream declares public symbols and signatures. The harness generates importable interface stubs so downstream can start development. When upstream submits the implementation, the harness checks interface deviations that can be determined statically. If the contract is revised, downstream following the old agreement must recheck its implementation."
+  },
+  "[\"[[O0]]主要结论：[[C0]] 在 Doc2Repo、NL2Repo 和 CodeProjectEval 的从规格生成仓库任务中，作者报告 AECP 相比两种团队基线提高隐藏测试通过率、缩短墙钟时间。相比单 Agent，它平均使用更多输出 token。与集成者基线的第一步消融同时引入共享工作区和知识产物，因此该对比无法单独归因于知识投递。主实验使用 AWS Strands Agents SDK，另用 mini-SWE-agent 做一组复核。Claude Opus 4.8、Opus 4.6 与 Sonnet 5 通过 Bedrock 调用，DeepSeek-V4-Flash 与 GLM-5.2 通过 OpenRouter 调用。底层引擎和硬件未披露。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Main findings:[[C0]] In repository generation from specifications on Doc2Repo, NL2Repo, and CodeProjectEval, the authors report that AECP improves hidden-test pass rates and shortens wall-clock time compared with two team baselines. Compared with a single Agent, it uses more output tokens on average. The first-step ablation against the integrator baseline introduces both a shared workspace and knowledge artifacts, so the comparison cannot be attributed to knowledge delivery alone. The main experiment uses the AWS Strands Agents SDK, with a separate verification run using mini-SWE-agent. Claude Opus 4.8, Opus 4.6, and Sonnet 5 are called through Bedrock, while DeepSeek-V4-Flash and GLM-5.2 are called through OpenRouter. The underlying engine and hardware are not disclosed."
+  },
+  "[\"[[O0]]论文[[C0]] · [[O1]]代码[[C1]]\",[[\"a\",null],[\"a\",null]]]": {
+    "en": "[[O0]]Paper[[C0]] · [[O1]]Code[[C1]]"
+  },
+  "[\"[[O0]]主张与研究方法：[[C0]] 常规请求接口看到的是各自完整的 prompt，应用内部“谁产生这段内容、谁接下来消费”的关系容易丢失。Parrot 用 [[O1]]Semantic Variable（语义变量）[[C1]] 显式标记 prompt 里的输入和输出槽位。变量的值可以是自然语言或代码，生产者与消费者通过同一变量建立依赖。\",[[\"strong\",null],[\"strong\",null]]]": {
+    "en": "[[O0]]Claims and research methods:[[C0]] The conventional request interface sees each complete prompt individually, so the application's internal relationships of \"who produces this content and who consumes it next\" are easily lost. Parrot uses [[O1]]Semantic Variable[[C1]] to explicitly mark input and output slots in a prompt. A variable's value can be natural language or code, and producers and consumers establish dependencies through the same variable."
+  },
+  "[\"[[O0]]主张与研究方法：[[C0]] 一个工作流经常沿相似的角色顺序执行。CacheScout 在线统计 Agent 调用转移，估计哪些角色很快会被调用，把这个信号用于固定角色前缀的驱逐与提前准备。固定前缀包括系统提示、工具说明和示例。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Claims and research methods:[[C0]] A workflow often executes along a similar sequence of roles. CacheScout collects online statistics of Agent call transitions, estimates which roles will be called soon, and uses this signal to evict and prefetch fixed role prefixes. Fixed prefixes include system prompts, tool descriptions, and examples."
+  },
+  "[\"[[O0]]主要结论：[[C0]] 角色执行顺序能为缓存调度提供复用信号，提前准备也需要与前台请求竞争资源。论文关注固定前缀服务效率。问答、对话、搜索和编码场景的实验主要比较 TTFT、每轮延迟、吞吐和缓存命中。harness 与引擎的具体版本暂列未核实。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Main findings:[[C0]] The execution order of roles can provide reuse signals for cache scheduling, and prefetching must also compete with foreground requests for resources. The paper focuses on fixed-prefix serving efficiency. Experiments in Q&amp;A, dialogue, search, and coding scenarios mainly compare TTFT, per-turn latency, throughput, and cache hit rate. The exact harness and engine versions remain unverified."
+  },
+  "[\"[[O0]]主张与研究方法：[[C0]] 并行 worker 节省的执行时间，需要覆盖重新探索上下文和最终对齐产物的开销。SquidAgent 在规划时同时生成子任务依赖图、各任务预计输出 token 数和每层预计协调 token 数。依赖图按拓扑层分组，同层任务满足依赖后可以并行。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Claims and research methods:[[C0]] The execution time saved by parallel workers must exceed the overhead of re-exploring context and aligning outputs at the end. SquidAgent generates a subtask dependency graph, estimated output tokens for each task, and estimated coordination tokens for each layer while planning. The dependency graph is grouped by topological layer, and tasks in the same layer can run in parallel once their dependencies are met."
+  },
+  "[\"[[O0]]提前统一约定。[[C0]] 启动并行层前，负责人写出命名、接口、格式及跨文件引用规则，降低产物完成后的对齐开销。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Agree on conventions in advance.[[C0]] Before starting a parallel layer, the lead writes out naming, interface, format, and cross-file reference rules to reduce alignment overhead after artifacts are complete."
+  },
+  "[\"[[O0]]逐层决定串并行。[[C0]] 设任务预计输出长度为 [[A1]]，协调开销为 [[A2]]，调度器比较 [[A3]] 与 [[A4]]。只有前者与后者的比值超过阈值才并行，否则由负责人串行完成。这个最大值估计的是并行关键路径，不是所有 worker 的总 token 消耗。\",[[\"strong\",null],[\"span\",\"τi\\\\tau_iτi​\",\"\"],[\"span\",\"C^\\\\widehat CC\",\"\"],[\"span\",\"∑iτi\\\\sum_i\\\\tau_i∑i​τi​\",\"\"],[\"span\",\"max⁡iτi+C^\\\\max_i\\\\tau_i+\\\\widehat Cmaxi​τi​+C\",\"\"]]]": {
+    "en": "[[O0]]Decide serial or parallel layer by layer.[[C0]] Let [[A1]] be the expected output length of a task and [[A2]] the coordination cost; the scheduler compares [[A3]] with [[A4]]. It runs the layer in parallel only when the ratio of the former to the latter exceeds the threshold; otherwise the lead completes it serially. The maximum estimates the parallel critical path, not the total token consumption of all workers."
+  },
+  "[\"[[O0]]主要结论：[[C0]] 在九个自建编码、技术写作和规划任务上，作者报告相较 Claude Code 的平均墙钟加速约为 2.6 倍，交付词数／秒提高约为 2.2 倍。该吞吐定义同时受产物长度和完成时间影响，质量另由 Claude Opus 4.6 对任务条目评分。实验执行模型为 Claude Sonnet 4.6。生成长度对模型生成主导的任务有预测价值，工具执行、外部 API 和服务排队还需要单独计时。当前评测以自建产物任务为主。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Main findings:[[C0]] On nine in-house coding, technical writing, and planning tasks, the authors report an average wall-clock speedup of about 2.6x over Claude Code, with delivered words per second increasing by about 2.2x. This throughput definition depends on both artifact length and completion time, while quality is rated separately by Claude Opus 4.6 for each task entry. The execution model is Claude Sonnet 4.6. Generation length is predictive for model-generation-dominated tasks, while tool execution, external API calls, and service queuing still require separate timing. The current evaluation focuses mainly on in-house artifact tasks."
+  },
+  "[\"[[O0]]论文[[C0]] · [[O1]]会议[[C1]] · [[O2]]代码[[C2]]\",[[\"a\",null],[\"a\",null],[\"a\",null]]]": {
+    "en": "[[O0]]Paper[[C0]] · [[O1]]Conference[[C1]] · [[O2]]Code[[C2]]"
+  },
+  "[\"[[O0]]主张与研究方法：[[C0]] 多个角色共享一个基础模型，并用各自的 LoRA 适配器专门化后，对相同历史仍会产生不同 KV。LoRA 用两个小矩阵 [[A1]] 表示权重更新，投影为 [[A2]]。LRAgent 利用基础投影高度相似的观察，把缓存拆成可共享部分和适配器相关部分。\",[[\"strong\",null],[\"span\",\"Ai,BiA_i,B_iAi​,Bi​\",\"\"],[\"span\",\"XiW0+(XiAi)BiX_iW_0+(X_iA_i)B_iXi​W0​+(Xi​Ai​)Bi​\",\"\"]]]": {
+    "en": "[[O0]]Claims and research methods:[[C0]] When multiple roles share one base model and are specialized with their own LoRA adapters, they still produce different KV for the same history. LoRA represents a weight update with two small matrices [[A1]], giving the projection [[A2]]. LRAgent exploits the observation that base projections are highly similar, splitting the cache into a shareable part and adapter-specific parts."
+  },
+  "[\"[[O0]]Flash-LoRA-Attention。[[C0]] 设注意力权重为 [[A1]]，低秩 value 为 [[A2]]，通过 [[A3]] 改变运算顺序。先在低秩空间做加权求和，再升维，避免为全部历史 token 展开完整角色 value 缓存。\",[[\"strong\",null],[\"span\",\"PPP\",\"\"],[\"span\",\"VlrV_{lr}Vlr​\",\"\"],[\"span\",\"P(Vbase+VlrBi)=PVbase+(PVlr)BiP(V_{base}+V_{lr}B_i)=PV_{base}+(PV_{lr})B_iP(Vbase​+Vlr​Bi​)=PVbase​+(PVlr​)Bi​\",\"\"]]]": {
+    "en": "[[O0]]Flash-LoRA-Attention.[[C0]] Let [[A1]] be the attention weights and [[A2]] the low-rank value; [[A3]] changes the computation order. It first performs a weighted sum in the low-rank space and then upscales, avoiding the need to expand full role-specific value caches for all historical tokens."
+  },
+  "[\"对应《深入理解计算机系统》§6.4–6.6。本讲把上一讲的局部性落实到两个问题：[[O0]]地址怎样映射到 Cache，程序的访问顺序怎样改变命中率。[[C0]]\",[[\"strong\",null]]]": {
+    "en": "Corresponding to \"Computer Systems: A Programmer's Perspective\" §6.4–6.6. This lecture applies the concept of locality from the previous lecture to two issues: [[O0]]how addresses map to the cache, and how the program's access order changes hit rates.[[C0]]"
+  },
+  "[\"分块例子换用每行 8 个 double 的模型。未分块的 ijk 每个输出元素重扫一行 A 和一列 B，约 [[A0]] 次输入 miss，合计 [[A1]]。若输入和输出各有一个 [[A2]] 子块能一起放进 Cache，同一对输入子块装入后可反复用。一个输出子块需 [[A3]] 对输入，每对约 [[A4]] 次 miss。总计：\",[[\"span\",\"n/8+nn/8+nn/8+n\",\"\"],[\"span\",\"9n3/89n^3/89n3/8\",\"\"],[\"span\",\"B×BB\\\\times BB×B\",\"\"],[\"span\",\"n/Bn/Bn/B\",\"\"],[\"span\",\"2B2/82B^2/82B2/8\",\"\"]]]": {
+    "en": "The blocking example uses a model with 8 doubles per line. In the unblocked ijk version, each output element rescans a row of A and a column of B, causing about [[A0]] input misses and [[A1]] in total. If an input sub-block and an output sub-block of [[A2]] fit in the cache together, the same pair of input sub-blocks can be reused after loading. One output sub-block needs [[A3]] pairs of inputs, each pair causing about [[A4]] misses. In total:"
+  },
+  "[\"逐条写出读、写地址，拆成块号、组号和 tag，再更新该组状态。遇到写分配，写 miss 也会装入新块。矩阵转置时，dst[j][i] 的命中结果填在目标矩阵的第 [[A0]] 行、第 [[A1]] 列。计算性能时还要分清「每次迭代的 miss 数」和「每次访存的 miss 比例」。\",[[\"span\",\"jjj\",\"\"],[\"span\",\"iii\",\"\"]]]": {
+    "en": "Write out the read and write addresses one by one, break them into block number, set number, and tag, then update the state of that set. With write-allocate, a write miss also loads a new block. During matrix transposition, the hit result for dst[j][i] is entered in row [[A0]] and column [[A1]] of the destination matrix. When calculating performance, also distinguish \"misses per iteration\" from \"miss rate per memory access.\""
+  },
+  "[\"内层循环的 [[A0]] 与内层下标无关，提前计算行首\",[[\"span\",\"nin ini\",\"\"]]]": {
+    "en": "The [[A0]] of the inner loop is independent of the inner index, so precompute the start of the row."
+  },
+  "[\"对不同长度测量，直线斜率是 CPE。现代超标量核可同时调度多个操作。[[O0]]延迟[[C0]]是一次操作到结果可用的周期数。[[O1]]发射间隔[[C1]]是一个部件能隔多久接受下一次独立操作。延迟为 3、发射间隔为 1 的流水化乘法器，可以连续三个周期启动三个独立乘法。若每次都依赖上一个结果，仍要每隔 3 周期才能开始下一次。\",[[\"strong\",null],[\"strong\",null]]]": {
+    "en": "For measurements at different lengths, the slope of the line is CPE. Modern superscalar cores can schedule multiple operations at once. [[O0]]Latency[[C0]] is the number of cycles from an operation to a usable result. [[O1]]Issue interval[[C1]] is how soon a unit can accept the next independent operation. A pipelined multiplier with latency 3 and issue interval 1 can start three independent multiplications in three consecutive cycles. If each operation depends on the previous result, it can still start the next only every 3 cycles."
+  },
+  "[\"[[O0]]符号解析[[C0]]。让每个外部引用找到对应定义。例如 main.o 里调用 sum，定义可以在 sum.o。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Symbol resolution[[C0]]. Let each external reference find its corresponding definition. For example, a call to sum in main.o can have its definition in sum.o."
+  },
+  "[\"[[O0]]重定位[[C0]]。给合并后的代码、数据和符号安排地址，按重定位条目修补引用的字节。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Relocation[[C0]]. Assign addresses to the merged code, data, and symbols, then patch the referenced bytes according to relocation entries."
+  },
+  "[\"[[O0]]论文[[C0]] · [[O1]]代码[[C1]] · [[O2]]数据[[C2]]\",[[\"a\",null],[\"a\",null],[\"a\",null]]]": {
+    "en": "[[O0]]Paper[[C0]] · [[O1]]Code[[C1]] · [[O2]]Data[[C2]]"
+  },
+  "[\"[[O0]]研究启发：[[C0]] 值得讨论的是哪些工具信号足以覆盖真实 KV 恢复预算、缺失时如何回退。进度通道与保留策略已有具体工作覆盖，新题需要进一步定位到未解决的工具类型、负载或接口问题。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Research implications:[[C0]] It is worth discussing which tool signals are sufficient to cover the real KV recovery budget and how to fall back when they are missing. Progress channels and retention strategies are already covered by specific work, so new questions need to target unresolved tool types, workloads, or interface problems."
+  },
+  "[\"[[O0]]官方发布[[C0]] · [[O1]]技术报告[[C1]] · [[O2]]开源代码[[C2]]\",[[\"a\",null],[\"a\",null],[\"a\",null]]]": {
+    "en": "[[O0]]Official release[[C0]] · [[O1]]Technical report[[C1]] · [[O2]]Open-source code[[C2]]"
+  },
+  "[\"[[O0]]主张与研究方法：[[C0]] 第三方网关可能把请求发给不同模型，API 返回的模型名由服务端声明。FlashProve 让客户端核查一个具体的计算命题。给定请求的 token、指定模型和解码规则，回复中被检查的位置是否符合该模型的计算结果？\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Claims and research methods:[[C0]] Third-party gateways may send requests to different models, and the model name returned by the API is declared by the server. FlashProve lets the client verify a specific computational proposition: given the request tokens, the specified model, and the decoding rules, do the inspected positions in the reply match that model's computation?"
+  },
+  "[\"[[O0]]锁定模型。[[C0]] 发布方用密码学承诺绑定权重与配置，客户端从独立可信渠道获取承诺 ID。服务商无需公开私有权重。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Lock the model.[[C0]] The publisher binds weights and configuration with a cryptographic commitment, and the client obtains the commitment ID through an independent trusted channel. The service provider does not need to disclose private weights."
+  },
+  "[\"[[O0]]生成证明。[[C0]] 证明器把推理写成可以检查的数学约束，包括矩阵运算、MoE 专家选择和输出比较。严格匹配时，需要证明被检查的 token 在对应前缀下取得模型最高分。zkSNARK（简洁零知识证明）把这些约束的检查压缩成一份证明，协议设计以隐藏权重与内部计算为目标。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Generating a proof.[[C0]] The prover expresses inference as verifiable mathematical constraints, including matrix operations, MoE expert selection, and output comparisons. Strict matching requires proving that the checked token has the highest model score for its prefix. A zkSNARK (succinct zero-knowledge proof) compresses verification of these constraints into a proof; the protocol aims to hide the weights and internal computation."
+  },
+  "[\"[[O0]]客户端验收。[[C0]] CPU 验证器用承诺、请求 token、回复、验收规则及证明文件检查结果。客户端还要确认 tokenizer、覆盖区间与回复结束位置。仓库的严格匹配结果是 [[A1]]。允许与最高分存在差距的策略返回 [[A2]]，表示输出满足设定的分数限制。\",[[\"strong\",null],[\"code\",\"YES\",\"\"],[\"code\",\"WITHIN LIMITS\",\"\"]]]": {
+    "en": "[[O0]]Client verification.[[C0]] The CPU verifier checks the result using the commitment, request tokens, reply, acceptance rules, and proof file. The client also confirms the tokenizer, coverage intervals, and reply end position. The repository's strict-match result is [[A1]]. Strategies that allow a gap from the highest score return [[A2]], indicating that the output meets the specified score limit."
+  },
+  "[\"[[O0]]为什么采用事后验证。[[C0]] 生成时后一个 token 依赖前一个。事后已经知道完整序列，证明器可以像 prefill 一样并行算各位置的表示，并按因果掩码检查指定位置。多条请求可成批分摊权重承诺的检查开销。MoE 每个 token 只运行少数专家，证明器也围绕实际参与计算的专家组织工作。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Why post-hoc verification.[[C0]] Each generated token depends on the previous one. After generation, the full sequence is known, so the prover can compute representations for all positions in parallel, as in prefill, and check specified positions with a causal mask. Multiple requests can share the cost of checking weight commitments in batches. For MoE, each token runs only a few experts, so the prover organizes work around the experts actually involved."
+  },
+  "[\"[[O0]]普通版日常循环[[C0]]：接入旅行、背包与餐桌、商店、家具、花圃、庭院旅友、日历及活动奖励等流程；后续持续修正状态同步与结算时机。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Normal Edition daily loop[[C0]]: covers travel, backpack and dining table, shop, furniture, flower bed, courtyard visitors, calendar, and event rewards; subsequent work continued to refine state synchronization and settlement timing."
+  },
+  "[\"[[O0]]预取或提前准备：[[C0]] 后台有空闲资源时，为可能即将执行的角色准备 KV，减少它真正到达后的 Prefill 工作。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Prefetching:[[C0]] When background resources are idle, prepare KV for roles that may run soon, reducing the Prefill work once they actually arrive."
+  },
+  "[\"[[O0]]主张与研究方法：[[C0]] PoS 将“发生过什么”的历史，转成“现在认为世界是什么样、还有什么没完成”的显式 belief state（当前判断状态）。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Claims and research methods:[[C0]] PoS converts the history of \"what has happened\" into an explicit belief state of \"what the world is currently believed to be like and what remains unfinished\" (current judgment state)."
+  },
+  "[\"[[O0]]只优化执行部分。[[C0]] 提示词、工具观察和摘要生成 token 不进入该执行策略目标；已生成的摘要作为条件输入保留。搜索与摘要可以共享模型，但不代表摘要 token 也被这个目标直接训练。\",[[\"strong\",null]]]": {
+    "en": "[[O0]]Only the execution part is optimized.[[C0]] Prompts, tool observations, and summary-generation tokens do not enter this execution-policy objective; the already generated summary is retained as a conditional input. Search and summary generation may share a model, but that does not mean summary tokens are directly trained by this objective."
   }
 }

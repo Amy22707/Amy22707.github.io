@@ -1,8 +1,8 @@
 ---
 title: FocusBloom
 publishedAt: 2026-10-09
-updatedAt: 2026-11-06
-description: A Windows focus and study planner with customizable app restrictions, task and planning lists, and offline focus history.
+updatedAt: 2026-11-07
+description: A focus and study planner for Windows and macOS, with customizable app restrictions, task and planning lists, and offline focus history.
 repository: https://github.com/Amy22707/FocusBloom
 demo: https://amy22707.github.io/amy-studio/focusbloom/
 kind: project

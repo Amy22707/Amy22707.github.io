@@ -3,7 +3,7 @@
 The language selector has three modes:
 
 - **默认 / Default** restores the original website: mostly English interfaces and Chinese posts.
-- **全中文** switches interface and introduction text to Chinese.
+- **中文** switches interface and introduction text to Chinese.
 - **English** switches Chinese article text and game introductions to English.
 
 The choice is saved locally under `amy.site-language`. The personal website, Studio, and the game introduction share it when hosted on the same `amy22707.github.io` origin. Previews on different ports do not share browser storage.
@@ -127,4 +127,15 @@ Normal builds and GitHub Actions use the committed static dictionaries and never
 
 ## Travel Frog availability
 
-The introduction page is `/studio/travel-frog/` in the personal-site repository. The Studio card is configured in Studio's `site/data/studio.json`. Download and play URLs are deliberately empty while testing is pending. Language changes do not publish private game packages, enable gameplay, or translate the game client itself.
+The introduction page is `/studio/travel-frog/` in the personal-site repository. The Studio card is configured in Studio's `site/data/studio.json`; play and download URLs now point to the published web entry and releases. Translation maintenance must retain those URLs and never change software packages or translate the game client itself.
+
+Published dictionaries may contain source-language fallbacks, including Chinese
+text with only its punctuation changed. These are pending translations, not
+reviewed English; they must not mask a newly generated translation. Preserve
+existing meaningful translations and manual overrides when refreshing assets.
+
+Sentence generation follows the same rule: current manual overrides take priority,
+then valid entries in the exact page/context catalog, then local draft caches.
+Missing caches must not erase committed translations. `npm.cmd run test:i18n`
+checks this precedence and the four reviewed contexts that previously missed their
+overrides, in addition to placeholder and fallback behavior.

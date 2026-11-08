@@ -1,6 +1,8 @@
 // Only normalize English translations of explicit Chinese terms, never original
 // English paper titles, identifiers, code, or numerical ranges such as long long.
 export const isAddress = value => /^(https?:\/\/|[\w.+-]+@[\w-]+(?:\.[\w-]+)+$)/i.test(value);
+export const isSourceFallback = (source, translated) => /[\u3400-\u9fff]/.test(source) && typeof translated === 'string' && source.replace(/[\p{P}\p{Z}\s]/gu, '') === translated.replace(/[\p{P}\p{Z}\s]/gu, '');
+export const hasUntranslatedEnglish = (source, values) => /[\u3400-\u9fff]/.test(source) && values.some(value => typeof value !== 'string' || !value.trim() || isSourceFallback(source, value));
 const normalizePunctuation = value => value
   .replace(/[\u2018\u2019]/g, "'")
   .replace(/[\u201c\u201d]/g, '"')

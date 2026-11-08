@@ -1,8 +1,8 @@
 ---
 title: "Travel Frog: A Journey to China — Local Reverse-Engineered Edition"
 publishedAt: 2026-10-23
-updatedAt: 2026-11-06
-description: "An unofficial offline edition of Travel Frog: A Journey to China for Windows, Android, and the web, with separate Normal and Gallery saves."
+updatedAt: 2026-11-08
+description: "An unofficial offline edition of Travel Frog: A Journey to China for Windows, macOS, Android, and the web, with separate Normal and Gallery saves."
 repository: https://github.com/Amy22707/Travel-Frog
 kind: project
 technologies:

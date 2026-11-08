@@ -8,7 +8,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test:i18n": "node --test tests/i18n-inline.test.mjs",
+    "test:i18n": "node --test tests/i18n-inline.test.mjs tests/i18n-fallback.test.mjs tests/i18n-block-catalog.test.mjs tests/i18n-review-targets.test.mjs",
     "preview:i18n": "node scripts/preview-i18n.mjs",
     "studio:check": "node scripts/sync-studio.mjs --check",
     "setup:studio-sync": "node scripts/install-studio-sync.mjs",
