@@ -1546,7 +1546,7 @@ for i in range(2,n+1):
 print(dp[n])
 ```
 ## [宠物小精灵之收服](http://cs101.openjudge.cn/practice/04102/)
-二位费用01背包。
+二维费用01背包。
 ```python
 n,m,k=map(int,input().split())
 w=[]

@@ -293,7 +293,7 @@ int main(){
 # 2026.2.11
 ## [最小覆盖子串](https://leetcode.cn/problems/minimum-window-substring/description/?envType=study-plan-v2&envId=top-100-liked)
 滑动窗口。遍历右端点，每次在符合要求的情况下缩左端点。
-1.遍历哈希表：for(const auto &p : ori)，p.first,p.secnd
+1.遍历哈希表：for(const auto &p : ori)，p.first,p.second
 2.调用函数时，使用值传递会创建一次副本，占用多余内存空间，可使用引用传递（const)。
 3.s.substr(l,len)，多次调用会导致超内存。
 ```cpp

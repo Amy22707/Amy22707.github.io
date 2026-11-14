@@ -2202,7 +2202,7 @@ int main()
 ```
 # 2026.4.17
 ## [我自己的 ostream_iterator](http://cxsjsx.openjudge.cn/hw202609/F/)
-1.*x=*s:重载=和*，接收到之后就打印。
+1.\*x=\*s:重载=和\*，接收到之后就打印。
 2.重载前置++，返回对象本身即可。（std::ostream（输出流）本身就具有“自动推进”的属性。）
 ```cpp
 #include <iostream>

@@ -26,6 +26,21 @@ const normalizePunctuation = value => value
   .replace(/\(\s+/g, '(')
   .replace(/\s{2,}/g, ' ')
   .trim();
+export function normalizeBoldPadding(text) {
+  if (typeof text !== 'string') return text;
+  let result = text.replace(/\[\[O(\d+)\]\]([ \t]+)/g, (match, id, spaces, offset, whole) => {
+    const before = whole[offset - 1] ?? '';
+    const needSpace = before && !/[\s([{"'“‘—–/-]/.test(before);
+    return (needSpace ? ' ' : '') + `[[O${id}]]`;
+  });
+  result = result.replace(/([ \t]+)\[\[C(\d+)\]\]/g, (match, spaces, id, offset, whole) => {
+    const after = whole[offset + match.length] ?? '';
+    const needSpace = after && !/[\s)\]}"'”’,.;:!?—–/-]/.test(after);
+    return `[[C${id}]]` + (needSpace ? ' ' : '');
+  });
+  return result;
+}
+
 export function normalizeTerms(source, english) {
   if (typeof english !== 'string') return english;
   english = normalizePunctuation(english);

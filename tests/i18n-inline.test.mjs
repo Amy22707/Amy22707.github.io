@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { parseFragment } from 'parse5';
 import { describeRun, inlineRuns, parseTemplate } from '../public/i18n/inline-blocks.mjs';
-import { normalizeTerms, isAddress } from '../scripts/i18n-terms.mjs';
+import { normalizeTerms, normalizeBoldPadding, isAddress } from '../scripts/i18n-terms.mjs';
 const adapter = {
   tag: node => node.tagName || '', children: node => node.childNodes || [], isText: node => node.nodeName === '#text',
   text(node) { return node.nodeName === '#text' ? node.value : (node.childNodes || []).map(child => this.text(child)).join(''); },
@@ -42,6 +42,11 @@ test('translated angle brackets are plain text, not executable markup', () => {
 test('nested lists and fenced code split runs rather than being reparented', () => {
   const parent = parseFragment('<li>前缀 <code>x</code><ul><li>子项</li></ul>后缀</li>').childNodes[0];
   assert.equal(inlineRuns(parent, adapter).length, 2);
+});
+test('bold markers do not absorb surrounding spaces', () => {
+  assert.equal(normalizeBoldPadding('a [[O0]] bold [[C0]]b'), 'a [[O0]]bold[[C0]] b');
+  assert.equal(normalizeBoldPadding('the [[O0]] term [[C0]].'), 'the [[O0]]term[[C0]].');
+  assert.equal(normalizeBoldPadding('keep[[O1]] tight[[C1]]'), 'keep [[O1]]tight[[C1]]');
 });
 test('scoped technical terminology is normalized without changing source facts', () => {
   assert.equal(normalizeTerms('长程 Agent 与显存、缓存抖动', 'Long-range agents, VRAM, and cache jitter'), 'Long-horizon agents, GPU memory, and cache thrashing');

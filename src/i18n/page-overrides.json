@@ -461,36 +461,96 @@
     }
   },
   "blog/travel-frog/index.html": {
-    "Stage40.本地体验修正与旅行循环复核": {"en":"Stage 40. Local Gameplay Fixes and Travel-Cycle Verification"},
-    "屋顶照片的花枝与投影": {"en":"Branches and Shadows in Rooftop Photos"},
-    "日历入口与红点同步": {"en":"Synchronizing the Calendar Entry and Notification Dot"},
-    "肥料消耗与缓释肥": {"en":"Fertilizer Consumption and Slow-Release Fertilizer"},
-    "花瓶中的花苞、盛开与枯萎": {"en":"Buds, Blooms, and Wilting in the Vase"},
-    "图鉴版的花费任务与旅行返程": {"en":"Spending Tasks and Travel Returns in the Gallery Edition"},
-    "这一轮从实际游玩中遇到的照片、日历、花圃和花瓶问题继续修正。普通版与图鉴版共用同一套服务逻辑，修改先保存在本地，等下一次发布时再统一打包。": {"en":"This round continues fixing photo, calendar, flower-bed, and vase issues encountered during actual play. The Normal and Gallery Editions share the same server logic. The changes remain local and will be packaged together in the next release."},
-    "使用的花枝宽427，而明信片画布宽500。此前没有对应位置数据，树枝回退到左上角，右侧就留下了明显空隙；树枝的投影也出现在天空中。": {"en":"uses a 427-pixel-wide branch asset, while the postcard canvas is 500 pixels wide. Without position data, the branch defaulted to the upper-left corner, leaving an obvious gap on the right; its shadow also appeared in the sky."},
-    "现在按素材尺寸将花枝右移73像素，使它贴住画面右边缘。投影放回右侧瓦面。新生成的照片与相册详情共用这组位置，读取旧照片时校正返回的图层，保留原始存档内容。这组位置来自画布边界和素材形状的本地校准。": {"en":"The branch is now shifted 73 pixels to the right, based on the asset dimensions, so it meets the right edge of the canvas. Its shadow is placed back on the roof tiles on the right. Newly generated photos and album detail views use these positions. When loading older photos, the returned layers are corrected without changing the original save data. These positions are a local calibration based on the canvas boundaries and asset shapes."},
-    "特产选择页中的苹果、椰子等图标也对照了原始图集。原始裁切尺寸分别为187×189和208×206，缩小到物品格后会呈现相应的边缘和纹理，没有发现错图或额外降质的取图路径，因此保留原素材。": {"en":"The apple, coconut, and other icons on the souvenir selection page were also checked against the original texture atlas. The original crop sizes are 187x189 and 208x206, respectively; scaling them down to item slots produces the corresponding edges and textures. No incorrect images or additional quality loss in the image-loading path were found, so the original assets were retained."},
-    "日历的奖励判断、庭院入口和红点现在使用相同的可领取条件。当月已经到日期、尚未领取的幸运日礼物可以触发提示；节气料理仍需要完成对应任务。": {"en":"Calendar reward checks, the courtyard entry, and its notification dot now use the same eligibility conditions. Lucky-day gifts in the current month whose dates have arrived but that have not yet been claimed can trigger a notification; solar-term dishes still require completing their respective tasks."},
-    "除了加载日历时刷新，还在庭院界面创建、同步完成、网页回到前台及每分钟检查时更新。这样跨过日期或重新进入庭院后，不会只在日历内部看得到奖励，首页却没有入口。奖励领完后，庭院入口和红点一同消失，小仓库仍保留日历。": {"en":"Updates now occur not only when loading the calendar, but also when creating the courtyard view, after synchronization, when the web page returns to the foreground, and during the check each minute. After a date change or re-entering the courtyard, a reward should no longer appear only inside the calendar while its entry is missing from the home screen. Once all rewards have been claimed, the courtyard entry and notification dot disappear together; the calendar remains accessible in the small storehouse."},
-    "此前所有放入堆肥箱的物品都按两小时完成吸收，缓释肥虽然有较长的后续肥效，物品本身却同样很快消失。现在将吸收时长和肥效持续时间分别处理。": {"en":"Previously, all items placed in the compost bin finished being absorbed after two hours. Slow-release fertilizer had a longer subsequent effect, but the item itself disappeared just as quickly. Absorption time and the duration of the fertilizer effect are now handled separately."},
-    "当前离线时长设置为普通肥料一天、缓释肥三天、普通特产半天。新放入后的五分钟取回窗口保留，开始发酵后按队列依次吸收。普通肥料和缓释肥的后续肥效仍分别按一天、三天处理，已吸收材料的肥力继续累积到土地上。物品说明能确认缓释肥更慢、更持久，具体小时数属于可调整的本地规则。": {"en":"The current offline settings give regular fertilizer one day to be absorbed, slow-release fertilizer three days, and ordinary souvenirs half a day. The five-minute retrieval window after placing an item is retained; once fermentation begins, items are absorbed sequentially from the queue. The subsequent effects of regular and slow-release fertilizer still last one day and three days, respectively, and fertility from absorbed materials continues to accumulate in the soil. Item descriptions establish that slow-release fertilizer acts more slowly and lasts longer; the specific durations are adjustable local rules."},
-    "蜡梅的两张原始贴图是花苞和开花，不能统一解释为新鲜与枯萎。这次按花材种类拆开生命周期。": {"en":"The two original wintersweet textures depict buds and blooms, so they cannot both be interpreted as fresh and wilted stages. The life cycle is now handled separately for each type of flower."},
-    "花材": {"en":"Flowers and Grasses"},
-    "当前本地阶段": {"en":"Current Local Stages"},
-    "总保留时间": {"en":"Total Time Retained"},
-    "蜡梅、木槿等七种礼物花材": {"en":"Seven types of gift flowers, including wintersweet and hibiscus"},
-    "两天花苞，五天开花": {"en":"Two days in bud, five days in bloom"},
-    "七天": {"en":"Seven days"},
-    "狗尾草等小型野花野草": {"en":"Small wildflowers and grasses, including foxtail grass"},
-    "三天新鲜，两天第二阶段贴图": {"en":"Three days fresh, two days using the second-stage texture"},
-    "五天": {"en":"Five days"},
-    "花圃培育的花材": {"en":"Flowers grown in the flower bed"},
-    "五天新鲜，两天枯萎": {"en":"Five days fresh, two days wilted"},
-    "阶段切换沿用原本的贴图和客户端状态。时间以插花时记录的时间戳计算，重进不会重置；到期清理只发生一次。精确的官服时长未从保存资源中找到，这里按游玩反馈设置本地时长。已经清除且缺少原始记录的花材，需要重新插入后观察。": {"en":"Stage changes retain the original textures and client states. Timing is calculated from the timestamp recorded when the flowers were arranged and is not reset on re-entry; expiry cleanup happens only once. The precise official-server durations were not found in the preserved resources, so these local durations are based on play feedback. Flowers that have already been cleared and lack their original records need to be arranged again before their behavior can be observed."},
-    "图鉴版购买后保持9999三叶草，不能用余额下降来判断是否花过草。现在成功购买普通商店或嘟嘟的商品时，按实际标价推进扭蛋机的“花点三叶草”任务。被拦截、退款或免费操作不增加花费进度。": {"en":"The Gallery Edition keeps 9999 clover after purchases, so a falling balance cannot be used to determine whether clover was spent. A successful purchase from the regular shop or Dudu's shop now advances the gashapon machine's \"Spend Some Clover\" task by the actual listed price. Blocked, refunded, or free operations do not add spending progress."},
-    "另外使用隔离的图鉴版存档验证了完整旅行流程。": {"en":"The complete travel flow was also verified using an isolated Gallery Edition save."},
-    "花瓶阶段、不同肥料的吸收时长、图鉴版购买任务、旧照片图层读取和旅行返程的五组回归测试通过。日历还单独验证了跨日补领、庭院重新同步和奖励领完后的隐藏状态。测试使用专用数据，修改保留在本地待下一次发布。": {"en":"Five groups of regression tests passed: vase stages, absorption times for different fertilizers, Gallery Edition purchase tasks, loading older photo layers, and travel returns. Separate calendar checks covered claiming overdue rewards after a date change, courtyard resynchronization, and hiding the entry after all rewards are claimed. Testing used dedicated data; the changes remain local for the next release."},
+    "Stage40.本地体验修正与旅行循环复核": {
+      "en": "Stage 40. Local Gameplay Fixes and Travel-Cycle Verification"
+    },
+    "屋顶照片的花枝与投影": {
+      "en": "Branches and Shadows in Rooftop Photos"
+    },
+    "日历入口与红点同步": {
+      "en": "Synchronizing the Calendar Entry and Notification Dot"
+    },
+    "肥料消耗与缓释肥": {
+      "en": "Fertilizer Consumption and Slow-Release Fertilizer"
+    },
+    "花瓶中的花苞、盛开与枯萎": {
+      "en": "Buds, Blooms, and Wilting in the Vase"
+    },
+    "图鉴版的花费任务与旅行返程": {
+      "en": "Spending Tasks and Travel Returns in the Gallery Edition"
+    },
+    "这一轮从实际游玩中遇到的照片、日历、花圃和花瓶问题继续修正。普通版与图鉴版共用同一套服务逻辑，修改先保存在本地，等下一次发布时再统一打包。": {
+      "en": "This round continues fixing photo, calendar, flower-bed, and vase issues encountered during actual play. The Normal and Gallery Editions share the same server logic. The changes remain local and will be packaged together in the next release."
+    },
+    "使用的花枝宽427，而明信片画布宽500。此前没有对应位置数据，树枝回退到左上角，右侧就留下了明显空隙；树枝的投影也出现在天空中。": {
+      "en": "uses a 427-pixel-wide branch asset, while the postcard canvas is 500 pixels wide. Without position data, the branch defaulted to the upper-left corner, leaving an obvious gap on the right; its shadow also appeared in the sky."
+    },
+    "现在按素材尺寸将花枝右移73像素，使它贴住画面右边缘。投影放回右侧瓦面。新生成的照片与相册详情共用这组位置，读取旧照片时校正返回的图层，保留原始存档内容。这组位置来自画布边界和素材形状的本地校准。": {
+      "en": "The branch is now shifted 73 pixels to the right, based on the asset dimensions, so it meets the right edge of the canvas. Its shadow is placed back on the roof tiles on the right. Newly generated photos and album detail views use these positions. When loading older photos, the returned layers are corrected without changing the original save data. These positions are a local calibration based on the canvas boundaries and asset shapes."
+    },
+    "特产选择页中的苹果、椰子等图标也对照了原始图集。原始裁切尺寸分别为187×189和208×206，缩小到物品格后会呈现相应的边缘和纹理，没有发现错图或额外降质的取图路径，因此保留原素材。": {
+      "en": "The apple, coconut, and other icons on the souvenir selection page were also checked against the original texture atlas. The original crop sizes are 187x189 and 208x206, respectively; scaling them down to item slots produces the corresponding edges and textures. No incorrect images or additional quality loss in the image-loading path were found, so the original assets were retained."
+    },
+    "日历的奖励判断、庭院入口和红点现在使用相同的可领取条件。当月已经到日期、尚未领取的幸运日礼物可以触发提示；节气料理仍需要完成对应任务。": {
+      "en": "Calendar reward checks, the courtyard entry, and its notification dot now use the same eligibility conditions. Lucky-day gifts in the current month whose dates have arrived but that have not yet been claimed can trigger a notification; solar-term dishes still require completing their respective tasks."
+    },
+    "除了加载日历时刷新，还在庭院界面创建、同步完成、网页回到前台及每分钟检查时更新。这样跨过日期或重新进入庭院后，不会只在日历内部看得到奖励，首页却没有入口。奖励领完后，庭院入口和红点一同消失，小仓库仍保留日历。": {
+      "en": "Updates now occur not only when loading the calendar, but also when creating the courtyard view, after synchronization, when the web page returns to the foreground, and during the check each minute. After a date change or re-entering the courtyard, a reward should no longer appear only inside the calendar while its entry is missing from the home screen. Once all rewards have been claimed, the courtyard entry and notification dot disappear together; the calendar remains accessible in the small storehouse."
+    },
+    "此前所有放入堆肥箱的物品都按两小时完成吸收，缓释肥虽然有较长的后续肥效，物品本身却同样很快消失。现在将吸收时长和肥效持续时间分别处理。": {
+      "en": "Previously, all items placed in the compost bin finished being absorbed after two hours. Slow-release fertilizer had a longer subsequent effect, but the item itself disappeared just as quickly. Absorption time and the duration of the fertilizer effect are now handled separately."
+    },
+    "当前离线时长设置为普通肥料一天、缓释肥三天、普通特产半天。新放入后的五分钟取回窗口保留，开始发酵后按队列依次吸收。普通肥料和缓释肥的后续肥效仍分别按一天、三天处理，已吸收材料的肥力继续累积到土地上。物品说明能确认缓释肥更慢、更持久，具体小时数属于可调整的本地规则。": {
+      "en": "The current offline settings give regular fertilizer one day to be absorbed, slow-release fertilizer three days, and ordinary souvenirs half a day. The five-minute retrieval window after placing an item is retained; once fermentation begins, items are absorbed sequentially from the queue. The subsequent effects of regular and slow-release fertilizer still last one day and three days, respectively, and fertility from absorbed materials continues to accumulate in the soil. Item descriptions establish that slow-release fertilizer acts more slowly and lasts longer; the specific durations are adjustable local rules."
+    },
+    "蜡梅的两张原始贴图是花苞和开花，不能统一解释为新鲜与枯萎。这次按花材种类拆开生命周期。": {
+      "en": "The two original wintersweet textures depict buds and blooms, so they cannot both be interpreted as fresh and wilted stages. The life cycle is now handled separately for each type of flower."
+    },
+    "花材": {
+      "en": "Flowers and Grasses"
+    },
+    "当前本地阶段": {
+      "en": "Current Local Stages"
+    },
+    "总保留时间": {
+      "en": "Total Time Retained"
+    },
+    "蜡梅、木槿等七种礼物花材": {
+      "en": "Seven types of gift flowers, including wintersweet and hibiscus"
+    },
+    "两天花苞，五天开花": {
+      "en": "Two days in bud, five days in bloom"
+    },
+    "七天": {
+      "en": "Seven days"
+    },
+    "狗尾草等小型野花野草": {
+      "en": "Small wildflowers and grasses, including foxtail grass"
+    },
+    "三天新鲜，两天第二阶段贴图": {
+      "en": "Three days fresh, two days using the second-stage texture"
+    },
+    "五天": {
+      "en": "Five days"
+    },
+    "花圃培育的花材": {
+      "en": "Flowers grown in the flower bed"
+    },
+    "五天新鲜，两天枯萎": {
+      "en": "Five days fresh, two days wilted"
+    },
+    "阶段切换沿用原本的贴图和客户端状态。时间以插花时记录的时间戳计算，重进不会重置；到期清理只发生一次。精确的官服时长未从保存资源中找到，这里按游玩反馈设置本地时长。已经清除且缺少原始记录的花材，需要重新插入后观察。": {
+      "en": "Stage changes retain the original textures and client states. Timing is calculated from the timestamp recorded when the flowers were arranged and is not reset on re-entry; expiry cleanup happens only once. The precise official-server durations were not found in the preserved resources, so these local durations are based on play feedback. Flowers that have already been cleared and lack their original records need to be arranged again before their behavior can be observed."
+    },
+    "图鉴版购买后保持9999三叶草，不能用余额下降来判断是否花过草。现在成功购买普通商店或嘟嘟的商品时，按实际标价推进扭蛋机的“花点三叶草”任务。被拦截、退款或免费操作不增加花费进度。": {
+      "en": "The Gallery Edition keeps 9999 clover after purchases, so a falling balance cannot be used to determine whether clover was spent. A successful purchase from the regular shop or Dudu's shop now advances the gashapon machine's \"Spend Some Clover\" task by the actual listed price. Blocked, refunded, or free operations do not add spending progress."
+    },
+    "另外使用隔离的图鉴版存档验证了完整旅行流程。": {
+      "en": "The complete travel flow was also verified using an isolated Gallery Edition save."
+    },
+    "花瓶阶段、不同肥料的吸收时长、图鉴版购买任务、旧照片图层读取和旅行返程的五组回归测试通过。日历还单独验证了跨日补领、庭院重新同步和奖励领完后的隐藏状态。测试使用专用数据，修改保留在本地待下一次发布。": {
+      "en": "Five groups of regression tests passed: vase stages, absorption times for different fertilizers, Gallery Edition purchase tasks, loading older photo layers, and travel returns. Separate calendar checks covered claiming overdue rewards after a date change, courtyard resynchronization, and hiding the entry after all rewards are claimed. Testing used dedicated data; the changes remain local for the next release."
+    },
     "介绍页、下载与正式发布": {
       "en": "Introduction page, downloads, and official release"
     },
@@ -516,7 +576,7 @@
       "en": "Traveling with Frog backfills progress from existing travel, collection, and crafting records. Official-server redemption codes and online little red hearts count as completed in the offline edition; \"Frogs Doing Big Things Together\" can be claimed after confirming the offline return gift, and the reward is granted only once."
     },
     "许愿池保留最初四次机会。商店的许愿家具礼袋可以用 3000 草重复购买，每次补一件尚未收集的地板、餐桌或餐椅。这三件集齐后再次购买会返还当次花费。": {
-      "en": "The wishing pool keeps its original four chances. The stall's wishing-furniture gift bag can be repurchased for 3,000 clover, adding one floor, dining table, or dining chair not yet collected each time. Once all three are collected, buying it again refunds the amount spent."
+      "en": "The wishing pool keeps its original four chances. The stall's wishing-furniture gift bag can be repurchased for 3,000 clovers, adding one floor, dining table, or dining chair not yet collected each time. Once all three are collected, buying it again refunds the amount spent."
     },
     "称号、工具栏的快速滚轮停在列表边界，也可以拖动滑块或按住鼠标中键滚动。游戏加载条只向前播放一次，横屏提示加大字号。照片分享会发放符合条件的离线奖励，保留可保存为 PNG 和关闭的明信片画面。": {
       "en": "Titles and the toolbar's quick wheel stop at the list boundaries; you can also drag the scrollbar or hold the middle mouse button to scroll. The game loading bar plays forward only once, and the landscape-orientation hint uses a larger font. Photo sharing grants qualifying offline rewards and keeps a postcard screen that can be saved as PNG or closed."
@@ -589,6 +649,63 @@
     },
     "3.EAB 配置包与正式规则恢复": {
       "en": "3. EAB configuration packages and official rule restoration"
+    },
+    "Stage41.动态照片首次加载、图鉴花盆与木棉花照片": {
+      "en": "Stage41. Dynamic Photo First Load, Encyclopedia Flower Pots, and Kapok Photos"
+    },
+    "动态照片首次选图后的刷新": {
+      "en": "Refreshing After the First Dynamic Photo Selection"
+    },
+    "图鉴版花盆补齐": {
+      "en": "Adding Missing Flower Pots to the Encyclopedia Edition"
+    },
+    "日历提示的位置": {
+      "en": "Where the Calendar Hint Appears"
+    },
+    "木棉花照片的背景变体": {
+      "en": "Background Variants for Kapok Photos"
+    },
+    "Stage42.返程照片保存与立冬料理补领": {
+      "en": "Stage42. Saving Return Photos and Claiming Missed Start-of-Winter Dishes"
+    },
+    "继续处理实际游玩发现的问题，修改仍保存在本地。": {
+      "en": "Continuing to fix issues found in actual play; the changes are still saved locally."
+    },
+    "照片渲染器在资源尚未到齐时可能先得到空纹理。动态照片的完整状态推送又会替换模型数据，而已经打开的制作页仍引用之前的数据。两条路径现在都补上刷新：等待照片资源加载后再设置纹理，收到完整状态后同步当前动态相册和制作页。": {
+      "en": "The photo renderer may receive an empty texture before the assets have all arrived. A full-state push for dynamic photos also replaces the model data, while an already-open crafting page still references the previous data. Both paths now refresh: set the texture after the photo assets finish loading, and sync the current dynamic album and crafting page after receiving the full state."
+    },
+    "异步加载还加入请求序号。用户快速换照片或关闭界面后，较早返回的加载结果不会覆盖新选择，也不会重新写入已经关闭的图像。材料缩略图与照片显示共用加载完成后的刷新逻辑。": {
+      "en": "Async loading now also carries a request sequence number. If the user switches photos quickly or closes the interface, an earlier load result cannot overwrite the new selection or write back into an image that has been closed. Material thumbnails and photo display share the same refresh logic once loading completes."
+    },
+    "正式花盆配置包含陶瓷花盆23001和迎春花盆23002。此前图鉴版补齐了堆肥箱和挂兜，却漏了花盆。现在创建图鉴存档、加载花盆以及归一化图鉴资源时都会补齐配置中的花盆款式。已有存档继续保留当前选中的款式和两格植物进度，普通版按原收集进度显示。": {
+      "en": "The official flower-pot configuration includes ceramic pot 23001 and winter jasmine pot 23002. An earlier encyclopedia update added the compost bin and hanging pouch but missed the flower pots. Creating an encyclopedia save, loading flower pots, and normalizing encyclopedia assets now all fill in the pot styles from the configuration. Existing saves keep their currently selected style and two-slot plant progress, while the standard edition shows progress based on its original collection."
+    },
+    "小仓库日历按钮的提示改用右上角的圆形红点，避免使用带感叹号的图标资源。红点和庭院入口继续共用是否有奖励可领取的判断。跨日、返回前台和庭院同步时都会刷新。": {
+      "en": "The hint on the small-warehouse calendar button now uses a round red dot in the upper-right corner instead of an icon carrying an exclamation mark. The dot and the courtyard entrance still share the same check for claimable rewards. Both refresh on day change, on returning to the foreground, and on courtyard sync."
+    },
+    "这些改动属于下一次安装包更新的内容，已经安装的v0.2.4仍运行原有代码。": {
+      "en": "These changes belong to the next installer update; an already installed v0.2.4 still runs the original code."
+    },
+    "对照三张截图和原始素材，正确照片使用的木棉背景变体保留了y=-236的偏移。同组另外几张素材没有位置记录，生成时回退到y=0，树干、花枝与前方青蛙所在的枝条就出现错位。": {
+      "en": "Comparing the three screenshots with the original assets, the kapok background variant used by the correct photo retains its y=-236 offset. The other assets in the same group have no position record, so generation falls back to y=0, and the trunk, flowering branches, and the branch holding the frog in front end up misaligned."
+    },
+    "现在同组背景和小鸟变体共用y=-236，保留各自的小鸟数量及旅伴。已有木棉花照片在读取详情时也校准对应背景图层。原始照片记录保留。": {
+      "en": "The backgrounds and bird variants in the same group now share y=-236 while keeping their own bird counts and companions. Existing kapok photos also calibrate the corresponding background layer when their details are read. The original photo records are preserved."
+    },
+    "七组服务端回归检查通过，覆盖花盆补齐和植物保留、木棉花变体、屋顶树枝、图鉴购买任务、图鉴旅行、肥料和花瓶阶段。客户端另验证了冷缓存照片加载、快速切换时的旧请求、已关闭界面，以及动态照片状态推送后的当前页刷新。实际游戏界面的首次选图还需在下一次更新运行包后验收。": {
+      "en": "Seven groups of server-side regression checks passed, covering flower-pot completion and plant retention, kapok variants, rooftop branches, encyclopedia purchase tasks, encyclopedia travel, and the fertilizer and vase stages. On the client, cold-cache photo loading, stale requests during rapid switching, closed interfaces, and current-page refresh after a dynamic photo state push were also verified. The first photo selection in the actual game interface still needs acceptance testing once the next update package runs."
+    },
+    "返程明信片的「保存」直接写入游戏相册。打包脚本原先在这个动作之前额外触发了 PNG 下载，现在已移除。游戏相册详情中的保存仍可导出 PNG。": {
+      "en": "The Save action on return postcards writes directly to the in-game album. The packaging script previously triggered an extra PNG download before that action; this has now been removed. Save in the in-game album details can still export a PNG."
+    },
+    "2026年立冬是11月7日，对应红糖糍粑。节气料理可在当月补领，仍需完成累计获得30三叶草和商店抽奖兑换奖品的任务，广告或分享条件由离线规则自动完成。点击未解锁的料理会打开原版节气详情面板，显示三条任务的当前进度和完成标记。缺少当天日历随记时，任务面板也可以正常打开。节气与新手礼物落在同一天时，已解锁的节气料理优先显示。": {
+      "en": "The start of winter in 2026 falls on November 7 and corresponds to brown-sugar ciba. Seasonal dishes can still be claimed later in the same month, but the tasks for earning 30 clovers in total and exchanging prizes in the shop lottery must still be completed; the ad or share conditions are completed automatically by the offline rules. Clicking a locked dish opens the original seasonal detail panel, which shows the current progress and completion marks of the three tasks. The task panel also opens normally when there is no calendar note for that day. When a seasonal dish and a beginner gift fall on the same day, the unlocked seasonal dish is shown first."
+    },
+    "日历的日期格和领取判断统一按北京时间处理。跨月时客户端重新读取奖励和任务，旧页面发出的领奖请求会核对月份，避免领错同一天的奖励。": {
+      "en": "Calendar date cells and claim checks are handled uniformly in Beijing time. When the month changes, the client re-reads rewards and tasks, and claim requests sent from an old page verify the month so that the wrong day’s reward is not claimed."
+    },
+    "隔离测试覆盖普通版和图鉴版的11月7日补领、任务未完成、提前领取、重复领取及跨月请求。两版生成的客户端脚本也核对了返程存相册和相册导出各自的调用。本地网页版和 Windows 两版运行文件已覆盖。庭院入口与红点分开判断：当月有到期且未领的节气料理时显示日历，满足领取条件才点亮红点。修复了已到期格子的点击命中，并在独立无头浏览器中实际点击11月7日格子，确认首页显示日历但没有红点，原版面板展示三项进度。": {
+      "en": "Isolated tests cover the November 7 late claim in both the standard and encyclopedia editions, incomplete tasks, early claims, duplicate claims, and cross-month requests. The client scripts generated for both editions were also checked for their respective calls to save return photos and export from the album. The local web version and both Windows builds have been regenerated. The courtyard entrance and the red dot are judged separately: the calendar is shown when there is an expired, unclaimed seasonal dish for the month, and the red dot lights up only when the claim conditions are met. The click target on expired cells was fixed, and the November 7 cell was actually clicked in an isolated headless browser, confirming that the home page shows the calendar but no red dot and that the original panel lists three task progress entries."
     }
   },
   "blog/ics/index.html": {
@@ -600,6 +717,1530 @@
     },
     "库插桩可以记录 malloc 的请求大小和返回地址。课件对比预处理宏替换、链接器 —wrap 和动态加载时的 LD_PRELOAD。采用哪一种取决于能否改源码、重新链接，以及被观察程序是否通过动态符号调用目标函数。": {
       "en": "Library instrumentation can record the requested size of malloc and the return address. The courseware compares preprocessor macro replacement, linker --wrap, and LD_PRELOAD during dynamic loading. Which method to use depends on whether the source code can be modified or re-linked, and whether the observed program calls the target function through dynamic symbols."
+    },
+    "Y86-64 常见指令格式与操作顺序": {
+      "en": "Common Y86-64 instruction formats and operation order"
+    },
+    "取指 Fetch：拆出字段并计算 valP": {
+      "en": "Fetch: extract fields and compute valP"
+    },
+    "译码 Decode：选择 srcA、srcB，读取寄存器": {
+      "en": "Decode: select srcA and srcB, read registers"
+    },
+    "执行 Execute：ALU 计算 valE": {
+      "en": "Execute: the ALU computes valE"
+    },
+    "写回 Write back：访存，写回 dstE、dstM": {
+      "en": "Write back: access memory and write dstE/dstM"
+    },
+    "更新 PC PC update": {
+      "en": "PC update"
+    },
+    "RAW 冒险": {
+      "en": "RAW hazard"
+    },
+    "数据转发及转发优先级": {
+      "en": "Data forwarding and forwarding priority"
+    },
+    "控制冒险&分支预测失败": {
+      "en": "Control hazards and branch misprediction"
+    },
+    "编译器四种优化及两个限制": {
+      "en": "Four compiler optimizations and two limitations"
+    },
+    "两个限制": {
+      "en": "Two limitations"
+    },
+    "第 15 讲：链接": {
+      "en": "Lecture 15: Linking"
+    },
+    "从符号表判断链接错误": {
+      "en": "Diagnosing link errors from the symbol table"
+    },
+    "绝对与 PC 相对重定位": {
+      "en": "Absolute and PC-relative relocation"
+    },
+    "第 16 讲：异常控制流与进程": {
+      "en": "Lecture 16: Exceptional control flow and processes"
+    },
+    "正常控制流、异常和系统调用": {
+      "en": "Normal control flow, exceptions, and system calls"
+    },
+    "进程和上下文切换": {
+      "en": "Processes and context switching"
+    },
+    "fork 的两条返回路径": {
+      "en": "The two return paths of fork"
+    },
+    "终止、回收与换程序": {
+      "en": "Termination, reaping, and program replacement"
+    },
+    "第 17 讲：信号与非本地跳转": {
+      "en": "Lecture 17: Signals and nonlocal jumps"
+    },
+    "后台任务为什么需要信号": {
+      "en": "Why background jobs need signals"
+    },
+    "信号的基本机制": {
+      "en": "Basic signal mechanism"
+    },
+    "发送与接收": {
+      "en": "Sending and receiving"
+    },
+    "处理函数与屏蔽": {
+      "en": "Handlers and masking"
+    },
+    "编写安全的处理函数": {
+      "en": "Writing safe handlers"
+    },
+    "用 sigsuspend 等待信号": {
+      "en": "Waiting for signals with sigsuspend"
+    },
+    "非本地跳转": {
+      "en": "Nonlocal jumps"
+    },
+    "Cache Lab：模拟缓存与分块转置": {
+      "en": "Cache Lab: cache simulation and blocked transpose"
+    },
+    "Part A：从访存地址定位缓存行": {
+      "en": "Part A: locating a cache line from an access address"
+    },
+    "LRU 怎样选替换对象": {
+      "en": "How LRU chooses a victim"
+    },
+    "Part B：先算矩阵访问的步长": {
+      "en": "Part B: derive the access stride for the matrix"
+    },
+    "跑测试与读分数": {
+      "en": "Running tests and reading the score"
+    },
+    "课件先讲栈地址随机化，教材介绍更广的 ASLR。是否随机化程序代码、库和其他区域取决于可执行文件与系统配置。栈随机化只改变栈的映射位置，代码等区域的地址可能保持固定；课件中的固定代码地址是简化示例。": {
+      "en": "The courseware first covers stack address randomization, while the textbook introduces the broader ASLR. Whether program code, libraries, and other regions are randomized depends on the executable and system configuration. Stack randomization only changes where the stack is mapped; addresses of regions such as code may remain fixed. The fixed code address in the courseware is a simplified example."
+    },
+    "首字节（十六进制）": {
+      "en": "First byte (hexadecimal)"
+    },
+    "传送指令 / 首字节": {
+      "en": "Move instructions / first byte"
+    },
+    "跳转指令 / 首字节": {
+      "en": "Jump instructions / first byte"
+    },
+    "本课简化处理器遇到非 AOK 状态就停止；更完整的系统可以进入异常处理程序。": {
+      "en": "The simplified processor in this course stops on any non-AOK status; a more complete system can enter an exception handler."
+    },
+    "符号": {
+      "en": "Symbol"
+    },
+    "读法": {
+      "en": "Reading"
+    },
+    "字级 MUX 用同一个选择信号控制所有位。ALU 也是组合逻辑，结果要写入寄存器或内存才能保留。": {
+      "en": "A word-level MUX uses the same select signal for all bits. The ALU is also combinational logic, so its result must be written to a register or memory to be retained."
+    },
+    "HCL 代码描述的是电路连接与选择关系，而不是顺序执行的程序。case 按优先次序选出唯一结果，全部条件在硬件上并行比较，不需要多个时钟。四选一的例子：": {
+      "en": "HCL code describes circuit connections and selection relationships, not a sequentially executed program. A case selects a single result by priority, and all conditions are compared in parallel in hardware with no need for multiple clocks. Example of a four-way select:"
+    },
+    "组合逻辑负责算，存储部件负责记。时钟寄存器在上升沿采样输入，其他时间保持输出。例如输入已从 x 变成 y，输出仍可保持 x，直到下一个上升沿才变成 y。": {
+      "en": "Combinational logic computes; storage components remember. A clocked register samples its input on the rising edge and holds its output at other times. For example, after the input changes from x to y, the output can still hold x until the next rising edge, when it becomes y."
+    },
+    "格式": {
+      "en": "Format"
+    },
+    "实际作用": {
+      "en": "Effect"
+    },
+    "将 rA 的数据压入栈": {
+      "en": "Push the data in rA onto the stack"
+    },
+    "将栈顶数据弹出到 rA": {
+      "en": "Pop the top of the stack into rA"
+    },
+    "ALU 运算结果": {
+      "en": "ALU result"
+    },
+    "内存读取的数据": {
+      "en": "Data read from memory"
+    },
+    "新栈指针": {
+      "en": "New stack pointer"
+    },
+    "栈顶读取的数据": {
+      "en": "Data read from the top of the stack"
+    },
+    "新 PC 从 valP、valC、valM 中选出：ret 用 valM，call 与条件成立的跳转用 valC，其余指令用 valP。": {
+      "en": "The new PC is selected from valP, valC, and valM: ret uses valM, call and taken jumps use valC, and all other instructions use valP."
+    },
+    "这里的 F 包含本周期组合逻辑与相应状态更新；组合信号按数据依赖逐步传播。例如加载指令必须先算出地址，才可能从该地址得到数据。": {
+      "en": "F here includes this cycle's combinational logic along with the corresponding state updates; combinational signals propagate step by step along data dependencies. For example, a load must first compute its address before it can obtain data from that address."
+    },
+    "SEQ 把 PC 更新放在指令处理的末尾；SEQ+ 根据上一条指令留下的结果，在取指前选择本条指令的 PC。SEQ+ 仍然是顺序实现，重排 PC 选择并没有让多条指令同时执行。": {
+      "en": "SEQ places the PC update at the end of instruction processing; SEQ+ selects this instruction's PC before fetch, based on the result left by the previous instruction. SEQ+ is still a sequential implementation: moving the PC selection does not make multiple instructions execute at once."
+    },
+    "I1 需要五个周期才能完成，但填满后可以每周期完成一条。这是多条指令在不同阶段重叠，不是同一 ALU 在同一时刻执行多条指令。 PC 的选择并入 F 的控制，不再作为第六个独立流水级。": {
+      "en": "I1 takes five cycles to complete, but once the pipeline is full, one instruction can finish each cycle. This is multiple instructions overlapping in different stages, not one ALU executing several instructions at the same instant. PC selection is folded into F's control rather than being a sixth independent pipeline stage."
+    },
+    "若后一条指令需要前一条尚未写回的结果，就存在写后读（Read After Write，RAW）。": {
+      "en": "A read-after-write (RAW) hazard exists when a later instruction needs a result that an earlier instruction has not yet written back."
+    },
+    "预测只决定先取哪条指令，不改变 ISA 规定的执行结果。 条件跳转到 E 时，根据 CC 与 ifun 得到真实 e_Cnd；错误路径上的指令必须在产生程序副作用前取消。": {
+      "en": "Prediction only determines which instruction to fetch first; it does not change the execution result required by the ISA. When a conditional jump reaches E, the true e_Cnd is obtained from CC and ifun; instructions on the wrong path must be canceled before they produce program side effects."
+    },
+    "这里暂停的是后续取指，不是 ret 自己；否则 ret 无法到 M 取回地址。相对于可立即知道下一地址的指令，基本实现的 ret 通常增加三个等待周期。": {
+      "en": "What stalls here is subsequent fetching, not ret itself; otherwise ret could not reach M to retrieve its address. Compared with instructions whose next address is known immediately, ret in the basic implementation usually adds three wait cycles."
+    },
+    "课件重点分析两种组合。": {
+      "en": "The courseware focuses on two combinations."
+    },
+    "对课件这套基本实现，普通可转发的数据相关通常不增加周期；紧邻的 load/use 通常加一周期；预测失败加两周期；ret 通常加三周期。组合事件按实际控制和周期表计数，不能把所有单独处罚机械相加。": {
+      "en": "For the courseware's basic implementation, an ordinary forwardable data dependency usually adds no cycles; an adjacent load/use usually adds one cycle; a misprediction adds two; and ret usually adds three. Combined events are counted according to the actual control and cycle table; the individual penalties cannot simply be added together."
+    },
+    "快": {
+      "en": "Fast"
+    },
+    "慢": {
+      "en": "Slow"
+    },
+    "密度": {
+      "en": "Density"
+    },
+    "低": {
+      "en": "Low"
+    },
+    "高": {
+      "en": "High"
+    },
+    "每字节成本": {
+      "en": "Cost per byte"
+    },
+    "CPU 的高速缓存（cache）。": {
+      "en": "The CPU's cache."
+    },
+    "比较同容量器件时，教材把 SRAM 的功耗与每位成本列得较高，DRAM 则以较少的晶体管换取更高的密度。实际功耗还取决于工艺、访问频率和待机方式。": {
+      "en": "When comparing devices of the same capacity, the textbook lists SRAM as having higher power consumption and cost per bit, while DRAM trades fewer transistors for higher density. Actual power also depends on the process, access frequency, and standby mode."
+    },
+    "DMA 的数据传输不需要 CPU 逐字节搬运，CPU 仍负责发起请求与处理完成事件。数据进入主存和最终被程序读入寄存器是不同环节。": {
+      "en": "DMA transfers do not require the CPU to move data byte by byte; the CPU still initiates requests and handles completion events. Data entering main memory and data finally being read into registers by a program are different steps."
+    },
+    "机械盘读写要等待寻道和旋转。SSD 没有这些机械部件，通常具有较低的随机访问延迟、较强的抗振动能力和较低的运行噪声，也便于做成更小的形态。每容量价格与写入寿命要结合设备和工作负载比较。": {
+      "en": "Mechanical disks must wait for seek and rotation on reads and writes. SSDs have no such mechanical parts and usually offer lower random-access latency, better shock resistance, and less operating noise, and they are easier to make in smaller form factors. Price per capacity and write endurance must be compared in light of the device and workload."
+    },
+    "对象": {
+      "en": "Object"
+    },
+    "时间局部性（Temporal Locality）": {
+      "en": "Temporal locality"
+    },
+    "空间局部性（Spatial Locality）": {
+      "en": "Spatial locality"
+    },
+    "循环反复执行同一段代码": {
+      "en": "A loop repeatedly executes the same code"
+    },
+    "顺序执行相邻指令": {
+      "en": "Sequential execution of adjacent instructions"
+    },
+    "反复读取或更新 sum": {
+      "en": "Repeatedly reading or updating sum"
+    },
+    "顺序读取数组元素": {
+      "en": "Sequentially reading array elements"
+    },
+    "CPU、主存与外部存储的速度差异，意味着减少慢层访问往往十分重要；课件历史趋势图用于说明这类差距。": {
+      "en": "The speed gap between the CPU, main memory, and external storage means reducing slow-layer accesses is often important; the courseware's historical trend graph illustrates this gap."
+    },
+    "直写Write-through": {
+      "en": "Write-through"
+    },
+    "写回Write-back": {
+      "en": "Write-back"
+    },
+    "写分配Write-allocate": {
+      "en": "Write-allocate"
+    },
+    "不写分配No-write-allocate": {
+      "en": "No-write-allocate"
+    },
+    "公共子表达式消除": {
+      "en": "Common subexpression elimination"
+    },
+    "1. Procedure Call（过程调用限制）": {
+      "en": "1. Procedure Call (limitation)"
+    },
+    "外部函数调用可能修改全局状态。即使函数参数相同，返回值也可能因为全局变量或静态变量变化而不同。因此编译器不能随意删除、合并或移动函数调用。": {
+      "en": "An external function call may modify global state. Even with the same arguments, its return value may differ because global or static variables changed. The compiler therefore cannot freely delete, merge, or move function calls."
+    },
+    "2. Memory Aliasing（存储器别名限制）": {
+      "en": "2. Memory Aliasing (limitation)"
+    },
+    "对应今年第 15 讲课件《Linking》（11 月 5 日）及教材第 7 章。": {
+      "en": "This corresponds to this year's Lecture 15 slides, \"Linking\" (November 5), and Chapter 7 of the textbook."
+    },
+    "用 nm 看本模块提供哪些定义、需要哪些定义。T 常表示代码节的全局定义，D 表示已初始化的全局数据，U 表示未定义引用。只有声明且没有实际引用的名字，通常不会留下 U 项。readelf -sW 能进一步区分符号的绑定、类型和所在节。": {
+      "en": "Use nm to see which definitions this module provides and which it needs. T usually denotes a global definition in the code section, D initialized global data, and U an undefined reference. A name that is only declared and never actually referenced usually leaves no U entry. readelf -sW further distinguishes a symbol's binding, type, and section."
+    },
+    "同名定义": {
+      "en": "Duplicate definition"
+    },
+    "按课件模型处理": {
+      "en": "Handling under the courseware model"
+    },
+    "两个全局强定义": {
+      "en": "Two global strong definitions"
+    },
+    "重复定义错误": {
+      "en": "Duplicate definition error"
+    },
+    "一个全局强定义与一个 common": {
+      "en": "One global strong definition and one common"
+    },
+    "引用绑定到强定义": {
+      "en": "The reference binds to the strong definition"
+    },
+    "多个 common": {
+      "en": "Multiple common definitions"
+    },
+    "合并为一个存储对象，考虑大小和对齐": {
+      "en": "Merged into one storage object, taking size and alignment into account"
+    },
+    "两个文件各有同名 static": {
+      "en": "Two files each have a static of the same name"
+    },
+    "每个模块引用自己的局部符号": {
+      "en": "Each module references its own local symbol"
+    },
+    "这里的 common 指传统工具链对未初始化的全局暂定定义的表示。ELF 中显式标为 weak 的符号还有自己的绑定规则。链接器能匹配符号名，跨模块声明的 C 类型仍需由程序保证一致。": {
+      "en": "Here common refers to the traditional toolchain's representation of an uninitialized tentative global definition. Symbols explicitly marked weak in ELF have their own binding rules. The linker can match symbol names, but the program must still ensure that C types declared across modules agree."
+    },
+    "构建时可用 ar rcs libvector.a addvec.o multvec.o 建静态库，ar t 列成员。共享库通常用 -fPIC 编译，再用 gcc -shared 生成。链接时写在可执行文件里的 NEEDED 项告诉加载器运行时需要哪些库。dlopen 则由已经运行的程序主动发起，dlsym 返回可调用的函数地址或数据地址。": {
+      "en": "At build time, ar rcs libvector.a addvec.o multvec.o creates a static library, and ar t lists its members. Shared libraries are usually compiled with -fPIC and produced with gcc -shared. A NEEDED entry written into the executable at link time tells the loader which libraries are needed at run time. dlopen is initiated by an already running program, and dlsym returns a callable function address or data address."
+    },
+    "库插桩可以记录函数的参数和返回值。编译时用宏改写调用点。链接时用 GNU ld 的 —wrap，让未定义的 foo 引用转到 __wrap_foo，同时包装函数内的 __real_foo 指向真实实现。加载时为当前程序指定 LD_PRELOAD，动态加载器可优先选中包装实现，包装函数可用 dlsym 的 RTLD_NEXT 取得后续的定义。今年课件第 59–60 页讲编译时插桩，第 61–63 页讲加载时插桩，第 64 页汇总三种方式。": {
+      "en": "Library instrumentation can record a function's arguments and return value. At compile time, macros rewrite call sites. At link time, GNU ld's --wrap redirects undefined references to foo to __wrap_foo, while __real_foo inside the wrapper points to the real implementation. At load time, setting LD_PRELOAD for the current program lets the dynamic loader prefer the wrapper implementation, and the wrapper can use dlsym with RTLD_NEXT to reach the next definition. This year's slides cover compile-time instrumentation on pages 59-60, load-time instrumentation on pages 61-63, and summarize all three approaches on page 64."
+    },
+    "对应今年第 16 讲课件《Exceptional Control Flow I》和教材 §8.1–8.4。本讲从一条指令遇到事件时怎样进入内核，讲到内核怎样让多个进程各自继续执行。": {
+      "en": "This corresponds to this year's Lecture 16 slides, \"Exceptional Control Flow I\", and textbook §8.1-8.4. This lecture covers how an instruction enters the kernel when an event occurs, and how the kernel lets multiple processes each continue executing."
+    },
+    "顺序执行、跳转、call 和 ret 都按程序指令选取后续 PC。定时器到期、磁盘读完、缺页和系统调用也会改变执行位置，但由事件触发，处理器将控制交给内核入口。内核保存继续执行所需的现场，处理结束后可以重试当前指令、接着执行下一条，或结束当前控制流。": {
+      "en": "Sequential execution, jumps, call, and ret all select the next PC according to program instructions. A timer expiring, a disk read completing, a page fault, and a system call also change where execution continues, but they are triggered by events and the processor hands control to a kernel entry point. The kernel saves the state needed to continue; after handling, it can retry the current instruction, continue with the next one, or end the current control flow."
+    },
+    "怎样触发": {
+      "en": "How it is triggered"
+    },
+    "处理之后": {
+      "en": "After handling"
+    },
+    "中断 interrupt": {
+      "en": "Interrupt"
+    },
+    "外部设备或定时器，和当前指令异步": {
+      "en": "An external device or timer, asynchronous to the current instruction"
+    },
+    "通常从下一条继续": {
+      "en": "Usually continues with the next instruction"
+    },
+    "陷阱 trap": {
+      "en": "Trap"
+    },
+    "指令有意触发，例如系统调用": {
+      "en": "Triggered intentionally by an instruction, such as a system call"
+    },
+    "故障 fault": {
+      "en": "Fault"
+    },
+    "执行指令时遇到问题，例如缺页": {
+      "en": "A problem while executing an instruction, such as a page fault"
+    },
+    "能修复就重试该指令，否则报告错误": {
+      "en": "Retries the instruction if the problem can be fixed; otherwise reports an error"
+    },
+    "终止 abort": {
+      "en": "Abort"
+    },
+    "教材中指严重且不可恢复的异常": {
+      "en": "In the textbook, a severe and unrecoverable exception"
+    },
+    "放弃当前控制流": {
+      "en": "Abandons the current control flow"
+    },
+    "异常号用于选择对应的异常入口。Linux x86-64 的 syscall 指令使用专门的内核入口，内核再按 %rax 中的系统调用号找服务。调用参数依次放在 %rdi、%rsi、%rdx、%r10、%r8、%r9，结果放回 %rax。注意第 4 项是 %r10，普通 C 函数的 System V 调用约定第 4 项通常用 %rcx。C 库包装一般将内核的负错误码转成 -1 并设置 errno。": {
+      "en": "The exception number selects the corresponding exception entry. Linux x86-64's syscall instruction uses a dedicated kernel entry, and the kernel then finds the service by the system call number in %rax. Arguments go in %rdi, %rsi, %rdx, %r10, %r8, and %r9 in order, and the result is returned in %rax. Note that the fourth argument is %r10, while the System V calling convention for ordinary C functions usually uses %rcx for the fourth. The C library wrapper generally converts a negative kernel error code into -1 and sets errno."
+    },
+    "缺页说明当前访问不能直接通过地址转换。地址合法时，内核可建立映射、从磁盘调页或处理写时复制，再从原指令重试。地址无有效映射且无法修复时，通常收到 SIGSEGV。数组越界在 C 中是未定义行为，访问是否触发硬件错误还取决于所在页面能否访问。": {
+      "en": "A page fault means the current access cannot pass address translation directly. If the address is valid, the kernel can establish a mapping, page in from disk, or handle copy-on-write, then retry the original instruction. If the address has no valid mapping and cannot be fixed, the process usually receives SIGSEGV. An out-of-bounds array access is undefined behavior in C, and whether it triggers a hardware fault also depends on whether the containing page is accessible."
+    },
+    "Fault 重试时，会用恢复后的现场重新执行原指令。修好缺页映射可以使重试成功。整数除零的除数若仍为零，按原位置返回就会再次触发异常。判断能否恢复要看引发故障的条件是否已经消除。": {
+      "en": "When a fault is retried, the original instruction executes again with the restored state. Fixing the page-fault mapping can make the retry succeed. If the divisor of an integer divide-by-zero is still zero, returning to the original location triggers the exception again. Whether recovery is possible depends on whether the condition that caused the fault has been removed."
+    },
+    "进程是程序的一次运行实例，有 PID、当前执行位置和私有虚拟地址空间。同一个程序可以启动许多次。上下文是进程以后继续运行需要的状态，包括 PC、寄存器、栈指针、标志及内核管理的栈、调度和地址空间信息。切换时，内核保存旧进程的上下文，从可运行进程中选出一个，恢复它的现场。": {
+      "en": "A process is one running instance of a program, with a PID, a current execution position, and a private virtual address space. The same program can be started many times. The context is the state a process needs to continue later, including the PC, registers, stack pointer, flags, and kernel-managed stack, scheduling, and address-space information. When switching, the kernel saves the old process's context, selects a runnable process, and restores its state."
+    },
+    "fork 返回值": {
+      "en": "fork return value"
+    },
+    "所在位置": {
+      "en": "Location"
+    },
+    "父进程": {
+      "en": "Parent"
+    },
+    "数值是子进程 PID": {
+      "en": "The value is the child's PID"
+    },
+    "子进程": {
+      "en": "Child"
+    },
+    "从同一条 fork 调用之后继续": {
+      "en": "Continues after the same fork call"
+    },
+    "原进程": {
+      "en": "Original process"
+    },
+    "创建失败，检查 errno": {
+      "en": "Creation failed; check errno"
+    },
+    "父子有各自的虚拟地址空间。私有可写内存通常先共享物理页，写入时再复制。继承的文件描述符可以指向同一个打开文件，因此可能共享文件偏移。第 39、42 页的局部变量 x 在 fork 后各有一份，父进程递减得到 0、−1，子进程递增得到 2、3。": {
+      "en": "Parent and child have separate virtual address spaces. Private writable memory is usually shared as physical pages first and copied on write. Inherited file descriptors can refer to the same open file and therefore may share the file offset. The local variable x on pages 39 and 42 has a copy in each process after fork: the parent decrements it to 0 and -1, while the child increments it to 2 and 3."
+    },
+    "wait(&status) 回收任意一个可回收的子进程，成功时返回子 PID。": {
+      "en": "wait(&status) reaps any one reapable child and returns the child's PID on success."
+    },
+    "waitpid(pid, &status, 0) 等指定孩子。孩子还没结束时会等待，即使其他孩子已可回收。": {
+      "en": "waitpid(pid, &status, 0) waits for a specific child. It waits while that child has not finished, even if other children are already reapable."
+    },
+    "WIFEXITED 成立后读 WEXITSTATUS，WIFSIGNALED 成立后读 WTERMSIG。status 是编码后的状态。": {
+      "en": "After WIFEXITED holds, read WEXITSTATUS; after WIFSIGNALED holds, read WTERMSIG. status is an encoded status value."
+    },
+    "execve(path, argv, envp) 成功后替换当前进程的程序映像，PID 保持不变，原调用位置不会继续执行。失败时返回 -1。": {
+      "en": "execve(path, argv, envp) replaces the current process's program image on success, keeping the PID; execution does not continue at the original call site. On failure it returns -1."
+    },
+    "shell 启动外部命令的常见流程是父进程 fork，子进程 execve，父进程按需要 waitpid。argv 和 envp 都用空指针结束，环境字符串形如 PATH=/usr/bin。新程序开始时能从初始栈取得参数和环境。打开的描述符通常会保留，设置了 close-on-exec 的描述符会关闭。": {
+      "en": "The usual flow for the shell to start an external command is: the parent forks, the child calls execve, and the parent calls waitpid as needed. Both argv and envp end with a null pointer, and environment strings look like PATH=/usr/bin. The new program can obtain arguments and the environment from the initial stack. Open descriptors are usually preserved, while descriptors marked close-on-exec are closed."
+    },
+    "对应今年第 17 讲课件《Exceptional Control Flow: Signals and Nonlocal Jumps》和教材 §8.5–8.6。本讲解决两个问题：进程怎样在内核通知下处理异步事件，函数怎样跳出深层调用栈。": {
+      "en": "This corresponds to this year's Lecture 17 slides, \"Exceptional Control Flow: Signals and Nonlocal Jumps\", and textbook §8.5-8.6. This lecture addresses two questions: how a process handles asynchronous events notified by the kernel, and how a function escapes a deep call stack."
+    },
+    "信号是用小整数 ID（1–30）标识的通知，表示系统里发生了某类事件，由内核发给进程；另一进程可以用 kill 系统调用请求内核代为发送。除 ID 之外信号不携带信息。": {
+      "en": "A signal is a notification identified by a small integer ID (1-30) indicating that some type of event occurred in the system; the kernel sends it to a process, and another process can call the kill system call to ask the kernel to send one. Signals carry no information beyond the ID."
+    },
+    "默认动作": {
+      "en": "Default action"
+    },
+    "对应事件": {
+      "en": "Corresponding event"
+    },
+    "终止": {
+      "en": "Terminate"
+    },
+    "用户按 Ctrl-C": {
+      "en": "The user presses Ctrl-C"
+    },
+    "强制杀死，不能覆盖或忽略": {
+      "en": "Forced termination; cannot be caught or ignored"
+    },
+    "段错误": {
+      "en": "Segmentation fault"
+    },
+    "定时器到期": {
+      "en": "Timer expires"
+    },
+    "忽略": {
+      "en": "Ignore"
+    },
+    "子进程停止或终止": {
+      "en": "A child stops or terminates"
+    },
+    "进程对信号的三种反应是忽略、终止（可带 core dump）、或执行用户安装的处理函数（handler）。每种信号有预定义默认动作：终止、终止并转储 core、停止直到收到 SIGCONT、忽略。": {
+      "en": "A process can respond to a signal in three ways: ignore it, terminate (optionally with a core dump), or run a user-installed handler. Each signal has a predefined default action: terminate, terminate with core dump, stop until SIGCONT, or ignore."
+    },
+    "handler 执行期间可以被其他信号打断。内核隐式屏蔽与当前正在处理的信号同类的 pending 信号，所以同类信号不会嵌套。显式屏蔽用 sigprocmask 配合 sigset_t：sigemptyset、sigfillset、sigaddset、sigdelset 构造集合，SIG_BLOCK、SIG_UNBLOCK、SIG_SETMASK 修改屏蔽集。屏蔽集也叫信号掩码，execve 之后会继承当前屏蔽集。": {
+      "en": "A handler can be interrupted by other signals while it runs. The kernel implicitly blocks pending signals of the same type as the one being handled, so signals of that type do not nest. Explicit blocking uses sigprocmask with a sigset_t: sigemptyset, sigfillset, sigaddset, and sigdelset build the set, and SIG_BLOCK, SIG_UNBLOCK, and SIG_SETMASK modify the mask. The blocked set is also called the signal mask; execve inherits the current mask."
+    },
+    "handler 必须在信号可能到达之前安装。fork 之后父进程立刻 kill 时，子进程可能还没执行到注册语句，信号按默认动作处理而丢失，需要先注册再 fork。": {
+      "en": "A handler must be installed before a signal can arrive. If the parent calls kill immediately after fork, the child may not yet have executed the registration statement, so the signal takes its default action and is lost; register first, then fork."
+    },
+    "handler 与主程序并发执行、共享全局数据：": {
+      "en": "The handler runs concurrently with the main program and shares global data:"
+    },
+    "尽量简单，例如只置一个全局标志就返回。": {
+      "en": "Keep it as simple as possible, for example setting a global flag and returning."
+    },
+    "进入时保存 errno，退出前恢复。": {
+      "en": "Save errno on entry and restore it before returning."
+    },
+    "访问共享数据结构时临时屏蔽所有信号，防止更新到一半被打断。": {
+      "en": "Temporarily block all signals while accessing shared data structures to prevent an update from being interrupted halfway."
+    },
+    "fork 之后父子谁先运行不确定。fork 前屏蔽 SIGCHLD，父进程把子进程登记进作业表后再恢复屏蔽；子进程在 execve 前恢复继承的屏蔽集。这样登记完成之前 SIGCHLD 不会插入。": {
+      "en": "After fork, it is uncertain whether the parent or child runs first. Block SIGCHLD before fork, have the parent register the child in the job table and then unblock it, and have the child restore the inherited mask before execve. This way SIGCHLD cannot arrive before registration is complete."
+    },
+    "sigsetjmp/siglongjmp 额外保存与恢复信号屏蔽集，在 handler 里跳转必须用这对函数。fault 类信号（如 SIGFPE）默认动作是终止，安装 handler 后进程可以接管；但 handler 若正常返回，出错指令会重试并再次触发同一信号。要真正继续执行，handler 用 siglongjmp 跳到别处，或直接结束进程。": {
+      "en": "sigsetjmp/siglongjmp additionally save and restore the signal mask; jumps from a handler must use this pair. A fault-type signal such as SIGFPE has terminate as its default action, and installing a handler lets the process take over; but if the handler returns normally, the faulting instruction retries and raises the same signal again. To truly continue, the handler must siglongjmp elsewhere or simply terminate the process."
+    },
+    "信号是进程级的异常处理，非本地跳转是进程内的异常控制流。": {
+      "en": "Signals are process-level exception handling; nonlocal jumps are intra-process exceptional control flow."
+    },
+    "trace 操作": {
+      "en": "Trace operation"
+    },
+    "模拟器处理": {
+      "en": "Simulator behavior"
+    },
+    "指令读取，跳过": {
+      "en": "Instruction fetch; skipped"
+    },
+    "一次数据读": {
+      "en": "One data read"
+    },
+    "一次数据写": {
+      "en": "One data write"
+    },
+    "先读再写同一地址，连续模拟两次": {
+      "en": "Read then write to the same address; simulated as two consecutive accesses"
+    },
+    "在目标组中找到有效且 tag 相等的行时，记一次 hit，并更新这条行的时间。": {
+      "en": "When a valid line with a matching tag is found in the target set, count a hit and update that line's time."
+    },
+    "找不到就记一次 miss。组内有空行时直接装入。": {
+      "en": "Otherwise count a miss. If the set has an empty line, load into it directly."
+    },
+    "组满时，选择最近使用时间最小的行替换，同时记一次 eviction。装入后记录新 tag 和时间。": {
+      "en": "If the set is full, evict the line with the smallest most recent use time and count an eviction. After loading, record the new tag and time."
+    },
+    "实现": {
+      "en": "Implementation"
+    },
+    "为什么这样安排": {
+      "en": "Rationale"
+    },
+    "源行的这一段可一次用完。即使写 B 挤掉了 A 的行，本次需要的源值已经读出": {
+      "en": "This segment of the source row can be used up in one pass. Even if writing B evicts A's line, the source values needed for this step have already been read."
+    },
+    "按源矩阵的 24 行、4 列分块。先读 4 个值再写，最后一块只处理剩余行": {
+      "en": "Block by 24 rows and 4 columns of the source matrix. Read four values before writing; the last block handles only the remaining rows."
+    },
+    "本次 WSL 官方测试": {
+      "en": "This WSL official test"
+    },
+    "Part A，八组轨迹": {
+      "en": "Part A, eight traces"
+    },
+    "三种转置尺寸合计": {
+      "en": "Total for the three transpose sizes"
+    },
+    "自动评分": {
+      "en": "Automatic grading"
+    },
+    "Scoreboard 的 Total Misses 是三个转置尺寸的未命中次数之和。Style 单列 12 分，由助教根据注释、缩进、行长、错误处理和可读性等人工评定。README 还列有局部变量超限和内存泄漏的正确性扣分。": {
+      "en": "The Scoreboard's Total Misses is the sum of misses for the three transpose sizes. Style is 12 separate points, assessed by teaching assistants for comments, indentation, line length, error handling, and readability. The README also lists correctness deductions for exceeding the local-variable limit and for memory leaks."
+    },
+    "可得到不同符号的无穷。": {
+      "en": "produce infinities of different signs."
+    },
+    "。因而非规格化数与最小规格化数使用同一个实际指数，只是前导位从": {
+      "en": "cannot be applied directly. Thus subnormal numbers and the smallest normalized number share the same actual exponent, but the leading bit changes from"
+    },
+    "是默认舍入方式：取最近的候选，恰在中点时取保留位末位为": {
+      "en": "is the default rounding mode: take the nearest candidate, and at an exact midpoint take the one whose last retained bit is"
+    },
+    "的那一个。例如保留三位二进制小数，": {
+      "en": ". For example, keeping three binary fractional bits,"
+    },
+    "；这份输出含地址、机器字节和注释。": {
+      "en": "; this output contains addresses, machine bytes, and comments."
+    },
+    "，普通": {
+      "en": ", and ordinary"
+    },
+    "也不能把": {
+      "en": "cannot write a"
+    },
+    "位立即数直接写入内存。": {
+      "en": "-bit immediate directly to memory either."
+    },
+    "后，比较的是": {
+      "en": ", the comparison is of"
+    },
+    "字节操作数称为一个字，与 x86 指令后缀中": {
+      "en": "-byte operand is called a word, unlike the"
+    },
+    "字节的称呼不同。用": {
+      "en": "-byte meaning of the suffix in x86 instructions. Write"
+    },
+    "调用约定由软件共同遵守。": {
+      "en": "Calling conventions are software agreements."
+    },
+    "ISA 规定": {
+      "en": "The ISA specifies that"
+    },
+    "压入返回地址、": {
+      "en": "pushes the return address and"
+    },
+    "取出返回地址。约定用哪些寄存器传参、把返回值放在哪个寄存器，以及谁保存寄存器，则由 ABI 或课程采用的调用约定规定。例如使用": {
+      "en": "pops it. Which registers carry arguments, where the return value goes, and who saves registers are set by the ABI or by the calling convention used in the course. For example, passing the first two integer arguments in"
+    },
+    "传前两个整数参数和用": {
+      "en": "and returning an integer in"
+    },
+    "返回整数，都是软件约定。": {
+      "en": "are software conventions."
+    },
+    "位，按下面的固定编码读取，与函数参数的传递顺序无关：": {
+      "en": "bits and is read according to the fixed encoding below, independent of argument-passing order:"
+    },
+    "进一步指定减法。": {
+      "en": "further specifies subtraction."
+    },
+    "Y86-64 的跳转和调用目标直接编码为绝对地址，与 x86-64 常见的 PC 相对位移不同。": {
+      "en": "Y86-64 encodes jump and call targets as absolute addresses, unlike the PC-relative offsets common in x86-64."
+    },
+    "。端序只改变多字节常量的字节排列，不交换 icode/ifun，或 rA/rB。": {
+      "en": ". Endianness only changes the byte order of multi-byte constants; it does not swap icode/ifun or rA/rB."
+    },
+    "统一让": {
+      "en": "both let"
+    },
+    "指定基址，所以两类指令都可以由同一个读端口取得基址，经相同的 ALU 输入通路计算": {
+      "en": "specify the base address, so both instruction classes can obtain the base through the same read port and compute"
+    },
+    "在 store 中提供要写入的值，在 load 中指定接收数据的寄存器。把基址位置固定下来可简化译码和数据通路。": {
+      "en": "supplies the value to store in store instructions and specifies the destination register in load instructions. Fixing the base position simplifies decoding and the datapath."
+    },
+    "教材图 4-3 把": {
+      "en": "Textbook Figure 4-3 encodes the four operations of"
+    },
+    "的四种运算分别编码。四条指令的": {
+      "en": "separately. All four instructions have"
+    },
+    "都是": {
+      "en": "equal to"
+    },
+    "，整个首字节随": {
+      "en": "; the entire first byte varies with"
+    },
+    "变化，后面再接一字节": {
+      "en": "and is followed by one"
+    },
+    "指定异或，": {
+      "en": "specifies XOR, and"
+    },
+    "指定源寄存器": {
+      "en": "specifies the source register"
+    },
+    "）和目的寄存器": {
+      "en": ") and the destination register"
+    },
+    "）。减法方向仍是": {
+      "en": "). The subtraction direction is still"
+    },
+    "图 4-3 中，传送类的": {
+      "en": "In Figure 4-3,"
+    },
+    "，跳转类的": {
+      "en": ", and"
+    },
+    "。两类指令共用同一套条件": {
+      "en": ". Both classes share the same condition"
+    },
+    "。表中的编码都是": {
+      "en": ". The encodings in the table are all"
+    },
+    "首字节": {
+      "en": "first bytes"
+    },
+    "，后面还要按指令类别读取寄存器字节或目标地址。": {
+      "en": ", followed by register bytes or a target address depending on the instruction class."
+    },
+    "，第二个字节": {
+      "en": ", and the second byte"
+    },
+    "是寄存器编号组合。": {
+      "en": "combines register numbers."
+    },
+    "，后八字节是小端目标地址。两条指令的首字节低四位都是": {
+      "en": ", whose last eight bytes are a little-endian target address. The low four bits of the first byte are"
+    },
+    "，都在": {
+      "en": "for both instructions, and both perform their action when"
+    },
+    "时执行对应动作。拆编码时，先用高四位确定指令类别，再在该类别里解释低四位。": {
+      "en": ". When decoding, use the high four bits to determine the instruction class, then interpret the low four bits within that class."
+    },
+    "指向当前栈顶，即最近压入的位置。设执行前栈指针为 S：": {
+      "en": "points to the current top of the stack, the most recently pushed location. Let the stack pointer before execution be S:"
+    },
+    "判断是否为零；非零才计数并移动指针。指针每次增加": {
+      "en": "to test whether it is zero; only when it is nonzero do you count it and advance the pointer. The pointer increases by"
+    },
+    "字节（一个元素的宽度）。": {
+      "en": "bytes (the width of one element)."
+    },
+    "字节常量。它们是汇编器伪指令，不是 CPU 执行的指令。独立的 Y86-64 示例通常自己初始化": {
+      "en": "-byte constant. These are assembler directives, not instructions executed by the CPU. A standalone Y86-64 example usually initializes"
+    },
+    "，与本课 AT&T 的“目的在后”不同；这里的": {
+      "en": ", unlike AT&T's destination-last order used in this course; here"
+    },
+    "是寄存器名。Y86-64 与 MIPS 一样把数据访存与运算分离，但编码仍是变长，且保留 CC 和栈指令。": {
+      "en": "is a register name. Y86-64, like MIPS, separates data memory access from arithmetic, but its encoding is still variable-length and it retains CC and stack instructions."
+    },
+    "是选择信号，": {
+      "en": "is the select signal, and"
+    },
+    "是两路输入的对应位。": {
+      "en": "are corresponding bits of the two inputs."
+    },
+    "两个输入都是": {
+      "en": "The result is"
+    },
+    "时，结果才为": {
+      "en": "only when both inputs are"
+    },
+    "至少一个输入为": {
+      "en": "The result is"
+    },
+    "时，结果为": {
+      "en": "when at least one input is"
+    },
+    "非": {
+      "en": "NOT"
+    },
+    "补门电路图时，可以从最内层的逻辑运算向外接线。": {
+      "en": "When drawing a gate circuit, wire outward from the innermost logic operation."
+    },
+    "对应反相器，每个": {
+      "en": "corresponds to an inverter, each"
+    },
+    "项对应与门，再把这些项的输出接入或门。同一输入可分出多条线。相等判断的两条路径分别识别「都为": {
+      "en": "term to an AND gate, and the outputs of these terms feed an OR gate. The same input can fan out to several lines. The two paths of an equality test separately recognize \"both"
+    },
+    "」和「都为": {
+      "en": "\" and \"both"
+    },
+    "」。MUX 的两条路径分别用选择信号及其反相控制，这样每次只有一路能进入输出。": {
+      "en": "\". The two MUX paths are controlled by the select signal and its complement, so only one path reaches the output at a time."
+    },
+    "，宽度由具体信号决定，可以是": {
+      "en": "whose width depends on the signal: it can be a"
+    },
+    "是兜底分支。结果是一个数值。": {
+      "en": "is the default branch. The result is a numeric value."
+    },
+    "读时序图时，在每个": {
+      "en": "When reading a timing diagram, sample the control signals and inputs at each"
+    },
+    "有效时钟沿": {
+      "en": "active clock edge"
+    },
+    "读取当时的控制信号和输入，再用沿前的寄存器值计算沿后的输出。组合逻辑的输入在两沿之间可以变化，寄存器的输出在两沿之间保持。累加器的": {
+      "en": ", then use the pre-edge register values to compute the post-edge outputs. Combinational inputs may change between edges, while register outputs hold between edges. The accumulator's"
+    },
+    "用于选择直通输入或累加反馈，两种选择都在同一个有效沿写入。": {
+      "en": "selects the pass-through input or the accumulated feedback, and both choices are written on the same active edge."
+    },
+    "开始。硬件可以读出供最长指令使用的一组字节，再挑选有效字段，指令本身的长度并不因此改变。": {
+      "en": ". The hardware can read a set of bytes sized for the longest instruction and then select the valid fields; the instruction's own length does not change."
+    },
+    "除了": {
+      "en": "Except for"
+    },
+    "根据 ifun 选择操作外，其他使用 ALU 的基本指令都执行加法": {
+      "en": ", which selects an operation from ifun, all other basic instructions that use the ALU perform addition"
+    },
+    "推导": {
+      "en": "When deriving the HCL for"
+    },
+    "的 HCL 时，先为每类指令写出它需要的": {
+      "en": ", first write down the"
+    },
+    "，再对照 ALU 的输入顺序找 A 口。访存地址用「基址 + 位移」，其中基址走 B 口、位移走 A 口。栈指令的旧栈指针走 B 口，A 口补上增减量。把 A 口来源相同的指令归在一个 case 项中，条件跳转由条件判断单元和 PC 选择逻辑处理。": {
+      "en": "each instruction class needs, then find port A by comparing with the ALU input order. Memory addresses use \"base + displacement\", with the base on port B and the displacement on port A. Stack instructions put the old stack pointer on port B and the increment or decrement on port A. Group instructions with the same port A source into one case; conditional jumps are handled by the condition unit and PC selection logic."
+    },
+    "。这里 valE 是写入地址，真正写入的数据是 valA。": {
+      "en": ". Here valE is the write address, while the data actually written is valA."
+    },
+    "访存读旧栈顶 valA。两个读端口取相同的": {
+      "en": "A memory read takes the old top of stack, valA. The two read ports fetch the same"
+    },
+    "，是为了分别保留“读取地址”和“加八的输入”。": {
+      "en": "to preserve both the \"address to read\" and the \"input plus eight\"."
+    },
+    "压栈的是返回点 valP，也就是 call 后下一条指令的地址；它在内存中的小端字节为": {
+      "en": "What is pushed is the return point valP, the address of the instruction after call; its little-endian bytes in memory are"
+    },
+    "，即关闭这个寄存器写回。rA/rB 是从指令中解码出的编号；dstE 是控制逻辑最终选择的写回编号。硬件可以取消写回，不必改写内存中的指令字节。": {
+      "en": ", disabling this register write-back. rA/rB are numbers decoded from the instruction; dstE is the write-back number ultimately chosen by the control logic. The hardware can cancel a write-back without rewriting the instruction bytes in memory."
+    },
+    "。取指算出 valP，只是顺序执行的候选值；PC 的更新在周期末尾统一完成。": {
+      "en": ". Fetch computes valP as only the sequential-execution candidate; the PC update is performed uniformly at the end of the cycle."
+    },
+    "。这组新状态在下一周期才可见，所以第四条 je 不跳转，PC 选择": {
+      "en": ". This new state is visible only in the next cycle, so the fourth instruction, je, does not jump and the PC selects"
+    },
+    "是时钟沿前数据需要稳定的时间。简单指令也必须等待统一周期结束，许多部件只在周期的一部分时间有用。因此 SEQ 每周期完成一条指令的速度，取决于周期本身有多长。": {
+      "en": "is how long data must be stable before the clock edge. Even simple instructions must wait for the uniform cycle to end, and many components are useful only during part of the cycle. Thus SEQ's rate of one instruction per cycle depends on how long the cycle itself is."
+    },
+    "。图上的信号名就是导线承载的值。": {
+      "en": ". The signal names in the diagram are the values carried on the wires."
+    },
+    "延迟（latency）": {
+      "en": "Latency"
+    },
+    "是一项任务从开始到结束的时间；": {
+      "en": "is the time a task takes from start to finish;"
+    },
+    "吞吐率（throughput）": {
+      "en": "throughput"
+    },
+    "是单位时间完成的任务数。流水线主要改善吞吐率，单条任务的延迟不一定下降。课件把": {
+      "en": "is the number of tasks completed per unit time. Pipelining mainly improves throughput; the latency of a single task does not necessarily decrease. The courseware splits the"
+    },
+    "周期取决于最慢的一级": {
+      "en": "The cycle is determined by the slowest stage"
+    },
+    "，不能拿所有阶段延迟的平均值。 分级不均会让短阶段空等；级数增加又会增加寄存器开销。例如六级结构的寄存器开销占": {
+      "en": ", not by the average of all stage delays. Uneven stages leave short stages waiting, and more stages add register overhead. For example, in a six-stage design register overhead accounts for"
+    },
+    "看分级计算的题目时要区分两种量。按固定周期的时钟沿计算，无冒险的单条指令经过": {
+      "en": "When working stage-timing problems, distinguish two quantities. With a fixed clock period, an instruction without hazards passes through"
+    },
+    "级要": {
+      "en": "stages in"
+    },
+    "。如果题目采用逐级传播开销相加的口径，则计算": {
+      "en": ". If the problem instead adds up per-stage propagation costs, compute"
+    },
+    "。各级均衡时两式一致，各级不均衡时，短阶段在固定时钟下仍要等到下一个沿。重新分级时应按题设允许的切分方式重算级数、每一级的组合延迟和寄存器开销，再分别计算延迟与稳态完成间隔。": {
+      "en": ". The two expressions agree when the stages are balanced; when they are not, a short stage under a fixed clock still waits for the next edge. When repartitioning, recompute the number of stages, each stage's combinational delay, and register overhead using the cuts allowed by the problem, then calculate the latency and the steady-state completion interval separately."
+    },
+    "当 load 在 E、addq 在 D 时，load 的 ALU 才算出访问地址，真正的数据要到下一周期的 M 才读出。当前 e_valE 是地址，不是待加载的数据，不能把它当成": {
+      "en": "When load is in E and addq is in D, the load's ALU has only just computed the access address; the actual data is not read until M in the next cycle. The current e_valE is an address, not the data to be loaded, so it cannot be forwarded as the result of"
+    },
+    "尚未从内存取得。这同时触发 load/use 与 ret：前者要求 D stall，后者通常要求 D bubble。必须让 load/use 优先，保留 D 中的 ret 多等一周期，不能把它当成无用指令清掉。": {
+      "en": "that ret needs has not yet been fetched from memory. This triggers both load/use and ret: the former requires D to stall, while the latter usually requires a D bubble. Load/use must take priority, keeping ret in D for one more cycle rather than discarding it as a useless instruction."
+    },
+    "一条 load 不一定真的访问 DRAM：如果请求的数据已在上层缓存中，可以由缓存提供。": {
+      "en": "A load does not necessarily access DRAM: if the requested data is already in an upper-level cache, the cache can supply it."
+    },
+    "SRAM 的“静态”是指无需刷新，不是断电后仍能保存。": {
+      "en": "SRAM's \"static\" means it needs no refresh, not that it retains data without power."
+    },
+    "SRAM 和 DRAM 都是易失性存储。": {
+      "en": "Both SRAM and DRAM are volatile."
+    },
+    "缓存采用 SRAM、主存采用 DRAM，体现了速度与容量成本之间的取舍。SDRAM 在同步接口下传输；DDR SDRAM 利用时钟的两个边沿传输数据，提高接口带宽。": {
+      "en": "Caches use SRAM and main memory uses DRAM, reflecting the tradeoff between speed and capacity cost. SDRAM transfers over a synchronous interface; DDR SDRAM transfers on both clock edges, raising interface bandwidth."
+    },
+    "多个芯片共同提供一个字的不同位段，因此数据分布在多个芯片上。": {
+      "en": "Multiple chips together supply different bit slices of one word, so the data is distributed across chips."
+    },
+    "上层缓存下层的部分内容，利用局部性让常用访问尽可能留在快层": {
+      "en": "An upper cache holds part of the lower level's contents, using locality to keep common accesses in the fast layer as much as possible"
+    },
+    "，从而降低平均成本。": {
+      "en": ", thereby lowering average cost."
+    },
+    "也可以从一行 Cache 的内容反推它对应的内存块。": {
+      "en": "You can also infer the memory block corresponding to a cache line."
+    },
+    "若组号为": {
+      "en": "If the set index is"
+    },
+    "、标记为": {
+      "en": "and the tag is"
+    },
+    "，块号就是": {
+      "en": ", the block number is"
+    },
+    "，该块覆盖字节地址": {
+      "en": ", and the block covers byte addresses"
+    },
+    "手算时，先用这个关系检查表里的 tag、组号和地址范围是否对应。判断命中必须同时满足有效位为": {
+      "en": "When working by hand, first use this relation to check that the tag, set index, and address range in the table correspond. A hit requires both a valid bit of"
+    },
+    "与 tag 相同，访问后要用更新过的组状态继续判断下一次。": {
+      "en": "and a matching tag; after an access, continue judging the next access using the updated set state."
+    },
+    "两个不同的指针可能指向同一个内存位置。提前或推迟写入数据，可能改变下一次读取的数据。因此只有调用者能够保证指针不重叠时，才可以考虑使用": {
+      "en": "Two different pointers may point to the same memory location. Writing data earlier or later may change what the next read sees. Therefore"
+    },
+    "判断一个 C 名字是否涉及链接，可以先看它在哪个阶段起作用。": {
+      "en": "To decide whether a C name involves linking, first see at which stage it acts."
+    },
+    "、头文件名和宏用于预处理，类型关键字供编译器解析。全局函数、全局对象的定义以及被使用的外部引用可以出现在链接符号表里。函数参数和自动局部变量由编译器决定其寄存器或栈位置，调试信息中仍可能记录它们的名字。": {
+      "en": ", header names, and macros are used by preprocessing; type keywords are for the compiler. Definitions of global functions and global objects, and external references that are used, can appear in the linker symbol table. Function parameters and automatic local variables have their register or stack locations chosen by the compiler, though debug information may still record their names."
+    },
+    "readelf -rW 可列出 RELA 条目，其中有节内偏移、类型、符号和加数。链接器给各输入节分配输出地址后，根据节首地址和偏移确定要填的位置。图中的 R_X86_64_32 / R_X86_64_32S 按": {
+      "en": "readelf -rW lists RELA entries, which contain the section offset, type, symbol, and addend. After the linker assigns output addresses to input sections, it determines the location to patch from the section base address and offset. R_X86_64_32 / R_X86_64_32S in the figure write the absolute values"
+    },
+    "填绝对值，分别要求低 32 位能零扩展或符号扩展回完整值。R_X86_64_PC32 按": {
+      "en": ", requiring respectively that the low 32 bits zero-extend or sign-extend back to the full value. R_X86_64_PC32 writes the PC-relative displacement"
+    },
+    "填 PC 相对位移。": {
+      "en": "."
+    },
+    "正好是下一条指令的地址。第 36 页示例中": {
+      "en": "is exactly the address of the next instruction. In the page 36 example,"
+    },
+    "，所以写入": {
+      "en": ", so the value written is"
+    },
+    "，机器码里的四字节为 0A 00 00 00。现代工具链对外部函数调用还常生成 R_X86_64_PLT32。若调用可直接绑定到本程序内的定义，链接器可写入到该定义的相对位移。": {
+      "en": ", and the four bytes in the machine code are 0A 00 00 00. Modern toolchains also often generate R_X86_64_PLT32 for external function calls. If a call can bind directly to a definition within this program, the linker can write the relative displacement to that definition."
+    },
+    "的反汇编时，立即数字段或相对位移里的零可能是占位值。先用": {
+      "en": ", a zero in an immediate field or relative displacement may be a placeholder. First use"
+    },
+    "检查该字段有没有重定位条目，再根据它引用的符号解释真正含义。对于": {
+      "en": "to check whether the field has a relocation entry, then interpret its true meaning from the symbol it references. For"
+    },
+    "，零位移会让反汇编器暂时显示目标为下一条指令。链接时解析出目标地址后，才用正确的位移覆盖这个字段。": {
+      "en": ", a zero displacement makes the disassembler temporarily show the target as the next instruction. Only after linking resolves the target address is the field overwritten with the correct displacement."
+    },
+    "普通缓冲读盘时，进程发起 read 后可能阻塞。设备通过 DMA 将数据写入主存，完成后发中断通知内核，内核唤醒等待进程。": {
+      "en": "During ordinary buffered disk reads, a process may block after issuing read. The device writes data into main memory via DMA, then raises an interrupt to notify the kernel, which wakes the waiting process."
+    },
+    "DMA 搬数据，中断报告完成": {
+      "en": "DMA moves the data; the interrupt reports completion."
+    },
+    "。等待者被调度后，read 可从内核的页缓存把数据交给用户缓冲区。": {
+      "en": "Once the waiter is scheduled, read can hand the data from the kernel page cache to the user buffer."
+    },
+    "等待 I/O 的进程可暂时让出 CPU，定时抢占可让其他进程得到运行机会。保存恢复和局部性损失都可能带来开销。进入内核并不一定换进程，例如一次很快完成的系统调用可以回到原调用者。": {
+      "en": "A process waiting for I/O can temporarily yield the CPU, and timer preemption lets other processes run. Saving and restoring state and losing locality both add overhead. Entering the kernel does not necessarily switch processes; a quick system call can return to the original caller."
+    },
+    "并发": {
+      "en": "Concurrency"
+    },
+    "表示执行区间重叠，单核交替执行也能并发。": {
+      "en": "means execution intervals overlap, and alternating execution on one core is concurrent too."
+    },
+    "并行": {
+      "en": "Parallelism"
+    },
+    "表示同一时刻在多个核上实际执行。": {
+      "en": "means actually executing on multiple cores at the same instant."
+    },
+    "做输出题时画出父、子两条执行线。每条线上保持自己的程序顺序，跨线只加 fork、wait 等真正存在的约束。一次输出只能证明打印顺序，无法还原每次上下文切换。若连续": {
+      "en": "For output-counting problems, draw two execution lines, one for the parent and one for the child. Each line keeps its own program order; across lines add only real constraints such as fork and wait. One observed output shows only printing order and cannot reconstruct every context switch. If"
+    },
+    "次 fork 都成功，而且每个产生的进程都到达下一轮，最终有": {
+      "en": "consecutive forks all succeed and every resulting process reaches the next round, there are"
+    },
+    "个进程。若 fork 前有尚未刷新的 stdio 缓冲，也要考虑那段缓冲会随地址空间复制。": {
+      "en": "processes at the end. If stdio buffers are unflushed before fork, remember that the buffer is copied along with the address space."
+    },
+    "子进程结束后，内核释放大部分资源，保留退出状态供父进程读取，这段等待回收的状态叫": {
+      "en": "After a child exits, the kernel releases most of its resources but keeps the exit status for the parent to read; this state, waiting to be reaped, is called a"
+    },
+    "僵尸": {
+      "en": "zombie"
+    },
+    "。父进程先退出时，仍活着的孩子是": {
+      "en": ". If the parent exits first, the still-living child is an"
+    },
+    "孤儿": {
+      "en": "orphan"
+    },
+    "，由系统重新指定父进程，后来再回收。": {
+      "en": ", and the system assigns it a new parent to reap it later."
+    },
+    "读带多层": {
+      "en": "When reading code with multiple levels of"
+    },
+    "的代码时，在每个分叉点先记下当时的变量值，再在各进程线上分别更新。": {
+      "en": ", record the variable values at each fork point, then update them separately on each process line."
+    },
+    "只等待调用者自己的子进程。若中间进程先回收它的孩子，再由上层父进程回收中间进程，就可以沿这条等待关系推出哪一段代码必须最后执行。": {
+      "en": "waits only for the caller's own children. If an intermediate process reaps its child first, and then the upper parent reaps the intermediate process, the wait relationships determine which code must execute last."
+    },
+    "shell 启动前台命令时 fork 子进程并 waitpid 等待；命令以": {
+      "en": "When the shell starts a foreground command, it forks a child and waits with waitpid; if the command ends with"
+    },
+    "结尾时，父进程打印子进程 PID 后继续读下一条命令。后台任务结束时没有进程回收它，会一直留在僵尸状态。shell 长期运行，僵尸堆积会耗尽内核资源。信号解决这个问题：子进程停止或终止时，内核向父进程发送 SIGCHLD，父进程借此在合适的时机回收。": {
+      "en": ", the parent prints the child's PID and continues reading commands. No process reaps a background task when it finishes, so it stays a zombie. As the shell runs for a long time, zombies accumulate and can exhaust kernel resources. Signals solve this: when a child stops or terminates, the kernel sends SIGCHLD to the parent, which can then reap it at a suitable time."
+    },
+    "内核为每个进程维护": {
+      "en": "The kernel maintains two bit vectors,"
+    },
+    "两个位向量。发送信号就是内核把目标进程 pending 的第": {
+      "en": ", for each process. Sending a signal means the kernel sets bit"
+    },
+    "位置 1；接收信号就是进程被强制作出反应，同时清掉该位。pending 记录已发送但还没接收的信号，blocked 记录被屏蔽、暂时不接收的信号。": {
+      "en": "in the target process's pending vector; receiving a signal means the process is forced to react and the bit is cleared. pending records signals sent but not yet received; blocked records signals that are masked and temporarily not received."
+    },
+    "同类信号不排队。": {
+      "en": "Signals of the same kind do not queue."
+    },
+    "每种信号在 pending 中只占一位，已有同类信号 pending 时再次发送会被丢弃。信号只能报告\"某类事件发生过\"，不能用来计数（比如数清有几个子进程退出）。屏蔽期间到达的信号，解除屏蔽后最多处理一次。": {
+      "en": "Each signal type occupies only one bit in pending, so if a signal of that type is already pending, another is discarded. Signals can only report \"an event of this type occurred\"; they cannot count events (for example, how many children exited). A signal that arrives while blocked is handled at most once after unblocking."
+    },
+    "信号有两个来源：内核检测到事件（除零发 SIGFPE、子进程终止发 SIGCHLD），或另一进程调用 kill 请求内核发送。": {
+      "en": "Signals have two sources: the kernel detects an event (division by zero sends SIGFPE, child termination sends SIGCHLD), or another process calls kill to request that the kernel send one."
+    },
+    "给单个进程发 SIGKILL；PID 前加负号则发给整个进程组。": {
+      "en": "sends SIGKILL to a single process; prefixing the PID with a minus sign sends it to the entire process group."
+    },
+    "每个进程属于一个进程组。终端上 Ctrl-C 向": {
+      "en": "Each process belongs to a process group. On a terminal, Ctrl-C sends SIGINT (default: terminate) to the"
+    },
+    "前台": {
+      "en": "foreground"
+    },
+    "进程组发 SIGINT（默认终止），Ctrl-Z 发 SIGTSTP（默认停止），后台进程组收不到键盘信号。": {
+      "en": "process group, and Ctrl-Z sends SIGTSTP (default: stop); background process groups do not receive keyboard signals."
+    },
+    "内核从异常处理程序返回、准备把控制交给进程": {
+      "en": "When the kernel returns from an exception handler and is about to hand control to process"
+    },
+    "时，计算": {
+      "en": ", it computes"
+    },
+    "。pnb 为空就执行下一条指令；否则取编号最小的位": {
+      "en": ". If pnb is empty, it executes the next instruction; otherwise it takes the lowest-numbered bit"
+    },
+    "，强制": {
+      "en": ", forces"
+    },
+    "接收信号": {
+      "en": "to receive signal"
+    },
+    "，处理完再重复检查。进程上下文切换都由进入某个异常处理程序开始，所以信号只在进程从内核态返回用户态的时刻被接收。多线程进程由内核随机选一个不屏蔽该信号的线程接收。": {
+      "en": ", and repeats the check after handling. Every process context switch begins by entering some exception handler, so signals are received only when a process returns from kernel mode to user mode. In a multithreaded process, the kernel picks a thread that does not block the signal."
+    },
+    "把 signum 的动作换成 handler；handler 取 SIG_IGN 时忽略该信号，取 SIG_DFL 时恢复默认动作。handler 返回后回到被信号打断的位置继续执行。handler 是与主程序并发的": {
+      "en": "changes the action for signum to handler; SIG_IGN ignores the signal, and SIG_DFL restores the default action. When handler returns, execution resumes at the point where the signal interrupted it. The handler is a"
+    },
+    "逻辑流": {
+      "en": "logical flow"
+    },
+    "，属于同一进程：进入 handler 不创建新进程，也共用原进程的地址空间。": {
+      "en": "concurrent with the main program and belongs to the same process: entering the handler creates no new process and shares the original address space."
+    },
+    "只调用": {
+      "en": "Call only"
+    },
+    "异步信号安全": {
+      "en": "async-signal-safe"
+    },
+    "函数（可重入，或不会被信号打断）。": {
+      "en": "functions (reentrant, or not interruptible by signals)."
+    },
+    "安全；": {
+      "en": "are safe;"
+    },
+    "不安全，": {
+      "en": "are unsafe, and"
+    },
+    "是唯一安全的输出函数。格式化输出可用 SIO 包（sio_puts、sio_putl、受限格式的 sio_printf）。主程序与 handler 都用 printf 可能因共享 stdio 缓冲而死锁。": {
+      "en": "is the only safe output function. For formatted output, use the SIO package (sio_puts, sio_putl, and a restricted sio_printf). If both the main program and a handler use printf, they can deadlock on the shared stdio buffer."
+    },
+    "全局变量声明为 volatile；只读写的全局标志用": {
+      "en": "Declare global variables volatile; for a global flag that is only read and written, use"
+    },
+    "，不需要额外保护。": {
+      "en": "and no extra protection is needed."
+    },
+    "SIGCHLD 的 handler 要用": {
+      "en": "The SIGCHLD handler must loop with"
+    },
+    "循环回收，直到 errno 等于 ECHILD。多个孩子终止可能只送来一个 SIGCHLD，只 wait 一次会漏掉其余僵尸。": {
+      "en": "to reap children until errno equals ECHILD. Several children may terminate while only one SIGCHLD is delivered, so waiting once can leave the rest as zombies."
+    },
+    "想\"等 SIGCHLD 到达再继续\"时，": {
+      "en": "To \"wait until SIGCHLD arrives\","
+    },
+    "有竞争窗口：检查 pid 之后、进入 pause 之前信号到达，pause 就再也等不到下一次。": {
+      "en": "has a race window: if the signal arrives after pid is checked but before pause is entered, pause waits forever for the next one."
+    },
+    "安全但慢。": {
+      "en": "is safe but slow."
+    },
+    "原子地完成\"临时把屏蔽集换成 prev 并挂起\"：信号到达且 handler 返回后，恢复原屏蔽集再返回，检查与挂起之间没有窗口。": {
+      "en": "atomically \"temporarily replaces the mask with prev and suspends\": after the signal arrives and the handler returns, the original mask is restored and the call returns, leaving no window between check and suspend."
+    },
+    "把当前寄存器上下文（栈指针、基址指针、PC）存入 j 并返回 0。": {
+      "en": "saves the current register context (stack pointer, frame pointer, PC) in j and returns 0."
+    },
+    "从 j 恢复上下文，把返回值设为 i，跳到 j 中保存的 PC，于是 setjmp 再次返回、这次返回 i。setjmp 调用一次可以返回多次，longjmp 调用一次不返回。深层嵌套调用出错时，一步跳回入口处的": {
+      "en": "restores the context from j, sets the return value to i, and jumps to the PC saved in j, so setjmp returns again, this time with i. One setjmp call can return many times; one longjmp call never returns. When an error occurs deep in nested calls, jump straight back to the"
+    },
+    "，按返回值分派错误处理。": {
+      "en": "at the entry point and dispatch error handling by return value."
+    },
+    "跳转限制在栈纪律之内：只能跳到": {
+      "en": "Jumps are limited by stack discipline: you may jump only to the setjmp point of a function that has been"
+    },
+    "已调用但还没返回": {
+      "en": "called but has not yet returned"
+    },
+    "的函数的 setjmp 点。setjmp 所在的函数一旦返回，它的栈帧已不在栈上，再对它 longjmp 行为未定义。": {
+      "en": ". Once the function containing setjmp returns, its stack frame is no longer on the stack, and a longjmp to it has undefined behavior."
+    },
+    "这个实验对应第 13 讲的 Cache 组织与性能。Part A 用": {
+      "en": "This lab corresponds to Lecture 13 on cache organization and performance. Part A uses"
+    },
+    "重放访存记录，统计命中、缺失和淘汰。Part B 用": {
+      "en": "to replay a memory-access trace, counting hits, misses, and evictions. Part B uses"
+    },
+    "实现矩阵转置，通过改变访问顺序减少缺失。评分器用 Valgrind 记录转置函数的访存地址，再用参考模拟器统计这些访问在指定缓存上的结果。": {
+      "en": "to implement matrix transpose, reducing misses by changing access order. The grader uses Valgrind to record the addresses accessed by the transpose function, then uses a reference simulator to count how those accesses behave in the specified cache."
+    },
+    "命令行参数": {
+      "en": "The command-line arguments are"
+    },
+    "是组索引位数，": {
+      "en": "for the set-index bits,"
+    },
+    "是块偏移位数，": {
+      "en": "for block-offset bits, and"
+    },
+    "指定 trace 文件。组数为": {
+      "en": "for the trace file. The number of sets is"
+    },
+    "，每块为": {
+      "en": ", each block is"
+    },
+    "字节，容量为": {
+      "en": "bytes, and the capacity is"
+    },
+    "字节。给定字节地址": {
+      "en": "bytes. Given byte address"
+    },
+    "是块号。源码先用右移去掉块偏移，再用": {
+      "en": "is the block number. The source first shifts right to remove the block offset, then uses"
+    },
+    "取组号，剩下的高位是 tag。只扫描选中的那一组。": {
+      "en": "to get the set index; the remaining high bits are the tag. Only the selected set is scanned."
+    },
+    "题设保证一次访问不跨块。trace 中的长度在解析和": {
+      "en": "The problem guarantees that one access does not cross a block. The length in the trace is preserved for parsing and for"
+    },
+    "输出时保留，查找缓存行时用访问地址即可。若": {
+      "en": "output; finding a cache line only needs the access address. If the first access of"
+    },
+    "的第一次访问缺失，第二次会命中刚装入的块。": {
+      "en": "misses, the second hits the block just loaded."
+    },
+    "每条缓存行记录 tag 和最近使用时间": {
+      "en": "Each cache line records a tag and the most recent use time"
+    },
+    "。时间为零表示无效，每次模拟访问先推进计数器。": {
+      "en": ". A time of zero means invalid, and each simulated access first advances the counter."
+    },
+    "时，地址": {
+      "en": ", addresses"
+    },
+    "对应块号 0、2、4，都映射到组 0。依次执行": {
+      "en": "map to block numbers 0, 2, and 4, all in set 0. Executing"
+    },
+    "，前两条各缺失一次，": {
+      "en": "in order gives one miss each for the first two;"
+    },
+    "连续命中两次并让块 0 成为最近使用的块。最后一次访问缺失，淘汰块 2。结果为": {
+      "en": "hits twice in a row and makes block 0 the most recently used. The last access misses and evicts block 2. The result is"
+    },
+    "。模拟结束用题目要求的": {
+      "en": ". At the end, print the counts with the required"
+    },
+    "输出计数。": {
+      "en": "."
+    },
+    "函数参数": {
+      "en": "The function parameters are"
+    },
+    "是源矩阵列数，": {
+      "en": "for the source matrix's column count and"
+    },
+    "是源矩阵行数。原矩阵为": {
+      "en": "for its row count. The original matrix is"
+    },
+    "，结果是": {
+      "en": "and the result is"
+    },
+    "。正确性要求": {
+      "en": ". Correctness requires"
+    },
+    "。C 数组按行优先存放，对固定的": {
+      "en": ". C arrays are stored in row-major order; for fixed"
+    },
+    "连续读，": {
+      "en": "reads consecutively while"
+    },
+    "则按": {
+      "en": "writes with a stride of"
+    },
+    "字节的步长写。": {
+      "en": "bytes."
+    },
+    "评分用": {
+      "en": "Grading uses a direct-mapped cache of"
+    },
+    "的直接映射缓存，即": {
+      "en": ":"
+    },
+    "组、每组一行、每行": {
+      "en": "sets, one line per set,"
+    },
+    "KiB。一行可容纳": {
+      "en": "KiB. One line holds"
+    },
+    "。分块把访问限制在几行几列内，让刚带入的行尽早被用完。直接映射还要考虑 A 与 B 的行会不会落在同一组。": {
+      "en": "s. Blocking confines accesses to a few rows and columns so that lines just brought in are used up quickly. With direct mapping, also consider whether rows of A and B land in the same set."
+    },
+    "评分尺寸": {
+      "en": "Grading sizes"
+    },
+    "分块。每次先把一行的 8 个元素读入标量变量，再写到 B": {
+      "en": "blocking. Each time, read the 8 elements of one row into scalar variables, then write them to B."
+    },
+    "分块，再按四个": {
+      "en": "blocking, then process four"
+    },
+    "象限处理。用 B 的部分位置暂存一个象限": {
+      "en": "quadrants. Use part of B to temporarily hold one quadrant."
+    },
+    "一行跨": {
+      "en": "A row spans"
+    },
+    "字节，隔四行就跨": {
+      "en": "bytes, and four rows apart spans"
+    },
+    "字节，行首会映射到同一组。分阶段写 B 可减少上下两组行交替挤占缓存": {
+      "en": "bytes, so the row starts map to the same set. Writing B in stages reduces the two groups of rows alternately evicting each other from the cache."
+    },
+    "A 一行": {
+      "en": "A row of A is"
+    },
+    "字节，模": {
+      "en": "bytes, which leaves"
+    },
+    "余": {
+      "en": "modulo"
+    },
+    "。当数组首地址按缓存行对齐时，行首在整行与半行边界间交替，四列一组能配合这种对齐": {
+      "en": ". When the array base is cache-line aligned, row starts alternate between whole-line and half-line boundaries, and groups of four columns match this alignment."
+    },
+    "的暂存分三步。先读 A 的上四行，把左上象限转置到 B 的最终位置，右上象限暂放在 B 的对应上半行内。再读 A 的左下象限，同时取出 B 里暂存的值，分别写到各自的最终位置。最后转置 A 的右下象限。B 里暂存的数据要先取出，再覆盖原位置。": {
+      "en": "case uses three staging steps. First read the upper four rows of A and transpose the upper-left quadrant to its final position in B, while the upper-right quadrant is temporarily placed in the corresponding upper half of B. Then read the lower-left quadrant of A while retrieving the temporary values from B, and write each to its final position. Finally transpose the lower-right quadrant of A. Temporarily stored data in B must be retrieved before its location is overwritten."
+    },
+    "提交函数使用描述字符串": {
+      "en": "The submitted function uses the description string"
+    },
+    "，供评分器识别。题目允许针对三个尺寸选择不同实现。Part B 最多用 12 个局部": {
+      "en": ", which the grader uses to identify it. The problem allows different implementations for the three sizes. Part B may use at most 12 local"
+    },
+    "，A 保持只读，允许使用 B 暂存。当前实现的四个循环下标和八个暂存变量正好用满 12 个。": {
+      "en": "; A stays read-only, and B may be used for staging. The current implementation's four loop indices and eight temporary variables use exactly 12."
+    },
+    "在 Linux 或 Ubuntu WSL 的": {
+      "en": "Run in the"
+    },
+    "目录运行：": {
+      "en": "directory on Linux or Ubuntu WSL:"
+    },
+    "Part A 若计数不同，先选短 trace，用": {
+      "en": "If Part A counts differ, start with a short trace, compare it line by line with"
+    },
+    "逐条对照，找出第一次状态分叉。Part B 先确认转置正确，再比较 miss。": {
+      "en": ", and find the first state divergence. For Part B, confirm correctness first, then compare misses. The"
+    },
+    "可以交给": {
+      "en": "can be fed to"
+    },
+    "检查具体哪些访问发生缺失。": {
+      "en": "to see which accesses miss."
+    },
+    "原始分": {
+      "en": "raw points"
+    },
+    "次 miss": {
+      "en": "misses"
+    },
+    "次 miss，": {
+      "en": "misses,"
+    },
+    "原始分换算为": {
+      "en": "raw points converted to"
+    },
+    "在 Linux 中按 handout 的 Makefile 生成": {
+      "en": "builds"
+    },
+    "。用下面的命令确认包里是两份带课程要求文件头的源码。": {
+      "en": "with the handout Makefile on Linux. Use the command below to confirm that the package contains two source files with the required course headers."
+    },
+    "在 Autolab 的 Cache Lab 作业页上传": {
+      "en": "Upload"
+    },
+    "即可。": {
+      "en": "on the Cache Lab assignment page in Autolab."
+    },
+    "用来在本地复查自动评分，Autolab 提交后可以在作业页查看线上结果。": {
+      "en": "is used to re-check the automatic grading locally; after submitting to Autolab, the online result is available on the assignment page."
+    },
+    "下面的参数、返回值和保存责任采用本课Linux x86-64 System V ABI。整数和指针参数使用这组通用寄存器，浮点参数主要使用XMM寄存器；混合参数分别按各自序列分配。表中的参数顺序描述调用时的角色，进入函数后寄存器还可以保存局部变量或中间结果。": {
+      "en": "The parameters, return values, and saving responsibilities below follow the Linux x86-64 System V ABI used in this course. Integer and pointer parameters use this set of general-purpose registers, and floating-point parameters mainly use XMM registers; mixed parameters are allocated in their respective sequences. The order of parameters in the table describes their roles during the call, and after entering the function, registers can still hold local variables or intermediate results."
+    },
+    "传送四字（quad word）": {
+      "en": "Move quadword"
+    },
+    "传送绝对的四字": {
+      "en": "Move absolute quadword"
+    },
+    "读 SEQ 图与做题的顺序": {
+      "en": "Reading the SEQ Diagram and How to Approach Problems"
+    },
+    "转换为八字": {
+      "en": "Convert to octword"
+    },
+    "中文称呼": {
+      "en": "Chinese name"
+    },
+    "成员共享首地址；大小容纳最大成员，再按最大对齐要求补齐。": {
+      "en": "members share the starting address; the size accommodates the largest member and is then padded to the largest alignment requirement."
+    },
+    "Buffer overflow，缓冲区溢出": {
+      "en": "Buffer overflow"
+    },
+    "，je 允许正常返回；不同则调用失败处理。guard 不是一般题目中可以随意假定的固定常量。": {
+      "en": ", je allows a normal return; otherwise, control goes to the failure handler. The guard is not a fixed constant that can be assumed arbitrarily in general exercises."
+    },
+    "一次读取目标扇区的平均时间近似为：": {
+      "en": "The average time to read a target sector is approximately:"
+    },
+    "需要可编程的已擦除位置，不能像 DRAM 一样任意原地覆盖。": {
+      "en": "An erased position must be programmable; data cannot be overwritten in place as in DRAM."
+    },
+    "看首次装入、映射争用还是工作集超容量。": {
+      "en": "Check whether it is a first load, mapping contention, or a working set exceeding capacity."
+    },
+    "静态库 .a 是目标文件归档。链接器扫描命令行时，从归档抽取能解决当前未定义引用的成员，所以通常把使用者放在库之前，例如 gcc main.o -L. -lvector -o prog。共享库 .so 由动态加载器在装载时或程序显式请求时引入。readelf -d 可看动态依赖，运行时也可用 dlopen、dlsym 查找库及符号。共享库常见 PIC 代码通过 PC 相对寻址、GOT 或 PLT 等机制支持装载到不同位置。": {
+      "en": "The static library .a is an archive of object files. When the linker scans the command line, it extracts members from the archive that can resolve current undefined references, so the object files that use the library are normally placed before it on the command line, for example gcc main.o -L. -lvector -o prog. The shared library .so is introduced by the dynamic loader at load time or when the program explicitly requests it. readelf -d shows dynamic dependencies, and at runtime dlopen and dlsym can also be used to locate libraries and symbols. Common PIC code in shared libraries supports being loaded at different addresses via PC-relative addressing, GOT, or PLT mechanisms."
+    },
+    "取负使最低置位右侧不变、左侧翻转，按位与后只留下该位。": {
+      "en": "Negation leaves the bits to the right of the lowest set bit unchanged and flips the bits above it; a bitwise AND then keeps only that bit."
+    },
+    "三份程序都关掉了 PIE，代码地址固定，可以直接在 GDB 里对函数名设断点：": {
+      "en": "All three programs are built without PIE, so code addresses are fixed and breakpoints can be set directly on function names in GDB:"
+    },
+    "按当前要调试的程序选一组；另一组里的函数名在这个程序中没有定义。以 rtarget 第五关为例，生成二进制输入并启动调试：": {
+      "en": "Choose a set according to the program being debugged; the function names in the other set are not defined in this program. For example, to debug level five of rtarget, generate the binary input and start debugging:"
+    },
+    "M 级发现预测错误时，给 D、E、M 注入气泡，取消三条年轻指令；下一周期从 W 保存的顺序地址恢复取指。": {
+      "en": "When the M stage detects a misprediction, it injects bubbles into D, E, and M and cancels three younger instructions; in the next cycle, instruction fetch is restored from the sequential address saved by W."
+    },
+    "第一段把 M 的加载数据送进下一拍 M 将使用的 valA；第二段只放行“加载值仅作为待存数据”的情况。基址或栈指针属于 srcB，到 E 算地址时就要用，仍须暂停。若某寄存器既作 store 数据又作地址基址，也会被 srcB 条件拦住。": {
+      "en": "The first clause sends M's loaded data to the valA that M will use in the next cycle; the second clause only permits the case where the loaded value is used solely as data to be stored. The base address or stack pointer belongs to srcB, which is needed when E computes the address, so a stall is still required. If a register serves both as store data and as the address base, it will also be blocked by the srcB condition."
+    },
+    "全局变量、局部 static 对象": {
+      "en": "Global variables and local static objects"
+    },
+    "DRAM 芯片有 d 个 supercell，每个 supercell 保存 w 位，总容量为：": {
+      "en": "A DRAM chip has d supercells, each storing w bits, for a total capacity of:"
+    },
+    "紧接它的编码": {
+      "en": "The next encoding"
+    },
+    "只计算这个地址表达式，因此也能高效算": {
+      "en": "only computes this address expression, so it can also efficiently compute"
+    },
+    "符号扩展。看汇编时先标注每个寄存器目前表示的 C 变量，再逐条算地址与数值，最后写出等价的 C 表达式。": {
+      "en": "sign-extends. When reading assembly, first mark which C variable each register currently represents, then calculate the address and value of each instruction, and finally write out the equivalent C expression."
+    },
+    "零扩展传送 MOVZ": {
+      "en": "Zero-extending move MOVZ"
+    },
+    "符号扩展传送 MOVS": {
+      "en": "Sign-extending move MOVS"
+    },
+    "位数除法通常先": {
+      "en": "-bit division is usually preceded by"
+    },
+    "同时计算并设置条件码；": {
+      "en": "computes and sets the condition codes as well;"
+    },
+    "先算候选值再按条件选择；条件传送适合两边都便宜且没有危险访问或副作用的表达式。": {
+      "en": "computes the candidate value first and then selects according to the condition; conditional move suits expressions where both sides are cheap and have no risky accesses or side effects."
+    },
+    "”，再算局部变量、保存寄存器和返回地址的偏移。": {
+      "en": "', then calculate the offsets of local variables, saved registers, and the return address."
+    },
+    "要计算已有字符串与追加字符串的总长度；不设宽度的": {
+      "en": "must compute the total length of the existing string and the appended string; a width-unspecified"
+    },
+    "对四字节 buf 最多读三个字符，再加终止零，但": {
+      "en": "for a four-byte buf, read at most three characters plus the terminating zero, but"
+    },
+    "，其展示的栈帧也分配 24 字节：合法容量与 padding 数量不同，但这两份示例的返回槽偏移相同。题目给出汇编时，以实际的 rsp 变化和对象起点计算。": {
+      "en": ", whose displayed stack frame also allocates 24 bytes: the legal capacity and padding amount differ, but the return slot offsets are the same in both examples. When a problem gives assembly, calculate from the actual rsp changes and object starting points."
+    },
+    "。这里两个片段只在 ret 时消耗栈地址；若 gadget 还包含 pop，必须同时计算它消耗的数据槽。": {
+      "en": ". Here both snippets consume stack addresses only at ret; if a gadget also contains pop, the data slots it consumes must be counted as well."
+    },
+    "用寄存器逐次增加元素的字节宽度，或另行计算地址。": {
+      "en": "increment the byte width in the register, or compute the address separately."
+    },
+    "地址计算、压栈、出栈、调用和普通传送虽然也可能使用 ALU 做加减，但不因此改写 CC。": {
+      "en": "Address calculation, push, pop, calls, and ordinary moves may also use the ALU for addition and subtraction, but they do not rewrite CC."
+    },
+    "附加页进一步说明存储电路：双稳态元件可保持": {
+      "en": "The supplementary page further explains the storage circuit: bistable elements can hold"
+    },
+    "两个读端口取得旧的寄存器值，组合逻辑算出": {
+      "en": "two read ports obtain the old register values, and combinational logic computes"
+    },
+    "。ret 虽然只长": {
+      "en": ". Although ret is only"
+    },
+    "选择当前取指地址，读指令，算 valP 和预测下一地址。": {
+      "en": "select the current fetch address, read the instruction, and compute valP and the predicted next address."
+    },
+    "等程序寄存器不同。例如一条 load 算出地址时，另一条指令正在译码，两者的中间值必须分别保留。": {
+      "en": "differ from program registers. For example, while one load instruction computes an address, another instruction is decoding, and the intermediate values of both must be preserved separately."
+    },
+    "大写阶段前缀表示已存入流水线寄存器的字段，小写阶段前缀表示本周期在该阶段算出的信号。": {
+      "en": "An uppercase stage prefix denotes a field already stored in a pipeline register, and a lowercase stage prefix denotes a signal computed in that stage during this cycle."
+    },
+    "先前算出的 ALU 结果，现在保存在 M 级寄存器中。": {
+      "en": "the ALU result computed earlier is now held in the M-stage register."
+    },
+    "接收本周期算好的新输入。": {
+      "en": "receives the new input computed this cycle."
+    },
+    "运算结果往往在 E 阶段就已算出，加载数据在 M 阶段读出；不必等到 W 写进寄存器文件，再由后续指令读出来。转发（forwarding，也称旁路 bypass）把已经产生的值直接送到 D 的操作数选择器。": {
+      "en": "Results are often computed already in the E stage and loaded data is read out in the M stage, so there is no need to wait for the W stage to write them into the register file before later instructions read them. Forwarding (also called bypassing) sends the produced value directly to the operand selector in D."
+    },
+    "同一周期中，E 的组合结果送到 D；到上升沿，addq 的正确操作数存入 E 级寄存器，下一周期算出": {
+      "en": "in the same cycle, E's combinational result is sent to D; at the rising edge, the correct operand of addq is stored in the E-stage register, and the next cycle computes"
+    },
+    "。它在 E 时，目标路径的第一条指令已在 D，第二条已在 F。下一个周期让 D、E 都装入 bubble，分别取消这两条年轻指令；分支本身继续进入 M，以其保存的顺序地址恢复取指。": {
+      "en": ". When the branch is in E, the first instruction on the target path is already in D and the second is in F. In the next cycle, bubbles are loaded into D and E, canceling these two younger instructions; the branch itself continues into M and restores instruction fetch from its saved sequential address."
+    },
+    "容量、单芯片数据宽度与模块总数据宽度要分别计算。": {
+      "en": "Capacity, per-chip data width, and total module data width must be computed separately."
+    },
+    "ms，按统一单位计算：": {
+      "en": " ms; converting to consistent units:"
+    },
+    "按列访问不等于每次必然 miss；实际效果还取决于容量、块大小、映射及相邻列能否复用仍留在缓存中的数据。判断代码局部性时，应先算地址差，而不是只看循环变量的名字。": {
+      "en": "Column-wise access does not necessarily miss every time; the actual effect also depends on capacity, block size, mapping, and whether adjacent columns can reuse data still resident in the cache. When judging code locality, compute the address differences first instead of looking only at loop variable names."
+    },
+    "用同一个中心下标算上、下、左、右四个邻居": {
+      "en": "use the same center index to compute the four neighbors: up, down, left, and right"
+    },
+    "。另外还要算功能部件和 load 的吞吐下限，取各种限制中较大的那个。内积每元素要读两个输入，课件的两路 load 即给出 1 CPE 下限。double 乘积可以提前算，内积的单累加器却仍被浮点加法的 3 周期延迟限制。展开 6×1 保留该链，6×6 或 6×1a 才能把依赖限制压到接近吞吐限制。": {
+      "en": ". Also compute the throughput bounds of the functional units and of loads, and take the largest bound. A dot product reads two inputs per element, and the two load ports in the courseware give a 1 CPE lower bound. Double products can be computed ahead of time, but a single-accumulator dot product is still limited by the 3-cycle latency of floating-point addition. A 6×1 unrolling keeps that chain; only 6×6 or 6×1a can push the dependency bound close to the throughput bound."
+    },
+    "的位移。ELF 的某些 PC 相对重定位条目按": {
+      "en": "displacement. Certain PC-relative relocation entries in ELF are computed as"
+    },
+    "是浮点数的位表示，不能按普通整数乘除来计算浮点值。先提取字段：": {
+      "en": "is the bit representation of a floating-point number, which cannot be multiplied or divided as an ordinary integer to obtain its float value. First extract the fields:"
+    },
+    "按小班课的四步处理：先排除 NaN；再处理两种符号的零；异号时正数更大；同号时比较位模式，正数方向相同，负数方向相反。例如负数编码更大，可能表示绝对值更大、数值更小。": {
+      "en": "Use the four steps from recitation: first rule out NaN; then handle zeros of both signs; with different signs the positive number is larger; with the same sign compare the bit patterns, where the direction is the same for positive numbers and reversed for negative numbers. For example, a larger encoding of a negative number may mean a larger magnitude, that is, a smaller value."
+    },
+    "会崩溃。链上每个 slot 都在改变奇偶性，所以对齐要按整条链算，不能只看最后一个地址。": {
+      "en": "will crash. Every slot on the chain changes parity, so alignment must be computed along the whole chain, not just from the last address."
+    },
+    "用 M.valA 保存顺序地址，恢复项的右侧相应为 M.valA。当前实现在两个文件的分支恢复项中各将": {
+      "en": "uses M.valA to store the sequential address, so the right side of the restore item is M.valA. The current implementation changes"
+    },
+    "对应《深入理解计算机系统》§6.4–6.6。本讲把上一讲的局部性落实到两个问题：": {
+      "en": "This corresponds to \"Computer Systems: A Programmer's Perspective\" §§6.4–6.6. This lecture applies the locality from the previous lecture to two questions:"
+    },
+    "对应教材第 5 章。先减少无用工作，再看依赖链、功能部件吞吐量以及访存开销。": {
+      "en": "This corresponds to Chapter 5 of the textbook. First reduce unnecessary work, then look at dependency chains, functional unit throughput, and memory access overhead."
+    },
+    "1 字节是 8 位；两位十六进制数对应一字节，如": {
+      "en": "One byte is 8 bits; two hex digits correspond to one byte, e.g."
+    },
+    "。本次 Bomb Lab 第三关先取得表基址，再读取、扩展并加回基址：": {
+      "en": ". For Bomb Lab Level 3, first obtain the table's base address, then read, extend, and add the base address back:"
+    },
+    "，即 buf 的起点。返回槽原先在入口栈顶，减去": {
+      "en": ", i.e., the starting point of buf. The return slot was originally at the top of the stack at entry; subtracting"
+    },
+    "取指 Fetch": {
+      "en": "Instruction Fetch"
+    },
+    "执行 Execute": {
+      "en": "Execute"
+    },
+    "。Y86-64 的 call 长": {
+      "en": ". The Y86-64 call is"
+    },
+    "。错误路径调用": {
+      "en": ". The error path calls"
+    }
+  },
+  "blog/insightface/index.html": {
+    "2.安装……insightface?": {
+      "en": "2. Install... insightface?"
+    },
+    "没有轮子……那怎么办呢？": {
+      "en": "No wheel... so what now?"
+    },
+    "最后直接在cmd里面pip install whl文件，然后……numpy和torch的都安装失败了，不过mxnet的安装成功了。": {
+      "en": "In the end I ran pip install on the whl file in cmd; then... both numpy and torch failed to install, but mxnet installed successfully."
+    },
+    "调了一些bug之后程序跑起来了，然后……": {
+      "en": "After fixing a few bugs, the program ran, and then..."
+    }
+  },
+  "blog/august2025/index.html": {
+    "调了半天，最后红温了决定这一次提交还是WA就去睡觉，然后终于AC了……": {
+      "en": "Kept fiddling for ages; in the end I got so frustrated that I decided to go to sleep if this submission was another WA — and then it finally got AC..."
+    },
+    "第一次接触到try……except与EOF处理，记之。": {
+      "en": "First time encountering try...except and EOF handling — worth noting down."
+    }
+  },
+  "blog/march2026/index.html": {
+    "defaultdict(int) d.items() 两个多项式不一定一样长。": {
+      "en": "defaultdict(int), d.items(). The two polynomials are not necessarily the same length."
+    },
+    "可变参数：": {
+      "en": "Variable parameters:"
+    },
+    "：任意数量，打包成元组": {
+      "en": ": any number, packed into a tuple"
+    },
+    "：打包成字典": {
+      "en": ": packed into a dictionary"
+    }
+  },
+  "blog/may2026/index.html": {
+    "则检查前一层的dp并移动指针，否则同时移动两个指针。注意区间长度去掉0，以及": {
+      "en": "then check the previous layer of the dp and move the pointer; otherwise, move both pointers at once. Note that the interval length excludes 0, and"
+    },
+    "根据dp表的值从后往前回溯。如果遇到*则检查前一层的dp并移动指针，否则同时移动两个指针。注意区间长度去掉0，以及*和?不能合并到一起。": {
+      "en": "Backtrack from the end according to the values in the dp table. If a * is encountered, check the previous layer of the dp and move the pointer; otherwise, move both pointers at once. Note that the interval length excludes 0, and the '*' and '?' wildcards cannot be combined."
+    }
+  },
+  "blog/october2025/index.html": {
+    "前缀和。一开始写的位运算但是被首位0击败了。": {
+      "en": "Prefix sum. I first wrote it with bit operations, but the leading 0 defeated it."
+    }
+  },
+  "blog/november2025/index.html": {
+    "贪心。先将两组马从大到小排序。 如果田忌最大的马比齐王大，那么赢齐王。（这一步最优是因为当前齐王的马最大，因此用任何马赢了它都没有损失。） 如果田忌最大的马没有齐王大，那么用最小的马输齐王。（这一步最优是因为无论如何都会输给齐王这匹马，因此用田忌最小的马顶。） 如果田忌最大的马等于齐王最大的马，由于平局不扣钱，那么两步可能的路径是两匹马平局，或者用田忌最小的马输齐王最大的马。不能单从这两匹马判断最优策略，因此先考虑田忌最小的马的用途。 此时如果田忌最小的马大于齐王最小的马，那么赢齐王。（这一步最优是因为这是田忌最小的马，能赢总归是赚的。） 而如果田忌最小的马小于齐王最小的马，那么用这匹马输齐王最大的马。（这匹马无论如何都会输。） 如果田忌最小的马等于齐王最小的马，用这匹马输齐王最大的马更优。（这两组同时平局与相互交叉打的财产均为0，而剩余马贪心的钱财数大于等于安排这两组交叉打的钱财数。） 使用四个指针即可。注意结束循环的条件。": {
+      "en": "Greedy. First, sort both sets of horses from largest to smallest. If Tian Ji's largest horse is bigger than the King of Qi's, then win against the King of Qi. (This step is optimal because the King of Qi's horse is the largest, so whichever horse beats it gains without loss.) If Tian Ji's largest horse is no bigger than the King of Qi's, then use the smallest horse to lose to the King of Qi's. (This step is optimal because it will lose to this horse of the King of Qi no matter what, so use Tian Ji's smallest horse.) If Tian Ji's largest horse equals the King of Qi's largest horse, since a tie does not deduct money, the two possible paths are to tie these two horses or to use Tian Ji's smallest horse to lose to the King of Qi's largest horse. The optimal strategy cannot be judged from these two horses alone, so first consider the purpose of Tian Ji's smallest horse. At this point, if Tian Ji's smallest horse is bigger than the King of Qi's smallest horse, then win against the King of Qi. (This step is optimal because it is Tian Ji's smallest horse, and winning with it is always a gain.) If Tian Ji's smallest horse is smaller than the King of Qi's smallest horse, then use it to lose to the King of Qi's largest horse. (This horse will lose no matter what.) If Tian Ji's smallest horse equals the King of Qi's smallest horse, it is better to use it to lose to the King of Qi's largest horse. (Tying both pairs and cross-matching them both yield a monetary result of 0, while the greedy winnings from the remaining horses are greater than or equal to those from cross-matching these two pairs.) Four pointers suffice. Pay attention to the loop termination conditions."
+    }
+  },
+  "blog/april2026/index.html": {
+    "1.*x=*s:重载=和*，接收到之后就打印。 2.重载前置++，返回对象本身即可。（std::ostream（输出流）本身就具有“自动推进”的属性。）": {
+      "en": "1. *x=*s: overload = and *, then print after receiving it. 2. Overload prefix ++; returning the object itself is enough. (std::ostream (the output stream) itself has the property of advancing automatically.)"
+    }
+  },
+  "blog/december2025/index.html": {
+    "二维费用01背包。": {
+      "en": "Two-dimensional cost 0-1 knapsack."
+    }
+  },
+  "blog/winter2026/index.html": {
+    "滑动窗口。遍历右端点，每次在符合要求的情况下缩左端点。 1.遍历哈希表：for(const auto &p : ori)，p.first,p.second 2.调用函数时，使用值传递会创建一次副本，占用多余内存空间，可使用引用传递（const)。 3.s.substr(l,len)，多次调用会导致超内存。": {
+      "en": "Sliding window. Traverse the right endpoint, and each time shrink the left endpoint if conditions are met. 1. Traverse the hash table: for(const auto &p: ori), p.first, p.second 2. When calling a function, passing by value creates a copy and uses extra memory, so you can use pass by reference (const). 3. s.substr(l,len), calling it multiple times can lead to memory overflow."
     }
   }
 }

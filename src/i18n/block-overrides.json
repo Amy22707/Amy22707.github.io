@@ -1,5 +1,7 @@
 {
-  "[[A0]] 使用的花枝宽427，而明信片画布宽500。此前没有对应位置数据，树枝回退到左上角，右侧就留下了明显空隙；树枝的投影也出现在天空中。": {"en":"[[A0]] uses a 427-pixel-wide branch asset, while the postcard canvas is 500 pixels wide. Without position data, the branch defaulted to the upper-left corner, leaving an obvious gap on the right; its shadow also appeared in the sky."},
+  "[[A0]] 使用的花枝宽427，而明信片画布宽500。此前没有对应位置数据，树枝回退到左上角，右侧就留下了明显空隙；树枝的投影也出现在天空中。": {
+    "en": "[[A0]] uses a 427-pixel-wide branch asset, while the postcard canvas is 500 pixels wide. Without position data, the branch defaulted to the upper-left corner, leaving an obvious gap on the right; its shadow also appeared in the sky."
+  },
   "对应《深入理解计算机系统》§6.4–6.6。本讲把上一讲的局部性落实到两个问题：[[O0]]地址怎样映射到 Cache，程序的访问顺序怎样改变命中率。[[C0]]": {
     "en": "Corresponding to \"Computer Systems: A Programmer's Perspective\" §6.4–6.6. This lecture applies the concept of locality from the previous lecture to two issues: [[O0]]how addresses map to the cache, and how the program's access order changes hit rates.[[C0]]"
   },
@@ -118,7 +120,7 @@
     "en": "In the general format, if the exponent has [[A0]] bits and the fraction field has [[A1]] bits, then [[A2]]. Normalized numbers use [[A3]] and [[A4]]; subnormal numbers use [[A5]] and [[A6]], with values all being [[A7]]."
   },
   "单精度特殊值：正零 [[A0]]，负零 [[A1]]，正无穷 [[A2]]，负无穷 [[A3]]；指数全 [[A4]] 且小数字段非零是 NaN。最小正规格化正数 [[A5]]，最小正非规格化数 [[A6]]。向偶数舍入在[[O7]]被舍弃位恰为 [[A8]] 时[[C7]]，选择保留位末位为 [[A9]] 的结果；浮点转整数按 C 的规则向零截断。": {
-    "en": "Single-precision special values: positive zero [[A0]], negative zero [[A1]], positive infinity [[A2]], negative infinity [[A3]]; exponent all [[A4]] and non-zero fraction field is NaN. The smallest normalized positive number [[A5]], the smallest positive subnormal number [[A6]]. Rounding to even, when the discarded bits at [[O7]] are exactly [[A8]], [[C7]], choose the result with the last bit of the retained part as [[A9]]; floating-point to integer conversion truncates toward zero according to C rules."
+    "en": "Single-precision special values: positive zero [[A0]], negative zero [[A1]], positive infinity [[A2]], negative infinity [[A3]]; an exponent of all [[A4]] with a nonzero fraction field is NaN. The smallest positive normalized number is [[A5]], and the smallest positive subnormal number is [[A6]]. In round-to-even, [[O7]]when the discarded bits are exactly [[A8]][[C7]], the result whose last retained bit is [[A9]] is chosen; floating-point to integer conversion truncates toward zero according to C rules."
   },
   "位模式 [[A0]]，数值为最小正非规格化数 [[A1]]。": {
     "en": "Bit pattern [[A0]], numeric value is the smallest positive subnormal number [[A1]]."
@@ -323,5 +325,521 @@
   },
   "[\"[[O0]]只优化执行部分。[[C0]] 提示词、工具观察和摘要生成 token 不进入该执行策略目标；已生成的摘要作为条件输入保留。搜索与摘要可以共享模型，但不代表摘要 token 也被这个目标直接训练。\",[[\"strong\",null]]]": {
     "en": "[[O0]]Only the execution part is optimized.[[C0]] Prompts, tool observations, and summary-generation tokens do not enter this execution-policy objective; the already generated summary is retained as a conditional input. Search and summary generation may share a model, but that does not mean summary tokens are directly trained by this objective."
+  },
+  "例如 [[A0]]，编码 [[A1]]。最小正规格化正数是 [[A2]]；最小正非规格化数是 [[A3]]。非规格化区域相邻值间距恒为 [[A4]]，使数值平滑靠近零。[[A5]] 和 [[A6]] 数值比较相等，但符号位不同；[[A7]] 与 [[A8]] 可得到不同符号的无穷。": {
+    "en": "For example, [[A0]], encoded as [[A1]]. The smallest positive normalized number is [[A2]]; the smallest positive subnormal number is [[A3]]. Adjacent values in the subnormal region are always spaced [[A4]] apart, so values approach zero smoothly. [[A5]] and [[A6]] compare equal numerically but have different sign bits; [[A7]] and [[A8]] produce infinities of different signs."
+  },
+  "[[O0]]指数域为零时，实际指数取 [[A1]][[C0]]，不能直接套用 [[A2]]。因而非规格化数与最小规格化数使用同一个实际指数，只是前导位从 [[A3]] 变为 [[A4]]。": {
+    "en": "[[O0]]When the exponent field is zero, the actual exponent is [[A1]][[C0]]; [[A2]] cannot be applied directly. Thus subnormal numbers and the smallest normalized number share the same actual exponent, but the leading bit changes from [[A3]] to [[A4]]."
+  },
+  "[[O0]]向偶数舍入[[C0]]是默认舍入方式：取最近的候选，恰在中点时取保留位末位为 [[A1]] 的那一个。例如保留三位二进制小数，[[A2]] 舍为 [[A3]]，[[A4]] 舍为 [[A5]]。浮点数的加法先对齐指数、相加、规格化、舍入；乘法先合并符号和指数、相乘有效数字，再规格化、舍入。加上远小于当前数的量，可能因精度不足而完全没有效果。": {
+    "en": "[[O0]]Round to even[[C0]] is the default rounding mode: take the nearest candidate, and at an exact midpoint take the one whose last retained bit is [[A1]]. For example, keeping three binary fractional bits, [[A2]] rounds to [[A3]] and [[A4]] rounds to [[A5]]. Floating-point addition first aligns exponents, adds, normalizes, and rounds; multiplication first combines the signs and exponents, multiplies the significands, then normalizes and rounds. Adding a quantity much smaller than the current number may have no effect at all because of limited precision."
+  },
+  "[[A0]] 是 Shell 的输出重定向，将标准输出写入文件，同名文件已存在时会覆盖。生成 [[A1]] 只是在另一个文件里记录反汇编结果，不改变原来的 [[A2]]。[[A3]] 是输出文件名的扩展名，也可以保存为 [[A4]]；这份输出含地址、机器字节和注释。": {
+    "en": "[[A0]] is shell output redirection: it writes standard output to a file and overwrites an existing file of the same name. Generating [[A1]] merely records the disassembly in another file without changing the original [[A2]]. [[A3]] is the extension of the output filename, and the result can also be saved as [[A4]]; this output contains addresses, machine bytes, and comments."
+  },
+  "[[A0]] 中一般的立即数编码是符号扩展的 [[A1]] 位；完整 [[A2]] 位立即数用 [[A3]]，普通 [[A4]] 也不能把 [[A5]] 位立即数直接写入内存。": {
+    "en": "In [[A0]], an ordinary immediate is encoded as a sign-extended [[A1]]-bit value; a full [[A2]]-bit immediate uses [[A3]], and ordinary [[A4]] cannot write a [[A5]]-bit immediate directly to memory either."
+  },
+  "有符号比较关注 [[A0]] 和 [[A1]]：[[A2]] 条件为 [[A3]]，[[A4]] 为 [[A5]]。无符号比较关注 [[A6]]：[[A7]] 为 [[A8]]，[[A9]] 为 [[A10]]。执行 [[A11]] 后，比较的是 [[A12]]。": {
+    "en": "Signed comparisons depend on [[A0]] and [[A1]]: [[A2]] applies when [[A3]], and [[A4]] applies when [[A5]]. Unsigned comparisons depend on [[A6]]: [[A7]] applies when [[A8]], and [[A9]] applies when [[A10]]. After [[A11]], the comparison is of [[A12]]."
+  },
+  "这里把 [[A0]] 字节操作数称为一个字，与 x86 指令后缀中 [[A1]] 字节的称呼不同。用 [[A2]] 表示寄存器 r 中的值，用 [[A3]]、[[A4]] 分别表示从地址 a 读出的 [[A5]]、[[A6]] 字节。": {
+    "en": "Here the [[A0]]-byte operand is called a word, unlike the [[A1]]-byte meaning of the suffix in x86 instructions. Write [[A2]] for the value in register r, and [[A3]] and [[A4]] respectively for the [[A5]]-byte and [[A6]]-byte values read from address a."
+  },
+  "[[O0]]调用约定由软件共同遵守。[[C0]] ISA 规定 [[A1]] 压入返回地址、[[A2]] 取出返回地址。约定用哪些寄存器传参、把返回值放在哪个寄存器，以及谁保存寄存器，则由 ABI 或课程采用的调用约定规定。例如使用 [[A3]]、[[A4]] 传前两个整数参数和用 [[A5]] 返回整数，都是软件约定。": {
+    "en": "[[O0]]Calling conventions are software agreements.[[C0]] The ISA specifies that [[A1]] pushes the return address and [[A2]] pops it. Which registers carry arguments, where the return value goes, and who saves registers are set by the ABI or by the calling convention used in the course. For example, passing the first two integer arguments in [[A3]] and [[A4]] and returning an integer in [[A5]] are software conventions."
+  },
+  "寄存器编号占 [[A0]] 位，按下面的固定编码读取，与函数参数的传递顺序无关：": {
+    "en": "The register number occupies [[A0]] bits and is read according to the fixed encoding below, independent of argument-passing order:"
+  },
+  "[[O0]]首字节高四位 icode 选择指令类别，低四位 ifun 选择该类别内的功能。[[C0]] 冒号表示把两个四位字段拼成一个字节。例如 [[A1]] 表示 [[A2]] 的整数运算类，[[A3]] 进一步指定减法。": {
+    "en": "[[O0]]The high four bits of the first byte, icode, select the instruction class, and the low four bits, ifun, select the operation within that class.[[C0]] The colon means the two four-bit fields are packed into one byte. For example, [[A1]] denotes the integer-operation class [[A2]], and [[A3]] further specifies subtraction."
+  },
+  "表中的 V、D、Dest 各占 [[A0]] 字节，都是小端编码。[[O1]]Y86-64 的跳转和调用目标直接编码为绝对地址，与 x86-64 常见的 PC 相对位移不同。[[C1]] 寄存器指示字节的高四位是 rA，低四位是 rB；即使在 [[A2]] 中 rA 是目的寄存器，也仍放在高四位。": {
+    "en": "In the table, V, D, and Dest each occupy [[A0]] bytes and are all little-endian. [[O1]]Y86-64 encodes jump and call targets as absolute addresses, unlike the PC-relative offsets common in x86-64.[[C1]] In the register-specifier byte, the high four bits are rA and the low four bits are rB; even in [[A2]], where rA is the destination register, it still occupies the high four bits."
+  },
+  "编码 [[A0]] 时，目的 [[A1]] 的编号是 [[A2]]，基址 [[A3]] 的编号是 [[A4]]，所以寄存器字节是 [[A5]]；位移 [[A6]] 的 [[A7]] 位补码是 [[A8]]，按小端写成 [[A9]]。端序只改变多字节常量的字节排列，不交换 icode/ifun，或 rA/rB。": {
+    "en": "When encoding [[A0]], the destination [[A1]] has number [[A2]] and the base [[A3]] has number [[A4]], so the register byte is [[A5]]; the displacement [[A6]] is the [[A7]]-bit two's complement value [[A8]], written little-endian as [[A9]]. Endianness only changes the byte order of multi-byte constants; it does not swap icode/ifun or rA/rB."
+  },
+  "[[A0]] 和 [[A1]] 统一让 [[A2]] 指定基址，所以两类指令都可以由同一个读端口取得基址，经相同的 ALU 输入通路计算 [[A3]]。[[A4]] 在 store 中提供要写入的值，在 load 中指定接收数据的寄存器。把基址位置固定下来可简化译码和数据通路。": {
+    "en": "[[A0]] and [[A1]] both let [[A2]] specify the base address, so both instruction classes can obtain the base through the same read port and compute [[A3]] over the same ALU input path. [[A4]] supplies the value to store in store instructions and specifies the destination register in load instructions. Fixing the base position simplifies decoding and the datapath."
+  },
+  "教材图 4-3 把 [[A0]] 的四种运算分别编码。四条指令的 [[A1]] 都是 [[A2]]，整个首字节随 [[A3]] 变化，后面再接一字节 [[A4]]。": {
+    "en": "Textbook Figure 4-3 encodes the four operations of [[A0]] separately. All four instructions have [[A1]] equal to [[A2]]; the entire first byte varies with [[A3]] and is followed by one [[A4]] byte."
+  },
+  "例如 [[A0]] 是 [[A1]]。[[A2]] 指定异或，[[A3]] 指定源寄存器 [[A4]]（[[A5]]）和目的寄存器 [[A6]]（[[A7]]）。减法方向仍是[[O8]]目的减源[[C8]]：": {
+    "en": "For example, [[A0]] is [[A1]]. [[A2]] specifies XOR, and [[A3]] specifies the source register [[A4]] ([[A5]]) and the destination register [[A6]] ([[A7]]). The subtraction direction is still [[O8]]destination minus source[[C8]]:"
+  },
+  "图 4-3 中，传送类的 [[A0]] 为 [[A1]]，跳转类的 [[A2]] 为 [[A3]]。两类指令共用同一套条件 [[A4]]。表中的编码都是[[O5]]首字节[[C5]]，后面还要按指令类别读取寄存器字节或目标地址。": {
+    "en": "In Figure 4-3, [[A0]] for the move class is [[A1]], and [[A2]] for the jump class is [[A3]]. Both classes share the same condition [[A4]]. The encodings in the table are all [[O5]]first bytes[[C5]], followed by register bytes or a target address depending on the instruction class."
+  },
+  "例如 [[A0]] 是 [[A1]]，第二个字节 [[A2]] 是寄存器编号组合。[[A3]] 是 [[A4]]，后八字节是小端目标地址。两条指令的首字节低四位都是 [[A5]]，都在 [[A6]] 时执行对应动作。拆编码时，先用高四位确定指令类别，再在该类别里解释低四位。": {
+    "en": "For example, [[A0]] is [[A1]], and the second byte [[A2]] combines register numbers. [[A3]] is [[A4]], whose last eight bytes are a little-endian target address. The low four bits of the first byte are [[A5]] for both instructions, and both perform their action when [[A6]]. When decoding, use the high four bits to determine the instruction class, then interpret the low four bits within that class."
+  },
+  "Y86-64 栈沿低地址增长，[[A0]] 指向当前栈顶，即最近压入的位置。设执行前栈指针为 S：": {
+    "en": "The Y86-64 stack grows toward lower addresses, and [[A0]] points to the current top of the stack, the most recently pushed location. Let the stack pointer before execution be S:"
+  },
+  "每次读取当前元素，用 [[A0]] 判断是否为零；非零才计数并移动指针。指针每次增加 [[A1]] 字节（一个元素的宽度）。[[A2]] 必须读取刚才测试元素产生的 CC，不能误用别的加法留下的 CC。": {
+    "en": "Read the current element each time and use [[A0]] to test whether it is zero; only when it is nonzero do you count it and advance the pointer. The pointer increases by [[A1]] bytes (the width of one element). [[A2]] must read the CC produced by the element just tested, not the CC left by some other addition."
+  },
+  "[[A0]] 指定随后代码或数据的放置地址；[[A1]] 按 [[A2]] 字节对齐；[[A3]] 放入一个 [[A4]] 字节常量。它们是汇编器伪指令，不是 CPU 执行的指令。独立的 Y86-64 示例通常自己初始化 [[A5]]，通过 call 进入主过程，再用 halt 结束；栈与代码、数据应放在互不覆盖的区域。": {
+    "en": "[[A0]] sets the address at which the following code or data is placed; [[A1]] aligns to [[A2]] bytes; [[A3]] emits an [[A4]]-byte constant. These are assembler directives, not instructions executed by the CPU. A standalone Y86-64 example usually initializes [[A5]] itself, enters the main procedure through call, and ends with halt; the stack, code, and data should occupy non-overlapping regions."
+  },
+  "MIPS 示例的 [[A0]] 把结果放在第一个操作数 [[A1]]，与本课 AT&T 的“目的在后”不同；这里的 [[A2]] 是寄存器名。Y86-64 与 MIPS 一样把数据访存与运算分离，但编码仍是变长，且保留 CC 和栈指令。": {
+    "en": "In the MIPS example, [[A0]] places the result in the first operand [[A1]], unlike AT&T's destination-last order used in this course; here [[A2]] is a register name. Y86-64, like MIPS, separates data memory access from arithmetic, but its encoding is still variable-length and it retains CC and stack instructions."
+  },
+  "这里 [[A0]] 是选择信号，[[A1]] 和 [[A2]] 是两路输入的对应位。": {
+    "en": "Here [[A0]] is the select signal, and [[A1]] and [[A2]] are corresponding bits of the two inputs."
+  },
+  "[[A0]] 与 [[A1]]（AND）": {
+    "en": "[[A0]] and [[A1]] (AND)"
+  },
+  "两个输入都是 [[A0]] 时，结果才为 [[A1]]": {
+    "en": "The result is [[A1]] only when both inputs are [[A0]]"
+  },
+  "[[A0]] 或 [[A1]]（OR）": {
+    "en": "[[A0]] or [[A1]] (OR)"
+  },
+  "至少一个输入为 [[A0]] 时，结果为 [[A1]]": {
+    "en": "The result is [[A1]] when at least one input is [[A0]]"
+  },
+  "非 [[A0]]（NOT）": {
+    "en": "NOT [[A0]]"
+  },
+  "[[A0]] 变成 [[A1]]，[[A2]] 变成 [[A3]]": {
+    "en": "[[A0]] becomes [[A1]], and [[A2]] becomes [[A3]]"
+  },
+  "[[A0]] 时，[[A1]]，所以 [[A2]]。": {
+    "en": "When [[A0]], [[A1]], so [[A2]]."
+  },
+  "补门电路图时，可以从最内层的逻辑运算向外接线。[[A0]] 对应反相器，每个 [[A1]] 项对应与门，再把这些项的输出接入或门。同一输入可分出多条线。相等判断的两条路径分别识别「都为 [[A2]]」和「都为 [[A3]]」。MUX 的两条路径分别用选择信号及其反相控制，这样每次只有一路能进入输出。": {
+    "en": "When drawing a gate circuit, wire outward from the innermost logic operation. [[A0]] corresponds to an inverter, each [[A1]] term to an AND gate, and the outputs of these terms feed an OR gate. The same input can fan out to several lines. The two paths of an equality test separately recognize \"both [[A2]]\" and \"both [[A3]]\". The two MUX paths are controlled by the select signal and its complement, so only one path reaches the output at a time."
+  },
+  "HCL（Hardware Control Language）用于描述硬件的控制逻辑。[[A0]] 表示[[O1]]布尔信号[[C1]]，课件的 [[A2]] 表示[[O3]]字级信号[[C3]]，宽度由具体信号决定，可以是 [[A4]] 位寄存器 ID，也可以是 [[A5]] 位数据。": {
+    "en": "HCL (Hardware Control Language) describes hardware control logic. [[A0]] denotes a [[O1]]Boolean signal[[C1]], while [[A2]] in the courseware denotes a [[O3]]word-level signal[[C3]] whose width depends on the signal: it can be a [[A4]]-bit register ID or [[A5]] bits of data."
+  },
+  "[[A0]] 是集合成员判断，相当于若干相等比较做或。方括号中的 case 表达式[[O1]]从上到下选取第一个条件为真的值[[C1]]；[[A2]] 是兜底分支。结果是一个数值。": {
+    "en": "[[A0]] tests set membership, equivalent to ORing several equality comparisons. The case expressions in brackets [[O1]]select the value of the first true condition from top to bottom[[C1]]; [[A2]] is the default branch. The result is a numeric value."
+  },
+  "读时序图时，在每个[[O0]]有效时钟沿[[C0]]读取当时的控制信号和输入，再用沿前的寄存器值计算沿后的输出。组合逻辑的输入在两沿之间可以变化，寄存器的输出在两沿之间保持。累加器的 [[A1]] 用于选择直通输入或累加反馈，两种选择都在同一个有效沿写入。": {
+    "en": "When reading a timing diagram, sample the control signals and inputs at each [[O0]]active clock edge[[C0]], then use the pre-edge register values to compute the post-edge outputs. Combinational inputs may change between edges, while register outputs hold between edges. The accumulator's [[A1]] selects the pass-through input or the accumulated feedback, and both choices are written on the same active edge."
+  },
+  "有寄存器字节时，valC 从 [[A0]] 开始；无寄存器字节的跳转、调用从 [[A1]] 开始。硬件可以读出供最长指令使用的一组字节，再挑选有效字段，指令本身的长度并不因此改变。": {
+    "en": "With a register byte, valC starts at [[A0]]; for jumps and calls without a register byte, it starts at [[A1]]. The hardware can read a set of bytes sized for the longest instruction and then select the valid fields; the instruction's own length does not change."
+  },
+  "寄存器读端口 A 不一定读指令字段 rA。 [[A0]] 的 rA 是接收弹出值的目的寄存器，译码时真正要读取的是 [[A1]]，所以两个读端口都选择 [[A2]]。": {
+    "en": "Register read port A does not necessarily read instruction field rA. In [[A0]], rA is the destination register that receives the popped value; what decoding actually needs to read is [[A1]], so both read ports select [[A2]]."
+  },
+  "ALU 有输入 [[A0]]，输出 [[A1]]。减法执行的顺序是 [[A2]]。[[O3]]除了 [[A4]] 根据 ifun 选择操作外，其他使用 ALU 的基本指令都执行加法[[C3]]：": {
+    "en": "The ALU has inputs [[A0]] and output [[A1]]. Subtraction is performed in the order [[A2]]. [[O3]]Except for [[A4]], which selects an operation from ifun, all other basic instructions that use the ALU perform addition[[C3]]:"
+  },
+  "推导 [[A0]] 的 HCL 时，先为每类指令写出它需要的 [[A1]]，再对照 ALU 的输入顺序找 A 口。访存地址用「基址 + 位移」，其中基址走 B 口、位移走 A 口。栈指令的旧栈指针走 B 口，A 口补上增减量。把 A 口来源相同的指令归在一个 case 项中，条件跳转由条件判断单元和 PC 选择逻辑处理。": {
+    "en": "When deriving the HCL for [[A0]], first write down the [[A1]] each instruction class needs, then find port A by comparing with the ALU input order. Memory addresses use \"base + displacement\", with the base on port B and the displacement on port A. Stack instructions put the old stack pointer on port B and the increment or decrement on port A. Group instructions with the same port A source into one case; conditional jumps are handled by the condition unit and PC selection logic."
+  },
+  "两个读端口取得旧的寄存器值，组合逻辑算出 [[A0]]；到本次完成的时钟沿，才把结果写入 [[A1]]。": {
+    "en": "The two read ports obtain the old register values, combinational logic computes [[A0]], and only at the clock edge that completes this cycle are the results written to [[A1]]."
+  },
+  "访存写入 [[A0]]，不写回程序寄存器，PC 增加 [[A1]]。这里 valE 是写入地址，真正写入的数据是 valA。": {
+    "en": "A memory write goes to [[A0]] without writing back to the program registers, and the PC increases by [[A1]]. Here valE is the write address, while the data actually written is valA."
+  },
+  "访存读旧栈顶 valA。两个读端口取相同的 [[A0]]，是为了分别保留“读取地址”和“加八的输入”。": {
+    "en": "A memory read takes the old top of stack, valA. The two read ports fetch the same [[A0]] to preserve both the \"address to read\" and the \"input plus eight\"."
+  },
+  "压栈的是返回点 valP，也就是 call 后下一条指令的地址；它在内存中的小端字节为 [[A0]]。": {
+    "en": "What is pushed is the return point valP, the address of the instruction after call; its little-endian bytes in memory are [[A0]]."
+  },
+  "条件不满足的 [[A0]] 选择 [[A1]]，即关闭这个寄存器写回。rA/rB 是从指令中解码出的编号；dstE 是控制逻辑最终选择的写回编号。硬件可以取消写回，不必改写内存中的指令字节。": {
+    "en": "When the condition fails, [[A0]] selects [[A1]], disabling this register write-back. rA/rB are numbers decoded from the instruction; dstE is the write-back number ultimately chosen by the control logic. The hardware can cancel a write-back without rewriting the instruction bytes in memory."
+  },
+  "例如 PC=[[A0]] 的 [[A1]]：取指同时得到 [[A2]] 和 [[A3]]。[[A4]] 时选 [[A5]]，[[A6]] 时选 [[A7]]。取指算出 valP，只是顺序执行的候选值；PC 的更新在周期末尾统一完成。": {
+    "en": "For example, for [[A1]] at PC=[[A0]]: fetch produces [[A2]] and [[A3]] at the same time. Select [[A5]] when [[A4]], and [[A7]] when [[A6]]. Fetch computes valP as only the sequential-execution candidate; the PC update is performed uniformly at the end of the cycle."
+  },
+  "第三条将 [[A0]] 更新为 [[A1]]，并使 [[A2]]。这组新状态在下一周期才可见，所以第四条 je 不跳转，PC 选择 [[A3]]。": {
+    "en": "The third instruction updates [[A0]] to [[A1]] and makes [[A2]]. This new state is visible only in the next cycle, so the fourth instruction, je, does not jump and the PC selects [[A3]]."
+  },
+  "其中 [[A0]] 是最长有效组合路径的延迟，[[A1]] 是时钟沿前数据需要稳定的时间。简单指令也必须等待统一周期结束，许多部件只在周期的一部分时间有用。因此 SEQ 每周期完成一条指令的速度，取决于周期本身有多长。": {
+    "en": "Here [[A0]] is the delay of the longest valid combinational path, and [[A1]] is how long data must be stable before the clock edge. Even simple instructions must wait for the uniform cycle to end, and many components are useful only during part of the cycle. Thus SEQ's rate of one instruction per cycle depends on how long the cycle itself is."
+  },
+  "遇到一条具体指令，先确定它的效果，再依次追踪[[O0]]指令字段 → 要读的寄存器 → ALU 两个输入 → 访存地址与数据 → 两个写回目的 → 新 PC[[C0]]。图上的信号名就是导线承载的值。": {
+    "en": "For a specific instruction, first determine its effect, then trace [[O0]]instruction fields → registers to read → the two ALU inputs → memory address and data → the two write-back destinations → the new PC[[C0]]. The signal names in the diagram are the values carried on the wires."
+  },
+  "[[O0]]延迟（latency）[[C0]] 是一项任务从开始到结束的时间；[[O1]]吞吐率（throughput）[[C1]] 是单位时间完成的任务数。流水线主要改善吞吐率，单条任务的延迟不一定下降。课件把 [[A2]] ps 的组合逻辑分成三段，每段 [[A3]] ps，每级寄存器开销为 [[A4]] ps：": {
+    "en": "[[O0]]Latency[[C0]] is the time a task takes from start to finish; [[O1]]throughput[[C1]] is the number of tasks completed per unit time. Pipelining mainly improves throughput; the latency of a single task does not necessarily decrease. The courseware splits the [[A2]] ps of combinational logic into three stages of [[A3]] ps each, with [[A4]] ps of register overhead per stage:"
+  },
+  "[[O0]]周期取决于最慢的一级[[C0]]，不能拿所有阶段延迟的平均值。 分级不均会让短阶段空等；级数增加又会增加寄存器开销。例如六级结构的寄存器开销占 [[A1]]，因此不能靠无限增加级数获得无限加速。": {
+    "en": "[[O0]]The cycle is determined by the slowest stage[[C0]], not by the average of all stage delays. Uneven stages leave short stages waiting, and more stages add register overhead. For example, in a six-stage design register overhead accounts for [[A1]], so adding stages indefinitely cannot yield unlimited speedup."
+  },
+  "看分级计算的题目时要区分两种量。按固定周期的时钟沿计算，无冒险的单条指令经过 [[A0]] 级要 [[A1]]。如果题目采用逐级传播开销相加的口径，则计算 [[A2]]。各级均衡时两式一致，各级不均衡时，短阶段在固定时钟下仍要等到下一个沿。重新分级时应按题设允许的切分方式重算级数、每一级的组合延迟和寄存器开销，再分别计算延迟与稳态完成间隔。": {
+    "en": "When working stage-timing problems, distinguish two quantities. With a fixed clock period, an instruction without hazards passes through [[A0]] stages in [[A1]]. If the problem instead adds up per-stage propagation costs, compute [[A2]]. The two expressions agree when stages are balanced; when they are not, short stages under a fixed clock still wait for the next edge. When repartitioning, recompute the number of stages, each stage's combinational delay, and register overhead using the allowed cuts in the problem, then calculate latency and steady-state completion interval separately."
+  },
+  "当 load 在 E、addq 在 D 时，load 的 ALU 才算出访问地址，真正的数据要到下一周期的 M 才读出。当前 e_valE 是地址，不是待加载的数据，不能把它当成 [[A0]] 的结果转发。": {
+    "en": "When load is in E and addq is in D, the load's ALU has only just computed the access address; the actual data is not read until M in the next cycle. The current e_valE is an address, not the data to be loaded, so it cannot be forwarded as the result of [[A0]]."
+  },
+  "当 load 在 E、ret 在 D 时，ret 需要的新 [[A0]] 尚未从内存取得。这同时触发 load/use 与 ret：前者要求 D stall，后者通常要求 D bubble。必须让 load/use 优先，保留 D 中的 ret 多等一周期，不能把它当成无用指令清掉。": {
+    "en": "When load is in E and ret is in D, the new [[A0]] that ret needs has not yet been fetched from memory. This triggers both load/use and ret: the former requires D to stall, while the latter usually requires a D bubble. Load/use must take priority, keeping ret in D for one more cycle rather than discarding it as a useless instruction."
+  },
+  "[[O0]]地址说明在哪里读写，数据说明读到或写入什么。[[C0]] 一条 load 不一定真的访问 DRAM：如果请求的数据已在上层缓存中，可以由缓存提供。": {
+    "en": "[[O0]]The address says where to read or write; the data says what is read or written.[[C0]] A load does not necessarily access DRAM: if the requested data is already in an upper-level cache, the cache can supply it."
+  },
+  "SRAM 的“静态”是指无需刷新，不是断电后仍能保存。[[O0]]SRAM 和 DRAM 都是易失性存储。[[C0]] 缓存采用 SRAM、主存采用 DRAM，体现了速度与容量成本之间的取舍。SDRAM 在同步接口下传输；DDR SDRAM 利用时钟的两个边沿传输数据，提高接口带宽。": {
+    "en": "SRAM's \"static\" means it needs no refresh, not that it retains data without power. [[O0]]Both SRAM and DRAM are volatile.[[C0]] Caches use SRAM and main memory uses DRAM, reflecting the tradeoff between speed and capacity cost. SDRAM transfers over a synchronous interface; DDR SDRAM transfers on both clock edges, raising interface bandwidth."
+  },
+  "通过 RAS 发送行号 [[A0]]。(Row Address)": {
+    "en": "Send the row number [[A0]] via RAS. (Row Address)"
+  },
+  "通过 CAS 发送列号 [[A0]]。(Column Address)": {
+    "en": "Send the column number [[A0]] via CAS. (Column Address)"
+  },
+  "[[O0]]多个芯片共同提供一个字的不同位段，因此数据分布在多个芯片上。[[C0]] 容量、单芯片数据宽度与模块总数据宽度要分别计算。": {
+    "en": "[[O0]]Multiple chips together supply different bit slices of one word, so the data is distributed across chips.[[C0]] Capacity, per-chip data width, and total module data width must be computed separately."
+  },
+  "靠近 CPU 的层通常更快、更小、每字节成本更高；向下容量更大、访问更慢、每字节更便宜。[[O0]]上层缓存下层的部分内容，利用局部性让常用访问尽可能留在快层[[C0]]，从而降低平均成本。": {
+    "en": "Layers closer to the CPU are usually faster, smaller, and more expensive per byte; lower layers are larger, slower, and cheaper per byte. [[O0]]An upper cache holds part of the lower level's contents, using locality to keep common accesses in the fast layer as much as possible[[C0]], thereby lowering average cost."
+  },
+  "也可以从一行 Cache 的内容反推它对应的内存块。[[O0]]若组号为 [[A1]]、标记为 [[A2]]，块号就是 [[A3]]，该块覆盖字节地址 [[A4]] 到 [[A5]]。[[C0]] 手算时，先用这个关系检查表里的 tag、组号和地址范围是否对应。判断命中必须同时满足有效位为 [[A6]] 与 tag 相同，访问后要用更新过的组状态继续判断下一次。": {
+    "en": "You can also infer the memory block corresponding to a cache line. [[O0]]If the set index is [[A1]] and the tag is [[A2]], the block number is [[A3]], and the block covers byte addresses [[A4]] through [[A5]].[[C0]] When working by hand, first use this relation to check that the tag, set index, and address range in the table correspond. A hit requires both a valid bit of [[A6]] and a matching tag; after an access, continue judging the next access using the updated set state."
+  },
+  "两个不同的指针可能指向同一个内存位置。提前或推迟写入数据，可能改变下一次读取的数据。因此只有调用者能够保证指针不重叠时，才可以考虑使用 [[A0]]。": {
+    "en": "Two different pointers may point to the same memory location. Writing data earlier or later may change what the next read sees. Therefore [[A0]] can be considered only when the caller can guarantee that the pointers do not overlap."
+  },
+  "判断一个 C 名字是否涉及链接，可以先看它在哪个阶段起作用。[[A0]]、头文件名和宏用于预处理，类型关键字供编译器解析。全局函数、全局对象的定义以及被使用的外部引用可以出现在链接符号表里。函数参数和自动局部变量由编译器决定其寄存器或栈位置，调试信息中仍可能记录它们的名字。": {
+    "en": "To decide whether a C name involves linking, first see at which stage it acts. [[A0]], header names, and macros are used by preprocessing; type keywords are for the compiler. Definitions of global functions and global objects, and external references that are used, can appear in the linker symbol table. Function parameters and automatic local variables have their register or stack locations chosen by the compiler, though debug information may still record their names."
+  },
+  "readelf -rW 可列出 RELA 条目，其中有节内偏移、类型、符号和加数。链接器给各输入节分配输出地址后，根据节首地址和偏移确定要填的位置。图中的 R_X86_64_32 / R_X86_64_32S 按 [[A0]] 填绝对值，分别要求低 32 位能零扩展或符号扩展回完整值。R_X86_64_PC32 按 [[A1]] 填 PC 相对位移。": {
+    "en": "readelf -rW lists RELA entries, which contain the section offset, type, symbol, and addend. After the linker assigns output addresses to input sections, it determines the location to patch from the section base address and offset. R_X86_64_32 / R_X86_64_32S in the figure write the absolute values [[A0]], requiring respectively that the low 32 bits zero-extend or sign-extend back to the full value. R_X86_64_PC32 writes the PC-relative displacement [[A1]]."
+  },
+  "[[A0]] 正好是下一条指令的地址。第 36 页示例中 [[A1]]，[[A2]]，所以写入 [[A3]]，机器码里的四字节为 0A 00 00 00。现代工具链对外部函数调用还常生成 R_X86_64_PLT32。若调用可直接绑定到本程序内的定义，链接器可写入到该定义的相对位移。": {
+    "en": "[[A0]] is exactly the address of the next instruction. In the page 36 example, [[A1]] and [[A2]], so the value written is [[A3]], and the four bytes in the machine code are 0A 00 00 00. Modern toolchains also often generate R_X86_64_PLT32 for external function calls. If a call can bind directly to a definition within this program, the linker can write the relative displacement to that definition."
+  },
+  "读 [[A0]] 的反汇编时，立即数字段或相对位移里的零可能是占位值。先用 [[A1]] 或 [[A2]] 检查该字段有没有重定位条目，再根据它引用的符号解释真正含义。对于 [[A3]]，零位移会让反汇编器暂时显示目标为下一条指令。链接时解析出目标地址后，才用正确的位移覆盖这个字段。": {
+    "en": "When reading the disassembly of [[A0]], a zero in an immediate field or relative displacement may be a placeholder. First use [[A1]] or [[A2]] to check whether the field has a relocation entry, then interpret its true meaning from the symbol it references. For [[A3]], a zero displacement makes the disassembler temporarily show the target as the next instruction. Only after linking resolves the target address is the field overwritten with the correct displacement."
+  },
+  "普通缓冲读盘时，进程发起 read 后可能阻塞。设备通过 DMA 将数据写入主存，完成后发中断通知内核，内核唤醒等待进程。[[O0]]DMA 搬数据，中断报告完成[[C0]]。等待者被调度后，read 可从内核的页缓存把数据交给用户缓冲区。": {
+    "en": "During ordinary buffered disk reads, a process may block after issuing read. The device writes data into main memory via DMA, then raises an interrupt to notify the kernel, which wakes the waiting process. [[O0]]DMA moves the data; the interrupt reports completion.[[C0]] Once the waiter is scheduled, read can hand the data from the kernel page cache to the user buffer."
+  },
+  "等待 I/O 的进程可暂时让出 CPU，定时抢占可让其他进程得到运行机会。保存恢复和局部性损失都可能带来开销。进入内核并不一定换进程，例如一次很快完成的系统调用可以回到原调用者。[[O0]]并发[[C0]]表示执行区间重叠，单核交替执行也能并发。[[O1]]并行[[C1]]表示同一时刻在多个核上实际执行。": {
+    "en": "A process waiting for I/O can temporarily yield the CPU, and timer preemption lets other processes run. Saving and restoring state and losing locality both add overhead. Entering the kernel does not necessarily switch processes; a quick system call can return to the original caller. [[O0]]Concurrency[[C0]] means execution intervals overlap, and alternating execution on one core is concurrent too. [[O1]]Parallelism[[C1]] means actually executing on multiple cores at the same instant."
+  },
+  "做输出题时画出父、子两条执行线。每条线上保持自己的程序顺序，跨线只加 fork、wait 等真正存在的约束。一次输出只能证明打印顺序，无法还原每次上下文切换。若连续 [[A0]] 次 fork 都成功，而且每个产生的进程都到达下一轮，最终有 [[A1]] 个进程。若 fork 前有尚未刷新的 stdio 缓冲，也要考虑那段缓冲会随地址空间复制。": {
+    "en": "For output-counting problems, draw two execution lines, one for the parent and one for the child. Each line keeps its own program order; across lines add only real constraints such as fork and wait. One observed output shows only printing order and cannot reconstruct every context switch. If [[A0]] consecutive forks all succeed and every resulting process reaches the next round, there are [[A1]] processes at the end. If stdio buffers are unflushed before fork, remember that the buffer is copied along with the address space."
+  },
+  "子进程结束后，内核释放大部分资源，保留退出状态供父进程读取，这段等待回收的状态叫[[O0]]僵尸[[C0]]。父进程先退出时，仍活着的孩子是[[O1]]孤儿[[C1]]，由系统重新指定父进程，后来再回收。": {
+    "en": "After a child exits, the kernel releases most of its resources but keeps the exit status for the parent to read; this state, waiting to be reaped, is called a [[O0]]zombie[[C0]]. If the parent exits first, the still-living child is an [[O1]]orphan[[C1]], and the system assigns it a new parent to reap it later."
+  },
+  "读带多层 [[A0]] 和 [[A1]] 的代码时，在每个分叉点先记下当时的变量值，再在各进程线上分别更新。[[A2]] 只等待调用者自己的子进程。若中间进程先回收它的孩子，再由上层父进程回收中间进程，就可以沿这条等待关系推出哪一段代码必须最后执行。": {
+    "en": "When reading code with multiple levels of [[A0]] and [[A1]], record the variable values at each fork point, then update them separately on each process line. [[A2]] waits only for the caller's own children. If an intermediate process reaps its child first, and then the upper parent reaps the intermediate process, the wait relationships determine which code must execute last."
+  },
+  "shell 启动前台命令时 fork 子进程并 waitpid 等待；命令以 [[A0]] 结尾时，父进程打印子进程 PID 后继续读下一条命令。后台任务结束时没有进程回收它，会一直留在僵尸状态。shell 长期运行，僵尸堆积会耗尽内核资源。信号解决这个问题：子进程停止或终止时，内核向父进程发送 SIGCHLD，父进程借此在合适的时机回收。": {
+    "en": "When the shell starts a foreground command, it forks a child and waits with waitpid; if the command ends with [[A0]], the parent prints the child's PID and continues reading commands. No process reaps a background task when it finishes, so it stays a zombie. As the shell runs for a long time, zombies accumulate and can exhaust kernel resources. Signals solve this: when a child stops or terminates, the kernel sends SIGCHLD to the parent, which can then reap it at a suitable time."
+  },
+  "内核为每个进程维护 [[A0]] 和 [[A1]] 两个位向量。发送信号就是内核把目标进程 pending 的第 [[A2]] 位置 1；接收信号就是进程被强制作出反应，同时清掉该位。pending 记录已发送但还没接收的信号，blocked 记录被屏蔽、暂时不接收的信号。": {
+    "en": "The kernel maintains two bit vectors, [[A0]] and [[A1]], for each process. Sending a signal means the kernel sets bit [[A2]] in the target process's pending vector; receiving a signal means the process is forced to react and the bit is cleared. pending records signals sent but not yet received; blocked records signals that are masked and temporarily not received."
+  },
+  "[[O0]]同类信号不排队。[[C0]] 每种信号在 pending 中只占一位，已有同类信号 pending 时再次发送会被丢弃。信号只能报告\"某类事件发生过\"，不能用来计数（比如数清有几个子进程退出）。屏蔽期间到达的信号，解除屏蔽后最多处理一次。": {
+    "en": "[[O0]]Signals of the same kind do not queue.[[C0]] Each signal type occupies only one bit in pending, so if a signal of that type is already pending, another is discarded. Signals can only report \"an event of this type occurred\"; they cannot count events (for example, how many children exited). A signal that arrives while blocked is handled at most once after unblocking."
+  },
+  "信号有两个来源：内核检测到事件（除零发 SIGFPE、子进程终止发 SIGCHLD），或另一进程调用 kill 请求内核发送。[[A0]] 给单个进程发 SIGKILL；PID 前加负号则发给整个进程组。": {
+    "en": "Signals have two sources: the kernel detects an event (division by zero sends SIGFPE, child termination sends SIGCHLD), or another process calls kill to request that the kernel send one. [[A0]] sends SIGKILL to a single process; prefixing the PID with a minus sign sends it to the entire process group."
+  },
+  "每个进程属于一个进程组。终端上 Ctrl-C 向[[O0]]前台[[C0]]进程组发 SIGINT（默认终止），Ctrl-Z 发 SIGTSTP（默认停止），后台进程组收不到键盘信号。": {
+    "en": "Each process belongs to a process group. On a terminal, Ctrl-C sends SIGINT (default: terminate) to the [[O0]]foreground[[C0]] process group, and Ctrl-Z sends SIGTSTP (default: stop); background process groups do not receive keyboard signals."
+  },
+  "内核从异常处理程序返回、准备把控制交给进程 [[A0]] 时，计算 [[A1]]。pnb 为空就执行下一条指令；否则取编号最小的位 [[A2]]，强制 [[A3]] 接收信号 [[A4]]，处理完再重复检查。进程上下文切换都由进入某个异常处理程序开始，所以信号只在进程从内核态返回用户态的时刻被接收。多线程进程由内核随机选一个不屏蔽该信号的线程接收。": {
+    "en": "When the kernel returns from an exception handler and is about to hand control to process [[A0]], it computes [[A1]]. If pnb is empty, it executes the next instruction; otherwise it takes the lowest-numbered bit [[A2]], forces [[A3]] to receive signal [[A4]], and repeats the check after handling. Every process context switch begins by entering some exception handler, so signals are received only when a process returns from kernel mode to user mode. In a multithreaded process, the kernel picks a thread that does not block the signal."
+  },
+  "[[A0]] 把 signum 的动作换成 handler；handler 取 SIG_IGN 时忽略该信号，取 SIG_DFL 时恢复默认动作。handler 返回后回到被信号打断的位置继续执行。handler 是与主程序并发的[[O1]]逻辑流[[C1]]，属于同一进程：进入 handler 不创建新进程，也共用原进程的地址空间。": {
+    "en": "[[A0]] changes the action for signum to handler; SIG_IGN ignores the signal, and SIG_DFL restores the default action. When handler returns, execution resumes at the point where the signal interrupted it. The handler is a [[O1]]logical flow[[C1]] concurrent with the main program and belongs to the same process: entering the handler creates no new process and shares the original address space."
+  },
+  "只调用[[O0]]异步信号安全[[C0]]函数（可重入，或不会被信号打断）。[[A1]]、[[A2]]、[[A3]]、[[A4]]、[[A5]]、[[A6]] 安全；[[A7]]、[[A8]]、[[A9]]、[[A10]] 不安全，[[A11]] 是唯一安全的输出函数。格式化输出可用 SIO 包（sio_puts、sio_putl、受限格式的 sio_printf）。主程序与 handler 都用 printf 可能因共享 stdio 缓冲而死锁。": {
+    "en": "Call only [[O0]]async-signal-safe[[C0]] functions (reentrant, or not interruptible by signals). [[A1]], [[A2]], [[A3]], [[A4]], [[A5]], and [[A6]] are safe; [[A7]], [[A8]], [[A9]], and [[A10]] are unsafe, and [[A11]] is the only safe output function. For formatted output, use the SIO package (sio_puts, sio_putl, and a restricted sio_printf). If both the main program and a handler use printf, they can deadlock on the shared stdio buffer."
+  },
+  "全局变量声明为 volatile；只读写的全局标志用 [[A0]]，不需要额外保护。": {
+    "en": "Declare global variables volatile; for a global flag that is only read and written, use [[A0]] and no extra protection is needed."
+  },
+  "SIGCHLD 的 handler 要用 [[A0]] 循环回收，直到 errno 等于 ECHILD。多个孩子终止可能只送来一个 SIGCHLD，只 wait 一次会漏掉其余僵尸。": {
+    "en": "The SIGCHLD handler must loop with [[A0]] to reap children until errno equals ECHILD. Several children may terminate while only one SIGCHLD is delivered, so waiting once can leave the rest as zombies."
+  },
+  "想\"等 SIGCHLD 到达再继续\"时，[[A0]] 有竞争窗口：检查 pid 之后、进入 pause 之前信号到达，pause 就再也等不到下一次。[[A1]] 安全但慢。[[A2]] 原子地完成\"临时把屏蔽集换成 prev 并挂起\"：信号到达且 handler 返回后，恢复原屏蔽集再返回，检查与挂起之间没有窗口。": {
+    "en": "To \"wait until SIGCHLD arrives\", [[A0]] has a race window: if the signal arrives after pid is checked but before pause is entered, pause waits forever for the next one. [[A1]] is safe but slow. [[A2]] atomically \"temporarily replaces the mask with prev and suspends\": after the signal arrives and the handler returns, the original mask is restored and the call returns, leaving no window between check and suspend."
+  },
+  "[[A0]] 把当前寄存器上下文（栈指针、基址指针、PC）存入 j 并返回 0。[[A1]] 从 j 恢复上下文，把返回值设为 i，跳到 j 中保存的 PC，于是 setjmp 再次返回、这次返回 i。setjmp 调用一次可以返回多次，longjmp 调用一次不返回。深层嵌套调用出错时，一步跳回入口处的 [[A2]]，按返回值分派错误处理。": {
+    "en": "[[A0]] saves the current register context (stack pointer, frame pointer, PC) in j and returns 0. [[A1]] restores the context from j, sets the return value to i, and jumps to the PC saved in j, so setjmp returns again, this time with i. One setjmp call can return many times; one longjmp call never returns. When an error occurs deep in nested calls, jump straight back to the [[A2]] at the entry point and dispatch error handling by return value."
+  },
+  "跳转限制在栈纪律之内：只能跳到[[O0]]已调用但还没返回[[C0]]的函数的 setjmp 点。setjmp 所在的函数一旦返回，它的栈帧已不在栈上，再对它 longjmp 行为未定义。": {
+    "en": "Jumps are limited by stack discipline: you may jump only to the setjmp point of a function that has been [[O0]]called but has not yet returned[[C0]]. Once the function containing setjmp returns, its stack frame is no longer on the stack, and a longjmp to it has undefined behavior."
+  },
+  "这个实验对应第 13 讲的 Cache 组织与性能。Part A 用 [[A0]] 重放访存记录，统计命中、缺失和淘汰。Part B 用 [[A1]] 实现矩阵转置，通过改变访问顺序减少缺失。评分器用 Valgrind 记录转置函数的访存地址，再用参考模拟器统计这些访问在指定缓存上的结果。": {
+    "en": "This lab corresponds to Lecture 13 on cache organization and performance. Part A uses [[A0]] to replay a memory-access trace, counting hits, misses, and evictions. Part B uses [[A1]] to implement matrix transpose, reducing misses by changing access order. The grader uses Valgrind to record the addresses accessed by the transpose function, then uses a reference simulator to count how those accesses behave in the specified cache."
+  },
+  "命令行参数 [[A0]] 是组索引位数，[[A1]] 是每组的行数，[[A2]] 是块偏移位数，[[A3]] 指定 trace 文件。组数为 [[A4]]，每块为 [[A5]] 字节，容量为 [[A6]] 字节。给定字节地址 [[A7]]：": {
+    "en": "The command-line arguments are [[A0]] for the set-index bits, [[A1]] for lines per set, [[A2]] for block-offset bits, and [[A3]] for the trace file. The number of sets is [[A4]], each block is [[A5]] bytes, and the capacity is [[A6]] bytes. Given byte address [[A7]]:"
+  },
+  "其中 [[A0]] 是块号。源码先用右移去掉块偏移，再用 [[A1]] 取组号，剩下的高位是 tag。只扫描选中的那一组。": {
+    "en": "Here [[A0]] is the block number. The source first shifts right to remove the block offset, then uses [[A1]] to get the set index; the remaining high bits are the tag. Only the selected set is scanned."
+  },
+  "题设保证一次访问不跨块。trace 中的长度在解析和 [[A0]] 输出时保留，查找缓存行时用访问地址即可。若 [[A1]] 的第一次访问缺失，第二次会命中刚装入的块。": {
+    "en": "The problem guarantees that one access does not cross a block. The length in the trace is preserved for parsing and for [[A0]] output; finding a cache line only needs the access address. If the first access of [[A1]] misses, the second hits the block just loaded."
+  },
+  "每条缓存行记录 tag 和最近使用时间 [[A0]]。时间为零表示无效，每次模拟访问先推进计数器。": {
+    "en": "Each cache line records a tag and the most recent use time [[A0]]. A time of zero means invalid, and each simulated access first advances the counter."
+  },
+  "例如 [[A0]] 时，地址 [[A1]]、[[A2]]、[[A3]] 对应块号 0、2、4，都映射到组 0。依次执行 [[A4]]、[[A5]]、[[A6]]、[[A7]]，前两条各缺失一次，[[A8]] 连续命中两次并让块 0 成为最近使用的块。最后一次访问缺失，淘汰块 2。结果为 [[O9]]2 hit、3 miss、1 eviction[[C9]]。模拟结束用题目要求的 [[A10]] 输出计数。": {
+    "en": "For example, with [[A0]], addresses [[A1]], [[A2]], and [[A3]] map to block numbers 0, 2, and 4, all in set 0. Executing [[A4]], [[A5]], [[A6]], and [[A7]] in order gives one miss each for the first two; [[A8]] hits twice in a row and makes block 0 the most recently used. The last access misses and evicts block 2. The result is [[O9]]2 hits, 3 misses, 1 eviction[[C9]]. At the end, print the counts with the required [[A10]]."
+  },
+  "函数参数 [[A0]] 是源矩阵列数，[[A1]] 是源矩阵行数。原矩阵为 [[A2]]，结果是 [[A3]]。正确性要求 [[A4]]。C 数组按行优先存放，对固定的 [[A5]] 递增 [[A6]] 时，[[A7]] 连续读，[[A8]] 则按 [[A9]] 字节的步长写。": {
+    "en": "The function parameters are [[A0]] for the source matrix's column count and [[A1]] for its row count. The original matrix is [[A2]] and the result is [[A3]]. Correctness requires [[A4]]. C arrays are stored in row-major order; for fixed [[A5]] and increasing [[A6]], [[A7]] reads consecutively while [[A8]] writes with a stride of [[A9]] bytes."
+  },
+  "评分用 [[A0]] 的直接映射缓存，即 [[A1]] 组、每组一行、每行 [[A2]] 字节，容量为 [[A3]] KiB。一行可容纳 [[A4]] 个 [[A5]]。分块把访问限制在几行几列内，让刚带入的行尽早被用完。直接映射还要考虑 A 与 B 的行会不会落在同一组。": {
+    "en": "Grading uses a direct-mapped cache of [[A0]]: [[A1]] sets, one line per set, [[A2]] bytes per line, and a capacity of [[A3]] KiB. One line holds [[A4]] [[A5]]s. Blocking confines accesses to a few rows and columns so that lines just brought in are used up quickly. With direct mapping, also consider whether rows of A and B land in the same set."
+  },
+  "评分尺寸 [[A0]]": {
+    "en": "Grading sizes [[A0]]"
+  },
+  "[[A0]] 分块。每次先把一行的 8 个元素读入标量变量，再写到 B": {
+    "en": "[[A0]] blocking. Each time, read the 8 elements of one row into scalar variables, then write them to B."
+  },
+  "[[A0]] 分块，再按四个 [[A1]] 象限处理。用 B 的部分位置暂存一个象限": {
+    "en": "[[A0]] blocking, then process four [[A1]] quadrants. Use part of B to temporarily hold one quadrant."
+  },
+  "一行跨 [[A0]] 字节，隔四行就跨 [[A1]] 字节，行首会映射到同一组。分阶段写 B 可减少上下两组行交替挤占缓存": {
+    "en": "A row spans [[A0]] bytes, and four rows apart spans [[A1]] bytes, so the row starts map to the same set. Writing B in stages reduces the two groups of rows alternately evicting each other from the cache."
+  },
+  "A 一行 [[A0]] 字节，模 [[A1]] 余 [[A2]]。当数组首地址按缓存行对齐时，行首在整行与半行边界间交替，四列一组能配合这种对齐": {
+    "en": "A row of A is [[A0]] bytes, which leaves [[A2]] modulo [[A1]]. When the array base is cache-line aligned, row starts alternate between whole-line and half-line boundaries, and groups of four columns match this alignment."
+  },
+  "[[A0]] 的暂存分三步。先读 A 的上四行，把左上象限转置到 B 的最终位置，右上象限暂放在 B 的对应上半行内。再读 A 的左下象限，同时取出 B 里暂存的值，分别写到各自的最终位置。最后转置 A 的右下象限。B 里暂存的数据要先取出，再覆盖原位置。": {
+    "en": "The [[A0]] case uses three staging steps. First read the upper four rows of A and transpose the upper-left quadrant to its final position in B, while the upper-right quadrant is temporarily placed in the corresponding upper half of B. Then read the lower-left quadrant of A while retrieving the temporary values from B, and write each to its final position. Finally transpose the lower-right quadrant of A. Temporarily stored data in B must be retrieved before its location is overwritten."
+  },
+  "提交函数使用描述字符串 [[A0]]，供评分器识别。题目允许针对三个尺寸选择不同实现。Part B 最多用 12 个局部 [[A1]]，A 保持只读，允许使用 B 暂存。当前实现的四个循环下标和八个暂存变量正好用满 12 个。": {
+    "en": "The submitted function uses the description string [[A0]], which the grader uses to identify it. The problem allows different implementations for the three sizes. Part B may use at most 12 local [[A1]]; A stays read-only, and B may be used for staging. The current implementation's four loop indices and eight temporary variables use exactly 12."
+  },
+  "在 Linux 或 Ubuntu WSL 的 [[A0]] 目录运行：": {
+    "en": "Run in the [[A0]] directory on Linux or Ubuntu WSL:"
+  },
+  "Part A 若计数不同，先选短 trace，用 [[A0]] 与 [[A1]] 逐条对照，找出第一次状态分叉。Part B 先确认转置正确，再比较 miss。[[A2]] 生成的 [[A3]] 可以交给 [[A4]] 检查具体哪些访问发生缺失。": {
+    "en": "If Part A counts differ, start with a short trace, compare it line by line with [[A0]] and [[A1]], and find the first state divergence. For Part B, confirm correctness first, then compare misses. The [[A3]] generated by [[A2]] can be fed to [[A4]] to see which accesses miss."
+  },
+  "[[A0]] 原始分": {
+    "en": "[[A0]] raw points"
+  },
+  "[[A0]] 次 miss": {
+    "en": "[[A0]] misses"
+  },
+  "[[A0]] 次 miss，[[A1]] 原始分": {
+    "en": "[[A0]] misses, [[A1]] raw points"
+  },
+  "[[A0]] 原始分换算为 [[A1]]": {
+    "en": "[[A0]] raw points converted to [[A1]]"
+  },
+  "[[A0]] 在 Linux 中按 handout 的 Makefile 生成 [[A1]]。用下面的命令确认包里是两份带课程要求文件头的源码。": {
+    "en": "[[A0]] builds [[A1]] with the handout Makefile on Linux. Use the command below to confirm that the package contains two source files with the required course headers."
+  },
+  "在 Autolab 的 Cache Lab 作业页上传 [[A0]] 即可。[[A1]] 用来在本地复查自动评分，Autolab 提交后可以在作业页查看线上结果。": {
+    "en": "Upload [[A0]] on the Cache Lab assignment page in Autolab. [[A1]] is used to re-check the automatic grading locally; after submitting to Autolab, the online result is available on the assignment page."
+  },
+  "课上的 x86-64 Linux 环境通常有 [[A0]]、[[A1]]、[[A2]]、[[A3]]、指针=8 字节。[[O4]]位串本身没有正负，类型和运算决定解释方式。[[C4]]": {
+    "en": "The x86-64 Linux environment used in this course usually has [[A0]], [[A1]], [[A2]], [[A3]], and pointers are 8 bytes. [[O4]]Bit strings themselves have no sign; the type and operations determine how they are interpreted.[[C4]]"
+  },
+  "32 位无符号范围是 [[A0]]，补码有符号范围是 [[A1]] 到 [[A2]]。最高位为 1 的同一位串，按有符号解释时比按无符号解释少 [[A3]]：[[A4]] 是 [[A5]] 或 [[A6]]。": {
+    "en": "The 32-bit unsigned range is [[A0]], and the two's complement signed range is [[A1]] to [[A2]]. For the same bit string with a most significant bit of 1, the signed interpretation is [[A3]] less than the unsigned interpretation: [[A4]] is [[A5]] or [[A6]]."
+  },
+  "左移在低位补 0；逻辑右移在高位补 0；[[O0]]算术右移复制符号位[[C0]]。例如 8 位 [[A1]] 右移 2 位，逻辑结果 [[A2]]，算术结果 [[A3]]。在本课环境中，负 [[A4]] 的 [[A5]] 是算术右移，[[A6]] 的 [[A7]] 是逻辑右移。移位量必须在 [[A8]] 到位宽减 1 之间。负数算术右移向负无穷取整，如 [[A9]]；C 整数除法向零截断，[[A10]]。": {
+    "en": "Left shift pads with 0 at the low end; logical right shift pads with 0 at the high end; [[O0]]arithmetic right shift copies the sign bit[[C0]]. For example, shifting the 8-bit [[A1]] right by 2 bits gives the logical result [[A2]] and the arithmetic result [[A3]]. In this course environment, [[A5]] on a negative [[A4]] is an arithmetic right shift, while [[A7]] on [[A6]] is a logical right shift. The shift amount must be between [[A8]] and one less than the bit width. Arithmetic right shift of a negative number rounds toward negative infinity, as in [[A9]]; C integer division truncates toward zero, [[A10]]."
+  },
+  "掩码的三个常用动作：[[A0]] 保留选定位；[[A1]] 置位；[[A2]] 清位。取第 [[A3]] 个字节可写 [[A4]]。补码取负的位级恒等式是 [[A5]]（按 [[A6]] 取模）；[[A7]] 只保留最低位的 1。": {
+    "en": "Three common mask operations: [[A0]] keeps the selected bits; [[A1]] sets bits; [[A2]] clears bits. To extract the [[A3]]th byte, write [[A4]]. The bit-level identity for negating in two's complement is [[A5]] (modulo [[A6]]); [[A7]] keeps only the lowest set bit."
+  },
+  "[[O0]]有符号数和无符号数比较，有符号数会被转换为无符号数。[[C0]] 有符号和无符号的同宽转换保留位串，改变数值解释。因此在 32 位 [[A1]] 下，[[A2]] 为真：比较前 [[A3]] 被转成很大的 [[A4]]。[[A5]] 等较窄整数参加普通算术时通常先提升到 [[A6]]。做混合类型题先确定每个操作数的类型和通常算术转换，再比较数值。": {
+    "en": "[[O0]]When signed and unsigned numbers are compared, the signed number is converted to unsigned.[[C0]] Conversion between signed and unsigned of the same width preserves the bit string but changes the numerical interpretation. Therefore, with 32-bit [[A1]], [[A2]] is true: before the comparison, [[A3]] is converted to a large [[A4]]. Narrower integers such as [[A5]] are usually promoted to [[A6]] before ordinary arithmetic. For mixed-type problems, determine each operand's type and the usual arithmetic conversions before comparing values."
+  },
+  "[[O0]]把较窄补码有符号数扩宽时复制符号位[[C0]]，例如 [[A1]] 的 [[A2]] 扩为 [[A3]]；无符号数扩宽高位补零。截断只保留低位，再按目标类型解释。若把负 [[A4]] 转成 [[A5]]，通常先扩成负 [[A6]]，再按模 [[A7]] 转无符号；不能想当然地只给原来的 16 位补零。": {
+    "en": "[[O0]]When widening a narrower two's complement signed value, copy the sign bit[[C0]]; for example, [[A1]]'s [[A2]] widens to [[A3]]. Widening an unsigned value fills the added high bits with zeros. Truncation keeps only the low bits and then interprets them as the target type. To convert a negative [[A4]] to [[A5]], the value is usually first widened to a negative [[A6]] and then converted to unsigned modulo [[A7]]; you cannot simply zero-extend the original 16 bits."
+  },
+  "无符号加、乘按 [[A0]] 取模：[[A1]]。硬件补码加法也留下低 [[A2]] 位；同号加数得到异号结果时发生有符号溢出，减法溢出则要求两操作数异号且结果与被减数异号。[[O3]]标准 C 中有符号溢出没有定义结果[[C3]]；做位级题时题目通常单独规定补码回绕或用编译选项明确该语义。": {
+    "en": "Unsigned addition and multiplication are performed modulo [[A0]]: [[A1]]. Hardware two's complement addition also retains the low [[A2]] bits; signed overflow occurs when adding two numbers of the same sign produces a result of the opposite sign. Subtraction overflows when the two operands have opposite signs and the result has the opposite sign from the minuend. [[O3]]In standard C, signed overflow has undefined results[[C3]]; bit-level problems usually specify two's complement wraparound separately or use compiler options to make the semantics explicit."
+  },
+  "[[A0]] 是无符号进位/借位标志，[[A1]] 表示结果为零，[[A2]] 是结果符号位，[[A3]] 表示有符号溢出。[[O4]][[A5]] 同时计算并设置条件码；[[A6]] 按 [[A7]] 设置条件码但不写回；[[A8]] 按 [[A9]] 设置条件码但不写回。[[A10]] 不修改条件码。[[C4]]": {
+    "en": "[[A0]] is the unsigned carry/borrow flag, [[A1]] indicates a zero result, [[A2]] is the result's sign bit, and [[A3]] indicates signed overflow. [[O4]][[A5]] computes and sets the condition codes; [[A6]] sets the condition codes according to [[A7]] without writing back; [[A8]] sets the condition codes according to [[A9]] without writing back. [[A10]] does not modify the condition codes.[[C4]]"
+  },
+  "结构体按声明顺序为成员安排不同位置，中间和末尾可以插入 padding；[[O0]]联合体的所有成员从同一地址开始，共用空间。[[C0]] 按本课 ABI，[[A1]]、[[A2]]、[[A3]] 的大小和通常对齐分别为 1、4、8 字节：": {
+    "en": "Structs place members at different offsets in declaration order, with padding inserted in the middle or at the end; [[O0]]all members of a union start at the same address and share the same space.[[C0]] Under the ABI used in this course, the sizes and usual alignments of [[A1]], [[A2]], and [[A3]] are 1, 4, and 8 bytes respectively:"
+  },
+  "课件用 x86 和 MIPS 说明两种传统设计思路：CISC 倾向支持更多复杂操作和寻址方式；早期 RISC 倾向使用较简单、规则的指令和 [[O0]]load/store 结构[[C0]]，由加载、存储指令访问数据内存，算术主要在寄存器之间完成。": {
+    "en": "The courseware uses x86 and MIPS to illustrate two traditional design approaches: CISC tends to support more complex operations and addressing modes, while early RISC tends to use simpler, more regular instructions and a [[O0]]load/store architecture[[C0]], where only load and store instructions access data memory and arithmetic is done mainly between registers."
+  },
+  "本讲对应教材 §4.4 流水线的通用原理与 §4.5 Y86-64 的流水线实现。SEQ 让一条指令在一个长周期内完成；PIPE 在阶段之间加入流水线寄存器，让多条指令同时处于不同阶段。学习主线是[[O0]]提高吞吐率 → 保存各指令的中间状态 → 处理数据与控制冒险 → 保持顺序执行的结果[[C0]]。": {
+    "en": "This lecture corresponds to textbook §4.4, General Principles of Pipelining, and §4.5, the Y86-64 Pipeline Implementation. SEQ completes one instruction in a single long cycle; PIPE inserts pipeline registers between stages so that multiple instructions can be in different stages at once. The main thread is [[O0]]increase throughput → save the intermediate state of each instruction → handle data and control hazards → preserve the results of sequential execution[[C0]]."
+  },
+  "课件第 [[A0]]～[[A1]] 页逐步插入 nop，是在说明[[O2]]没有转发时[[C2]]要等到何时。在该示例的时序模型中，寄存器到 W 阶段结束才写好，D 需要取得相应旧状态中的值，因此两条初始化与 addq 之间要隔三个 nop 才能直接读对。这不是加入转发后的 PIPE 还必须手工插三个 nop。": {
+    "en": "The courseware gradually inserts nops on pages [[A0]] to [[A1]] to illustrate [[O2]]when there is no forwarding[[C2]]. In the timing model of this example, registers are written only at the end of the W stage, and D needs to obtain the value from the corresponding old state. Therefore, three nops must be inserted between the two initializations and the addq instruction to allow direct reading. This does not mean that after adding forwarding, PIPE still requires manually inserting three nops."
+  },
+  "这种情况冻结 F、D，向 E 注入 bubble，M、W 正常运行，通常损失一个周期。编译器或程序员可把没有依赖的有用指令安排在 load 与使用之间，例如假设 [[A0]]：": {
+    "en": "In this case, F and D are frozen, bubbles are injected into E, and M and W run normally, usually losing one cycle. The compiler or programmer can arrange useful instructions without dependencies between load and usage, for example, suppose [[A0]]:"
+  },
+  "[[A0]] 形成 [[A1]] 个前导 [[A2]]，左移一次后留下最高 [[A3]] 位的 [[A4]]，取反得到高 [[A5]] 位为零的掩码。例如 [[A6]] 时，掩码是 [[A7]]，把算术右移结果中的高四位清掉。[[A8]] 时最终掩码为全一，返回原位串；[[A9]] 时掩码只留下最低位，得到原最高位的值。": {
+    "en": "[[A0]] forms [[A1]] leading [[A2]]s; after one left shift, keep the highest [[A3]] bits of [[A4]], and invert to get a mask whose high [[A5]] bits are zero. For example, when [[A6]], the mask is [[A7]], clearing the top four bits of the arithmetic right shift result. When [[A8]], the final mask is all ones, returning the original bit string; when [[A9]], the mask keeps only the lowest bit, yielding the original most significant bit's value."
+  },
+  "[[A0]] 的 farm 整体比 [[A1]] 晚 7 字节，所以地址统一加 7。中间夹着的 [[A2]]、[[A3]] 只改条件码，不改变要传递的数据，是搜索字节序列时附带进来的指令。": {
+    "en": "The farm for [[A0]] lies 7 bytes after the farm for [[A1]], so addresses are uniformly increased by 7. The intervening [[A2]] and [[A3]] only change the condition codes without altering the data to be passed, and are instructions picked up incidentally when searching the byte sequence."
+  },
+  "32 位写入会零扩展：[[A0]] 把 [[A1]] 的低 32 位送进 [[A2]]，同时把 [[A3]] 的高 32 位清零。所以 cookie 和偏移都能用 32 位立即数放进 64 位寄存器。第五关搬移偏移用的也是这条 32 位链路，因此偏移必须落在 0 到 [[A4]]；本题的 [[A5]] 满足。若偏移需要为负，零扩展后无法表示，必须另找减法或借位 gadget。": {
+    "en": "32-bit writes are zero-extended: [[A0]] writes the low 32 bits of [[A1]] into [[A2]] while clearing the high 32 bits of [[A3]]. So cookies and offsets can be placed into a 64-bit register using a 32-bit immediate. The offset moved in level five also uses this 32-bit path, so the offset must be between 0 and [[A4]]; [[A5]] in this problem satisfies this. If the offset needs to be negative, it cannot be represented after zero-extension, and another subtraction or borrow gadget is required."
+  },
+  "链的第一步用 [[A0]] 捕获 [[A1]]。进入这个 gadget 时 [[A2]]，所以 [[A3]]。随后 [[A4]] 把基址放进 [[A5]]。偏移 [[A6]] 先由 [[A7]] 放进 [[A8]]，再沿 [[A9]] 搬进 [[A10]]；每次 32 位写入都会零扩展，最终 [[A11]]。[[A12]] 算出 [[A13]]，再用 [[A14]] 放进参数寄存器，最后 [[A15]] 到 [[A16]]。": {
+    "en": "The first step of the chain uses [[A0]] to capture [[A1]]. When entering this gadget, [[A2]], so [[A3]]. Afterwards, [[A4]] puts the base address into [[A5]]. The offset [[A6]] is first placed into [[A8]] by [[A7]], then transferred along [[A9]] into [[A10]]; each 32-bit write is zero-extended, and finally [[A11]]. [[A12]] computes [[A13]], which [[A14]] puts into the argument register, and finally [[A15]] returns to [[A16]]."
+  },
+  "同一周期中，E 的组合结果送到 D；到上升沿，addq 的正确操作数存入 E 级寄存器，下一周期算出 [[A0]]。[[O1]]转发改变的是操作数来源，不是提前改写程序寄存器。[[C1]]": {
+    "en": "In the same cycle, the combined result of E is sent to D; at the rising edge, the correct operand for addq is stored in the E stage register, and [[A0]] is calculated in the next cycle. [[O1]]Forwarding changes the source of the operand, not the program register ahead of time.[[C1]]"
+  },
+  "[[A0]] 分别是 [[A1]] 的高字节，即位 [[A2]]～[[A3]]；它们不是整个 [[A4]] 位寄存器的最高字节。[[O5]]写 [[A6]] 位寄存器会清零对应寄存器的高 [[A7]] 位；写 [[A8]] 或 [[A9]] 位部分保留其他位。[[C5]]": {
+    "en": "[[A0]] are respectively the high byte of [[A1]], i.e., bits [[A2]]-[[A3]]; they are not the highest byte of the entire [[A4]]-bit register. [[O5]]Writing to a [[A6]]-bit register clears the high [[A7]] bits of the corresponding register; writing to the [[A8]]- or [[A9]]-bit part preserves the other bits.[[C5]]"
+  },
+  "[[A0]] 逐位作用，结果仍是一整个位串；[[A1]] 先把零视为假、非零视为真，结果为 [[A2]]。[[A3]] 和 [[A4]] 会短路：[[A5]] 先确认指针非空，再访问所指对象。需要 0/1 表示时常用 [[A6]]。": {
+    "en": "[[A0]] work bit by bit, and the result is still a whole bit string; [[A1]] first treat zero as false and non-zero as true, with the result being [[A2]]. [[A3]] and [[A4]] can short-circuit: [[A5]] first checks that the pointer is not null before accessing the object it points to. When 0/1 representation is needed, [[A6]] is commonly used."
+  },
+  "[\"紧接它的编码 [[A0]] 是[[O1]]最小正规格化正数[[C1]]，指数域为 [[A2]]、小数域为零，数值为 [[A3]]，已经不属于非规格化数。\",[[\"span\",\"0x00800000\\\\mathtt{0x00800000}0x00800000\",\"\"],[\"strong\",null],[\"span\",\"111\",\"\"],[\"span\",\"2−1262^{-126}2−126\",\"\"]]]": {
+    "en": "The next encoding, [[A0]], is [[O1]]the smallest normalized positive number[[C1]], with an exponent field of [[A2]] and a zero fraction field; its value is [[A3]], which is no longer a subnormal number."
+  },
+  "[\"[[A0]] 查看文件类型；[[A1]] 查看符号表，定位函数和全局对象；[[A2]] 将代码解码为汇编文本；[[A3]] 提取可打印字符串，可用于寻找提示、常量和输入格式。提取出的字符串还要通过代码引用确认用途。\",[[\"code\",\"file\",\"\"],[\"code\",\"objdump -t\",\"\"],[\"code\",\"objdump -d\",\"\"],[\"code\",\"strings\",\"\"]]]": {
+    "en": "[[A0]] shows the file type; [[A1]] shows the symbol table and locates functions and global objects; [[A2]] decodes code into assembly text; [[A3]] extracts printable strings, which can be used to find hints, constants, and input formats. The extracted strings should also be confirmed against code references for their use."
+  },
+  "[\"[[A0]] 依次指同一寄存器的 64/32/16/8 位部分，[[A1]] 是第 8～15 位。写 32 位寄存器（如 [[A2]]）会把对应 64 位寄存器的高 32 位清零；写 [[A3]] 则不清。考试读混合宽度指令时，要同时追踪修改了哪几位。\",[[\"code\",\"%rax/%eax/%ax/%al\",\"\"],[\"code\",\"%ah\",\"\"],[\"code\",\"%eax\",\"\"],[\"code\",\"%ax/%al\",\"\"]]]": {
+    "en": "[[A0]] refer to the 64/32/16/8-bit parts of the same register, and [[A1]] is bits 8–15. Writing to a 32-bit register (such as [[A2]]) clears the high 32 bits of the corresponding 64-bit register; writing to [[A3]] does not. When reading mixed-width instructions in exams, track which bits are modified."
+  },
+  "[\"[[A0]] 常见方向是立即数→寄存器/内存、寄存器→寄存器/内存、内存→寄存器；普通 [[A1]] 不能直接内存→内存。[[A2]] 零扩展，[[A3]] 符号扩展。看汇编时先标注每个寄存器目前表示的 C 变量，再逐条算地址与数值，最后写出等价的 C 表达式。\",[[\"code\",\"mov\",\"\"],[\"code\",\"movq\",\"\"],[\"code\",\"movz\",\"\"],[\"code\",\"movs\",\"\"]]]": {
+    "en": "[[A0]] moves data in these common directions: immediate → register/memory, register → register/memory, memory → register; ordinary [[A1]] cannot move directly from memory to memory. [[A2]] zero-extends, [[A3]] sign-extends. When reading assembly, first mark which C variable each register currently represents, then calculate the address and value of each instruction, and finally write out the equivalent C expression."
+  },
+  "[\"[[O0]]调用者保存[[C0]]表示被调用函数可以改写该寄存器；调用者若还需要调用前的值，就在调用前保存、调用后恢复。[[O1]]被调用者保存[[C1]]表示被调用函数如果要使用并改写它，必须在返回前恢复原值。[[A2]] 始终要正确维护，在函数返回后恢复调用者应有的栈顶。\",[[\"strong\",null],[\"strong\",null],[\"code\",\"%rsp\",\"\"]]]": {
+    "en": "[[O0]]Caller-saved[[C0]] indicates that the called function may overwrite this register; if the caller still needs the value from before the call, it must save the register before the call and restore it after. [[O1]]Callee-saved[[C1]] indicates that if the callee needs to use and modify the register, it must restore the original value before returning. [[A2]] must also be maintained correctly so that the stack top expected by the caller is restored after the function returns."
+  },
+  "[\"低位补 [[A0]]。\",[[\"span\",\"000\",\"\"]]]": {
+    "en": "Fill the low bits with [[A0]]."
+  },
+  "[\"高位补 [[A0]]。\",[[\"span\",\"000\",\"\"]]]": {
+    "en": "Fill the high bits with [[A0]]."
+  },
+  "[\"有符号 [[A0]] 位数除法通常先 [[A1]]，无符号 [[A2]] 位数除法通常先清零 [[A3]]。[[O4]]单操作数 [[A5]] 返回完整乘积，双操作数 [[A6]] 保留低 [[A7]] 位[[C4]]。\",[[\"span\",\"646464\",\"\"],[\"code\",\"cqto\",\"\"],[\"span\",\"646464\",\"\"],[\"code\",\"%rdx\",\"\"],[\"strong\",null],[\"code\",\"imulq S\",\"\"],[\"code\",\"imulq S,D\",\"\"],[\"span\",\"646464\",\"\"]]]": {
+    "en": "Signed [[A0]]-bit division is usually preceded by [[A1]], and unsigned [[A2]]-bit division usually starts by clearing [[A3]]. [[O4]]Single-operand [[A5]] returns the full product, while two-operand [[A6]] keeps only the lower [[A7]] bits[[C4]]."
+  },
+  "[\"调用者若希望值跨函数调用保留，必须在调用前保存调用者保存寄存器中的内容：[[A0]]。被调用者若使用 [[A1]]，须在返回前恢复。[[A2]] 返回时也要恢复。局部变量若需要地址、体积较大或寄存器不够，编译器会给它栈空间；[[A3]] 可选作帧指针。\",[[\"code\",\"%rax,%rdi,%rsi,%rdx,%rcx,%r8～%r11\",\"\"],[\"code\",\"%rbx,%rbp,%r12～%r15\",\"\"],[\"code\",\"%rsp\",\"\"],[\"code\",\"%rbp\",\"\"]]]": {
+    "en": "If the caller wants a value to persist across function calls, it must save the caller-saved registers [[A0]] before the call. If the callee uses [[A1]], it must restore them before returning. [[A2]] must also be restored upon return. If local variables need an address, are too large, or the registers run out, the compiler allocates stack space for them; [[A3]] can optionally serve as the frame pointer."
+  },
+  "[\"[[A0]] 按行连续存放，[[A1]] 的地址为 [[A2]]；[[A3]] 决定每行跨度。若 [[A4]] 在运行时确定，函数需接收 [[A5]]，如 [[A6]]。数组 [[A7]] 与指针 [[A8]] 都能参与指针运算，但 [[A9]]（在数组未退化的上下文）是整个数组大小，[[A10]] 是指针大小。\",[[\"code\",\"int a[R][C]\",\"\"],[\"code\",\"a[i][j]\",\"\"],[\"span\",\"base+4(iC+j)\\\\mathrm{base}+4(iC+j)base+4(iC+j)\",\"\"],[\"code\",\"C\",\"\"],[\"code\",\"C=n\",\"\"],[\"code\",\"n\",\"\"],[\"code\",\"int f(size_t n,int a[n][n],size_t i,size_t j)\",\"\"],[\"code\",\"a\",\"\"],[\"code\",\"p\",\"\"],[\"code\",\"sizeof(a)\",\"\"],[\"code\",\"sizeof(p)\",\"\"]]]": {
+    "en": "[[A0]] is stored contiguously in row-major order, and the address of [[A1]] is [[A2]]; [[A3]] determines the stride of each row. If [[A4]] is determined at runtime, the function must receive [[A5]], as in [[A6]]. Both the array [[A7]] and the pointer [[A8]] can participate in pointer arithmetic, but [[A9]] (where the array has not decayed) is the size of the entire array, while [[A10]] is the size of the pointer."
+  },
+  "[\"[[A0]] 对一个单精度数加法，[[A1]] 对一个双精度数加法，[[A2]] 对 XMM 中多个单精度通道并行加法。[[A3]] 负责相应宽度的浮点传送，[[A4]] 把整数转双精度，[[A5]] 把单精度转双精度。混合参数函数中，指针与整数走通用寄存器，浮点值走 XMM 寄存器；先标出每条转换指令的输入类型，再追踪 [[A6]] 中的返回值。\",[[\"code\",\"addss\",\"\"],[\"code\",\"addsd\",\"\"],[\"code\",\"addps\",\"\"],[\"code\",\"movss/movsd\",\"\"],[\"code\",\"cvtsi2sd\",\"\"],[\"code\",\"cvtss2sd\",\"\"],[\"code\",\"%xmm0\",\"\"]]]": {
+    "en": "[[A0]] adds two single-precision numbers, [[A1]] adds two double-precision numbers, and [[A2]] performs parallel addition across multiple single-precision lanes in XMM. [[A3]] handle floating-point transfers of the corresponding width, [[A4]] converts an integer to double precision, and [[A5]] converts single precision to double precision. In functions with mixed parameters, pointers and integers use general-purpose registers while floating-point values use XMM registers; first mark the input type of each conversion instruction, then track the return value in [[A6]]."
+  },
+  "[\"小端把最低有效字节放在最低地址，大端反之；一个字节内部的位序不翻转。逐字节读取的 [[A0]] 不变，数组下标也不倒序。[[A1]] 从偏移 4 开始，与 [[A2]] 是不同的四字节范围。类型宽度由 ABI 决定，本讲的 Linux x86-64 中 long 为 8 字节；“64 位机器”本身不能决定所有类型宽度。\",[[\"code\",\"c[j]\",\"\"],[\"code\",\"i[1]\",\"\"],[\"code\",\"i[0]\",\"\"]]]": {
+    "en": "Little-endian places the least significant byte at the lowest address; big-endian does the opposite. The bit order within a single byte is not reversed. Reading [[A0]] byte by byte does not change the bytes, and array indices are not reversed. [[A1]] starts at offset 4 and covers a different four-byte range from [[A2]]. Type widths are determined by the ABI; in the Linux x86-64 covered in this lecture, long is 8 bytes, and being a \"64-bit machine\" does not by itself determine the width of all types."
+  },
+  "[\"课件递归函数每层声明 [[A0]]。按 int 为 4 字节计算，每层数组占 [[A1]] KiB；8 MiB 只算数组约容纳 64 层，实际还需返回地址和其他栈帧内容。未返回的各层都保留自己的对象，深递归可能耗尽栈。\",[[\"code\",\"int a[1<<15]\",\"\"],[\"span\",\"4×215=1284\\\\times2^{15}=1284×215=128\",\"\"]]]": {
+    "en": "In the courseware's recursive function, [[A0]] is declared at each level. Calculating with int as 4 bytes, each level's array occupies [[A1]] KiB; 8 MiB only approximately holds 64 levels of arrays, and in reality the return addresses and other stack frame contents are also needed. Each non-returned level retains its own objects, so deep recursion may exhaust the stack."
+  },
+  "[\"成功时 fgets 最多读取容量减 1 个字符，再补终止零；换行可能保留，超长行的剩余输入可能仍在输入流。[[A0]] 对四字节 buf 最多读三个字符，再加终止零，但 [[A1]] 以空白分隔，不等同于按行读取。\",[[\"code\",\"scanf(\\\"%3s\\\",buf)\",\"\"],[\"code\",\"%s\",\"\"]]]": {
+    "en": "When successful, `fgets` reads at most capacity minus 1 characters, then appends a null terminator; the newline may be retained, and the rest of an overly long line may remain in the input stream. For a four-byte `buf`, [[A0]] reads at most three characters plus the null terminator, but [[A1]] reads whitespace-delimited tokens, which is not equivalent to reading by line."
+  },
+  "[\"设分配后 [[A0]]，即 buf 的起点。返回槽原先在入口栈顶，减去 [[A1]] 后位于 [[A2]]：\",[[\"span\",\"R[rsp]=BR[\\\\mathtt{rsp}]=BR[rsp]=B\",\"\"],[\"span\",\"242424\",\"\"],[\"span\",\"B+24B+24B+24\",\"\"]]]": {
+    "en": "Assume that after allocation [[A0]], which is the starting point of buf. The return slot was originally at the top of the stack at entry; after subtracting [[A1]], it is located at [[A2]]:"
+  },
+  "[\"[[A0]] 访问 FS 基址加偏移 0x28 的内存；[[A1]]，因此与教材的 [[A2]] 是同一偏移写法。相同值异或为零，[[A3]]，je 允许正常返回；不同则调用失败处理。guard 不是一般题目中可以随意假定的固定常量。\",[[\"code\",\"%fs:0x28\",\"\"],[\"span\",\"0x28=40\\\\mathtt{0x28}=400x28=40\",\"\"],[\"code\",\"%fs:40\",\"\"],[\"span\",\"ZF=1\\\\mathrm{ZF}=1ZF=1\",\"\"]]]": {
+    "en": "[[A0]] accesses the memory at the FS base plus offset 0x28; [[A1]], so this is the same offset notation as [[A2]] in the textbook. The same value XORed with itself yields zero, [[A3]], so je allows a normal return; otherwise, control goes to the failure handler. The guard is not a fixed constant that can be assumed arbitrarily in general problems."
+  },
+  "[\"以这段汇编分配后 [[A0]] 为基准，课件的 buf 在 [[A1]]，canary 在 [[A2]]，返回地址在 [[A3]]。输入七个字符时终止零在 [[A4]]，已经越界但未触及 canary；八个字符的零开始写到 canary，能否检测取决于是否实际改变 guard。\",[[\"span\",\"R[rsp]=BR[\\\\mathtt{rsp}]=BR[rsp]=B\",\"\"],[\"span\",\"B∼B+3B\\\\sim B+3B∼B+3\",\"\"],[\"span\",\"B+8∼B+15B+8\\\\sim B+15B+8∼B+15\",\"\"],[\"span\",\"B+24∼B+31B+24\\\\sim B+31B+24∼B+31\",\"\"],[\"span\",\"B+7B+7B+7\",\"\"]]]": {
+    "en": "Taking [[A0]] after this assembly's allocation as the base, the courseware's buf is at [[A1]], the canary at [[A2]], and the return address at [[A3]]. When seven characters are entered, the terminating zero is at [[A4]], already out of bounds but not yet reaching the canary; with eight characters, the terminating zero starts overwriting the canary, and whether this is detected depends on whether the guard actually changes."
+  },
+  "[\"[[A0]] 把 Y86-64 汇编 [[A1]] 转为目标代码文本 [[A2]]；[[A3]] 按 ISA 模拟这些指令，报告状态、寄存器和内存变化。它们是课程工具，不是普通 gcc 的另一组默认命令；[[A4]] 也不是可以直接交给本机 x86-64 CPU 执行的 ELF 文件。\",[[\"code\",\"yas\",\"\"],[\"code\",\".ys\",\"\"],[\"code\",\".yo\",\"\"],[\"code\",\"yis\",\"\"],[\"code\",\".yo\",\"\"]]]": {
+    "en": "[[A0]] converts Y86-64 assembly [[A1]] into target code text [[A2]]; [[A3]] simulates these instructions according to the ISA, reporting changes to status, registers, and memory. These are course tools, not another set of default gcc commands; [[A4]] files are not ELF files that can be executed directly on the native x86-64 CPU."
+  },
+  "[\"附加页进一步说明存储电路：双稳态元件可保持 [[A0]]；D 锁存器在使能期间透明，而边沿触发的存储只在时钟沿附近采样。本讲理解 SEQ 时，主要使用[[O1]]时钟沿更新状态、周期中传播组合信号[[C1]]这一模型。\",[[\"span\",\"0/10/10/1\",\"\"],[\"strong\",null]]]": {
+    "en": "The supplementary page further explains the storage circuit: bistable elements can hold [[A0]]; D latches are transparent while enabled, while edge-triggered storage samples only near the clock edge. For SEQ in this lecture, we mainly use the model in which [[O1]]state is updated at the clock edge and combinational signals propagate during the cycle[[C1]]."
+  },
+  "[\"[[A0]] 同时可能写两个寄存器，因此 SEQ 提供 E、M 两个写端口。对于 [[A1]]，两端口都要写 [[A2]]；[[O3]]M 端口优先，弹出的数据覆盖新栈指针候选值[[C3]]。上例若改成 [[A4]]，最终 [[A5]]，而不是 [[A6]]。\",[[\"code\",\"popq\",\"\"],[\"code\",\"popq %rsp\",\"\"],[\"code\",\"%rsp\",\"\"],[\"strong\",null],[\"code\",\"popq %rsp\",\"\"],[\"code\",\"%rsp=0x55\",\"\"],[\"code\",\"0x208\",\"\"]]]": {
+    "en": "[[A0]] may write two registers at the same time, so SEQ provides two write ports, E and M. For [[A1]], both ports must write [[A2]]; [[O3]]the M port takes priority, so the popped data overwrites the new stack pointer candidate[[C3]]. If the example above is changed to [[A4]], the final value is [[A5]] rather than [[A6]]."
+  },
+  "[\"一个 [[A0]] DRAM 芯片有 d 个 supercell，每个 supercell 保存 w 位，总容量为：\",[[\"span\",\"d×wd\\\\times wd×w\",\"\"]]]": {
+    "en": "A [[A0]] DRAM chip has d supercells, each storing w bits, for a total capacity of:"
+  },
+  "[\"课件的 [[A0]] 芯片由 [[A1]] 行、[[A2]] 列 supercell 组成，每格八位，容量为 [[A3]] bit，即 [[A4]] byte。读取第 [[A5]] 格的基本过程为：\",[[\"span\",\"16×816\\\\times816×8\",\"\"],[\"span\",\"444\",\"\"],[\"span\",\"444\",\"\"],[\"span\",\"128128128\",\"\"],[\"span\",\"161616\",\"\"],[\"span\",\"(2,1)(2,1)(2,1)\",\"\"]]]": {
+    "en": "The [[A0]] chip in the courseware consists of [[A1]] rows and [[A2]] columns of supercells, each eight bits wide, for a capacity of [[A3]] bits, that is, [[A4]] bytes. The basic process of reading the [[A5]]th cell is:"
+  },
+  "[\"例如每扇区 [[A0]] byte、每磁道平均 [[A1]] 扇区、每表面 [[A2]] 磁道、每盘片两个表面、共五个盘片：\",[[\"span\",\"512512512\",\"\"],[\"span\",\"300300300\",\"\"],[\"span\",\"200002000020000\",\"\"]]]": {
+    "en": "For example, with [[A0]] bytes per sector, an average of [[A1]] sectors per track, [[A2]] tracks per surface, two surfaces per platter, and five platters in total:"
+  },
+  "[\"与 [[A0]] 相加的位级结果为 [[A1]]。\",[[\"code\",\"x\",\"\"],[\"span\",\"000\",\"\"]]]": {
+    "en": "Adding [[A0]] gives a bit-level result of [[A1]]."
+  },
+  "[\"[[A0]] 可写 [[A1]]：负数的全一掩码与 [[A2]] 做或仍为 [[A3]]；零得到 [[A4]]；正数得到 [[A5]]。\",[[\"code\",\"sign(x)\",\"\"],[\"code\",\"(x >> 31) | !!x\",\"\"],[\"span\",\"111\",\"\"],[\"span\",\"−1-1−1\",\"\"],[\"span\",\"000\",\"\"],[\"span\",\"111\",\"\"]]]": {
+    "en": "[[A0]] can be written as [[A1]]: the bitwise OR of a negative number's all-ones mask with [[A2]] is still [[A3]]; zero gives [[A4]]; a positive number gives [[A5]]."
+  },
+  "[\"小班课的 [[A0]] 写法是：\",[[\"code\",\"absVal\",\"\"]]]": {
+    "en": "The recitation version of [[A0]] is:"
+  },
+  "[\"复制到 [[A0]] 的内容就是一条完整 ROP 链。链的第一条 gadget 必须能给出一个栈地址；用 [[A1]]，进入它时 [[A2]]，所以基址是 [[A3]]。字符串相对基址的偏移是 [[A4]]，算出 [[A5]]，恰好是复制块中 [[A6]] 的字符串落到的新位置。\",[[\"code\",\"rbp+8\",\"\"],[\"code\",\"movq %rsp,%rax; ret\",\"\"],[\"code\",\"%rsp = rbp+0x10\",\"\"],[\"code\",\"rbp+0x10\",\"\"],[\"code\",\"0x68\",\"\"],[\"code\",\"rbp+0x78\",\"\"],[\"code\",\"buf+0x70\",\"\"]]]": {
+    "en": "The content copied to [[A0]] is a complete ROP chain. The first gadget in the chain must produce a stack address; using [[A1]], on entry [[A2]], so the base address is [[A3]]. The string's offset from the base is [[A4]]; computing [[A5]] gives exactly the new location where the string from [[A6]] in the copied block lands."
+  },
+  "[\"在 [[A0]] 返回前查看栈顶，可以直接确认返回槽和缓冲区地址：\",[[\"code\",\"getbuf\",\"\"]]]": {
+    "en": "Before [[A0]] returns, checking the top of the stack directly confirms the return slot and buffer address:"
+  },
+  "[\"2026 年的 handout 已提供 Linux 可执行文件，直接读取 [[A0]]，不需要编译模拟器，也不需要安装 Rust。进入 WSL 后，在实验根目录运行：\",[[\"code\",\".hcl\",\"\"]]]": {
+    "en": "The 2026 handout already provides the Linux executable, so [[A0]] files can be read directly, with no need to compile the simulator or install Rust. After entering WSL, run the following in the experiment root directory:"
+  },
+  "[\"[[A0]] 把 [[A1]] 汇编为 [[A2]]；[[A3]] 按 ISA 执行，不模拟流水线，是判断程序语义的参照；[[A4]] 按指定架构逐周期运行，用来检查硬件实现和周期数。[[A5]] 是自己写的汇编，[[A6]] 是汇编结果，[[A7]] 是处理器描述。\",[[\"code\",\"yas\",\"\"],[\"code\",\".ys\",\"\"],[\"code\",\".yo\",\"\"],[\"code\",\"yis\",\"\"],[\"code\",\"ysim\",\"\"],[\"code\",\".ys\",\"\"],[\"code\",\".yo\",\"\"],[\"code\",\".hcl\",\"\"]]]": {
+    "en": "[[A0]] assembles [[A1]] into [[A2]]; [[A3]] executes according to the ISA without simulating the pipeline and serves as a reference for program semantics; [[A4]] runs cycle by cycle on the specified architecture, used to check the hardware implementation and cycle count. [[A5]] is the assembly you write, [[A6]] is the assembly result, and [[A7]] is the processor description."
+  },
+  "[\"这里的条件应来自 M，因为 E 已经是另一条指令。[[A0]] 用 M.valA 保存顺序地址，恢复项的右侧相应为 M.valA。当前实现在两个文件的分支恢复项中各将 [[A1]] 改为 [[A2]]，使指令类型、条件结果和恢复地址来自同一阶段；其余模板内容保留。\",[[\"code\",\"pipe_s4c\",\"\"],[\"code\",\"!e_cnd\",\"\"],[\"code\",\"!M.cnd\",\"\"]]]": {
+    "en": "The condition here should come from M, since E already holds another instruction. [[A0]] uses M.valA to store the sequential address, so the right side of the restore item is M.valA. The current implementation changes [[A1]] to [[A2]] in the branch restore items of both files, so the instruction type, condition result, and restore address all come from the same stage; the rest of the template is unchanged."
+  },
+  "[\"[[A0]] 不改变原数，但产生用于判断正负和零的 CC。[[A1]] 跳过非正数；[[A2]] 在需要时增加计数。每八项结束后，两个指针各增加 [[A3]] 字节。\",[[\"code\",\"andq\",\"\"],[\"code\",\"jle\",\"\"],[\"code\",\"iaddq\",\"\"],[\"span\",\"8×8=648\\\\times8=648×8=64\",\"\"]]]": {
+    "en": "[[A0]] leaves the original number unchanged but produces CC for judging positive, negative, and zero. [[A1]] skips non-positive numbers; [[A2]] increments the count when needed. After every eight items, both pointers advance by [[A3]] bytes."
+  },
+  "[\"[[A0]] 虽然也编码为 CMOVX，但 ifun 为零、无条件传送，可以直接从 E 转发。\",[[\"code\",\"rrmovq\",\"\"]]]": {
+    "en": "Although [[A0]] is also encoded as CMOVX, its ifun is zero (unconditional move), so it can be forwarded directly from E."
+  },
+  "[\"[[A0]] 在本地运行所有部分并打印评分字段，不执行上传。直接运行 [[A1]] 只会显示帮助，本版要求指定子命令。\",[[\"code\",\"grader autolab\",\"\"],[\"code\",\"./bin/grader\",\"\"]]]": {
+    "en": "[[A0]] runs all parts locally and prints the scoring fields without uploading. Running [[A1]] directly only shows help; this version requires a subcommand."
+  },
+  "[\"[[A0]] 把源路径中的目录部分换成 [[A1]]，使 tar 包的内部结构符合提交要求。当前 [[A2]] 汇编后代码为 [[A3]] 字节，没有额外栈分配，官方长度检查已通过。\",[[\"code\",\"--transform\",\"\"],[\"code\",\"archlab-handin/\",\"\"],[\"code\",\"ncopy\",\"\"],[\"span\",\"793793793\",\"\"]]]": {
+    "en": "[[A0]] replaces the directory part of the source path with [[A1]] so that the tar package's internal structure meets the submission requirements. The current assembled code of [[A2]] is [[A3]] bytes long, with no extra stack allocation, and the official length check passes."
+  },
+  "[\"提交函数使用描述字符串 [[A0]]，供评分器识别。题目允许针对三个尺寸选择不同实现。Part B 最多用 12 个局部 [[A1]]，A 保持只读，允许使用 B 暂存。当前实现的四个循环下标和八个暂存变量正好用满 12 个。\",[[\"code\",\"\\\"Transpose submission\\\"\",\"\"],[\"code\",\"int\",\"\"]]]": {
+    "en": "The submitted function uses the description string [[A0]], which the grader uses to identify it. The problem allows a different implementation for each of the three sizes. Part B may use at most 12 local [[A1]] variables; A stays read-only, and B may be used as scratch. The current implementation's four loop indices and eight temporaries use exactly 12."
+  },
+  "[\"[[A0]] 按 [[A1]] 设置条件码；[[A2]] 按 [[A3]] 设置条件码；二者均不写回结果。[[A4]]、[[A5]]、[[A6]]、[[A7]]、[[A8]] 不改变条件码；[[A9]] 保留 CF。[[A10]] 将 CF、OF 清零。分析 [[A11]] 前，先找到最近一条真正更新条件码的指令。\",[[\"code\",\"cmp S,D\",\"\"],[\"span\",\"D−SD-SD−S\",\"\"],[\"code\",\"test S,D\",\"\"],[\"span\",\"D&SD\\\\mathbin{\\\\&}SD&S\",\"\"],[\"code\",\"mov\",\"\"],[\"code\",\"lea\",\"\"],[\"code\",\"not\",\"\"],[\"code\",\"setcc\",\"\"],[\"code\",\"cmovcc\",\"\"],[\"code\",\"inc/dec\",\"\"],[\"code\",\"and/or/xor/test\",\"\"],[\"code\",\"jcc\",\"\"]]]": {
+    "en": "[[A0]] sets the condition codes according to [[A1]]; [[A2]] sets the condition codes according to [[A3]]; neither writes back the result. [[A4]], [[A5]], [[A6]], [[A7]], and [[A8]] do not change the condition codes; [[A9]] preserves CF. [[A10]] clears CF and OF. Before analyzing [[A11]], first find the most recent instruction that actually updates the condition codes."
+  },
+  "[\"[[O0]]常用寻址式 [[A1]] 的有效地址是 [[A2]]，其中 [[A3]] 可为 [[A4]]。[[C0]] 例如 [[A5]]、[[A6]] 时，[[A7]] 地址为 [[A8]]。[[A9]] 会访问内存；[[A10]] 只计算这个地址表达式，因此也能高效算 [[A11]]。\",[[\"strong\",null],[\"code\",\"D(Rb,Ri,S)\",\"\"],[\"span\",\"D+Rb+SRiD+R_b+S R_iD+Rb​+SRi​\",\"\"],[\"code\",\"S\",\"\"],[\"code\",\"1/2/4/8\",\"\"],[\"span\",\"R[rdx]=0xC000R[\\\\mathtt{rdx}]=\\\\mathtt{0xC000}R[rdx]=0xC000\",\"\"],[\"span\",\"R[rcx]=0x200R[\\\\mathtt{rcx}]=\\\\mathtt{0x200}R[rcx]=0x200\",\"\"],[\"code\",\"0x10(%rdx,%rcx,4)\",\"\"],[\"code\",\"0xC810\",\"\"],[\"code\",\"movq (...)\",\"\"],[\"code\",\"leaq (...)\",\"\"],[\"span\",\"x+4y+常数x+4y+\\\\text{常数}x+4y+常数\",\"\"]]]": {
+    "en": "[[O0]]The effective address of the common addressing form [[A1]] is [[A2]], where [[A3]] can be [[A4]].[[C0]] For example, with [[A5]] and [[A6]], the address of [[A7]] is [[A8]]. [[A9]] accesses memory; [[A10]] only computes this address expression, so it can also efficiently compute [[A11]]."
+  },
+  "[\"每次递归调用都会有自己的返回地址和栈帧。例如递归计数 [[A0]] 时，当前层把 [[A1]] 保存起来，递归计算 [[A2]]，再把两者相加。递归结束依靠基例 [[A3]]，层数过多会耗尽栈空间。\",[[\"code\",\"popcount(x)\",\"\"],[\"code\",\"x&1\",\"\"],[\"code\",\"x>>1\",\"\"],[\"span\",\"x=0x=0x=0\",\"\"]]]": {
+    "en": "Each recursive call has its own return address and stack frame. For example, when recursively computing [[A0]], the current level saves [[A1]], recursively computes [[A2]], and then adds the two. Recursion terminates at the base case [[A3]]; too many levels exhaust the stack."
+  },
+  "[\"对应 [[A0]]、[[A1]]、[[A2]]、[[A3]]、[[A4]]。汇编用 [[A5]] 算出栈上变量的地址作为参数；调用返回后，变量值已写入相应位置。[[A6]] 是成功赋值的项目数，此例要求三项都被读入。格式中的空白可匹配输入空白，[[A7]] 本身不会自动跳过空白，因此要看完整格式串。\",[[\"code\",\"%rdi=input\",\"\"],[\"code\",\"%rsi=format\",\"\"],[\"code\",\"%rdx=&index\",\"\"],[\"code\",\"%rcx=&letter\",\"\"],[\"code\",\"%r8=&value\",\"\"],[\"code\",\"lea\",\"\"],[\"code\",\"%eax\",\"\"],[\"code\",\"%c\",\"\"]]]": {
+    "en": "These correspond to [[A0]], [[A1]], [[A2]], [[A3]], [[A4]]. Assembly uses [[A5]] to compute the addresses of the stack variables as arguments; after the call returns, the values have been written to those locations. [[A6]] is the number of successfully assigned items; this example requires all three items to be read. Whitespace in the format string can match whitespace in the input, but [[A7]] itself does not automatically skip whitespace, so the entire format string matters."
+  },
+  "[\"平均旋转等待半圈，是基于目标位置与当前角度无特别关联的模型；它不是完整一圈。课件例子为 [[A0]]、[[A1]]、平均寻道 [[A2]] ms，按统一单位计算：\",[[\"span\",\"R=7200R=7200R=7200\",\"\"],[\"span\",\"S=400S=400S=400\",\"\"],[\"span\",\"999\",\"\"]]]": {
+    "en": "The average rotational wait of half a turn assumes the target position has no particular relation to the current angle; it is not a full rotation. The courseware example uses [[A0]], [[A1]], and an average seek time of [[A2]] ms; converting to consistent units:"
+  },
+  "[\"参数 [[A0]] 是浮点数的位表示，不能按普通整数乘除来计算浮点值。先提取字段：\",[[\"code\",\"uf\",\"\"]]]": {
+    "en": "The parameter [[A0]] is the bit representation of a floating-point number and cannot be multiplied or divided as an ordinary integer to obtain its float value. First, extract the fields:"
+  },
+  "[\"看分级计算的题目时要区分两种量。按固定周期的时钟沿计算，无冒险的单条指令经过 [[A0]] 级要 [[A1]]。如果题目采用逐级传播开销相加的口径，则计算 [[A2]]。各级均衡时两式一致，各级不均衡时，短阶段在固定时钟下仍要等到下一个沿。重新分级时应按题设允许的切分方式重算级数、每一级的组合延迟和寄存器开销，再分别计算延迟与稳态完成间隔。\",[[\"span\",\"kkk\",\"\"],[\"span\",\"kTclkkT_{\\\\mathrm{clk}}kTclk​\",\"\"],[\"span\",\"∑i(ti+r)\\\\sum_i(t_i+r)∑i​(ti​+r)\",\"\"]]]": {
+    "en": "When working on stage-timing problems, distinguish two quantities. With a fixed clock period, an instruction without hazards passes through [[A0]] stages, taking [[A1]]. If the problem instead adds up per-stage propagation costs, compute [[A2]]. The two expressions agree when the stages are balanced; when they are not, a short stage under a fixed clock still waits for the next edge. When repartitioning, recompute the number of stages, each stage's combinational delay, and register overhead using the cuts allowed by the problem, then calculate the latency and the steady-state completion interval separately."
+  },
+  "[\"被调用过程若已恢复自己的栈帧，执行 ret 时 [[A0]] 又指向 [[A1]]。ret 用旧 [[A2]] 读取返回地址，ALU 同时计算栈指针加八：\",[[\"code\",\"%rsp\",\"\"],[\"code\",\"0x1F8\",\"\"],[\"code\",\"%rsp\",\"\"]]]": {
+    "en": "When the called procedure has restored its own stack frame, executing ret makes [[A0]] point to [[A1]] again. ret uses the old [[A2]] to read the return address, while the ALU simultaneously computes the stack pointer plus eight:"
+  },
+  "神仙解法……真的神仙……神中神 神仙set……python还是太全面了…… [[A0]]": {
+    "en": "A godlike solution... truly godlike... the god of gods; a divine set... Python really does cover everything... [[A0]]"
+  },
+  "[\"调了一些bug之后程序跑起来了，然后…… [[A0]] 看起来因为没有仔细阅读官方文档，忘记装buffalo_l模型了，于是程序开始自动帮我下载。推测一大串报错可能是因为下载网络错误导致的。因此我决定沿着前两行的下载地址进行手动下载。\",[[\"img\",\"\",\"/images/insightface/buffalo-download-error-redacted.png\"]]]": {
+    "en": "After fixing a few bugs, the program ran, and then... [[A0]] It seems I hadn't read the official documentation carefully and forgot to install the buffalo_l model, so the program began downloading it automatically. I suspect the long string of errors came from network failures during the download. So I decided to download it manually using the addresses in the first two lines."
+  },
+  "[\"[[O0]]带通配符的字符串匹配[[C0]] 根据dp表的值从后往前回溯。如果遇到*则检查前一层的dp并移动指针，否则同时移动两个指针。注意区间长度去掉0，以及*和?不能合并到一起。 [[A1]]\",[[\"a\",null],[\"img\",\"\",\"https://img2024.cnblogs.com/blog/2669443/202605/2669443-20260510214123817-1251053.png\"]]]": {
+    "en": "[[O0]]Wildcard string matching[[C0]] Backtrack from the end according to the values in the dp table. If a * is encountered, check the previous layer of the dp and move the pointer; otherwise, move both pointers at once. Note that the interval length excludes 0, and the '*' and '?' wildcards cannot be combined. [[A1]]"
+  },
+  "[\"可变参数： [[A0]]：任意数量，打包成元组 [[A1]]：打包成字典 [[A2]],[[A3]]为特殊方法名，设置后可直接用+，print()调用。\",[[\"code\",\"*args\",\"\"],[\"code\",\"**kwargs\",\"\"],[\"code\",\"__add__()\",\"\"],[\"code\",\"__str__()\",\"\"]]]": {
+    "en": "Variable parameters: [[A0]]: any number, packed into a tuple; [[A1]]: packed into a dictionary. [[A2]] and [[A3]] are special method names; once defined, + and print() can be used directly."
   }
 }
