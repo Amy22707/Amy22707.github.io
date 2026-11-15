@@ -1,7 +1,7 @@
 ---
 title: Introduction to Computer Systems
 publishedAt: 2026-09-10
-updatedAt: 2026-10-29
+updatedAt: 2026-11-10
 description: Visible after end of course.
 kind: notes
 technologies:
