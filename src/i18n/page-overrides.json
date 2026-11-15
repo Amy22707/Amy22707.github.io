@@ -32,35 +32,17 @@
     }
   },
   "studio/travel-frog/index.html": {
-    "LOCAL REVERSE-ENGINEERED EDITION": {
-      "zh": "本地逆向版"
-    },
     "GALLERY EDITION": {
       "zh": "图鉴版"
     },
-    "Travel Frog: A Journey to China": {
-      "zh": "《旅行青蛙·中国之旅》"
-    },
     "04 / YOUR SAVE": {
       "zh": "04 / 你的存档"
-    },
-    "上线状态": {
-      "en": "Release status"
     },
     "游玩与下载": {
       "en": "Play & Downloads"
     },
     "全部作品 ↗": {
       "en": "All projects ↗"
-    },
-    "安卓 APK · 暂未上线": {
-      "en": "Android APK · Not yet released"
-    },
-    "解锁装备、家具、故事、称号、友情绘本、图鉴与百科，预置固定照片和动态照片制作材料。三叶草、常用消耗品保持固定数量；中秋、新年和周年庆活动常驻。使用独立存档。": {
-      "en": "Equipment, furniture, stories, titles, friendship picture books, collections, and the encyclopedia are unlocked, with preset fixed photos and materials for animated photos. Clover and common consumables are kept at fixed quantities; Mid-Autumn, New Year, and anniversary events remain available. This edition uses its own save."
-    },
-    "标准版双击": {
-      "en": "For the Normal Edition, double-click"
     },
     "；图鉴版双击": {
       "en": "; for the Gallery Edition, double-click"
@@ -73,9 +55,6 @@
     },
     "存档位于程序旁的": {
       "en": "Saves are stored beside the application in"
-    },
-    "。升级时保留此文件夹，迁移电脑时优先使用“导出存档”。关闭游戏窗口后，本地服务会自动退出。": {
-      "en": ". Keep this folder when upgrading. When moving to another computer, use “Export Save” where possible. Closing the game window also shuts down the local service."
     },
     "等待本地运行环境启动，选择“导入存档”，在系统文件选择器中选中": {
       "en": "Wait for the local runtime to start, choose “Import Save,” and use the system file picker to select a"
@@ -92,23 +71,8 @@
     "文件。": {
       "en": "file."
     },
-    "已有": {
-      "en": "If you already have a"
-    },
-    "、兼容 JSON 存档或完整初始化 JSONL 的玩家，直接在本地版中导入，不需要安装模拟器，也不需要登录官服。": {
-      "en": "file, a compatible JSON save, or a JSONL file containing complete initialization data, import it directly into the local edition. You do not need an emulator or an official-server login."
-    },
-    "当前下方命令针对": {
-      "en": "The commands below target the"
-    },
-    "客户端。其他安卓渠道、iOS，以及微信或淘宝小程序的账号，必须先确认能在受支持的安卓客户端中加载同一份进度；仅手机号相同不代表存档互通。无法登录并读取原进度时，不能靠本地版凭空恢复该账号的存档。": {
-      "en": "client. For accounts from other Android distribution channels, iOS, or WeChat/Taobao mini-programs, first verify that the same progress can be loaded in the supported Android client. Using the same phone number does not establish save compatibility. If you cannot log in and read the original progress, the local edition cannot reconstruct that account's save from nothing."
-    },
     "从": {
       "en": "From the"
-    },
-    "源码仓库（上线后开放）": {
-      "en": "source repository (available after launch),"
     },
     "下载源码 ZIP 并解压，在该目录打开 CMD。安装 Python 和 Android Platform Tools，让": {
       "en": "download and extract the source ZIP, then open CMD in that folder. Install Python and Android Platform Tools so that"
@@ -154,9 +118,6 @@
     },
     "复制到目标设备，在": {
       "en": "to the target device, then choose “Import Save” in the"
-    },
-    "标准版": {
-      "en": "Normal Edition"
     },
     "中“导入存档”。核对青蛙、库存、照片与日记后，导出一份": {
       "en": ". After checking the frog, inventory, photos, and diary, export a"
@@ -295,158 +256,11 @@
     "执行框架沿用 AutoAct 角色划分，公开实现修改 FastChat、Transformers、PEFT 和 FlashAttention。实验硬件为单张 NVIDIA A6000 48GB。训练与执行代码公开，完整预训练好角色权重的发布情况未核实。": {
       "en": "The execution framework follows the AutoAct role split, and the public implementation modifies FastChat, Transformers, PEFT, and FlashAttention. Experiments run on a single NVIDIA A6000 48GB. Training and execution code are public; the release of fully pretrained role weights was not verified."
     },
-    "仓库级编码，单 Agent 对照与多角色协作": {
-      "en": "Repository-level coding; single-agent baseline and multi-role collaboration"
-    },
-    "补丁、依赖证据、管理反馈": {
-      "en": "Patches, dependency evidence, management feedback"
-    },
-    "串行交接、私有并行、只读／可写管理": {
-      "en": "Serial handoffs, private parallel work, read-only and write-enabled management"
-    },
-    "AsynCodeBench，仓库快照与 pytest": {
-      "en": "AsynCodeBench, repository snapshots and pytest"
-    },
-    "OpenHands，任务专用 Docker，角色私有工作区": {
-      "en": "OpenHands, task-specific Docker, role-private workspaces"
-    },
-    "引擎未核实，Qwen／DeepSeek 等": {
-      "en": "Engine unverified; Qwen/DeepSeek and others"
-    },
-    "任务闭环，测试通过率、ADPR、DRS、token 开销": {
-      "en": "Closed-loop tasks; test pass rate, ADPR, DRS, token cost"
-    },
-    "两个独立委托者，同仓库编码": {
-      "en": "Two independent requesters editing the same repository"
-    },
-    "消息、补丁、文件编辑历史": {
-      "en": "Messages, patches, file edit history"
-    },
-    "串行交接／并行私有工作区，文件或 Redis 通信": {
-      "en": "Serial handoffs/parallel private workspaces; file or Redis communication"
-    },
-    "SWE-Bench Pro 派生双需求，原任务 Docker 镜像": {
-      "en": "Dual requirements derived from SWE-Bench Pro; original task Docker images"
-    },
-    "Claude Code／Codex，独立改动后合并": {
-      "en": "Claude Code/Codex; merge after independent changes"
-    },
-    "vLLM，Qwen3.8 Flash Next／DeepSeek V4 Flash／GLM 5.3 Flash，另有 Opus 4.8": {
-      "en": "vLLM; Qwen3.8 Flash Next/DeepSeek V4 Flash/GLM 5.3 Flash, plus Opus 4.8"
-    },
-    "闭环，联合通过率、部分完成、相对加权 token 成本": {
-      "en": "Closed loop; joint pass rate, partial completion, relative weighted token cost"
-    },
-    "从规格生成仓库，负责人和并行 worker": {
-      "en": "Generate a repository from a specification; lead and parallel workers"
-    },
-    "范围化发现、可执行证据、接口契约": {
-      "en": "Scoped findings, executable evidence, interface contracts"
-    },
-    "按代码访问投递，接口桩与静态检查，改版通知": {
-      "en": "Delivered on code access; interface stubs, static checks, revision notices"
-    },
-    "Doc2Repo／NL2Repo／CodeProjectEval，空工作区": {
-      "en": "Doc2Repo/NL2Repo/CodeProjectEval, empty workspaces"
-    },
-    "AWS Strands，另测 mini-SWE-agent": {
-      "en": "AWS Strands; also tested with mini-SWE-agent"
-    },
-    "Bedrock／OpenRouter，底层引擎未披露，Claude／DeepSeek／GLM": {
-      "en": "Bedrock/OpenRouter; underlying engine undisclosed; Claude/DeepSeek/GLM"
-    },
-    "闭环，隐藏测试通过率、墙钟时间、输出 token": {
-      "en": "Closed loop; hidden test pass rate, wall-clock time, output tokens"
-    },
-    "本地转移缓存，异步确认与校正": {
-      "en": "Local transition cache; asynchronous confirmation and correction"
-    },
-    "TDW 三任务、BEHAVIOR-1K": {
-      "en": "Three TDW tasks, BEHAVIOR-1K"
-    },
-    "API 后端，GPT-5 系列": {
-      "en": "API backends; GPT-5 family"
-    },
-    "模拟闭环，成功率、执行时间、token、费用": {
-      "en": "Simulated closed loop; success rate, execution time, tokens, cost"
-    },
-    "多请求应用，含多角色编码": {
-      "en": "Multi-request applications, including multi-role coding"
-    },
-    "语义变量、依赖图、并行分组与前缀复用": {
-      "en": "Semantic variables, dependency graphs, parallel grouping, prefix reuse"
-    },
-    "Parrot API，编码负载采用 MetaGPT 式分工": {
-      "en": "Parrot API; coding workload uses MetaGPT-style role division"
-    },
-    "Parrot Engine，编码实验 LLaMA 13B／A100": {
-      "en": "Parrot Engine; coding experiments with LLaMA 13B/A100"
-    },
-    "服务实测，端到端时延与 KV 内存": {
-      "en": "Serving measurements; end-to-end latency and KV memory"
-    },
-    "多角色调用，用户并发设置未明确": {
-      "en": "Multi-role calls; user concurrency settings unspecified"
-    },
-    "调用转移预测、驱逐与预取": {
-      "en": "Call transition prediction, eviction, and prefetching"
-    },
-    "六角色服务工作流，版本未核实": {
-      "en": "Six-role serving workflow; version unverified"
-    },
-    "服务实验，TTFT、轮延迟、turn/s、命中率": {
-      "en": "Serving experiments; TTFT, turn latency, turn/s, hit rate"
-    },
-    "规划上下文、接口与格式约定、文件": {
-      "en": "Planning context, interface and format agreements, files"
-    },
-    "会话继承，逐层按 token 预算选择串并行": {
-      "en": "Session inheritance; serial/parallel choices per layer under a token budget"
-    },
-    "九个自建编码／写作／规划任务，另测 Flow 任务": {
-      "en": "Nine in-house coding/writing/planning tasks, plus Flow tasks"
-    },
-    "Claude Agent SDK，公开代码有 worktree／agent-tool 两模式": {
-      "en": "Claude Agent SDK; public code has worktree and agent-tool modes"
-    },
-    "Claude Sonnet 4.6，后端引擎未披露": {
-      "en": "Claude Sonnet 4.6; backend engine undisclosed"
-    },
-    "闭环产物，墙钟时间、交付词数／秒、模型条目评分": {
-      "en": "Closed-loop artifacts; wall-clock time, delivered words/s, model-rated task entries"
-    },
-    "同任务内规划／行动／反思轮转，角色 LoRA": {
-      "en": "Planning/action/reflection rotation within one task; role LoRA"
-    },
-    "基础 KV、低秩适配器缓存": {
-      "en": "Base KV, low-rank adapter caches"
-    },
-    "HotpotQA／ScienceQA，另测受控长度轨迹": {
-      "en": "HotpotQA/ScienceQA, plus controlled-length trajectories"
-    },
-    "AutoAct 式框架，角色 LoRA 训练": {
-      "en": "AutoAct-style framework; role LoRA training"
-    },
-    "修改 FastChat／Transformers，LLaMA-3.1-8B／Ministral-8B，A6000": {
-      "en": "Modified FastChat/Transformers; LLaMA-3.1-8B/Ministral-8B, A6000"
-    },
-    "问答闭环及受控轨迹，准确率、TTFT、token/s、显存": {
-      "en": "QA closed loop and controlled trajectories; accuracy, TTFT, token/s, GPU memory"
-    },
-    "协作设置记录一个任务内有几个角色、怎样交接。共享对象区分消息、代码制品、计划与模型计算状态。Benchmark 决定任务和验收，harness 控制工作区、工具和消息，引擎执行模型推理。DRS 属于逻辑进度，TTFT 属于请求延迟，两者分别登记。": {
-      "en": "The collaboration setup records how many roles a task has and how they hand off. Shared objects distinguish messages, code artifacts, plans, and model computation state. Benchmarks determine the task and acceptance criteria; the harness controls workspaces, tools, and messages; the engine executes model inference. DRS is logical progress, while TTFT is request latency; the two are recorded separately."
-    },
     "Harness 按代码范围投递发现，并检查接口契约": {
       "en": "The harness delivers findings according to code scope and checks interface contracts"
     },
-    "复用高层计划转移，后台模型确认与校正": {
-      "en": "Reuse high-level plan transitions; background model confirmation and correction"
-    },
     "暴露文本产物的生产与消费关系，帮助调度和复用": {
       "en": "Expose the production and consumption relationships of text artifacts to aid scheduling and reuse"
-    },
-    "学习角色转移，调度固定前缀 KV": {
-      "en": "Learn role transitions and schedule fixed-prefix KV"
     },
     "继承上下文、提前写约定，按预计成本选择串并行": {
       "en": "Inherit context, write agreements early, and choose serial or parallel execution based on estimated cost"
@@ -463,23 +277,8 @@
     "论文 §8.4 在一张 A100 上用 LLaMA 13B 运行 MetaGPT 式的架构师、编码者、审查者工作流，观察到端到端时间与 KV 内存改善。共享前缀、调度批次和专门 attention 实现都贡献了收益。实测比较采用论文当时的 FastChat／vLLM 等基线，主要回答服务效率问题。该组结果没有用现代仓库修复闭环来验证代码正确率。代码公开为 ParrotServe，较大系统实验还包含其他应用与 LLaMA 7B。": {
       "en": "Section 8.4 of the paper runs a MetaGPT-style architect, coder, and reviewer workflow with LLaMA 13B on an A100, observing improvements in end-to-end time and KV memory. Shared prefixes, scheduled batches, and dedicated attention implementations all contribute. The measurements compare against baselines such as FastChat/vLLM from the time of the paper and mainly address serving efficiency. This set of results does not verify code correctness with a modern repository closed-loop fix. The code is public as ParrotServe, and larger system experiments also include other applications and LLaMA 7B."
     },
-    "角色执行顺序能为缓存调度提供复用信号，提前准备也需要与前台请求竞争资源。论文关注固定前缀服务效率。问答、对话、搜索和编码场景的实验主要比较 TTFT、每轮延迟、吞吐和缓存命中。harness 与引擎的具体版本暂列未核实。": {
-      "en": "The execution order of roles can provide reuse signals for cache scheduling, and prefetching must also compete with foreground requests for resources. The paper focuses on fixed-prefix serving efficiency. Experiments in Q&A, dialogue, search, and coding scenarios mainly compare TTFT, per-turn latency, throughput, and cache hits. The exact harness and engine versions remain unverified."
-    },
     "在九个自建编码、技术写作和规划任务上，作者报告相较 Claude Code 的平均墙钟加速约为 2.6 倍，交付词数／秒提高约为 2.2 倍。该吞吐定义同时受产物长度和完成时间影响，质量另由 Claude Opus 4.6 对任务条目评分。实验执行模型为 Claude Sonnet 4.6。生成长度对模型生成主导的任务有预测价值，工具执行、外部 API 和服务排队还需要单独计时。当前评测以自建产物任务为主。": {
       "en": "On nine in-house coding, technical writing, and planning tasks, the authors report an average wall-clock speedup of about 2.6x over Claude Code, with delivered words per second increasing by about 2.2x. This throughput definition depends on both artifact length and completion time, while quality is rated separately by Claude Opus 4.6 for each task entry. The execution model is Claude Sonnet 4.6. Generation length is predictive for model-generation-dominated tasks, while tool execution, external API calls, and service queuing still require separate timing. The current evaluation focuses mainly on in-house artifact tasks."
-    },
-    "具身任务内多 Agent 协作": {
-      "en": "Multi-agent collaboration within embodied tasks"
-    },
-    "高层计划与状态条件": {
-      "en": "High-level plans and state conditions"
-    },
-    "动态文本产物与前缀 KV": {
-      "en": "Dynamic text artifacts and prefix KV"
-    },
-    "区分单方补丁正确与两个独立需求联合验收": {
-      "en": "Distinguish a correct one-sided patch from joint acceptance of two independent requirements"
     },
     "多个编码 Agent 并行工作时，普通消息需要接收者自行记住何时使用某条发现，也需要上下游自行检查约定有没有落实。AECP 让一个负责人划分模块，再用两类结构化产物协调并行 worker。": {
       "en": "When multiple coding Agents work in parallel, ordinary messages require receivers to remember when to use a finding, and upstream and downstream must also check whether agreements were implemented. AECP has a lead divide modules, then uses two types of structured artifacts to coordinate parallel workers."
@@ -927,9 +726,6 @@
     },
     "链接器主要看 section，加载器按 segment 建立进程的内存映像，一个 segment 可以包含多个 section。.bss 的零数据在运行时有空间，文件无需存下每一个零字节。": {
       "en": "The linker mainly looks at sections, while the loader builds the process's memory image according to segments. A segment can contain multiple sections. Zero data in .bss has space at runtime, and the file does not need to store every zero byte."
-    },
-    "库插桩可以记录 malloc 的请求大小和返回地址。课件对比预处理宏替换、链接器 —wrap 和动态加载时的 LD_PRELOAD。采用哪一种取决于能否改源码、重新链接，以及被观察程序是否通过动态符号调用目标函数。": {
-      "en": "Library instrumentation can record the requested size of malloc and the return address. The courseware compares preprocessor macro replacement, linker --wrap, and LD_PRELOAD during dynamic loading. Which method to use depends on whether the source code can be modified or re-linked, and whether the observed program calls the target function through dynamic symbols."
     },
     "Y86-64 常见指令格式与操作顺序": {
       "en": "Common Y86-64 instruction formats and operation order"
@@ -1431,21 +1227,6 @@
     },
     "按源矩阵的 24 行、4 列分块。先读 4 个值再写，最后一块只处理剩余行": {
       "en": "Block by 24 rows and 4 columns of the source matrix. Read four values before writing; the last block handles only the remaining rows."
-    },
-    "本次 WSL 官方测试": {
-      "en": "This WSL official test"
-    },
-    "Part A，八组轨迹": {
-      "en": "Part A, eight traces"
-    },
-    "三种转置尺寸合计": {
-      "en": "Total for the three transpose sizes"
-    },
-    "自动评分": {
-      "en": "Automatic grading"
-    },
-    "Scoreboard 的 Total Misses 是三个转置尺寸的未命中次数之和。Style 单列 12 分，由助教根据注释、缩进、行长、错误处理和可读性等人工评定。README 还列有局部变量超限和内存泄漏的正确性扣分。": {
-      "en": "The Scoreboard's Total Misses is the sum of misses for the three transpose sizes. Style is 12 separate points, assessed by teaching assistants for comments, indentation, line length, error handling, and readability. The README also lists correctness deductions for exceeding the local-variable limit and for memory leaks."
     },
     "可得到不同符号的无穷。": {
       "en": "produce infinities of different signs."
@@ -2161,33 +1942,6 @@
     "检查具体哪些访问发生缺失。": {
       "en": "to see which accesses miss."
     },
-    "原始分": {
-      "en": "raw points"
-    },
-    "次 miss": {
-      "en": "misses"
-    },
-    "次 miss，": {
-      "en": "misses,"
-    },
-    "原始分换算为": {
-      "en": "raw points converted to"
-    },
-    "在 Linux 中按 handout 的 Makefile 生成": {
-      "en": "builds"
-    },
-    "。用下面的命令确认包里是两份带课程要求文件头的源码。": {
-      "en": "with the handout Makefile on Linux. Use the command below to confirm that the package contains two source files with the required course headers."
-    },
-    "在 Autolab 的 Cache Lab 作业页上传": {
-      "en": "Upload"
-    },
-    "即可。": {
-      "en": "on the Cache Lab assignment page in Autolab."
-    },
-    "用来在本地复查自动评分，Autolab 提交后可以在作业页查看线上结果。": {
-      "en": "is used to re-check the automatic grading locally; after submitting to Autolab, the online result is available on the assignment page."
-    },
     "下面的参数、返回值和保存责任采用本课Linux x86-64 System V ABI。整数和指针参数使用这组通用寄存器，浮点参数主要使用XMM寄存器；混合参数分别按各自序列分配。表中的参数顺序描述调用时的角色，进入函数后寄存器还可以保存局部变量或中间结果。": {
       "en": "The parameters, return values, and saving responsibilities below follow the Linux x86-64 System V ABI used in this course. Integer and pointer parameters use this set of general-purpose registers, and floating-point parameters mainly use XMM registers; mixed parameters are allocated in their respective sequences. The order of parameters in the table describes their roles during the call, and after entering the function, registers can still hold local variables or intermediate results."
     },
@@ -2424,9 +2178,6 @@
     }
   },
   "blog/may2026/index.html": {
-    "则检查前一层的dp并移动指针，否则同时移动两个指针。注意区间长度去掉0，以及": {
-      "en": "then check the previous layer of the dp and move the pointer; otherwise, move both pointers at once. Note that the interval length excludes 0, and"
-    },
     "根据dp表的值从后往前回溯。如果遇到*则检查前一层的dp并移动指针，否则同时移动两个指针。注意区间长度去掉0，以及*和?不能合并到一起。": {
       "en": "Backtrack from the end according to the values in the dp table. If a * is encountered, check the previous layer of the dp and move the pointer; otherwise, move both pointers at once. Note that the interval length excludes 0, and the '*' and '?' wildcards cannot be combined."
     }
