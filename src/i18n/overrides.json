@@ -1,7 +1,13 @@
 {
-  "A focus and study planner for Windows and macOS, with customizable app restrictions, task and planning lists, and offline focus history.": { "zh": "面向 Windows 和 macOS 的专注与学习规划软件，支持自定义应用限制、待办与计划清单，以及离线专注记录。" },
-  "An unofficial offline edition of Travel Frog: A Journey to China for Windows, macOS, Android, and the web, with separate Normal and Gallery saves.": { "zh": "《旅行青蛙·中国之旅》的非官方离线版，支持 Windows、macOS、Android 和网页游玩，普通版与图鉴版分别保存进度。" },
-  "An unofficial enhancement of Jizhi, a Chinese-poetry new-tab extension with traditional-color animations, offline poems, and customizable fonts. Installation packages are available on GitHub.": { "zh": "基于几枝的非官方增强版古诗词新标签页扩展，提供传统色动态背景、离线诗句与字体个性化。安装包已在 GitHub 提供。" },
+  "A focus and study planner for Windows and macOS, with customizable app restrictions, task and planning lists, and offline focus history.": {
+    "zh": "面向 Windows 和 macOS 的专注与学习规划软件，支持自定义应用限制、待办与计划清单，以及离线专注记录。"
+  },
+  "An unofficial offline edition of Travel Frog: A Journey to China for Windows, macOS, Android, and the web, with separate Normal and Gallery saves.": {
+    "zh": "《旅行青蛙·中国之旅》的非官方离线版，支持 Windows、macOS、Android 和网页游玩，普通版与图鉴版分别保存进度。"
+  },
+  "An unofficial enhancement of Jizhi, a Chinese-poetry new-tab extension with traditional-color animations, offline poems, and customizable fonts. Installation packages are available on GitHub.": {
+    "zh": "基于几枝的非官方增强版古诗词新标签页扩展，提供传统色动态背景、离线诗句与字体个性化。安装包已在 GitHub 提供。"
+  },
   "无 Agent 闭环": {
     "en": "No end-to-end agent loop"
   },
@@ -1616,9 +1622,6 @@
   "Begin again.": {
     "zh": "再启新程。"
   },
-  "Firefox 当前为未签名预览包，需要临时加载；重启浏览器后须重新加载。": {
-    "en": "Firefox is currently an unsigned preview. Load it temporarily and reload it after restarting the browser."
-  },
   "安装包位于 builds/：chrome.zip、edge.zip 与 firefox.zip。": {
     "en": "Installation packages are in builds/: chrome.zip, edge.zip, and firefox.zip."
   },
@@ -1634,9 +1637,6 @@
   "去 GitHub 看看 ↗": {
     "en": "Explore on GitHub ↗"
   },
-  "v2.5.2 预览版已发布，选择对应浏览器的安装包即可开始。安装方法见下方说明。": {
-    "en": "The v2.5.2 preview is available. Choose the package for your browser, then follow the installation steps below."
-  },
   "下载 Chrome ZIP ↓": {
     "en": "Download Chrome ZIP ↓"
   },
@@ -1646,17 +1646,11 @@
   "下载 Firefox ZIP ↓": {
     "en": "Download Firefox ZIP ↓"
   },
-  "Firefox 当前为未签名预览包，需要临时加载；重启浏览器后须重新加载。firefox-source.zip 是审核源码，不用于安装。": {
-    "en": "Firefox is currently an unsigned preview that must be loaded temporarily and reloaded after a browser restart. firefox-source.zip contains review sources, not an installable extension."
-  },
   "查看完整发布说明 ↗": {
     "en": "Read the full release notes ↗"
   },
   "扩展商店": {
     "en": "Extension stores"
-  },
-  "下载对应浏览器的 chrome.zip 或 edge.zip 并解压。": {
-    "en": "Download and extract chrome.zip or edge.zip for your browser."
   },
   "下载 firefox.zip，或使用自行构建的文件。": {
     "en": "Download firefox.zip or use your own local build."
@@ -1673,20 +1667,11 @@
   "版本与更新 ↗": {
     "en": "Releases & updates ↗"
   },
-  "2.5.2 · Preview": {
-    "zh": "2.5.2 · 预览版"
-  },
   "PREVIEW AVAILABLE": {
     "zh": "预览版已发布"
   },
   "GitHub ↗": {
     "zh": "GitHub ↗"
-  },
-  "Preview packages are on GitHub Releases. Firefox currently requires temporary installation; store listings are coming later.": {
-    "zh": "预览安装包已发布到 GitHub Releases。Firefox 目前需要临时加载，扩展商店入口将在后续提供。"
-  },
-  "An unofficial enhancement of Jizhi, a Chinese-poetry new-tab extension with traditional-color animations, offline poems, and customizable fonts. Preview packages are available on GitHub.": {
-    "zh": "基于几枝的非官方增强版古诗词新标签页扩展，提供传统色动态背景、离线诗句与字体个性化。预览安装包已发布到 GitHub。"
   },
   "古诗词 · 中国传统色": {
     "en": "Classical poetry · Traditional Chinese colors"
@@ -1715,9 +1700,6 @@
   "随手翻到的诗": {
     "en": "Verses to stumble upon"
   },
-  "8,501 条诗句，断网也能读。任它随机翻过，或按诗句、作者、篇名寻来；遇到喜欢的，就留在这一页。": {
-    "en": "8,501 verses to read, even offline. Let them turn at random, or search by verse, poet, or title. When one stays with you, pin it to the page."
-  },
   "流动的中国色": {
     "en": "Chinese colors in motion"
   },
@@ -1736,17 +1718,11 @@
   "需要时，打开搜索框，放上常去的几个网址。想留住眼前的颜色，也可以保存一张背景图。": {
     "en": "Bring up the search box when you need it, and keep a few familiar websites nearby. If a color catches your eye, save the background as an image."
   },
-  "发布后，从 Releases 下载对应浏览器的 chrome.zip 或 edge.zip 并解压。": {
-    "en": "Once published, download and extract chrome.zip or edge.zip for your browser from Releases."
-  },
   "Firefox 142+ · 临时安装": {
     "en": "Firefox 142+ · Temporary installation"
   },
   "需要 Node.js 24 和 npm 11。在项目目录执行：": {
     "en": "Requires Node.js 24 and npm 11. Run these commands in the project folder:"
-  },
-  "安装包位于 builds/：chrome.zip、edge.zip 与 firefox.zip。Firefox 构建还会生成审核所需的 firefox-source.zip；它不是安装包。": {
-    "en": "Packages are written to builds/: chrome.zip, edge.zip, and firefox.zip. The Firefox build also produces firefox-source.zip for review; it is not an installable package."
   },
   "把喜欢的留下。": {
     "en": "Keep what you love."
@@ -1823,17 +1799,11 @@
   "一点诗意，一抹色彩。每次打开新标签页，都是新的开始。": {
     "en": "A little poetry. A little color. A fresh start with every tab."
   },
-  "基于原版几枝的非官方增强版，将古典诗词与传统色动态背景相结合，提供离线诗句与个性化设置。": {
-    "en": "An unofficial enhancement of the original Jizhi extension, pairing classical Chinese poetry with animated traditional colors, offline poems, and personal touches."
-  },
   "开始使用 ↘": {
     "en": "Get started ↘"
   },
   "源代码 ↗": {
     "en": "Source code ↗"
-  },
-  "几枝·增强版：传统色波浪背景上的古诗词": {
-    "en": "Jizhi Enhanced: Chinese poetry over traditional-color waves"
   },
   "给新标签页，留一点呼吸的空间。": {
     "en": "A new tab, with room to breathe."
@@ -1843,12 +1813,6 @@
   },
   "让新标签页，有你的样子。": {
     "en": "Make a new tab feel like yours."
-  },
-  "离线也有诗意": {
-    "en": "Poetry, even offline"
-  },
-  "内置 8,500 条离线诗句。可以按诗句、作者或篇名搜索，固定喜欢的一句，也可以让随机轮换带来新的相遇。": {
-    "en": "Explore 8,500 offline verses. Search by poem, poet, or title, pin a favorite, or let random selection bring something new."
   },
   "流动的传统色": {
     "en": "Colors in motion"
@@ -1889,9 +1853,6 @@
   "Chrome 与 Edge · 本地安装": {
     "en": "Chrome & Edge · Local installation"
   },
-  "发布后，从 Releases 下载 chrome_edge.zip 并解压。": {
-    "en": "Download chrome_edge.zip from Releases when available, and extract it."
-  },
   "打开浏览器的扩展管理页面，开启开发者模式。": {
     "en": "Open your browser's extensions page and enable Developer mode."
   },
@@ -1904,12 +1865,6 @@
   "扩展管理页面": {
     "en": "Extensions pages"
   },
-  "Firefox · 临时安装": {
-    "en": "Firefox · Temporary installation"
-  },
-  "发布后，从 Releases 下载 firefox.zip，或使用自行构建的文件。": {
-    "en": "Download firefox.zip from Releases when available, or use your local build."
-  },
   "打开下方调试页面，点击“临时载入附加组件”，选择 firefox.zip 或解压目录中的 manifest.json。": {
     "en": "Open the debugging page below, choose Load Temporary Add-on, then select firefox.zip or the extracted manifest.json."
   },
@@ -1921,9 +1876,6 @@
   },
   "在项目目录安装依赖并构建浏览器安装包。": {
     "en": "In the project folder, install dependencies and build the browser packages."
-  },
-  "构建生成 builds/chrome_edge.zip 与 builds/firefox.zip。也可加载解压目录 builds/build_chrome 或 builds/build_firefox。": {
-    "en": "Output: builds/chrome_edge.zip and builds/firefox.zip. For unpacked loading, use builds/build_chrome or builds/build_firefox."
   },
   "按你的喜好，慢慢调整": {
     "en": "MAKE YOURSELF AT HOME"
@@ -1969,9 +1921,6 @@
   },
   "深色波浪与竖排诗词": {
     "en": "Dark waves and vertical Chinese poetry"
-  },
-  "彩色 Blobs 背景上的诗句": {
-    "en": "Poetry with a colorful Blobs background"
   },
   "常见问题与鸣谢": {
     "en": "Questions & credits"
@@ -2051,9 +2000,6 @@
   "Poetry, even offline": {
     "zh": "离线也有诗意"
   },
-  "Explore 8,500 offline verses. Search by poem, poet, or title, pin a favorite, or let random selection bring something new.": {
-    "zh": "内置 8,500 条离线诗句。可以按诗句、作者或篇名搜索，固定喜欢的一句，也可以让随机轮换带来新的相遇。"
-  },
   "Colors in motion": {
     "zh": "流动的传统色"
   },
@@ -2093,9 +2039,6 @@
   "Chrome & Edge · Local installation": {
     "zh": "Chrome 与 Edge · 本地安装"
   },
-  "Download chrome_edge.zip from Releases when available, and extract it.": {
-    "zh": "发布后，从 Releases 下载 chrome_edge.zip 并解压。"
-  },
   "Open your browser's extensions page and enable Developer mode.": {
     "zh": "打开浏览器的扩展管理页面，开启开发者模式。"
   },
@@ -2108,26 +2051,11 @@
   "Extensions pages": {
     "zh": "扩展管理页面"
   },
-  "Firefox · Temporary installation": {
-    "zh": "Firefox · 临时安装"
-  },
-  "Download firefox.zip from Releases when available, or use your local build.": {
-    "zh": "发布后，从 Releases 下载 firefox.zip，或使用自行构建的文件。"
-  },
-  "Open the debugging page below, choose Load Temporary Add-on, then select firefox.zip or the extracted manifest.json.": {
-    "zh": "打开下方调试页面，点击“临时载入附加组件”，选择 firefox.zip 或解压目录中的 manifest.json。"
-  },
-  "Open a new tab. Temporary add-ons must be loaded again after restarting Firefox; permanent installation requires Mozilla signing.": {
-    "zh": "打开新标签页即可体验。临时扩展在 Firefox 重启后需要重新加载；长期安装需要 Mozilla 签名。"
-  },
   "Build from source": {
     "zh": "从源码构建"
   },
   "In the project folder, install dependencies and build the browser packages.": {
     "zh": "在项目目录安装依赖并构建浏览器安装包。"
-  },
-  "Output: builds/chrome_edge.zip and builds/firefox.zip. For unpacked loading, use builds/build_chrome or builds/build_firefox.": {
-    "zh": "构建生成 builds/chrome_edge.zip 与 builds/firefox.zip。也可加载解压目录 builds/build_chrome 或 builds/build_firefox。"
   },
   "MAKE YOURSELF AT HOME": {
     "zh": "按你的喜好，慢慢调整"
@@ -2392,5 +2320,23 @@
   },
   "2026.11.03 · 庭院里再多一点来往": {
     "en": "2026.11.03 · A Little More Coming and Going in the Courtyard"
+  },
+  "MAS": {
+    "zh": "多智能体系统"
+  },
+  "Multi_Agent": {
+    "zh": "多智能体"
+  },
+  "Cpp": {
+    "zh": "C++"
+  },
+  "内置 8,176 条离线诗句。可以随机翻阅，或按诗句、作者和篇名搜索，再把喜欢的一句固定下来。": {
+    "en": "Read 8,176 verses offline. Browse at random, or search by verse, poet, or title and pin a favorite."
+  },
+  "GitHub 已发布 v2.5.3。请选择对应浏览器的安装包，然后按下方步骤安装。": {
+    "en": "Version 2.5.3 is available on GitHub. Choose your browser package and follow the steps below."
+  },
+  "也可以在「自定义句库」添加自己的句子，选填作者和作品名，再选固定一句、只在自己的句库里随机，或与内置诗句一起随机。": {
+    "en": "Add your own lines in Custom Verse Library. You can include the author and title, pin a line, shuffle your own collection, or mix it with the built-in verses."
   }
 }

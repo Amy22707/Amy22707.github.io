@@ -1,4 +1,12 @@
 {
+  "blog/agent-systems-wiki/index.html": {
+    "如果 A 的历史刚写进 CPU，B、C 的大历史又把它挤走；A 回来后重算并写入，接着又挤走 B。问题是状态没有活到复用时刻，单次搬运速度无法解释它。": {
+      "en": "Suppose A's history has just been written to CPU memory, only to be evicted by the large histories of B and C. When A returns, it recomputes and writes its state, evicting B in turn. The problem is that state does not survive until reuse; the speed of an individual transfer cannot explain it."
+    },
+    "Agent 数按一次任务内部的执行角色统计。单 Agent 可以调用工具、摘要模型或验证器。多个候选分别尝试同一题仍按各自的执行角色判断。单用户指单个任务或会话内的实验，多用户指多个独立任务或会话共享服务，包含明确的批量运行或服务回放。同一篇论文有不同实测设置时可以跨格登记。": {
+      "en": "Agent count is based on the execution roles within a single task. A single Agent can call tools, summarizer models, or validators. Multiple candidates attempting the same problem are still judged according to their respective execution roles. Single-user refers to experiments within a single task or session; multi-user refers to multiple independent tasks or sessions sharing services, including explicit batch runs or service replay. Different experimental settings in the same paper can be recorded across cells."
+    }
+  },
   "blog/tag/agents/index.html": {
     "Blog posts tagged Agents": {
       "zh": "标签为“智能体”的博客文章"
@@ -193,283 +201,130 @@
     }
   },
   "blog/multi-agent-systems-wiki/index.html": {
-    "2.1 CooperBench：用双功能合并验收衡量编码协作": {
-      "en": "2.1 CooperBench: Evaluating Coding Collaboration Through Joint Acceptance of Two Merged Features"
+    "角色共同使用基础 value 缓存，分别保存自己的低维 XA。需要时再用各自的 B 恢复增量。它主要节省存储，角色仍要计算自己尚未处理的历史对应的低维缓存。": {
+      "en": "The roles share the base value cache and each store their own low-dimensional XA. Each role uses its own B to reconstruct its increment when needed. This primarily saves storage; roles must still compute the low-dimensional cache for the history they have not yet processed."
     },
-    "2.2 SWE-bench：用真实 issue 和补丁测试验收仓库修复": {
-      "en": "2.2 SWE-bench: Evaluating Repository Repairs with Real Issues and Patch Tests"
+    "同一模型切换角色提示后，即使后面的历史文字完全相同，也可能得到不同的 KV 缓存。KVCMAS 希望利用前一角色已经算好的缓存，估计“切换到下一角色需要改多少”，减少下一角色重新处理整段历史的工作。": {
+      "en": "Switching role prompts for the same model can produce different KV caches even when the subsequent history text is identical. KVCMAS aims to reuse the preceding role's computed cache and estimate how much it must change for the next role, reducing the next role's work of processing the entire history again."
     },
-    "2.9 Pairing Matters：在同一推理服务上比较模型与 Harness": {
-      "en": "2.9 Pairing Matters: Comparing Models and Harnesses on the Same Inference Service"
-    },
-    "4.9 AgentPerfBench：用多轮请求轨迹衡量推理服务性能": {
-      "en": "4.9 AgentPerfBench: Measuring Inference-Service Performance with Multi-Turn Request Traces"
-    },
-    "（锁定协议）": {
-      "en": "(locked protocol)"
-    },
-    "479 个结构性冲突任务对上，无监督并行联合通过率为 28.8%，Opus 监督为 54.7%，单 Agent 为 57.2%。平均耗时分别为 19.8、24.2、28.4 分钟。实验同时展示了监督的时间开销和质量收益，模型费用需要另行核算。": {
-      "en": "Across 479 task pairs with structural conflicts, joint pass rates are 28.8% for unsupervised parallel execution, 54.7% with Opus supervision, and 57.2% for a single Agent. Mean durations are 19.8, 24.2, and 28.4 minutes, respectively. The experiment shows both the time overhead and quality gains of supervision; model costs must be calculated separately."
-    },
-    "同一运行时支持单 Agent、由模型选择交接的团队，以及代码指定交接顺序的工作流。运行时控制消息可达边和预算，并记录角色事件，用 Adherence 检查预定组织是否实际发生。": {
-      "en": "The same runtime supports a single Agent, teams with model-selected handoffs, and workflows with a code-specified handoff order. It controls which communication edges messages may traverse and the budget, records role events, and uses Adherence to check whether the intended organization actually took place."
-    },
-    "ProgramBench 的一组同构对照里，只委派规划能以约一半推理费用获得接近全阶段委派的分数。异步减少负责人等待，也可能在结果未齐时提前行动。实验分别报告分数、费用和墙钟时间。": {
-      "en": "In a matched ProgramBench comparison, delegating planning alone achieves scores close to delegating all stages at roughly half the inference cost. Asynchronous delegation reduces the lead's waiting, but can also lead to action before all results arrive. The experiments report scores, costs, and wall-clock time separately."
-    },
-    "Terminal-Bench 提供容器化终端任务和可执行验证器。维护论文检查指令、验证器、环境和资源限制，修复审计发现的问题，并发布 2.1。": {
-      "en": "Terminal-Bench provides containerized terminal tasks and executable verifiers. The maintenance paper audits instructions, verifiers, environments, and resource limits, fixes issues found in that audit, and releases version 2.1."
-    },
-    "使用 SWE-Bench、TerminalBench、OSWorld 和聊天来源的轨迹，提供录制请求回放及由请求分布合成的负载。回放保持会话内请求顺序，并扫描并发。": {
-      "en": "Using traces from SWE-Bench, TerminalBench, OSWorld, and chat workloads, it provides replay of recorded requests and synthetic workloads derived from request distributions. Replay preserves the order of requests within each session and sweeps concurrency levels."
-    },
-    "固定包内容比较执行方式。": {
-      "en": "Hold package contents fixed when comparing execution methods."
-    },
-    "推理引擎／服务口径": {
-      "en": "Inference Engine / Serving Setup"
-    },
-    "恢复。主设置在 Q、V 投影上使用 LoRA，并共享 key 缓存。它主要节省存储，各角色仍需计算自己的低秩历史。": {
-      "en": "to recover them. The main configuration applies LoRA to the Q and V projections and shares the key cache. It mainly saves storage; each role must still compute its own low-rank history."
-    },
-    "、保留各自上投影": {
-      "en": ", while retaining role-specific up-projections"
-    },
-    "。基础缓存和低秩缓存都共享，后继角色复用历史，只为新追加内容执行 prefill。不同角色的层输入存在差异，跨角色缓存复用依赖相似性近似。": {
-      "en": ". Both base and low-rank caches are shared, so later roles reuse history and only run prefill for newly appended content. Layer inputs differ across roles, so cross-role cache reuse relies on a similarity approximation."
-    },
-    "，低秩 value 为": {
-      "en": ", the low-rank value is"
-    },
-    "，通过": {
-      "en": ", through"
-    },
-    "改变运算顺序。先在低秩空间做加权求和，再升维，避免为全部历史 token 展开完整角色 value 缓存。": {
-      "en": "to change the computation order. It first performs a weighted sum in the low-rank space and then upscales, avoiding the need to expand full role-specific value caches for all historical tokens."
-    },
-    "作者在 LLaMA-3.1-8B-Instruct、Ministral-8B-Instruct 的规划／行动／反思三角色问答中，观察到该拆分比直接共享整个缓存更好地保留准确率，同时降低显存与重复 prefill 开销。BaseLRShared 需要共享": {
-      "en": "In three-role planning/action/reflection question answering with LLaMA-3.1-8B-Instruct and Ministral-8B-Instruct, the authors observe that this split preserves accuracy better than directly sharing the entire cache, while reducing GPU memory use and repeated prefill overhead. BaseLRShared requires shared"
-    },
-    "的适配器训练。主系统加速在相同长度轨迹上测量，准确率在 HotpotQA、ScienceQA 上测量，另有实际 HotpotQA 延迟结果。": {
-      "en": "adapter training. Main system speedups are measured on trajectories of equal length; accuracy is measured on HotpotQA and ScienceQA, with additional real HotpotQA latency results."
-    },
-    "执行框架沿用 AutoAct 角色划分，公开实现修改 FastChat、Transformers、PEFT 和 FlashAttention。实验硬件为单张 NVIDIA A6000 48GB。训练与执行代码公开，完整预训练好角色权重的发布情况未核实。": {
-      "en": "The execution framework follows the AutoAct role split, and the public implementation modifies FastChat, Transformers, PEFT, and FlashAttention. Experiments run on a single NVIDIA A6000 48GB. Training and execution code are public; the release of fully pretrained role weights was not verified."
-    },
-    "Harness 按代码范围投递发现，并检查接口契约": {
-      "en": "The harness delivers findings according to code scope and checks interface contracts"
-    },
-    "暴露文本产物的生产与消费关系，帮助调度和复用": {
-      "en": "Expose the production and consumption relationships of text artifacts to aid scheduling and reuse"
-    },
-    "继承上下文、提前写约定，按预计成本选择串并行": {
-      "en": "Inherit context, write agreements early, and choose serial or parallel execution based on estimated cost"
-    },
-    "共享基础缓存与低秩历史，按角色重建适配器贡献": {
-      "en": "Share base caches and low-rank histories; rebuild adapter contributions per role"
-    },
-    "知识产物。": {
-      "en": "Knowledge artifacts."
-    },
-    "契约产物。": {
-      "en": "Contract artifacts."
-    },
-    "论文 §8.4 在一张 A100 上用 LLaMA 13B 运行 MetaGPT 式的架构师、编码者、审查者工作流，观察到端到端时间与 KV 内存改善。共享前缀、调度批次和专门 attention 实现都贡献了收益。实测比较采用论文当时的 FastChat／vLLM 等基线，主要回答服务效率问题。该组结果没有用现代仓库修复闭环来验证代码正确率。代码公开为 ParrotServe，较大系统实验还包含其他应用与 LLaMA 7B。": {
-      "en": "Section 8.4 of the paper runs a MetaGPT-style architect, coder, and reviewer workflow with LLaMA 13B on an A100, observing improvements in end-to-end time and KV memory. Shared prefixes, scheduled batches, and dedicated attention implementations all contribute. The measurements compare against baselines such as FastChat/vLLM from the time of the paper and mainly address serving efficiency. This set of results does not verify code correctness with a modern repository closed-loop fix. The code is public as ParrotServe, and larger system experiments also include other applications and LLaMA 7B."
-    },
-    "在九个自建编码、技术写作和规划任务上，作者报告相较 Claude Code 的平均墙钟加速约为 2.6 倍，交付词数／秒提高约为 2.2 倍。该吞吐定义同时受产物长度和完成时间影响，质量另由 Claude Opus 4.6 对任务条目评分。实验执行模型为 Claude Sonnet 4.6。生成长度对模型生成主导的任务有预测价值，工具执行、外部 API 和服务排队还需要单独计时。当前评测以自建产物任务为主。": {
-      "en": "On nine in-house coding, technical writing, and planning tasks, the authors report an average wall-clock speedup of about 2.6x over Claude Code, with delivered words per second increasing by about 2.2x. This throughput definition depends on both artifact length and completion time, while quality is rated separately by Claude Opus 4.6 for each task entry. The execution model is Claude Sonnet 4.6. Generation length is predictive for model-generation-dominated tasks, while tool execution, external API calls, and service queuing still require separate timing. The current evaluation focuses mainly on in-house artifact tasks."
-    },
-    "多个编码 Agent 并行工作时，普通消息需要接收者自行记住何时使用某条发现，也需要上下游自行检查约定有没有落实。AECP 让一个负责人划分模块，再用两类结构化产物协调并行 worker。": {
-      "en": "When multiple coding Agents work in parallel, ordinary messages require receivers to remember when to use a finding, and upstream and downstream must also check whether agreements were implemented. AECP has a lead divide modules, then uses two types of structured artifacts to coordinate parallel workers."
-    },
-    "在 Doc2Repo、NL2Repo 和 CodeProjectEval 的从规格生成仓库任务中，作者报告 AECP 相比两种团队基线提高隐藏测试通过率、缩短墙钟时间。相比单 Agent，它平均使用更多输出 token。与集成者基线的第一步消融同时引入共享工作区和知识产物，因此该对比无法单独归因于知识投递。主实验使用 AWS Strands Agents SDK，另用 mini-SWE-agent 做一组复核。Claude Opus 4.8、Opus 4.6 与 Sonnet 5 通过 Bedrock 调用，DeepSeek-V4-Flash 与 GLM-5.2 通过 OpenRouter 调用。底层引擎和硬件未披露。": {
-      "en": "In repository generation from specifications on Doc2Repo, NL2Repo, and CodeProjectEval, the authors report that AECP improves hidden-test pass rates and shortens wall-clock time compared with two team baselines. Compared with a single Agent, it uses more output tokens on average. The first-step ablation against the integrator baseline introduces both a shared workspace and knowledge artifacts, so the comparison cannot be attributed to knowledge delivery alone. The main experiment uses the AWS Strands Agents SDK, with a separate verification run using mini-SWE-agent. Claude Opus 4.8, Opus 4.6, and Sonnet 5 are called through Bedrock, while DeepSeek-V4-Flash and GLM-5.2 are called through OpenRouter. The underlying engine and hardware are not disclosed."
-    },
-    "系统基于 Claude Agent SDK，公开代码支持 Git worktree 隔离。底层推理引擎和服务器硬件未披露。论文提示词及任务描述公开，无需训练新模型。": {
-      "en": "The system is based on the Claude Agent SDK, and the public code supports Git worktree isolation. The underlying inference engine and server hardware are not disclosed. The paper's prompts and task descriptions are public, and no new model training was required."
-    },
-    "2.3 SWE-Bench Pro V2：审计长程仓库任务并固定验收协议": {
-      "en": "2.3 SWE-Bench Pro V2: Auditing long-horizon repository tasks and locking down the acceptance protocol"
-    },
-    "2.5 Terminal-Bench 2.1：将任务与资源预算一起纳入版本管理": {
-      "en": "2.5 Terminal-Bench 2.1: Bringing tasks and resource budgets under version control"
-    },
-    "2.6 CORE-Bench：用论文代码与数据测计算复现": {
-      "en": "2.6 CORE-Bench: Measuring computational reproducibility with paper code and data"
-    },
-    "3.4 Relic：将重复协作故障转成可执行团队规则": {
-      "en": "3.4 Relic: Turning repeated collaboration failures into executable team rules"
-    },
-    "4.2 SquidAgent：继承规划上下文，按预计协调成本选择并行": {
-      "en": "4.2 SquidAgent: Inherit planning context and choose how much to parallelize based on expected coordination cost"
-    },
-    "4.4 KVCMAS：沿 Agent 工作流传递并修正共享上下文 KV": {
-      "en": "4.4 KVCMAS: Propagating and correcting shared-context KV along the agent workflow"
-    },
-    "4.5 Shepherd：用可分叉执行轨迹实施运行时监督": {
-      "en": "4.5 Shepherd: Implementing runtime supervision with forkable execution traces"
-    },
-    "4.10 DeCAF：拆开优化 Harness，再验证组合的收益": {
-      "en": "4.10 DeCAF: Decompose and optimize the harness, then verify the combined benefits"
-    },
-    "5.1 按 Benchmark 查": {
-      "en": "5.1 Browse by Benchmark"
-    },
-    "5.2 按 Harness 查": {
-      "en": "5.2 Browse by Harness"
-    },
-    "5.3 按推理引擎查": {
-      "en": "5.3 Browse by Inference Engine"
-    },
-    "5.4 按任务查": {
-      "en": "5.4 Browse by Task"
-    },
-    "给 Agent 一个空工作区、可运行的参考程序和相关文档。Agent 通过查询参考程序理解行为，提交独立实现，再用隐藏行为测试测兼容性。任务从命令行工具到 FFmpeg 等大型软件。": {
-      "en": "Give the Agent an empty workspace, a runnable reference program, and related documentation. The Agent understands behavior by querying the reference program, submits an independent implementation, and then checks compatibility with hidden behavioral tests. Tasks range from command-line tools to large software like FFmpeg."
-    },
-    "200 个任务覆盖程序重建，部分行为通过率可以反映未完全解决时的进展。Cohere 的团队研究用它比较规划、实现和验证三阶段的委派成本。": {
-      "en": "200 tasks cover program reconstruction, and partial behavior success rates can reflect progress when not fully solved. Cohere's team used it to compare the delegation costs of planning, implementation, and verification in three stages."
-    },
-    "CooperBench 的适配检查覆盖 50 个任务对，使用 OpenHands SDK 与 Gemini 3 Flash。该检查属于迁移一致性验证，CooperBench 未进入论文的大规模主实验。": {
-      "en": "The CooperBench adaptation check covers 50 task pairs, using the OpenHands SDK with Gemini 3 Flash. This check is part of the migration-consistency verification, and CooperBench was not involved in the large-scale main experiments of the paper."
-    },
-    "单 Agent 基线表现是最稳健的收益预测变量。基线已经很强时，额外协调通常更难带来收益。作者用留出配置验证了选择规则，跨任务域的绝对分数预测较弱。发表页面附可下载的配置级结果。": {
-      "en": "Single-agent baseline performance is the most robust predictor variable for gains. When the baseline is already strong, additional coordination usually makes gains harder to achieve. The authors validated the selection rules on held-out configurations, and absolute score prediction across task domains is weak. Config-level results are available for download on the publication page."
-    },
-    "将 Qwen3-Coder-Next、Devstral-Small 和 GLM-4.7-Flash，与 OpenCode、OpenHands、mini-SWE-agent、SWE-agent、AutoCodeRover、Agentless 两两组合。在固定的 100 个 SWE-bench Verified 任务上完成 1,800 次评分运行。用单张 H100 NVL 上的 vLLM 顺序部署各模型，harness 运行在单独的 CPU 主机，统一记录调用和验收。": {
-      "en": "Qwen3-Coder-Next, Devstral-Small, and GLM-4.7-Flash are paired with OpenCode, OpenHands, mini-SWE-agent, SWE-agent, AutoCodeRover, and Agentless in all pairwise combinations. A total of 1,800 evaluation runs were completed on 100 fixed SWE-bench Verified tasks. All models were sequentially deployed on a single H100 NVL using vLLM, while the harness ran on a separate CPU host, with calls and acceptance recorded uniformly."
-    },
-    "同一模型的任务解决率随 harness 改变，最大差异为 44 个百分点。按成功任务归一的计费 token 也可相差 20 倍以上。结果涵盖失败运行的成本。额外执行限制和超时因 harness 而异，数值对应论文实测组合。": {
-      "en": "The task success rate of the same model varies with the harness, with a maximum difference of 44 percentage points. The billed tokens normalized per successful task can also differ by more than 20-fold. The results include the cost of failed runs. Additional execution limits and timeouts vary depending on the harness, and the values correspond to the combinations measured in the paper."
-    },
-    "多个团队对同一任务并行探索，会重复搜索、解析和写代码。Learning to Share（LTS）在任务内建立共享记忆库，并训练小控制器判断每一步结果是否值得写入。主设置含三个并行的 MagenticOne 式团队，每队内部由负责人调度专门 Agent，最终仍用原 M1-Parallel 策略聚合答案。": {
-      "en": "Multiple teams explore the same task in parallel, which leads to repeated searching, parsing, and coding. Learning to Share (LTS) builds a shared memory pool within the task and trains a small controller to decide whether each step's result is worth writing. The main setup includes three parallel MagenticOne-style teams, each internally scheduled by a lead using specialized Agents, and the final answers are aggregated using the original M1-Parallel strategy."
-    },
-    "控制器读取任务、已有摘要、当前输入／输出／摘要的嵌入表示，通过可训练投影和 Qwen3-0.6B 控制器输出 YES 或 NO。它学习信息的下游用途，写入决策本身没有为文本提供可执行正确性证明。": {
-      "en": "The controller reads the task, existing summaries, and embeddings of the current input/output/summary, and outputs YES or NO using a trainable projection and the Qwen3-0.6B controller. It learns the downstream uses of the information; the writing decision itself does not provide an executable correctness proof for the text."
-    },
-    "作者在 AssistantBench 和 GAIA 上报告，相比无记忆的并行团队，LTS 改善任务分数并减少完整任务墙钟时间。全部写入的版本也能提速，但部分设置准确率下降。学习筛选在质量与时间之间取得不同取舍，例如 AssistantBench 的 GPT-5.1 设置中全部写入更快，LTS 分数更高。控制器推理与摘要生成是两项独立开销。": {
-      "en": "The authors report on AssistantBench and GAIA that, compared to parallel teams without memory, LTS improves task scores and reduces the end-to-end wall-clock time. The version that records everything also runs faster, but accuracy in some settings decreases. Learning-based selection makes different trade-offs between quality and time; for example, in AssistantBench's GPT-5.1 settings, writing everything is faster, but LTS scores are higher. Controller reasoning and summary generation are two independent overheads."
-    },
-    "明确接口。": {
-      "en": "Explicit interfaces."
-    },
-    "分别用原始人工技能包和带过程说明及输入输出接口的合成包，比较主上下文执行与子 Agent 执行。合成包来自 GPT-5.3 Codex 成功轨迹，再经 Copilot CLI 整理。87 道 SkillsBench 任务中有 64 道成功生成技能包，结果报告在该子集上。": {
-      "en": "Compare the main context execution and sub-Agent execution using the original human-authored skill packages and the synthesized packs with process explanations and input/output interfaces. The synthesized packs come from the successful trajectories of GPT-5.3 Codex and are organized via Copilot CLI. Out of 87 SkillsBench tasks, 64 successfully generated skill packs, and the results are reported on this subset."
-    },
-    "原人工技能包下，主上下文执行持平或更好；换成带清楚接口的过程型包后，子 Agent 执行更好，并在干扰技能增多时更稳定。子 Agent 总 token 明显增加。较小模型的最大上下文未必下降，作者认为部分主 Agent 运行提前失败，导致上下文较短。两套包还改变了内容和过程说明，因此跨包结果无法单独归因于输入输出接口。": {
-      "en": "With the original human-authored skill packages, main context execution is comparable or better; after switching to procedural packs with clear interfaces, sub-Agent execution performs better and remains more stable as interfering skills increase. The total tokens for the sub-Agent increase significantly. The maximum context for smaller models does not necessarily decrease; the authors believe some main Agent runs fail early, resulting in shorter contexts. The two sets of packs also change the content and process explanations, so cross-pack results cannot be solely attributed to the input/output interface."
-    },
-    "成员从工作记录中提炼规则，经过提议和采纳后，把触发条件、责任人、所需证据和运行时动作绑定到团队协议。成员更换时，已有规则可以继续生效，也可以修订或退役。": {
-      "en": "Members extract rules from work records, and after proposal and adoption, they bind the triggering conditions, owners, required evidence, and runtime actions to the team protocol. When members change, existing rules can continue to take effect, or they can be revised or retired."
-    },
-    "Relic v2 论文在 CooperBench 上按统一排除条件保留 469 对，Relic 通过 371 对。同模型的 47 对中，Relic 通过 28 对，单 Agent 26 对，普通双 Agent 13 对。全量对比包含已发布参考结果，结论需连同任务筛选与同模型对照阅读。": {
-      "en": "The Relic v2 paper retains 469 pairs on CooperBench under uniform exclusion criteria, of which Relic passes 371 pairs. Of the 47 same-model pairs, Relic passes 28, the single Agent 26, and a plain two-agent setup 13. The full comparison includes already published reference results, and the conclusions need to be read together with task filtering and same-model comparisons."
-    },
-    "匹配集中时，将估计差值加到上游缓存，并生成目标角色的完整维度 KV 供普通 attention 使用。匹配不可靠时，目标角色重新 prefill，该次完整计算也可提供新锚点。生成的目标 KV 可作为下一次交接的参考。": {
-      "en": "When matches are concentrated, add the estimated discrepancies to the upstream cache and generate full-dimension KVs for the target role for standard attention. When matches are unreliable, the target role prefills again; this complete computation can also provide new anchors. The generated target KVs can serve as a reference for the next handoff."
-    },
-    "在同一个轻量 harness 中，比较单 Agent、同步或异步委派、在哪个阶段使用 worker，以及不同强度模型组成的团队。Worker 通过明确子任务启动，完成后交付结果。": {
-      "en": "Within the same lightweight harness, comparisons are made between single Agent, synchronous or asynchronous delegation, the stage at which workers are used, and teams consisting of models of different strengths. Workers are activated through explicit sub-tasks and deliver results upon completion."
-    },
-    "同一模型的跨 harness 对照中，Duo 提升所测任务的通过率，Base 在该表的三个基准上使用的 token 和费用最低。应把通过率、成本和角色实际参与一起解读。": {
-      "en": "In cross-harness comparisons of the same model, Duo improves the pass rate of tested tasks, while Base uses the fewest tokens and the lowest cost on the three benchmarks in this table. Pass rate, cost, and actual participation of roles should be interpreted together."
-    },
-    "在 vLLM 和 SGLang 上记录 TTFT、输出 token 间隔、吞吐及缓存相关指标。合成负载需要保留前缀结构，仅匹配输入输出长度会丢失缓存行为。数据测的是模型请求服务，与最终任务验收分开。": {
-      "en": "On vLLM and SGLang, record TTFT, output token intervals, throughput, and cache-related metrics. Synthetic loads need to retain prefix structure; simply matching input-output length will lose caching behavior. The data measures model-request serving, separate from final task acceptance."
-    },
-    "从种子工作流出发，把提示词、模型、拓扑和工具策略分成多个优化维度。多个独立编码 Agent 按限定范围实验，再由整合 Agent 根据开发集结果和组件轨迹组合修改，最终用留出集测质量、推理成本和延迟。": {
-      "en": "Starting from the seed workflow, divide the prompts, models, topology, and tool strategies into multiple optimization dimensions. Multiple independent coding agents experiment within limited scopes, and then an integrating agent combines and revises them based on development-set results and component traces. Finally, measure quality, inference cost, and latency using a held-out set."
-    },
-    "四张表分别从": {
-      "en": "The four tables look up papers by"
-    },
-    "Benchmark、Harness、推理引擎、任务": {
-      "en": "Benchmark, Harness, inference engine, or task;"
-    },
-    "查论文。左列是查询项，右列的链接指向论文正文。": {
-      "en": "the left column lists the query items, and the links in the right column point to the full paper."
-    },
-    "（双功能联合验收）": {
-      "en": "(joint acceptance of two merged features)"
-    },
-    "（论文子集）": {
-      "en": "(paper subset)"
-    },
-    "论文自建工作流": {
-      "en": "Paper's own workflow"
+    "当系统完整算过某段共享历史在不同角色下的 KV，就能记录参考缓存和角色之间的差值。方法保存一小组这样的参考样本，并用低秩矩阵压缩，减少存储与匹配开销。": {
+      "en": "After fully computing KV for a shared history under different roles, the system can record the reference cache and the differences between roles. The method keeps a small set of these reference samples and compresses them using low-rank matrices to reduce storage and matching overhead."
     },
     "Harness／评测框架": {
       "en": "Harness / evaluation framework"
     },
-    "Harbor／原生评测 runner": {
-      "en": "Harbor / native evaluation runner"
+    "SWE-bench 把真实 GitHub issue 变成可自动验收的修复任务。Agent 拿到问题描述和修复前的仓库，需要查找相关代码、修改实现，最后提交一份补丁。": {
+      "en": "SWE-bench turns real GitHub issues into automatically verifiable repair tasks. The Agent receives the problem description and the repository before the fix, needs to locate the relevant code, modify the implementation, and finally submit a patch."
     },
-    "论文自建 Agent 编排": {
-      "en": "Agent orchestration built by the paper"
+    "仓库修复需要联合理解多个函数、文件和执行结果，难度高于给定函数签名的代码生成。最终分数按解决的 issue 比例计算。研究者可以接入单 Agent 或多 Agent 系统，但任务分工、消息交换和耗时由运行框架另行记录。": {
+      "en": "Repository repair requires a joint understanding of multiple functions, files, and execution results, which is more difficult than generating code from a given function signature. Final scores are calculated based on the proportion of issues resolved. Researchers can connect single-agent or multi-agent systems, but task division, message exchange, and time consumption are recorded separately by the runtime framework."
     },
-    "提供公开 Linux 镜像、Harbor 任务与独立重评分。锁定协议每题 50 分钟。OpenCollab 使用自己的 SWE-Bench Pro 子集与预算，结果按各自口径登记。": {
-      "en": "Provides public Linux images, Harbor tasks, and independent re-scoring. The locked protocol allows 50 minutes per problem. OpenCollab uses its own SWE-Bench Pro subset and budget, with results recorded according to each protocol."
+    "2.1 的维护论文研究这些题目如何持续保持有效。作者结合社区反馈、Agent 执行日志、参考解和自动检查寻找缺陷，经人工确认后修订指令、环境、测试及资源配置，再重跑评测。一个典型问题是：Agent 已用另一种正确方法完成任务，测试却只接受原先预想的实现方式。": {
+      "en": "The maintenance paper for version 2.1 studies how these tasks remain valid over time. The authors identify defects by combining community feedback, Agent execution logs, reference solutions, and automated checks, then revise instructions, environments, tests, and resource configurations after manual confirmation, before re-running the evaluation. A typical issue is when the Agent completes a task using another correct method, but the tests only accept the originally expected implementation."
     },
-    "在一张 H100 NVL 上依次运行模型，Agent harness 在独立 CPU 主机。每次运行共用 262,144 个生成 token 上限，harness 还有各自的额外限制。": {
-      "en": "Models are run sequentially on a single H100 NVL, with the Agent harness on a separate CPU host. Each run has a total cap of 262,144 generated tokens, and each harness has its own additional limits."
+    "论文问的是：给定一个任务和模型，额外增加 Agent 何时能提高完成质量？作者让同一任务分别由五种结构执行：一个 Agent 独立完成；多个 Agent 各自探索后汇总；负责人分工并审核；成员相互讨论后汇总；以及负责人和成员互相通信的混合结构。": {
+      "en": "The paper asks: given a task and a model, when does adding Agents improve completion quality? The authors ran the same task under five structures: a single Agent completing it independently; multiple Agents exploring separately and then aggregating; a lead dividing and reviewing the work; members discussing and then aggregating their results; and a hybrid structure in which the lead and members communicate with each other."
     },
-    "中，Helium 的实测环境为两张 H100 NVL，每个模型实例占一张。KVCMAS 并发回放用 A100 80 GB，单流实验用 A6000 48 GB。": {
-      "en": "In this setup, Helium's test environment uses two H100 NVLs, one per model instance. KVCMAS concurrent replay uses an A100 80 GB, while single-stream experiments use an A6000 48 GB."
+    "同一模型的解决率随 harness 改变，最大相差 44 个百分点，harness 的排名也会随模型变化。“每成功任务 token 成本”将成功和失败运行的消耗一起计入，再除以成功任务数，部分组合相差超过 20 倍。不同框架还有各自的执行限制与超时，因此这些差异对应论文的完整实测配置。": {
+      "en": "The success rate of the same model varies with the harness, with a maximum difference of 44 percentage points, and harness rankings also change with the model. \"Token cost per successful task\" includes the consumption of both successful and failed runs, divided by the number of successful tasks; some combinations differ by more than 20-fold. Different frameworks also have their own execution limits and timeouts, so these differences correspond to the complete measured configurations in the paper."
     },
-    "用双功能合并验收衡量编码协作": {
-      "en": "Measure coding collaboration through joint acceptance of two merged features"
+    "给定一个结构化任务，测试框架创建 2–6 个角色，并按指定图和发言顺序交付消息。900 个经人工校验的情景覆盖软件工程、DevOps 和数据工程。每条轨迹只考察预先定义的干预，比如在上游消息中加入必须保留的标记，逐跳核对它能否到达下游。其余测试分别记录硬约束丢失、错误事实传播和跨任务信息泄漏。标记和跨任务隔离用程序判定，硬约束及错误事实两项用独立评审模型 DeepSeek V4 Flash 打分。": {
+      "en": "Given a structured task, the testing framework creates 2–6 roles and delivers messages according to the specified graph and speaking order. The 900 manually verified scenarios cover software engineering, DevOps, and data engineering. Each trajectory examines only predefined interventions, such as adding markers that must be preserved in upstream messages, and checks step by step whether they reach downstream. Other tests record hard-constraint loss, propagation of incorrect facts, and cross-task information leakage. Markers and cross-task isolation are determined programmatically, while hard constraints and incorrect facts are scored by an independent review model, DeepSeek V4 Flash."
     },
-    "用真实 issue 和补丁测试验收仓库修复": {
-      "en": "Evaluate repository repair with real issues and patch tests"
+    "汇合节点可能忽略只由一条分支携带的信息。这个失效点在逐跳记录中可见，但格式正确的最终产物可能把它掩盖。论文比较 GPT-4.1 mini、Gemini 2.5 Flash Lite、Qwen3.5-35B-A3B 和 Llama 3.1 8B Instruct，后两者经 OpenRouter 调用。实验属于受控消息交互，原文未披露底层推理引擎和硬件。结果解释消息传递的行为，仓库改动、工具运行和真实任务耗时需要另行测量。": {
+      "en": "Convergence nodes may ignore information carried by only a single branch. This failure point is visible in step-by-step records, but the properly formatted final output may mask it. The paper compares GPT-4.1 mini, Gemini 2.5 Flash Lite, Qwen3.5-35B-A3B, and Llama 3.1 8B Instruct, with the latter two accessed via OpenRouter. The experiments involve controlled message interactions, with the underlying inference engine and hardware not disclosed in the original text. The results explain the behavior of message passing, while repository changes, tool execution, and real task durations need to be measured separately."
     },
-    "审计长程仓库任务并固定验收协议": {
-      "en": "Audit long-horizon repository tasks and lock down the acceptance protocol"
+    "模块负责人提前声明函数名、参数、返回结构等。Harness 生成接口桩，即可以导入、但尚未实现真实功能的占位代码，让依赖方先按约定开发。负责人提交真实实现时，框架检查能从代码中静态判断的接口不匹配，发现明确偏差就退回。": {
+      "en": "The module lead declares function names, parameters, return structures, etc., in advance. The harness generates interface stubs—placeholder code that can be imported but whose real functionality is not yet implemented—so that dependent parties can develop according to the agreement first. When the lead submits the real implementation, the framework checks for interface mismatches that can be statically determined from the code and rejects it if a clear deviation is found."
     },
-    "将任务与资源预算一起纳入版本管理": {
-      "en": "Bring tasks and resource budgets under version control"
+    "多个团队对同一道题并行探索，可能重复搜索网页、解析文件和计算答案。Learning to Share（LTS）给这些团队一个任务内共享记忆库，并训练小控制器决定哪些中间结果值得存入。主设置为三个 Magentic-One 式团队，各队仍有自己的负责人和执行 Agent。": {
+      "en": "Multiple teams explore the same problem in parallel, which may involve repeated web searches, file parsing, and answer computation. Learning to Share (LTS) provides these teams with a task-internal shared memory bank and trains a small controller to decide which intermediate results are worth storing. The main setup involves three Magentic-One-style teams, each with its own lead and executing Agents."
     },
-    "用论文代码与数据测计算复现": {
-      "en": "Measure computational reproducibility with paper code and data"
+    "方法的学习对象是持续保存、可修改的团队规则，模型参数和执行检查代码保持固定。作者通过只提供规则文本、增加运行时约束，以及更换成员等对照，检查规则是否真正影响后续工作。CooperBench 的全量比较混合了已发布参考结果，应重点结合其同模型子集阅读；不能把全部分数差异单独归因于规则机制。": {
+      "en": "The method learns continuously stored, modifiable team rules, while model parameters and execution-check code remain fixed. The authors test whether the rules truly affect subsequent work by providing only the rule text, adding runtime constraints, and replacing members as controls. The full CooperBench comparison mixes published reference results, so it should be read primarily alongside its same-model subset; the overall score differences cannot be attributed solely to the rule mechanism."
     },
-    "验证评测迁移前后的结果口径": {
-      "en": "Verify result consistency before and after evaluation migration"
+    "负责人生成子任务图，标明谁需要等待谁，并估计每项任务的输出长度及每层协调开销。没有依赖冲突的任务归为同一层。": {
+      "en": "The lead generates a subtask graph, indicating who needs to wait for whom, and estimates the output length of each task and the coordination overhead at each layer. Tasks with no dependencies between them are grouped into the same layer."
     },
-    "将重复协作故障转成可执行团队规则": {
-      "en": "Turn repeated collaboration failures into executable team rules"
+    "——XW₀ 是基础投影，XA 是低维中间结果，乘 B 后得到角色增量。": {
+      "en": "—XW₀ is the base projection, XA is the low-dimensional intermediate result, and multiplying by B yields the role-specific increment."
     },
-    "用可分叉执行轨迹实施运行时监督": {
-      "en": "Implement runtime supervision with forkable execution traces"
+    "匹配可靠时，修正前一角色的 KV，交给下一角色使用；不可靠时，回退到正常 prefill，必要时用这次完整计算补充参考记录。修正后的缓存还能继续传给后续角色。": {
+      "en": "If the match is reliable, the previous role's KV is corrected and passed to the next role; if not, the method falls back to normal prefill and, when necessary, uses the full computation to supplement the reference records. The corrected cache can still be passed on to subsequent roles."
     },
-    "用同一运行时控制团队结构和预算": {
-      "en": "Control team structure and budget with a single runtime"
+    "Compose：组合并重新验收。": {
+      "en": "Compose: Combine and re-verify."
     },
-    "用多轮请求轨迹衡量推理服务性能": {
-      "en": "Measure inference-service performance with multi-turn request traces"
+    "论文先观察生产轨迹，再用 AutoGen 移植内部编码助手和 Deep Research Agent，分别基于 SWE-bench Pro 与 Deep Research Bench 构造实验负载。集群实验将原有前沿模型角色映射为 3B–14B 的 Qwen 和 Llama 系列，具体映射未披露。原型修改 SGLang 的路由、调度与分层缓存，在 8 张 A100 80GB 上测量。作者报告峰值并发时平均作业完成时间缩短为对照的约 1/1.38–1/2.90，输出吞吐为 1.12–1.96 倍。这里的证据针对服务性能，论文未验证软件修复通过率或研究报告质量的相应变化。高度动态、历史路径难以预测的工作流也可能降低提前准备的收益。": {
+      "en": "The paper first observes production trajectories, then uses AutoGen to port the internal coding assistant and Deep Research Agent, constructing experimental workloads based on SWE-bench Pro and Deep Research Bench respectively. In cluster experiments, the original frontier model roles were mapped to 3B–14B Qwen and Llama series, but the specific mapping was not disclosed. The prototype modifies SGLang's routing, scheduling, and hierarchical caching, and is measured on 8 A100 80GB GPUs. The authors report that at peak concurrency, average job completion time is reduced to about 1/1.38–1/2.90 of the baseline, and output throughput is 1.12–1.96×. This evidence pertains to service performance; the paper does not verify corresponding changes in software repair pass rates or research report quality. Highly dynamic workflows with unpredictable historical paths may also reduce the benefit of advance preparation."
     },
-    "单 Agent 基线如何决定组队收益": {
-      "en": "How the single-agent baseline determines teaming gains"
+    "根据真实 issue 修改仓库，并用测试验收补丁": {
+      "en": "Modify the Repository Based on Real Issues and Verify Patches with Tests"
     },
-    "在同一推理服务上比较模型与 Harness": {
-      "en": "Compare models and harnesses on the same inference service"
+    "修订题目与测试，在干净环境中重新验收补丁": {
+      "en": "Revise the Tasks and Tests, and Re-verify Patches in a Clean Environment"
     },
-    "拆开优化 Harness，再验证组合的收益": {
-      "en": "Decompose and optimize the harness, then verify the combined gains"
+    "读相关代码时投递发现，提交实现时检查接口约定": {
+      "en": "Deliver findings when relevant code is read; check interface agreements when submitting the implementation"
     },
-    "本文收录同一个任务内多个 Agent 或子 Agent 如何传递证据、交付产物和协调执行，以及推理服务如何处理这些协作产生的请求。独立会话共享服务、多候选独立采样和同一任务内的协作分别记载。": {
-      "en": "This paper documents how multiple Agents or sub-Agents within a task pass evidence, deliver artifacts, and coordinate execution, and how inference services handle the requests this collaboration produces. Independent sessions sharing a service, independent sampling of multiple candidates, and intra-task collaboration are documented separately."
+    "负责人维护任务和进度记录，调度网页、文件及编码 Agent": {
+      "en": "The lead maintains task and progress records, and schedules web, file, and coding Agents"
     },
-    "运行论文代码、数据，验收复现结果": {
-      "en": "Run paper code and data, and accept the reproduced results"
+    "六个 benchmark 分别是 BrowseComp-Plus（网页检索）、Finance Agent（财务分析）、PlanCraft（约束下规划）、WorkBench（工作场景工具操作）、SWE-bench Verified（仓库修复）和 Terminal-Bench（终端任务）。260 个配置对应模型、组织方式与任务集的组合。": {
+      "en": "The six benchmarks are BrowseComp-Plus (web search), Finance Agent (financial analysis), PlanCraft (planning under constraints), WorkBench (work scenario tool operations), SWE-bench Verified (repository repair), and Terminal-Bench (terminal tasks). 260 configurations correspond to combinations of models, organizational methods, and task sets."
     },
-    "的原生 runner 支持 Docker、Modal 或 GCP，通信模式用 Redis。Shepherd 的监督对照每任务对用 3 个 E2B 沙箱，墙钟上限 3,300 秒，监督者也消耗模型配额。": {
-      "en": "The native runner supports Docker, Modal, or GCP, with communication via Redis. Shepherd's supervised comparison uses three E2B sandboxes per task pair, with a wall-clock limit of 3,300 seconds; the supervisor also consumes model quota."
+    "执行与评分也分开：Agent 开发时限制网络访问；提交后，将补丁放进干净容器重新测试，避免运行时修改的测试、依赖或其他环境状态被误当作修复成果。最终发布 642 道 V2 任务及固定的执行、评分协议。": {
+      "en": "Execution and scoring are also separated: network access is restricted while agents are being developed. After submission, patches are placed in clean containers for retesting, so that tests, dependencies, or other environment state modified at runtime are not mistaken for the fix. Eventually, 642 V2 tasks and fixed execution and scoring protocols were released."
+    },
+    "最终用行为测试比较新实现与参考程序：相同输入下，输出和行为是否兼容。测试通过自动探索不同输入生成，不强制 Agent 采用参考程序的内部架构。200 个任务既有小型命令行工具，也有 SQLite、FFmpeg 等大型软件。": {
+      "en": "Finally, behavioral tests were used to compare the new implementation with the reference program: under the same input, whether the output and behavior were compatible. The tests are generated by automatically exploring different inputs, without forcing the agent to adopt the reference program's internal architecture. The 200 tasks included both small command-line tools and large software like SQLite and FFmpeg."
+    },
+    "转换后还要做一致性验证：用相同模型和 Agent 分别运行原始评测程序与 Harbor 适配版本，检查迁移是否改变结果。作者在适配套件上进行跨模型、跨 harness 评测，并从中筛出小而多样的 Harbor-Index，降低大规模评测的成本。": {
+      "en": "After conversion, consistency verification is required: the same model and agent are used to run the original evaluation program and the Harbor adaptation version separately to check if the migration changes the results. The authors conduct cross-model and cross-harness evaluations on the suite, selecting small and diverse Harbor-Indexes to reduce the cost of large-scale evaluations."
+    },
+    "每次调用、委派、拒绝、终止与文件变更都记录所属角色。Adherence（组织执行一致性）据此检查声明的组织是否实际发生：成员有没有参与、委派是否落实、信息是否按允许路径传递，以及预算和上下文规则是否遵守。": {
+      "en": "Every call, delegation, rejection, termination, and file change records the assigned role. Adherence (organizational execution consistency) accordingly checks whether the declared organization actually occurs: whether members participate, whether delegations are implemented, whether information is delivered along permitted paths, and whether budget and context rules are followed."
+    },
+    "例如更换模型后，原先有效的提示词可能不再适用；分别改善的修改合到一起仍需重测。": {
+      "en": "For example, after changing models, previously effective prompts may no longer be applicable; improvements made separately still require retesting."
+    },
+    "每个角色需要交付规定格式的文档或代码，让后续角色明确可以使用什么信息。系统用共享消息池保存这些产物，成员按角色订阅相关消息；前序文档到达后触发下一步工作。程序员执行代码、读取报错，再修订实现，形成“交付—执行—反馈—修改”的循环。": {
+      "en": "Each role must deliver documents or code in a specified format, allowing subsequent roles to clearly understand what information can be used. The system stores these products in a shared message pool, and members subscribe to related messages according to their roles; when the preceding document arrives, the next step is triggered. Programmers execute code, read errors, and then revise implementation, forming a \"delivery—execution—feedback—modification\" cycle."
+    },
+    "任务记录保存已知事实、需要调查的问题、暂时假设和整体计划。进度记录检查当前是否完成、是否卡住或陷入重复，并指定下一位执行者及其行动。通常先按计划调用专门 Agent、读取结果，再决定下一步；若持续没有进展，则回到外层更新事实和计划，重新组织执行。": {
+      "en": "Task records preserve known facts, issues to investigate, temporary assumptions, and overall plans. Progress records check whether the current process is complete, stuck, or stuck in repetition, and designates the next executor and their actions. Usually, a dedicated agent is called as planned, the results are read, and then the next step is decided; if progress stalls, the process returns to the external level to update facts and plans and reorganize execution."
+    },
+    "编排器为每次模型调用附上工作流类型、实例和当前角色三个标识。网关把同一实例的请求串起来，从历史轨迹学习可能的角色路径和输出长度。预测被用在三个地方。": {
+      "en": "The orchestrator attaches three identifiers to each model call: workflow type, instance, and the current role. The gateway strings together requests for the same instance, learning possible role paths and output lengths from historical trajectories. The predictions are used in three places."
+    },
+    "MetaGPT 将软件开发组织成一套标准操作流程（SOP）：产品经理整理需求，架构师设计模块与接口，项目经理拆分实现任务，程序员写代码，再通过执行反馈修改。": {
+      "en": "MetaGPT organizes software development into a set of standard operating procedures (SOPs): product managers organize requirements, architects design modules and interfaces, project managers break down implementation tasks, programmers write code, and then feedback is used for modifications."
+    },
+    "AgentDropout 进一步研究：除去多余消息外，某些讨论轮次是否也不需要所有角色参加？同一个角色可以在一轮中有用，在另一轮中只重复已有内容。": {
+      "en": "AgentDropout further asks: besides removing redundant messages, are all roles really needed in certain discussion rounds? The same role might be useful in one round and only repeat existing content in another."
+    },
+    "如果下一个角色的固定前缀已存在于 CPU 内存，KVFlow 可以在当前角色生成时把它预取回 GPU。调度器暂时跳过缓存仍在搬运的请求，先执行已就绪的请求。这里复用的是相同前缀已算好的 KV。": {
+      "en": "If the fixed prefix of the next role already exists in CPU memory, KVFlow can prefetch it back to the GPU while generating the current role. The scheduler temporarily skips requests whose cache is still being transferred and executes requests that are ready first. Here, the already computed KV of the same prefix is reused."
+    },
+    "MultiAgentBench（Research／Bargaining）／MACS／ConVerse": {
+      "en": "MultiAgentBench (Research / Bargaining) / MACS / ConVerse"
+    },
+    "评测器把两份代码补丁合并，再运行两项功能各自的隐藏测试。合并失败，或者合并后只完成一项功能，都不算团队成功。Solo 对照让一个 Agent 直接完成两项功能；另比较开放与关闭消息通道，观察通信带来的变化。": {
+      "en": "The reviewer merges two patches of code and runs hidden tests for each feature. If the merge fails or only one function is completed after merging, it is not considered a team success. Solo comparison allows one Agent to directly complete both functions; it also compares opening and closing message channels to observe changes brought by communication."
+    },
+    "比较时对齐任务要求、工具访问和整个系统的推理 token 预算上限。团队需要在成员之间分配总预算。最终仍按任务结果评分，例如代码补丁是否通过测试、网页问题是否回答正确。作者再从执行日志统计通信、额外轮次和错误传播，拟合模型预测组队的收益。独立并行组没有显式消息交换，但代码与终端任务的公开实现仍共享容器状态。": {
+      "en": "Align task requirements, tool access, and system-wide inference token budget limits during comparison. Teams need to allocate the total budget among members. Ultimately, task results are still scored, such as whether code patches pass testing or whether web questions are answered correctly. The authors then fit a model to predict team benefit from communication, extra rounds, and error propagation tallied from execution logs. Independent parallel groups do not explicitly exchange messages, but the code and public implementations of terminal tasks still share container state."
     }
   },
   "blog/november2026/index.html": {
     "先递归建树，同时以列表保存每个节点的左右孩子。这里需要注意递归的过程中会改变全局变量，因此使用局部变量保存下标避免修改。然后在bfs的过程中同时实现恢复多叉树和镜像。使用左孩子右sibling方法，遍历孩子的过程即为一直访问左孩子的右孩子，直到遇到-1为止。题目要求镜像，只需在bfs的时候，对当前层的所有节点（即前一个节点的孩子）倒一下顺序加入队列即可。": {
       "en": "Build the tree recursively while storing each node's left and right children in a list. Note that recursion would modify global variables, so save the index in a local variable to avoid changes. Then, during BFS, restore the multi-way tree and mirror it at the same time. Using the left-child/right-sibling representation, iterating over children means repeatedly visiting the right sibling of the left child until reaching -1. The problem asks for a mirror image, so during BFS we only need to enqueue all nodes in the current level (the children of the previous node) in reverse order."
+    },
+    "由中根序列和后根序列重建二叉树": {
+      "en": "Reconstruct a binary tree from inorder and postorder sequences"
+    },
+    "小技巧：提前记录后序遍历每个节点在中序遍历中的位置。": {
+      "en": "Tip: while performing the postorder traversal, record each node's position in the inorder sequence in advance."
     }
   },
   "blog/travel-frog/index.html": {
@@ -922,17 +777,11 @@
     "每字节成本": {
       "en": "Cost per byte"
     },
-    "CPU 的高速缓存（cache）。": {
-      "en": "The CPU's cache."
-    },
     "比较同容量器件时，教材把 SRAM 的功耗与每位成本列得较高，DRAM 则以较少的晶体管换取更高的密度。实际功耗还取决于工艺、访问频率和待机方式。": {
       "en": "When comparing devices of the same capacity, the textbook lists SRAM as having higher power consumption and cost per bit, while DRAM trades fewer transistors for higher density. Actual power also depends on the process, access frequency, and standby mode."
     },
     "DMA 的数据传输不需要 CPU 逐字节搬运，CPU 仍负责发起请求与处理完成事件。数据进入主存和最终被程序读入寄存器是不同环节。": {
       "en": "DMA transfers do not require the CPU to move data byte by byte; the CPU still initiates requests and handles completion events. Data entering main memory and data finally being read into registers by a program are different steps."
-    },
-    "机械盘读写要等待寻道和旋转。SSD 没有这些机械部件，通常具有较低的随机访问延迟、较强的抗振动能力和较低的运行噪声，也便于做成更小的形态。每容量价格与写入寿命要结合设备和工作负载比较。": {
-      "en": "Mechanical disks must wait for seek and rotation on reads and writes. SSDs have no such mechanical parts and usually offer lower random-access latency, better shock resistance, and less operating noise, and they are easier to make in smaller form factors. Price per capacity and write endurance must be compared in light of the device and workload."
     },
     "对象": {
       "en": "Object"
@@ -975,9 +824,6 @@
     },
     "1. Procedure Call（过程调用限制）": {
       "en": "1. Procedure Call (limitation)"
-    },
-    "外部函数调用可能修改全局状态。即使函数参数相同，返回值也可能因为全局变量或静态变量变化而不同。因此编译器不能随意删除、合并或移动函数调用。": {
-      "en": "An external function call may modify global state. Even with the same arguments, its return value may differ because global or static variables changed. The compiler therefore cannot freely delete, merge, or move function calls."
     },
     "2. Memory Aliasing（存储器别名限制）": {
       "en": "2. Memory Aliasing (limitation)"
@@ -1107,9 +953,6 @@
     },
     "创建失败，检查 errno": {
       "en": "Creation failed; check errno"
-    },
-    "父子有各自的虚拟地址空间。私有可写内存通常先共享物理页，写入时再复制。继承的文件描述符可以指向同一个打开文件，因此可能共享文件偏移。第 39、42 页的局部变量 x 在 fork 后各有一份，父进程递减得到 0、−1，子进程递增得到 2、3。": {
-      "en": "Parent and child have separate virtual address spaces. Private writable memory is usually shared as physical pages first and copied on write. Inherited file descriptors can refer to the same open file and therefore may share the file offset. The local variable x on pages 39 and 42 has a copy in each process after fork: the parent decrements it to 0 and -1, while the child increments it to 2 and 3."
     },
     "wait(&status) 回收任意一个可回收的子进程，成功时返回子 PID。": {
       "en": "wait(&status) reaps any one reapable child and returns the child's PID on success."
@@ -1555,9 +1398,6 @@
     "与 tag 相同，访问后要用更新过的组状态继续判断下一次。": {
       "en": "and a matching tag; after an access, continue judging the next access using the updated set state."
     },
-    "两个不同的指针可能指向同一个内存位置。提前或推迟写入数据，可能改变下一次读取的数据。因此只有调用者能够保证指针不重叠时，才可以考虑使用": {
-      "en": "Two different pointers may point to the same memory location. Writing data earlier or later may change what the next read sees. Therefore"
-    },
     "判断一个 C 名字是否涉及链接，可以先看它在哪个阶段起作用。": {
       "en": "To decide whether a C name involves linking, first see at which stage it acts."
     },
@@ -1617,12 +1457,6 @@
     },
     "做输出题时画出父、子两条执行线。每条线上保持自己的程序顺序，跨线只加 fork、wait 等真正存在的约束。一次输出只能证明打印顺序，无法还原每次上下文切换。若连续": {
       "en": "For output-counting problems, draw two execution lines, one for the parent and one for the child. Each line keeps its own program order; across lines add only real constraints such as fork and wait. One observed output shows only printing order and cannot reconstruct every context switch. If"
-    },
-    "次 fork 都成功，而且每个产生的进程都到达下一轮，最终有": {
-      "en": "consecutive forks all succeed and every resulting process reaches the next round, there are"
-    },
-    "个进程。若 fork 前有尚未刷新的 stdio 缓冲，也要考虑那段缓冲会随地址空间复制。": {
-      "en": "processes at the end. If stdio buffers are unflushed before fork, remember that the buffer is copied along with the address space."
     },
     "子进程结束后，内核释放大部分资源，保留退出状态供父进程读取，这段等待回收的状态叫": {
       "en": "After a child exits, the kernel releases most of its resources but keeps the exit status for the parent to read; this state, waiting to be reaped, is called a"
@@ -2139,6 +1973,57 @@
     },
     "。错误路径调用": {
       "en": ". The error path calls"
+    },
+    "先把完整数据补齐到指定字宽，再从最低字节编号。芯片分工由数据线连线决定，内存地址的小端字节顺序由系统存储约定决定。": {
+      "en": "First pad the complete data to the specified word width, then number bytes from the least significant byte. Chip division is determined by the data-line connections, and the little-endian byte order of memory addresses is determined by system storage conventions."
+    },
+    "一次 CPU 字节访问先定位整个块。落在同块内的另一个字节时，可能直接命中。读命中、写命中都应按题设更新 LRU，新装入块通常记为最近使用。替换一条干净行只产生装入，替换一条脏行还需把旧块写回。写分配让普通写缺失也装入块并置脏。": {
+      "en": "A single CPU byte access locates the entire block. If it lands on another byte within the same block, it may hit directly. Read and write hits should update the LRU according to the problem statement, and newly loaded blocks are usually marked as recently used. Replacing a clean line only requires a load; replacing a dirty line also requires writing back the old block. Write allocation loads an ordinary write miss into a block and marks it dirty."
+    },
+    "的 handler 也要查前台作业。当前实现的": {
+      "en": "The handler also needs to check the foreground job. The current implementation"
+    },
+    "临时屏蔽所有可屏蔽信号，在读写作业表时防止 handler 插入；结束后用": {
+      "en": "temporarily blocks all blockable signals to prevent the handler from being interleaved while the job table is read or written; afterward, it uses"
+    },
+    "恢复保存的旧集合。": {
+      "en": "to restore the saved old mask set."
+    },
+    "原子地换上这份屏蔽集并挂起": {
+      "en": "atomically installs this mask set and suspends the process"
+    },
+    "handler 中的系统调用也会改写": {
+      "en": "System calls in the handler can also overwrite"
+    },
+    "复制的是对打开文件的引用，不是文件内容；若目标描述符已打开，它会在需要时先关闭目标。关闭临时": {
+      "en": "What is copied is a reference to the open file, not the file content; if the target descriptor is already open, it closes the target first if needed. Closing the temporary"
+    },
+    "孩子中、execve 前": {
+      "en": "in the child, before execve"
+    },
+    "判断宏": {
+      "en": "Macro"
+    },
+    "是八进制权限请求，表示拥有者、同组用户和其他用户均可读写，实际新文件权限还要去掉": {
+      "en": "It is an octal permission request, meaning that the owner, group, and other users can all read and write; the actual permissions of the new file still have the bits masked by"
+    },
+    "屏蔽的位。例如": {
+      "en": "cleared. For example, if"
+    },
+    "时，新文件通常得到": {
+      "en": ", new files usually get"
+    },
+    "取得停止信号，将作业记为": {
+      "en": "obtain the stop signal and mark the job as"
+    },
+    "取得终止信号，报告后删除作业": {
+      "en": "obtain the termination signal, report it, and delete the job"
+    },
+    "PID，进程号": {
+      "en": "PID, process number"
+    },
+    "过程调用可能存在“边带效应”的操作：外部函数调用可能修改全局状态。即使函数参数相同，返回值也可能因为全局变量或静态变量变化而不同。因此编译器不能随意删除、合并或移动函数调用。": {
+      "en": "Operations in a function call may have \"side effects\": external function calls may modify global state. Even if the function parameters are the same, the return value may differ due to changes in global variables or static variables. Therefore, the compiler cannot arbitrarily delete, merge, or move function calls."
     }
   },
   "blog/insightface/index.html": {
@@ -2205,6 +2090,251 @@
   "blog/winter2026/index.html": {
     "滑动窗口。遍历右端点，每次在符合要求的情况下缩左端点。 1.遍历哈希表：for(const auto &p : ori)，p.first,p.second 2.调用函数时，使用值传递会创建一次副本，占用多余内存空间，可使用引用传递（const)。 3.s.substr(l,len)，多次调用会导致超内存。": {
       "en": "Sliding window. Traverse the right endpoint, and each time shrink the left endpoint if conditions are met. 1. Traverse the hash table: for(const auto &p: ori), p.first, p.second 2. When calling a function, passing by value creates a copy and uses extra memory, so you can use pass by reference (const). 3. s.substr(l,len), calling it multiple times can lead to memory overflow."
+    }
+  },
+  "blog/tag/mas/index.html": {
+    "Blog posts tagged MAS": {
+      "zh": "标签为“多智能体系统”的博客文章"
+    },
+    "Posts tagged MAS | Amy": {
+      "zh": "标记为“多智能体系统”的文章 | Amy"
+    }
+  },
+  "blog/tag/multi_agent/index.html": {
+    "Blog posts tagged Multi_Agent": {
+      "zh": "标签为“多智能体”的博客文章"
+    },
+    "Posts tagged Multi_Agent | Amy": {
+      "zh": "标记为“多智能体”的文章 | Amy"
+    }
+  },
+  "blog/tag/前端/index.html": {
+    "Blog posts tagged 前端": {
+      "zh": "标签为“前端”的博客文章"
+    },
+    "Posts tagged 前端 | Amy": {
+      "zh": "标记为“前端”的文章 | Amy"
+    }
+  },
+  "blog/tag/数据结构/index.html": {
+    "Blog posts tagged 数据结构": {
+      "zh": "标签为“数据结构”的博客文章"
+    },
+    "Posts tagged 数据结构 | Amy": {
+      "zh": "标记为“数据结构”的文章 | Amy"
+    }
+  },
+  "blog/tag/本地服务器/index.html": {
+    "Blog posts tagged 本地服务器": {
+      "zh": "标签为“本地服务器”的博客文章"
+    },
+    "Posts tagged 本地服务器 | Amy": {
+      "zh": "标记为“本地服务器”的文章 | Amy"
+    }
+  },
+  "blog/tag/杂文/index.html": {
+    "Blog posts tagged 杂文": {
+      "zh": "标签为“杂文”的博客文章"
+    },
+    "Posts tagged 杂文 | Amy": {
+      "zh": "标记为“杂文”的文章 | Amy"
+    }
+  },
+  "blog/tag/深度学习/index.html": {
+    "Blog posts tagged 深度学习": {
+      "zh": "标签为“深度学习”的博客文章"
+    },
+    "Posts tagged 深度学习 | Amy": {
+      "zh": "标记为“深度学习”的文章 | Amy"
+    }
+  },
+  "blog/tag/游戏/index.html": {
+    "Blog posts tagged 游戏": {
+      "zh": "标签为“游戏”的博客文章"
+    },
+    "Posts tagged 游戏 | Amy": {
+      "zh": "标记为“游戏”的文章 | Amy"
+    }
+  },
+  "blog/tag/算法/index.html": {
+    "Blog posts tagged 算法": {
+      "zh": "标签为“算法”的博客文章"
+    },
+    "Posts tagged 算法 | Amy": {
+      "zh": "标记为“算法”的文章 | Amy"
+    }
+  },
+  "blog/tag/计算机系统/index.html": {
+    "Blog posts tagged 计算机系统": {
+      "zh": "标签为“计算机系统”的博客文章"
+    },
+    "Posts tagged 计算机系统 | Amy": {
+      "zh": "标记为“计算机系统”的文章 | Amy"
+    }
+  },
+  "blog/tag/计算机视觉/index.html": {
+    "Blog posts tagged 计算机视觉": {
+      "zh": "标签为“计算机视觉”的博客文章"
+    },
+    "Posts tagged 计算机视觉 | Amy": {
+      "zh": "标记为“计算机视觉”的文章 | Amy"
+    }
+  },
+  "blog/tag/逆向工程/index.html": {
+    "Blog posts tagged 逆向工程": {
+      "zh": "标签为“逆向工程”的博客文章"
+    },
+    "Posts tagged 逆向工程 | Amy": {
+      "zh": "标记为“逆向工程”的文章 | Amy"
+    }
+  },
+  "blog/tag/随机化/index.html": {
+    "Blog posts tagged 随机化": {
+      "zh": "标签为“随机化”的博客文章"
+    },
+    "Posts tagged 随机化 | Amy": {
+      "zh": "标记为“随机化”的文章 | Amy"
+    }
+  },
+  "blog/tag/ics/index.html": {
+    "Blog posts tagged ICS": {
+      "zh": "标签为“计算机系统导论”的博客文章"
+    },
+    "Posts tagged ICS | Amy": {
+      "zh": "标记为“计算机系统导论”的文章 | Amy"
+    }
+  },
+  "blog/tag/oop/index.html": {
+    "Blog posts tagged OOP": {
+      "zh": "标签为“面向对象编程”的博客文章"
+    },
+    "Posts tagged OOP | Amy": {
+      "zh": "标记为“面向对象编程”的文章 | Amy"
+    }
+  },
+  "blog/tag/android/index.html": {
+    "Blog posts tagged Android": {
+      "zh": "标记为安卓的博客文章"
+    },
+    "Posts tagged Android | Amy": {
+      "zh": "标记为安卓的文章 | Amy"
+    }
+  },
+  "blog/tag/cpp/index.html": {
+    "Blog posts tagged Cpp": {
+      "zh": "标签为 C++ 的博客文章"
+    },
+    "Posts tagged Cpp | Amy": {
+      "zh": "标记为 C++ 的文章 | Amy"
+    }
+  },
+  "blog/tag/astro/index.html": {
+    "Blog posts tagged Astro": {
+      "zh": "标签为 Astro 的博客文章"
+    },
+    "Posts tagged Astro | Amy": {
+      "zh": "标记为 Astro 的文章 | Amy"
+    }
+  },
+  "projects/tag/browser-extension/index.html": {
+    "Projects and notes tagged Browser Extension": {
+      "zh": "标记为浏览器扩展的项目和笔记"
+    },
+    "Browser Extension · Projects & Notes | Amy": {
+      "zh": "浏览器扩展 · 项目与笔记 | Amy"
+    }
+  },
+  "projects/tag/c-/index.html": {
+    "Projects and notes tagged C#": {
+      "zh": "标记为 C# 的项目和笔记"
+    },
+    "C# · Projects & Notes | Amy": {
+      "zh": "C# · 项目与笔记 | Amy"
+    }
+  },
+  "projects/tag/javascript/index.html": {
+    "Projects and notes tagged JavaScript": {
+      "zh": "标记为 JavaScript 的项目和笔记"
+    },
+    "JavaScript · Projects & Notes | Amy": {
+      "zh": "JavaScript · 项目与笔记 | Amy"
+    }
+  },
+  "projects/tag/react/index.html": {
+    "Projects and notes tagged React": {
+      "zh": "标记为 React 的项目和笔记"
+    },
+    "React · Projects & Notes | Amy": {
+      "zh": "React · 项目与笔记 | Amy"
+    }
+  },
+  "projects/tag/sqlite/index.html": {
+    "Projects and notes tagged SQLite": {
+      "zh": "标记为 SQLite 的项目和笔记"
+    },
+    "SQLite · Projects & Notes | Amy": {
+      "zh": "SQLite · 项目与笔记 | Amy"
+    }
+  },
+  "projects/tag/websocket/index.html": {
+    "Projects and notes tagged WebSocket": {
+      "zh": "标记为 WebSocket 的项目和笔记"
+    },
+    "WebSocket · Projects & Notes | Amy": {
+      "zh": "WebSocket · 项目与笔记 | Amy"
+    }
+  },
+  "projects/tag/wpf/index.html": {
+    "Projects and notes tagged WPF": {
+      "zh": "标记为 WPF 的项目和笔记"
+    },
+    "WPF · Projects & Notes | Amy": {
+      "zh": "WPF · 项目与笔记 | Amy"
+    }
+  },
+  "projects/tag/astro/index.html": {
+    "Projects and notes tagged Astro": {
+      "zh": "标记为 Astro 的项目和笔记"
+    }
+  },
+  "projects/tag/spring-2026/index.html": {
+    "Projects and notes tagged Spring 2026": {
+      "zh": "标记为 2026 年春季的项目与笔记"
+    }
+  },
+  "projects/tag/supervised-learning/index.html": {
+    "Projects and notes tagged Supervised Learning": {
+      "zh": "标记为监督学习的项目与笔记"
+    }
+  },
+  "projects/tag/featured/index.html": {
+    "Projects and notes tagged Featured": {
+      "zh": "标记为精选的项目和笔记"
+    }
+  },
+  "projects/tag/projects/index.html": {
+    "Projects and notes tagged Projects": {
+      "zh": "带有项目标签的项目和笔记"
+    }
+  },
+  "projects/tag/fall2026/index.html": {
+    "Projects and notes tagged Fall2026": {
+      "zh": "标记为 2026 年秋季的项目和笔记"
+    }
+  },
+  "projects/tag/ai/index.html": {
+    "Projects and notes tagged AI": {
+      "zh": "标记为 AI 的项目和笔记"
+    }
+  },
+  "projects/tag/typescript/index.html": {
+    "Projects and notes tagged TypeScript": {
+      "zh": "带有 TypeScript 标签的项目和笔记"
+    }
+  },
+  "projects/tag/fall-2025/index.html": {
+    "Projects and notes tagged Fall 2025": {
+      "zh": "标记为 2025 年秋季的项目和笔记"
     }
   }
 }

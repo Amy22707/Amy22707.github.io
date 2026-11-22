@@ -2,7 +2,7 @@
 title: Agent Systems 研究笔记
 description: Survey on Inference/Context/Memory/Scheduling/KV
 publishedAt: 2026-10-22
-updatedAt: 2026-11-04
+updatedAt: 2026-11-19
 pinned: false
 pinOrder: 1
 tags:
@@ -90,7 +90,7 @@ $$
 
 ## 2. Inference Engines
 <a id="material-nano-vllm"></a>
-### 2.1 nano-vLLM：请求、调度、缓存与 GPU 的连接
+### 2.1 nano-vLLM
 
 [nano-vLLM](https://github.com/GeeeekExplorer/nano-vllm) 是轻量推理引擎，适合沿一次请求追踪整个执行过程。
 
@@ -116,7 +116,7 @@ scheduler.postprocess(seqs, token_ids, is_prefill)
 BlockManager 维护逻辑 token 位置到物理 KV 块的映射，通过前缀哈希查找可复用块，用引用计数处理共享。引用归零后，块内容可以暂时保留，直到被重新分配覆盖。
 
 <a id="material-vllm"></a>
-### 2.2 vLLM：在多请求之间共享计算与显存
+### 2.2 vLLM
 
 [vLLM](https://docs.vllm.ai/en/latest/) 将请求处理、逐轮调度、KV 管理、模型执行和输出连接起来。先记住几种机制各自节省什么：
 
@@ -133,7 +133,7 @@ BlockManager 维护逻辑 token 位置到物理 KV 块的映射，通过前缀�
 
 <a id="material-deepinfer"></a>
 
-### 2.3 DeepInfer：结合模型结构优化推理与部署
+### 2.3 DeepInfer
 
 所读 [DeepInfer](https://github.com/deepseek-ai/DeepInfer) 版本支持 DeepSeek-V4.1-Flash，主要提供离线推理引擎。阅读入口是 `examples/offline_inference.py` → `LLMEngine` → Scheduler、BlockManager 与模型执行。
 
@@ -154,9 +154,13 @@ BlockManager 维护逻辑 token 位置到物理 KV 块的映射，通过前缀�
 SWA 的有限后缀重放要结合多层依赖理解；它不能推出整个模型只依赖最后几个 token。完整生产缓存服务和集群组件也并非全部包含在开源引擎中。
 
 <a id="paper-2610-23787"></a>
-### 2.4 DLite：草稿模型借用大模型的上下文表示
+### 2.4 DLite
 
 论文：[DLite: History-Free Speculative Decoding for Agentic AI](https://arxiv.org/abs/2610.23787)。 [代码](https://github.com/SJTU-DAI-Sys/DLite)。
+
+**Abstract**
+
+Speculative decoding has become a mainstream technique for accelerating large language model (LLM) inference by using a lightweight draft model to generate candidate tokens that are subsequently verified by the target model. However, agentic workloads introduce long and continuously evolving contexts and frequent multi-turn interactions. Under such workloads, we observe that existing draft models suffer from up to an 80% degradation in acceptance length, while maintaining their historical KV cache introduces substantial system overhead. In this paper, we identify the growing historical context as a common source of both problems and introduce DLite, a history-free speculative decoding framework for agentic AI. DLite directly **reuses contextual hidden states from the target model** and performs local speculative prediction without explicitly maintaining the historical context, transforming an increasingly complex modeling problem into local simple prediction problem. A lightweight sequential head further restores intra-block causal dependencies with low overhead. To effectively train this heterogeneous history-free architecture, we introduce a tailored two-stage training strategy. Experiments on general-purpose, long-context and agentic workloads show that DLite achieves 2 ∼ 6 acceptance length and outperforms the state-of-the-art speculative decoding method, DSpark, up to 70%.
 
 **主张与研究方法：** DLite 改进的是投机解码中的“起草”环节。普通解码由大模型逐个生成 token；投机解码先用便宜的草稿模型提出候选，再让大模型一次计算多个候选位置的分布。候选前缀通过验证，就能一次推进多个 token。起草越便宜、被接受的候选越多，收益越大。
 
@@ -198,9 +202,13 @@ $$
 
 这一组工作帮助判断“问题在哪里”。有的测完整工作流，有的细看搜索、缓存历史或记忆构建；共同要求是把最终任务结果与执行过程一起记录。
 <a id="paper-2608-15127"></a>
-### 3.1 AgentSysBench：先找完整工作流的瓶颈
+### 3.1 AgentSysBench
 
 论文：[From LLM Inference to Agentic Workloads: Characterization and Implications for Serving Systems](https://arxiv.org/abs/2608.15127)。
+
+**Abstract**
+
+Agentic applications are shifting AI serving from isolated model inference to long-running workloads in which LLMs coordinate tools, environments, and persistent state. However, the system behavior of these workloads—where latency, cost, and bottlenecks arise—remains poorly characterized, leaving serving systems to rely on assumptions built for conventional inference. We present AgentSysBench, a benchmark suite and measurement toolkit with **ten representative agentic applications and unified systems-level instrumentation**. Across controlled deployments and production traces, we identify six properties that distinguish agentic workloads from conventional LLM serving: (1) execution is heavyweight and stateful, with non-LLM components dominating latency in 5 of 10 applications and sandbox working-set memory peaking at 28 GB per session; (2) applications compose components with heterogeneous resource affinity—GPU-bound inference, memory-bound retrieval, CPU-bound sandboxes—whose task latencies diverge by up to 32×; (3) bottlenecks shift across requests, models, and deployments; (4) production sessions hold state idle for minutes to hours between active steps; (5) a control-plane tax— auxiliary LLM calls and context overhead from tool schemas and observations—crowds out productive compute and context; and (6) production traces from three applications reveal heavy cross-request redundancy in search queries and web fetches, exposing a large caching opportunity. Four design explorations demonstrate that these findings are actionable: task-aware serving reduces latency by 29–40%, communication-aware placement by up to 4.5×, state offloading reduces memory usage by 4.6×, and tool-result caching removes 35.2% of redundant search calls and saves 19.3% of aggregate search latency.
 
 **主张与研究方法：** 单次模型调用不能解释完整 Agent 的成本。作者用十类应用和生产轨迹，将模型、工具、环境、状态、通信与资源消耗放到同一条执行时间线上。
 
@@ -216,9 +224,13 @@ $$
 作者分别探索任务感知服务、组件放置、空闲状态卸载和工具结果缓存，用来验证这些测量发现的优化价值。
 <a id="paper-2610-30181"></a>
 
-### 3.2 OpenDS-World：测真实网页调查中的搜索、失败与停止
+### 3.2 OpenDS-World
 
 论文：[Deep Search in Real-World Web Environments](https://arxiv.org/abs/2610.30181v1)。
+
+**Abstract**
+
+Despite substantial progress in Deep Search agents, their ability to conduct end-to-end research in real-world open Web environments remains insufficiently evaluated. Unlike static retrieval settings, information on the real-world Web is distributed across diverse sources, modalities, and heterogeneous formats, often involving complex interaction mechanisms that require agents to autonomously search for, access, and integrate relevant evidence during execution. To address this gap, we introduce the OpenDS task, designed to evaluate agents’ ability to perform **multi-step deep search in the live, open Web**. This task requires agents to autonomously explore the real Web, discover and connect relevant evidence from multiple independent sources through Web search, browser interaction, and evidence processing, and ultimately determine a unique factual answer. Building on this task formulation, we construct OpenDS-World, a benchmark comprising 200 challenging tasks spanning diverse information modalities, heterogeneous file formats, and interactive access requirements, with independent human verification to ensure evidence validity and answer uniqueness. We evaluate 12 frontier models under a unified tool environment and execution protocol. The best-performing model achieves 39.0% accuracy, while human evaluation across 1,000 independent attempts yields 21.1% accuracy. Further analyses of tool usage, search cost, termination behavior, and failure recovery reveal substantial differences in research strategies across models, as well as persistent challenges in tool coordination and long-horizon search management. OpenDS-World provides a unified evaluation platform for systematically assessing and advancing agents’ autonomous deep search capabilities in real-world open Web environments.
 
 **主张与研究方法：** 构建 200 个真实网页调查任务，让 Agent 从视频线索出发，跨网页、文件和媒体搜集证据。用统一工具和预算评测 12 个模型，同时分析答案、耗时、工具调用与失败行为。
 
@@ -233,9 +245,13 @@ $$
 **研究启发：** 除了模型推理速度，还应关注慢失败恢复、工具选择、预算分配和停止判断，并同时衡量准确率与成本。
 
 <a id="paper-2610-05833"></a>
-### 3.3 Request Order Matters：旧缓存会让同一输入得到不同答案
+### 3.3 Request Order Matters
 
 论文：[Request Order Matters: Cache-History Sensitivity in Selective KV-Cache Reuse for Rolling Agents](https://arxiv.org/abs/2610.05833v1)。
+
+**Abstract**
+
+Long-running agents repeatedly call an LLM while retaining most of their document window, evicting old documents, and appending new ones. These rolling updates break exact prefix caching and motivate non-prefix KV-cache reuse with selective recomputation. We show that persistent KV-cache reuse with selective recomputation can be history-dependent: in our rolling-agent workload, **an unchanged prompt can produce different answers** depending on the requests processed before it. At a matched 5% recomputation budget, document-aligned recomputation reduces answer variation across request orders from 69.0% with CacheBlend’s token top-k policy to 26.1%. When each prompt is evaluated after a different sequence of preceding requests, document-aligned recomputation improves fidelity to full prefill by 34.5–52.5 percentage points over token top-k, while both policies achieve approximately 5.7× median TTFT speedup. Our ablation study shows that, in our rolling-agent workload, contiguity is the main factor associated with robust selective recomputation.
 
 **主张与研究方法：** 当 Agent 删掉最早的一份文档、追加新文档时，保留下来的文字虽然没变，其位置和前面的上下文已经变了。原来的 KV 因而不再等同于对新输入完整计算得到的 KV。选择性重算尝试修补其中一部分，同时复用剩余状态。
 
@@ -252,9 +268,13 @@ $$
 - 正常时间顺序下两者差异不显著；乱序和倒序时，连续片段更接近完整 Prefill 的结果。
 - 消融支持连续性这一共同因素，尚未发现文档边界或按偏差排序带来的额外显著优势；它没有完整解释连续性更稳的底层原因。
 <a id="paper-2606-06448"></a>
-### 3.4 Agent Memory Characterization：查询快，可能是写入时已经付了成本
+### 3.4 Agent Memory Characterization
 
 论文：[Agent Memory: Characterization and System Implications of Stateful Long-Horizon Workloads](https://arxiv.org/abs/2606.06448v2)。 [代码](https://github.com/Tambe-Lab/agent-memory-profiling) · [IISWC 2026](https://iiswc.org/iiswc2026/program.html)。
+
+**Abstract**
+
+LLM agents are increasingly deployed on long-horizon tasks requiring sustained reasoning over extended interaction histories. Realizing this at scale requires agents to persistently store, retrieve, and update their own memory across sessions. A rich ecosystem of agent memory systems has emerged spanning flat retrieval, LLM-mediated extraction, consolidating fact stores, and agentic control flows. Yet, their system-level behavior remains uncharacterized. We present the first systems characterization of agent memory. First, we introduce a system-oriented taxonomy classifying agent memory systems along four axes. Second, we build a **phase-aware profiling harness** attributing cost to construction, retrieval, and generation. Third, we characterize ten representative systems across two benchmark suites, uncovering how design choices shift cost across the write and read paths. Finally, we derive 10 system recommendations covering construction scheduling, capability floors, amortization via query volume, freshness-latency tradeoffs, and fleet-scale management.
 
 **主张与研究方法：** 对十种记忆系统分阶段记录调用、耗时、能耗和存储，并改变构建模型大小与会话到达间隔。实验覆盖 MemoryAgentBench、MemoryArena 和 Qwen3-1.7B 至 32B 等设置。
 
@@ -266,9 +286,13 @@ $$
 - 异步写入要权衡新鲜度：等写完再回答会增加延迟，直接回答可能读到旧状态。
 
 <a id="paper-2608-00101"></a>
-### 3.5 Copilot in the Wild：从生产会话看缓存失效、压缩和空闲
+### 3.5 Copilot in the Wild
 
 [论文](https://arxiv.org/abs/2608.00101) · [全文](https://arxiv.org/html/2608.00101v1) · [公开数据与分析代码](https://github.com/Azure/AzurePublicDataset/blob/master/GitHubCopilotCodingAgentDataset2026.md)
+
+**Abstract**
+
+AI coding agents (e.g., GitHub Copilot, Claude Code, Codex) interleave multi-step LLM inference with tool execution, creating a workload different from chatbots. We present the first production-scale characterization of this workload using sampled GitHub Copilot traces from June 2026, comprising 3.2M users, 13M sessions, 761M LLM calls, and 95T tokens. Our analysis reveals distinctive workload properties with important systems implications. For example, agentic coding sessions consist of sparse user-initiated turns, each unfolding into an **autonomous agent loop** of LLM calls coupled nearly 1:1 with tool execution. This structure yields KV cache hit rates averaging 90% within a turn, but falling to 55% across turn boundaries and drastically invalidated after events like model switches or context compaction. Diverse workflows and user behaviors are observed with variable and long-tailed token consumption, time span, and tool calls. We highlight the difference between quick agentic turnaround times and the minutes-long user idle periods at turn boundaries, and design a lightweight idle-time predictor that captures 86–90% of total idle time, enabling proactive decisions for efficient resource orchestration. These findings challenge assumptions underlying current LLM-serving systems and provide an empirical foundation for agent-native infrastructure.
 
 **主张与研究方法：** 真实用户使用编码 Agent 时，包含连续自动执行、用户停顿、模型切换、工具失败和上下文压缩。只用固定任务或合成到达过程评测，容易遗漏这些事件怎样改变缓存复用和资源占用。论文通过 GitHub Copilot 在 Visual Studio、VS Code 中的生产遥测，观察完整会话的结构和开销。
 
@@ -290,9 +314,13 @@ $$
 **研究启发：** CoMem/ACON 讨论怎样整理上下文，Continnum/MORI 讨论怎样跨间隔保留状态；这篇补上了真实会话中哪些事件、哪些用户行为触发代价的证据。可以先按“轮内工具等待、轮间用户等待、压缩之后”分组，判断各自的恢复负担，再考虑是否值得设计统一或分阶段策略。公开元数据可用于调查时间与负载现象；语义损失和 Qwen/DeepSeek 上的实际收益仍需另行验证。
 
 <a id="paper-2610-31710"></a>
-### 3.6 Compact-Bench：在同一修复进度上测摘要造成的损失
+### 3.6 Compact-Bench
 
 [论文](https://arxiv.org/html/2610.31710v2) · [代码](https://github.com/cai-jianfeng/compact-bench) · [数据](https://huggingface.co/datasets/caijanfeng/compact-bench)
+
+**Abstract**
+
+Context compaction lets long-horizon coding agents continue beyond their context windows, but can erase the state needed to finish a task. Prior evaluations measure efficiency, retained information, or end-to-end success, leaving the effect of a specific history replacement difficult to isolate. Compact-Bench pairs **full-history and summary-only continuations from a shared repository state**, and evaluates recurring details and successive production compactions. It covers 35 SWE-bench repairs, 146 agentic sessions, and 106 production chains. Across 14 summarizer backbones, stable damage ranges from 5 − 64% of 22 full-history successes: Claude Opus 4.8 preserves the most repairs, while DeepSeek-Flash damages the most. With Kimi-K3 as summarizer, the Kimi Code prompt preserves the most task continuations (19/22), whereas Claude Code retains the most recurring details (15.0%). LLM summaries retain at most 16.0% of recurring details, compared with 79.1% for mechanical extraction; production summaries retain 15.7% at the first boundary. Failures recur across methods: one repair is damaged by 13/14 backbones, and another by all 5 prompts. These results show that reliable compaction requires preserving the progress needed to complete a task, and that retaining relevant information alone does not ensure successful continuation. Code and data are available online.
 
 **主张与研究方法：** 编码 Agent 压缩历史后，仓库里的修改还在，但此前排除过的假设、测试约束和下一步计划可能丢失。论文从同一段历史、同一仓库快照出发，分别给同一个续跑 Agent 完整历史或仅给摘要，比较后续修复能否通过测试。该设计把压缩前已经发生的工作固定下来，减少两条完整轨迹天然不同带来的干扰。
 
@@ -307,9 +335,13 @@ $$
 
 历史越长，每轮输入越贵，但删掉信息又可能影响后续行动。这里的主要决策是：何时整理、保留什么、由谁决定，以及删出工作窗口的内容能否找回。
 <a id="paper-2605-30842"></a>
-### 4.1 CoMem：小模型在后台整理记忆，主 Agent 继续执行
+### 4.1 CoMem
 
 论文：[CoMem: Context Management with A Decoupled Long-Context Model](https://arxiv.org/abs/2605.30842)。 [代码](https://github.com/horizon-llm/CoMem)。
+
+**Abstract**
+
+Context management enables agentic models to solve long-horizon tasks through iterative summarization of previous interaction histories. However, this process typically incurs substantial decoding overhead for the extra summarization tokens, which significantly affect the end-to-end response latency at deployment. In this paper, we introduce COMEM, a novel framework that **decouples memory management from the primary agent workflow**, enabling these processes to execute in parallel. We propose a k-step-off asynchronous pipeline that overlaps the memory model’s summarization with the agent’s inference, effectively masking the latency of context processing. To ensure robustness under this asynchronous setting, we introduce a reward-driven training strategy that aligns the memory model to capture sufficient statistics for the agent’s decision-making. Theoretical analysis confirms that COMEM offers a superior efficiency-effectiveness trade-off compared to coupled architectures. Our extensive experimental results on SWE-Bench-Verified show that COMEM provides 1.4x latency improvements upon vanilla long-context solutions while preserving most of the performance. Furthermore, we demonstrate that these latency gains scale favorably with increased system throughput, offering a modular path forward for the independent optimization of agent reasoning and memory compression.
 
 **主张与研究方法：** 如果让主 Agent 停下来自己写摘要，后续执行就要等待摘要完成。CoMem 把这件事交给独立的小记忆模型，同时让主 Agent 继续工作。
 
@@ -328,9 +360,13 @@ $$
 - 异步的关键是保留近期原始记录，不能只把旧摘要当作最新状态。
 - 摘要替换会影响 KV 复用，k、摘要长度与质量共同决定取舍。
 <a id="paper-2605-05191"></a>
-### 4.2 LongSeeker：让 Agent 学会保留、压缩、摘录与回退
+### 4.2 LongSeeker
 
 论文：[LongSeeker: Elastic Context Orchestration for Long-Horizon Search Agents](https://arxiv.org/abs/2605.05191)。
+
+**Abstract**
+
+Long-horizon search agents must manage a rapidly growing working context as they reason, call tools, and observe information. Naively accumulating all intermediate content can overwhelm the agent, increasing costs and the risk of errors. We propose that effective context management should be adaptive: parts of the agent’s trajectory are maintained at different levels of detail depending on their current relevance to the task. To operationalize this principle, we introduce Context-ReAct, a general agentic paradigm for elastic context orchestration that **integrates reasoning, context management, and tool use in a unified loop**. Context-ReAct provides five atomic operations: Skip, Compress, Rollback, Snippet and Delete, which allow the agent to dynamically reshape its working context, preserving important evidence, summarizing resolved information, discarding unhelpful branches, and controlling context size. We prove that the Compress operator is expressively complete, while the other specialized operators provide efficiency and fidelity guarantees that reduce generation cost and hallucination risk. Building on this paradigm, we develop LongSeeker, a long-horizon search agent fine-tuned from Qwen3-30B-A3B on 10k synthesized trajectories. Across four representative search benchmarks, LongSeeker achieves 61.5% on BrowseComp and 62.5% on BrowseComp-ZH, substantially outperforming Tongyi DeepResearch (43.2% and 46.7%) and AgentFold (36.2% and 47.3%). These results highlight the potential of adaptive context management, showing that agents can achieve more reliable and efficient long-horizon reasoning by actively shaping their working memory.
 
 **主张与研究方法：** 普通 ReAct 在“思考 → 调用工具 → 接收观察”中不断追加历史。LongSeeker 的 Context-ReAct 把编辑上下文也变成 Agent 的动作：每步一起生成思考、上下文操作和普通工具调用，运行环境再据此构造下一步输入。
 
@@ -356,9 +392,13 @@ $$
 
 <a id="paper-2607-23809"></a>
 
-### 4.3 ACM：Agent 自己决定何时压缩，并能找回原文
+### 4.3 ACM
 
 论文：[ACM: Agentic Context Management for Long Horizon Tasks](https://arxiv.org/abs/2607.23809)。
+
+**Abstract**
+
+Agentic tasks are inherently long-horizon and multi-turn, constantly accumulating context through interactions with the environment. Existing context compression methods inevitably incur information loss and are triggered by rigid heuristic rules, leaving them misaligned with the agent’s evolving reasoning focus. We propose Agentic Context Management (ACM), a framework that equips agents with purpose-built context editing tools for lossless context management. Inspired by the interaction between short-term and long-term human memory, the agent autonomously decides when to compress its context, **offloads discarded content to an external memory system, and queries it on demand** for later retrieval. Building on this framework, we further develop a post-training pipeline that constructs high-quality demonstrations of context management and improves model performance on both agentic search and coding tasks. Further analysis reveals that effective context management reduces peak token pressure, enables extended explorations, and yields more consistent solutions across independent trials. Code, data, and model checkpoints are available at <https://github.com/lixiaochuan2020/agentic-context-management>.
 
 **主张与研究方法：** ACM 把上下文管理做成两类显式工具，让任务模型自己决定何时使用。
 
@@ -375,9 +415,13 @@ $$
 - 原文可恢复还不够，模型必须能判断缺了什么，并正确查询、使用它。
 
 <a id="paper-2608-21690"></a>
-### 4.4 Scroll：把历史放进可查询、可计算的会话环境
+### 4.4 Scroll
 
 论文：[Context as an Environment: Programmatic Context Management for Long-Horizon Agents](https://arxiv.org/abs/2608.21690)。
+
+**Abstract**
+
+LLM agents increasingly take on long-running tasks whose history grows far beyond a single model context window. Existing approaches compress earlier interactions or extract selected information into fixed memory representations, committing to what to preserve before future needs are known. We present Scroll, a context manager that treats each agent session as an executable Session Environment. The environment is backed by an **append-only Event Log and a sandboxed, persistent Python kernel**. The kernel maintains a typed namespace across model calls, allowing tool outputs, retrieved history, and derived state to be bound to variables rather than serialized into the prompt at each call. Model-written code searches, materializes, and transforms session state through exec; only explicitly printed projections enter the model’s working view for the next call. Context management thus becomes a programming task that inherits the improving coding abilities of LLMs, while the Event Log preserves lossless historical ground truth. As the working view approaches its budget, stale spans are evicted but remain recoverable: an eviction index keeps compact landmarks tied to exact Event Log addresses, so that the agent navigates directly to evicted regions instead of searching the full log. With Qwen3.8-Max as the backbone, Scroll achieves 94.8% on LongMemEvalS; 73.1% on BEAM10M , surpassing the best published memory system by 5.1 points; and 86.7% on LOCA256K, exceeding the best published long-horizon agent by 37.4 points.
 
 **主张与研究方法：** Scroll 将会话历史做成一个可以编程访问的 **Session Environment**，由两部分组成：
 
@@ -398,9 +442,13 @@ Agent 通过 `exec` 写代码检索日志、展开片段、筛选数据和做计
 
 <a id="paper-2609-40118"></a>
 
-### 4.5 ReCAP：保存历史重要性和依赖，等新请求来了再选
+### 4.5 ReCAP
 
 论文：[Persistent Context Graphs for Efficient Memory Compaction in LLM Agents](https://arxiv.org/abs/2609.40118)。
+
+**Abstract (paraphrased)**
+
+As agent histories grow, selecting relevant material for a new request can require reprocessing old context after its KV cache has expired. ReCAP saves attention-based importance scores and message dependencies in a persistent graph. When a new request arrives, it combines the stored scores with relevance cues from the request and follows dependency links to recover supporting messages **without an extra model call for selection**. The authors estimate about 95% lower latency for compaction and cold restoration compared with Codex’s summarization baseline on the two tested model families. They also report comparable quality with roughly half the historical context on SWE-Together and improved coding accuracy on Lost-in-Conversation.
 
 **主张与研究方法：** ReCAP 希望在下一条用户请求真正到来时再选历史，但又不想为选择而重新让模型读完整会话。它提前记录推理中产生的注意力信号，构建持久的上下文图。
 
@@ -420,9 +468,13 @@ Agent 通过 `exec` 写代码检索日志、展开片段、筛选数据和做计
 **研究启发：** 可以把昂贵执行过程中顺便得到的信号存下来，支持未来的廉价决策。
 <a id="paper-2510-00615"></a>
 
-### 4.6 ACON：从压缩导致的任务失败中改进规则
+### 4.6 ACON
 
 论文：[ACON: Optimizing Context Compression for Long-horizon LLM Agents](https://arxiv.org/abs/2510.00615v3)。 [代码](https://github.com/microsoft/acon) · [ICML 2026](https://www.microsoft.com/en-us/research/publication/acon-optimizing-context-compression-for-long-horizon-llm-agents/)。
+
+**Abstract**
+
+Large language models (LLMs) are increasingly deployed as agents in dynamic real-world environments, where success depends on maintaining precise records of actions and observations. However, the resulting unbounded context growth in long-horizon agentic tasks makes two critical bottlenecks: prohibitive inference memory costs and reasoning degradation due to irrelevant information. Existing compression methods fail to fully address this, often relying on brittle heuristics or requiring parameter updates impractical for proprietary or large-scale LLMs. We introduce Agent Context Optimization (ACON), a unified framework that optimally compresses both observations and history into concise, informative representations. Distinct from prior works, ACON employs an optimization in natural language space: it **iteratively refines compression guidelines based on failure analysis of the agent**, ensuring critical state information is preserved without model fine-tuning. To further minimize computational overhead, we distill the optimized compressor into smaller models. Experiments on AppWorld, OfficeBench, and Multi-objective QA demonstrate that ACON reduces peak token usage by 26–54% while improving task success over existing compression baselines. Notably, it enables smaller LMs to function effectively as long-horizon agents, achieving up to 46% performance improvement by mitigating context distraction. Our code is available at <https://github.com/microsoft/acon>.
 
 **主张与研究方法：** ACON 优化的是指导压缩器的自然语言规则，而不是先修改任务模型权重。
 
@@ -444,9 +496,13 @@ Agent 通过 `exec` 写代码检索日志、展开片段、筛选数据和做计
 **研究启发：** ACON 展示的是“用下游任务反馈优化上游表示”。与 CoMem 连起来看，一个研究怎样压缩，另一个研究压缩何时执行。
 <a id="paper-2511-03475"></a>
 
-### 4.7 ContextPilot：重排与去重证据块，让输入更容易命中前缀缓存
+### 4.7 ContextPilot
 
 论文：[ContextPilot: Fast Long-Context Inference via Context Reuse](https://arxiv.org/abs/2511.03475v4)。[代码](https://github.com/EfficientContext/ContextPilot) · [MLSys 2026 正式论文页](https://proceedings.mlsys.org/paper_files/paper/2026/hash/b0131b6ee02a00b03fc3320176fec8f5-Abstract-Conference.html)。
+
+**Abstract**
+
+AI applications increasingly depend on long-context inference, where LLMs consume substantial context to support stronger reasoning. Common examples include retrieval-augmented generation, agent memory layers, and multi-agent orchestration. As input contexts get longer, prefill latency becomes the main bottleneck. Yet today’s prefill acceleration techniques face a trade-off: they either preserve reasoning quality but deliver little KV-cache reuse, or improve reuse at the cost of degraded reasoning quality. We present CONTEXTPILOT, a system that accelerates prefill by introducing context reuse as a new mechanism for faster long-context inference. CONTEXTPILOT introduces a context index to identify overlapping context blocks across LLM interactions (e.g., across users and turns). It further proposes **context alignment and de-duplication techniques** to maximize KV-cache reuse. To preserve reasoning quality under reuse, it introduces succinct context annotations that prevent quality degradation. Finally, CONTEXTPILOT is built around a modular architecture with a clean interface that integrates with existing inference engines. Extensive evaluation shows that CONTEXTPILOT reduces LLM prefill latency by up to 3× compared to state-of-the-art methods while preserving reasoning quality. At longer context lengths, it can even improve reasoning quality. CONTEXTPILOT is open-sourced at: <https://github.com/EfficientContext/ContextPilot>.
 
 **主张与研究方法：** 多轮检索经常拿回相同文档，但顺序不同，或者把此前已有内容再放一遍。ContextPilot 在输入组装和推理引擎之间增加上下文优化层，主动把输入组织成更容易精确命中缓存的形式。
 
@@ -478,9 +534,13 @@ Agent 通过 `exec` 写代码检索日志、展开片段、筛选数据和做计
 **研究启发：** 与 CacheBlend 的区别是改变哪一层：ContextPilot 改文本组织，CacheBlend 修补不完全匹配的 KV。可进一步讨论，在长程 Agent 中怎样区分可重排证据、版本约束和必须保持顺序的执行历史。
 
 <a id="paper-2602-13594"></a>
-### 4.8 Hippocampus：用紧凑索引找片段，再还原完整原文
+### 4.8 Hippocampus
 
 [论文](https://proceedings.mlsys.org/paper_files/paper/2026/hash/a1d04870cf83a0f29819d66f1dfdbfcb-Abstract-Conference.html) · [全文](https://proceedings.mlsys.org/paper_files/paper/2026/file/a1d04870cf83a0f29819d66f1dfdbfcb-Paper-Conference.pdf)
+
+**Abstract**
+
+Agentic AI systems require persistent memory to store user-specific histories beyond the limited context window of LLMs. Existing memory systems rely on the dense vector databases, knowledge-graph traversal, or hybrids, which incur high retrieval latency and poor storage scalability. We introduce HIPPOCAMPUS, an agentic memory management system that uses compact binary signatures for semantic search and lossless token-ID streams for exact content reconstruction. Its core is a **Dynamic Wavelet** Matrix (DWM) that compresses and co-indexes both streams to support ultra-fast search in the compressed domain, thus avoiding costly dense-vector or graph computations. For a fixed tokenizer vocabulary, the storage footprint of this design grows linearly with memory size, making it suitable for long-horizon agentic deployments. Empirically, across LoCoMo and LongMemEval, HIPPOCAMPUS achieves end-to-end retrieval latency that is comparable to or lower than the evaluated agentic memory baselines, with 1.1×–31.5× speedups over the evaluated baselines, and reduces per-query token footprint by 1.1×–14.5×, while maintaining competitive task accuracy.
 
 **主张与研究方法：** 外部记忆要持续写入新历史，再根据当前问题检索片段。稠密向量索引、知识图谱和多次模型调用都可能增加写读开销。Hippocampus 选择把“用于快速寻找候选的表示”和“用于准确取回的原文”分开，使用压缩数据结构管理两者。
 
@@ -513,9 +573,13 @@ Agent 通过 `exec` 写代码检索日志、展开片段、筛选数据和做计
 
 <a id="paper-2604-24039"></a>
 
-### 4.9 AgenticCache：缓存下一步高层计划，后台 LLM 确认与校正
+### 4.9 AgenticCache
 
 [论文](https://proceedings.mlsys.org/paper_files/paper/2026/hash/c66a9db149261435664284a20b6f1d42-Abstract-Conference.html) · [全文](https://proceedings.mlsys.org/paper_files/paper/2026/file/c66a9db149261435664284a20b6f1d42-Paper-Conference.pdf) · [代码与实验日志](https://github.com/hojoonleokim/MLSys26_AgenticCache)
+
+**Abstract**
+
+Embodied AI agents increasingly rely on large language models (LLMs) for planning, yet per-step LLM calls impose severe latency and cost. In this paper, we show that embodied tasks exhibit strong plan locality, where the next plan is largely predictable from the current one. Building on this, we introduce AgenticCache, a planning framework that reuses cached plans to avoid per-step LLM calls. In AgenticCache, each agent queries a **runtime cache of frequent plan transitions**, while a background Cache Updater asynchronously calls the LLM to validate and refine cached entries. Across four multi-agent embodied benchmarks, AgenticCache improves task success rate by 22% on average across 12 configurations (4 benchmarks × 3 models), reduces simulation latency by 65%, and lowers token usage by 50%. Cache-based plan reuse thus offers a practical path to low-latency, low-cost embodied agents. Code is available at <https://github.com/hojoonleokim/MLSys26_AgenticCache>.
 
 **主张与研究方法：** 具身 Agent 每完成一步高层计划就等待 LLM 决定下一步，会使执行长时间停顿。结构化任务中，相邻计划经常重复，例如“去抓取物体 → 运输物体”。论文把这种规律称为 **plan locality（计划局部性）**，用本地缓存给出下一步，后台 LLM 负责确认和校正。
 
@@ -538,9 +602,13 @@ Agent 通过 `exec` 写代码检索日志、展开片段、筛选数据和做计
 
 <a id="paper-2506-14852"></a>
 
-### 4.10 APC：把成功执行提炼为模板，交给小模型重新适配
+### 4.10 APC
 
 [论文](https://arxiv.org/abs/2506.14852) · [全文](https://arxiv.org/html/2506.14852v2) · [会议论文页](https://proceedings.neurips.cc/paper_files/paper/2025/hash/9549f7d06700f0966d5f938f1d11022a-Abstract-Conference.html)
+
+**Abstract**
+
+LLM-based agent applications have shown increasingly remarkable capabilities in complex workflows but incur substantial costs and latency due to extensive planning and reasoning requirements. Existing LLM caching techniques (like context caching and semantic caching), primarily designed for serving chatbots, are insufficient for agent applications where outputs depend on external data and environmental contexts. We propose Agentic Plan Caching (APC), a novel test-time memory that extracts, stores, adapts, and reuses **structured plan templates** from planning stages of agent applications across semantically similar tasks to reduce the cost and latency of serving. Unlike traditional semantic caching, our system extracts plan templates from completed agent executions at test-time, employs keyword extraction to match new requests against cached plans, and utilizes lightweight models to adapt these templates to task-specific plans with contexts. Evaluation across multiple real-world agent applications shows that our system can reduce costs by 50.31% and latency by 27.28% on average while maintaining performance, offering a more efficient solution for serving LLM-based agents that complements existing LLM serving infrastructures.
 
 **主张与研究方法：** 相似任务可能使用相同的解题步骤，但数据、实体和环境每次不同。APC（Agentic Plan Caching，智能体计划缓存）保存可复用的计划模板，在新任务上用小模型适配，减少昂贵规划模型的重复调用。
 
@@ -564,9 +632,13 @@ APC 与 AgenticCache 的复用单位不同：APC 在相似任务间复用并适�
 跨轮调用之间会有工具等待。系统既要让任务及时继续，也要给其他任务腾出计算与显存。先区分整份 KV 的保留、放置和路由，再看一份 KV 内部的有损压缩。
 <a id="paper-nsdi26-agentix"></a>
 
-### 5.1 Agentix：根据任务已获得的服务，决定谁先运行
+### 5.1 Agentix
 
 论文：[Agentix: An Efficient Serving Engine for LLM Agents as General Programs](https://www.usenix.org/system/files/nsdi26-luo.pdf)。
+
+**Abstract**
+
+Large language model (LLM) applications are evolving beyond simple chatbots into dynamic, general-purpose agentic programs, which scale LLM calls and output tokens to help AI agents reason, explore, and solve complex tasks. However, existing LLM serving systems ignore dependencies between programs and calls, missing significant opportunities for optimization. Our analysis reveals that programs submitted to LLM serving engines experience long cumulative wait times, primarily due to head-of-line blocking at both the individual LLM request and the program. To address this, we introduce Agentix, an LLM serving system that treats programs as first-class citizens to minimize their end-to-end latencies. Agentix intercepts LLM calls submitted by programs, enriching schedulers with program-level context. We propose two scheduling algorithms—for single-threaded and distributed programs—that **preempt and prioritize LLM calls based on their programs’ previously completed calls**. Our evaluation demonstrates that across diverse LLMs and agentic workloads, Agentix improves throughput of programs by 4-15× at the same latency compared to state-of-the-art systems, such as vLLM.
 
 **主张与研究方法：** Agentix 把同一任务产生的多次模型调用关联起来，调度时考虑“这个任务已经获得多少计算服务”。
 
@@ -586,9 +658,13 @@ APC 与 AgenticCache 的复用单位不同：APC 在相似任务间复用并适�
 
 <a id="paper-2511-02230"></a>
 
-### 5.2 Continnum：工具还没返回，KV 值得保留多久
+### 5.2 Continnum
 
 论文：[Continnum / Continuum: Efficient and Robust Multi-Turn LLM Agent Scheduling with KV Cache Time-to-Live](https://arxiv.org/abs/2511.02230v7)。
+
+**Abstract**
+
+KV cache management is essential for efficient LLM inference. To maximize utilization, existing inference engines evict finished requests’ KV cache if new requests are waiting. This policy breaks for agentic workloads, which interleave LLM calls with tools, introducing pauses that prevent effective KV reuse across turns. Since many tool calls have much shorter durations than human response multi-turn chatbot, it would be promising to retain the KV cache in during these tools. However, many challenges remain. First, we need to consider both the potential cost of recomputation or reloading (if offloading enabled) as well as the increasing queueing delays after eviction from GPU. Second, due to the internal variance of tool call durations, the method needs to remain robust under limited predictability of tool call durations. We present Continnum, a serving system to optimize job completion time for multi-turn agent workloads by introducing **time-to-live mechanism for KV cache retention**. For requests that generate tool calls, Continnum selectively pins the KV cache in GPU memory with a time-to-live value determined by the reload cost and potential queueing delay induced by eviction. When the TTL expires, the KV cache can be automatically evicted to free up GPU memory, providing robust performance under edge cases. When combined with program-level first-come-first-serve, Continnum preserves multi-turn continuity, and reduces delay for agentic workflows. Evaluations on real-world agents (SWE-Bench, BFCL, OpenHand) with Llama-3.1 8B/70B, Gemma-3 12B, and GLM-4.5 355B shows that Continnum improves the average job completion times by over 8x while improving throughput.
 
 **主张与研究方法：** 一个模型调用结束后，Agent 往往只是去执行工具，稍后还会带着同一段历史回来。Continnum 用 TTL（Time To Live，保留期限）保护这段等待中的 GPU KV。
 
@@ -610,9 +686,13 @@ APC 与 AgenticCache 的复用单位不同：APC 在相似任务间复用并适�
 **研究启发：** 把“保护多久”与“返回后何时运行”一起考虑。工具返回预测、任务优先级和显存机会成本共同决定保留价值。
 
 <a id="paper-2606-00866"></a>
-### 5.3 MORI：把更快会用到的 KV 留在 GPU
+### 5.3 MORI
 
 论文：[Idleness is Relative: Exploiting Tool-Call Idle Windows for Offloading in Agentic Systems with MORI](https://arxiv.org/abs/2606.00866)。
+
+**Abstract**
+
+Modern LLM serving systems increasingly host agentic workloads, whose sessions issue tens of model invocations interleaved with tool calls, accumulating KV cache that can be reused across steps. As requests’ total KV cache size easily exceeds GPU HBM capacity, researchers offload them to CPU DRAM. However, tool-call durations span orders of magnitude, and the cost of transferring KV cache between tiers makes it impractical to re-place entries on every call. We observe that agentic programs exhibit a two-phase structure: busy phases of rapid short tool calls and idle phases dominated by long-running calls. Current eviction policies such as LRU fail to capture this property. A binary busy/idle label also falls short because the ratio of busy to idle programs may not match the hardware’s GPU-to-CPU capacity ratio. When it does not, one tier sits underutilized while the other is oversubscribed, wasting memory or forcing unnecessary evictions. We present MORI, an agent serving system that solves the above problem. Our key insight is that idleness is a continuous, relative spectrum. MORI **ranks all active programs by idleness**, assigns the busiest to GPU HBM and the most idle to CPU DRAM, dynamically shifts the partition boundary to match hardware capacity, and enforces admission control at each memory tier. Evaluated on real coding agent workloads collected from Claude Code across four GPU and model pairs, MORI delivers 20–71% higher throughput and 18–43% lower TTFT than the best baseline with offloading.
 
 **主张与研究方法：** MORI 管理整份会话 KV 在 GPU 与 CPU 之间的放置。它把空闲程度看成可比较的连续排序，而不是给每个程序贴一个固定的“忙”或“闲”标签。
 
@@ -630,9 +710,13 @@ APC 与 AgenticCache 的复用单位不同：APC 在相似任务间复用并适�
 
 <a id="paper-2608-14624"></a>
 
-### 5.4 CacheScout：预测下一个 Agent，提前准备固定前缀
+### 5.4 CacheScout
 
 论文：[Learning Agent Execution for KV-Cache Management in Agentic Serving](https://arxiv.org/abs/2608.14624)。
+
+**Abstract**
+
+Multi-agent LLM systems have emerged as an important deployment paradigm for AI services, where each user request is decomposed into a sequence of specialized agents. Across these workflows, every agent repeatedly executes a fixed context consisting of system prompts, tool definitions, and few-shot examples, creating substantial opportunities for KV-cache reuse. Existing LLM serving systems, however, manage KV-cache reactively using prefix caching and recency-based replacement, causing reusable agent contexts to be evicted before their next invocation and forcing repeated recomputation. We present CacheScout, an agent-aware KV-cache runtime layer for multi-agent LLM serving. The key insight is that future KV-cache reuse is governed by agent execution semantics rather than cache recency alone. CacheScout captures these semantics by **learning agent execution transitions online**, without requiring predefined workflow graphs or offline training, and uses the learned execution model to guide both cache eviction and proactive prefetching while leaving the serving critical path unchanged. We implement CacheScout on top of vLLM. Across representative real-world multi-agent workloads, CacheScout improves KV-cache hit rate by 10–18 percentage points, reduces mean TTFT by 18–45%, lowers mean per-turn latency by 29–38%, and increases peak throughput by up to 57%. These benefits also generalize to larger models, reducing TTFT by up to 54% while sustaining 37% higher throughput.
 
 **主张与研究方法：** 多 Agent 工作流会重复使用各角色的系统提示词、工具说明和示例。CacheScout 希望在真正调用该角色之前，就知道它的固定前缀是否值得保留。
 
@@ -655,9 +739,13 @@ APC 与 AgenticCache 的复用单位不同：APC 在相似任务间复用并适�
 
 <a id="paper-2610-14686"></a>
 
-### 5.5 Vesta：缓存在哪台机器，不必决定请求在哪台执行
+### 5.5 Vesta
 
 论文：[Vesta: Queueing-Aware LLM Scheduling for Real-World Workloads](https://arxiv.org/abs/2610.14686v1)。
+
+**Abstract**
+
+Agentic applications generate multi-turn sequences of LLM requests, with each new turn extending the context accumulated from prior interactions and tool calls. Prefix caching reuses the KV cache of earlier turns and avoids redundant prefill, but routing every turn to its cache-affine instance can create severe local queues while capacity remains idle elsewhere. Remote KV cache access relaxes this tension, yet migrating execution adds transfer work and is harmful when the cluster is already congested. Thus, deciding where to execute a request requires reasoning jointly about cache locality, queueing, and the current operating point of the cluster. We present Vesta, a queueing-aware scheduler for distributed agentic LLM serving. Vesta assigns each session a **stable holder for its authoritative KV cache while independently selecting an executor for every request**. Grounded in classical queueing theory, its objective accounts for backlog, reusable prefixes, KV cache transfer, and the queueing externality of additional service demand; it migrates execution to recover idle capacity when beneficial and favors placements that add the least prefill and transfer work as congestion rises. Vesta also migrates reusable prefixes across length buckets to avoid cold starts. On real-world agentic workloads, Vesta improves throughput by 14.0% and reduces mean TTFT by 57.8% over the state-of-the-art scheduler in a PD-colocated deployment. In PD-disaggregated deployments, it reduces mean TTFT by up to 18.1% and P99 TTFT by up to 29.0% at matched throughput.
 
 **主张与研究方法：** Vesta 将“谁保存权威 KV”与“这次请求在哪执行”分开。
 
@@ -675,9 +763,13 @@ APC 与 AgenticCache 的复用单位不同：APC 在相似任务间复用并适�
 - 迁移价值随拥堵状态变化，应从整个集群而非单个请求看收益。
 <a id="paper-2609-14872"></a>
 
-### 5.6 AgentKV：按不同执行阶段的需求保留 KV
+### 5.6 AgentKV
 
 论文：[AgentKV: Phase-Aware KV Eviction for Agentic LLMs](https://arxiv.org/abs/2609.14872v1)。 [代码](https://github.com/LiuTaowen-Tony/agentkv)。
+
+**Abstract**
+
+Agentic serving can consume orders of magnitude more tokens than chatbot workloads (Bai et al., 2026), stressing both KV-cache capacity and decode-time bandwidth. Most KV-eviction methods score cached keys against representative queries drawn from the most recent tokens, assuming future attention resembles recent attention. We show that agentic generation violates this assumption: future queries form a mixture over think, act, tool, and others phases, and principal-angle analysis shows these components occupy measurably different query subspaces, so recency representatives systematically undervalue keys that upcoming phases will need. We propose AGENTKV, which **maintains a small query buffer per phase** and scores cached keys against their union. We further implement AGENTKV in a persistent multi-turn serving path that carries compressed KV state across turns and compacts retained KV pages online. Across two models, six task domains, and three KV budgets each, AGENTKV improves task score by 5.5 points on average over R-KV and 5.3 over Tri-attention. Relative to upstream full-KV SGLang, AGENTKV improves output-token throughput by up to 1.80×. Code: <https://github.com/LiuTaowen-Tony/agentkv>.
 
 **主张与研究方法：** AgentKV 研究一份会话缓存内部应该留下哪些 token 的 KV。它的出发点是：Agent 思考、生成动作和读取工具结果时，注意力查询向量 Query 的分布不同。
 
@@ -692,9 +784,13 @@ AgentKV 按 think、act、tool、others 分别保存少量代表 Query，用它�
 - 逻辑上删掉条目，还要物理整理和释放页面，才能兑现显存与吞吐收益；过小预算仍会丢失必要信息。
 <a id="paper-2609-31395"></a>
 
-### 5.7 ActKV：优先保留有助于正确行动的 KV
+### 5.7 ActKV
 
 论文：[ActKV: Efficient LLM Agents through Action-Guided KV Cache Management](https://arxiv.org/abs/2609.31395v1)。
+
+**Abstract**
+
+Agentic LLM inference accumulates long KV caches across iterative observation-reasoning-action loops, imposing substantial memory overhead and limiting serving throughput. Existing compression methods emphasize overall output quality, overlooking the asymmetric importance of actions in driving task progress. Our key idea is to establish a compression criterion that values KV entries by their contribution to action generation and **prioritizes action quality**. However, iterative execution, dynamic memory demands, and scattered action-critical entries pose challenges to eviction policies, budget allocation, and paged memory integration. To this end, we propose ActKV, the first KV cache compression framework tailored for agentic LLM inference. (i) Action-oriented KV cache eviction exploits stable action access patterns to retain entries critical to future actions, supporting reliable task progress under compression. (ii) Confidence-driven adaptive budget allocation uses LLM’s intrinsic confidence to adapt the budget to evolving action-critical memory demands. (iii) Page-aware compression management standardizes compression into three primitives with customized kernels, realizing practical throughput gains. On long-trace tasks, ActKV retains an average of 98.53% of FullKV’s accuracy with only 25.98% of its peak KV cache memory. It also achieves 3.97× and 3.58× FullKV’s token and task throughput, delivering state-of-the-art performance.
 
 **主张与研究方法：** ActKV 把“是否支持正确行动”作为缓存保留的中心。因为决定调用哪个工具、传什么参数的动作，会直接影响外部任务进展。
 
@@ -714,9 +810,15 @@ AgentKV 按 think、act、tool、others 分别保存少量代表 Query，用它�
 
 **研究启发：** ActKV 展示从任务目标到打分信号，再到控制反馈和内核实现的完整链条。需要理解每一层怎样把上一层的意图变成可执行决策。
 
-### 5.8 CacheBlend：复用文档 KV，再用少量计算修补跨文档关系
+<a id="paper-2405-16444"></a>
+
+### 5.8 CacheBlend
 
 论文：[CacheBlend: Fast Large Language Model Serving for RAG with Cached Knowledge Fusion](https://arxiv.org/abs/2405.16444v3)。[代码：LMCache](https://github.com/LMCache/LMCache)。
+
+**Abstract**
+
+Large language models (LLMs) often incorporate multiple text chunks in their inputs to provide the necessary contexts. To speed up the prefill of the long LLM inputs, one can pre-compute the KV cache of a text and re-use the KV cache when the context is reused as the prefix of another LLM input. However, the reused text chunks are not always the input prefix, which makes precomputed KV caches not directly usable since they ignore the text’s cross-attention with the preceding texts. Thus, the benefits of reusing KV caches remain largely unrealized. This paper tackles just one challenge: when an LLM input contains multiple text chunks, how to quickly combine their precomputed KV caches in order to achieve the same generation quality as the expensive full prefill (i.e., without reusing KV cache)? This challenge naturally arises in retrieval-augmented generation (RAG) where the input is supplemented with multiple retrieved texts as the context. We present CacheBlend, a scheme that reuses the pre-computed KV caches, regardless prefix or not, and **selectively recomputes the KV values of a small subset of tokens** to partially update each reused KV cache. In the meantime, the small extra delay for recomputing some tokens can be pipelined with the retrieval of KV caches within the same job, allowing CacheBlend to store KV caches in slower devices with more storage capacity while retrieving them without increasing the inference delay. By comparing CacheBlend with the state-of-the-art KV cache reusing schemes on three open-source LLMs of various sizes and four popular benchmark datasets of different tasks, we show that CacheBlend reduces time-to-first-token (TTFT) by 2.2–3.3× and increases the inference throughput by 2.8-5× from full KV recompute without compromising generation quality. The code is available at <https://github.com/LMCache/LMCache>.
 
 **主张与研究方法：** 同一篇文档会被不同问题反复检索到，但不一定出现在相同前缀。CacheBlend 希望复用各文档已经算好的 KV，再用少量计算修补它们拼接后的上下文影响。
 
@@ -744,13 +846,17 @@ AgentKV 按 think、act、tool、others 分别保存少量代表 Query，用它�
 - 算法节省还要与缓存搬运、流水线一起设计；原论文的任务质量结果不代表所有持续运行场景都保持输出不变。
 <a id="paper-fast26-cacheslide"></a>
 
-### 5.9 CacheSlide：固定片段顺序不变时，怎样跨位置复用 KV
+### 5.9 CacheSlide
 
 论文：[CacheSlide: Unlocking Cross Position-Aware KV Cache Reuse for Accelerating LLM Serving](https://www.usenix.org/conference/fast26/presentation/liu-yang) · [原始 PDF](https://www.usenix.org/system/files/fast26-liu-yang.pdf) · [代码](https://github.com/SJTU-Storage-Lab/CacheSlide)。
 
+**Abstract (paraphrased)**
+
+Agent prompts often interleave stable instructions with changing observations. This can move familiar segments to new positions even when their order is unchanged. CacheSlide exploits **stable relative order across changing absolute positions**. It modifies positional encoding, recomputes attention for a small subset of tokens, and uses learned weights to combine cached and newly computed KV. Its vLLM implementation also manages cache state by layer and adapts to storage spill. Across tested models and agent workloads, the authors report lower latency and higher throughput than the compared systems.
+
 **主张与研究方法：** Agent 提示常由固定片段和变化片段交错组成。固定片段的先后顺序可以不变，但中间内容增长后，它们的绝对位置和前文都会变化。CacheSlide 将这种场景称为 RPDC（相对位置依赖缓存）。它同时处理位置对齐、上下文修补和缓存 I/O。
 
-教学例子：输入从 `[固定规则 A][旧观察][固定规则 B][问题]` 变成 `[固定规则 A][更长的新观察][固定规则 B][问题]`。B 的文字相同，但不能直接认定旧 KV 与新计算等价。
+假设输入从 `[固定规则 A][旧观察][固定规则 B][问题]` 变成 `[固定规则 A][更长的新观察][固定规则 B][问题]`。B 的文字相同，但不能直接认定旧 KV 与新计算等价。
 
 1. **CCPE：先降低位置变化的影响。** 按 Agent 提示模板划分复用块与重算块。任务相关的编码配置建立在 CoPE（上下文相关位置编码）上，使复用块使用较稳定的编码范围；变化块采用当前编码。论文通过冻结骨干、训练 CoPE/注意力 LoRA 适配来支持这一机制。
 2. **WCA：再修补变化前文的影响。** 较早层比较缓存与重算 K 的偏差，选一部分位置；后续层对选中位置进行修补，以偏差相关权重融合新旧 KV，并阶段性调整选择集合。它仍是近似计算，修正位置不自动恢复全部上下文关系。
@@ -764,12 +870,16 @@ AgentKV 按 think、act、tool、others 分别保存少量代表 Query，用它�
 **研究启发：** 与 CacheBlend 比较“修补什么”，与 ContextPilot 比较“是否改变输入组织”。它补充了一个应先查清的问题：我们希望保持原模型和原编码，还是允许训练配套适配？这个约束会改变可选方法。
 
 <a id="paper-2609-33762"></a>
-### 5.10 EfficientAgent：缓存要活到下一轮，卸载才可能划算
+### 5.10 EfficientAgent
 
 论文：[EfficientAgent: What Makes KV Cache Offloading Work for Concurrent Agents?](https://arxiv.org/abs/2609.33762v1) · [原文](https://arxiv.org/html/2609.33762v1) · [代码](https://github.com/KunmingSHAO/efficientagent_release)。
+**Abstract**
+
+LLM agents resend their whole conversation on every turn, and most of it was already processed on the previous turn. Serving systems avoid recomputing it by caching its key–value (KV) state and, when GPU memory runs out, by offloading that state to host memory. For agents, offloading gives inconsistent results: on the same coding-agent workload it speeds up one deployment, slows down another, and changes nothing on a third, even where loading a token back is several times cheaper than recomputing it. The reason is that cached state must survive until it is used again. While one agent waits for its tool, the server processes the contexts of all other agents, so an agent’s prefix is reused only if the host tier holds the reusable context of the whole agent pool, which we call the reuse **working set**. A smaller tier keeps writing state that is evicted before anyone reads it. We present EFFICIENTAGENT, which sizes and manages the host tier by this working set. A stack-distance model estimates the working set from agent histories to size the host tier; its predictions, made before the experiments, located the capacity at which offloading starts to pay. When the tier is too small, a runtime policy stops writing large refills of evicted context and keeps extending prefixes that are still cached; when the tier is large enough, it writes everything. On SWE-bench Verified coding agents, a host tier sized to the estimated working set cuts recomputed prompt tokens by 93% and end-to-end time by 39%. With a small fixed tier, the policy cuts recomputation by 35%; with a large tier, it avoids the 4.3-fold increase caused by always filtering writes. Across three GPU types and two models, offloading pays off when the GPU has little compute per byte of host bandwidth and the host tier holds the working set. Code is available at <https://github.com/KunmingSHAO/efficientagent_release>.
+
 **主张与研究方法：** CPU 加载一次 KV 比重新 prefill 便宜，并不保证卸载能加速。一个 Agent 等工具时，其他任务不断读写缓存；旧状态如果在下次使用前已被淘汰，系统就反复重算、写入、再淘汰。作者把这理解为复用工作集超出 CPU 缓存后的 thrashing（抖动）。
 
-教学例子：A 的历史刚写进 CPU，B、C 的大历史又把它挤走；A 回来后重算并写入，接着又挤走 B。问题是状态没有活到复用时刻，单次搬运速度无法解释它。
+如果 A 的历史刚写进 CPU，B、C 的大历史又把它挤走；A 回来后重算并写入，接着又挤走 B。问题是状态没有活到复用时刻，单次搬运速度无法解释它。
 
 方法分成三个决策：
 
@@ -787,9 +897,13 @@ AgentKV 按 think、act、tool、others 分别保存少量代表 Query，用它�
 **研究启发：** 与 MORI 比较“整份状态放哪里”，与 AgentKV/ActKV 比较“每任务保留什么”，它补上了“共享 CPU 层是否真的容得下复用集合”。Appendix G 还明确分析了上下文编辑怎样破坏前缀身份，因此“更短输入可能更多 fresh prefill”已是相关工作。可追问的是哪种实际任务/负载下，容量竞争或前缀重建成为主要代价。
 
 <a id="paper-2601-22705"></a>
-### 5.11 CONCUR：控制同时推进的 Agent 数，减少缓存抖动
+### 5.11 CONCUR
 
 [论文](https://arxiv.org/abs/2601.22705) · [全文](https://arxiv.org/html/2601.22705v1)
+
+**Abstract**
+
+Batch inference for agentic workloads stresses the GPU key–value (KV) cache in a sustained and cumulative manner, often causing severe throughput degradation well before memory capacity is exhausted. We identify this phenomenon as middle-phase thrashing, a previously under-characterized pathology in which cache efficiency collapses as long-lived agents accumulate state over time. We argue that mitigating this pathology requires moving beyond reactive, request-level cache management to proactive, agent-level admission control. Drawing inspiration from congestion control in distributed systems, we view the KV cache as a shared resource whose efficient utilization depends on feedback-driven regulation. Based on this insight, we present CONCUR, a lightweight control layer that regulates agent admission to bound aggregate cache pressure while preserving execution continuity. CONCUR adapts a cache-aware control algorithm to **dynamically adjust the number of active agents** using runtime cache signals. Across large models and real-world agent workloads, CONCUR prevents middle-phase thrashing and improves batch inference throughput by up to 4.09× on Qwen3-32B and 1.90× on DeepSeek-V3, while remaining compatible with existing LLM serving systems.
 
 **主张与研究方法：** 批量运行长程 Agent 时，每个任务在生成和工具调用之间切换，历史不断增长。等待工具的任务暂时不发请求，其 KV 容易被其他任务挤走；返回后重算历史，又挤走别人的 KV。论文把批量执行中间阶段持续出现的驱逐—重算循环称为 **middle-phase thrashing（中段缓存抖动）**。此时增加并发，可能使整批任务更慢。
 
@@ -808,9 +922,13 @@ admit、pause、resume 分别允许任务继续、暂停后续请求、重新激
 **研究启发：** 与 Continnum/MORI 决定已进入系统的状态如何保留相比，CONCUR 控制进入竞争的任务规模；与 EfficientAgent 的 CPU 缓存写入准入相比，它控制 Agent 执行准入。三者可以放在同一条因果链上理解：活跃任务数量与历史长度决定复用工作集，工作集和容量共同决定状态能否留到下次使用。研究不同长度、不同工具等待时间的任务混合时，需要先检查“按任务个数限流”是否能准确反映压力；这仍是待验证的问题。
 
 <a id="paper-2602-21548"></a>
-### 5.12 DualPath：借用 Decode 机器的网卡读取 KV
+### 5.12 DualPath
 
 [论文](https://arxiv.org/abs/2602.21548) · [全文](https://arxiv.org/html/2602.21548v2) · [会议版](https://conferences.sigcomm.org/sigcomm/2026/program/papers/)
+
+**Abstract**
+
+The performance of multi-turn, agentic LLM inference is increasingly dominated by KV-Cache storage I/O rather than computation. In prevalent disaggregated architectures, loading the massive KV-Cache from external storage creates a fundamental imbalance: storage NICs on prefill engines become bandwidth-saturated, while those on decoding engines remain idle. This asymmetry severely constrains overall system throughput. We present DualPath, an inference system that breaks this bottleneck by introducing dual-path KV-Cache loading. Beyond the traditional storage-to-prefill path, DualPath enables a novel storage-to-decode path, in which the KV-Cache is loaded into decoding engines and then efficiently transferred to prefill engines via **RDMA over the compute network**. DualPath combines this optimized data path — which inherently avoids network congestion and avoids interference with latency-critical model execution communications — with a global scheduler that dynamically balances load across prefill and decode engines. Our evaluation on three models with realistic agentic workloads demonstrates that DualPath improves offline inference throughput by up to 1.87× on our in-house inference system. It can also improve online serving throughput by an average factor of 1.96× without violating SLO.
 
 **主张与研究方法：** 长程 Agent 每轮通常只新增少量内容，却要继续使用很长的历史。当历史 KV 已存到外部存储，命中可以省掉重算，但仍要把 KV 读回来。在 Prefill/Decode 分离的集群里，原有路径集中使用 Prefill 机器的存储网卡，Decode 机器的存储网卡可能闲置，导致 GPU 等数据。
 
@@ -831,9 +949,13 @@ Prefill 内部还采用 **compute quota（计算时间额度）**：根据已缓
 **主要结论：** 高 KV 命中率会把一部分工作从重算转移到读取。此时性能可能受读取路径和网卡分配限制，扩大 Prefill 算力未必解决问题。DualPath 通过汇聚两侧存储带宽、隔离 KV 流量、平衡批次计算时间改善服务能力；上下文追加或生成变长、计算占比上升时，收益条件也会变化。
 <a id="paper-2609-18849"></a>
 
-### 5.13 Ask the Tool：读取工具实时进度，决定 KV 保留与恢复
+### 5.13 Ask the Tool
 
 [论文](https://arxiv.org/abs/2609.18849) · [全文](https://arxiv.org/html/2609.18849v1)
+
+**Abstract**
+
+An agentic request spends substantial wall-clock time waiting for tools, and its KV cache holds GPU memory the whole time. Serving systems decide whether that cache stays, leaves, or comes back by guessing how long the tool will run, from the tool’s name, its history, a duration declared before the call, or the engine’s own occupancy. We show that no estimate fixed before a call starts can know its duration, and such estimates may not even rank the calls. Meanwhile, the running tool already holds the answer, but the agent stack together with the tool silences it. We propose that **tool calls report their progress explicitly while they run**, and we measure what that takes. A census of four public agent corpora finds a readable signal in most tool time once it is revealed, in two strengths: a fraction of the work remaining, or an accurate signal that the end is near. A harness recovers it without changing what the agent sees, at no measurable cost to the agent’s benchmark score. At the points where a KV cache decision is made, the reported progress is between several times and an order of magnitude more accurate than the best published predictors, and it stays accurate when the environment changes. Plugged into a production engine through a few small hints, it cuts the p90 time to first token (TTFT) after a tool call by 20.7% (HBM only) and 20.8% (HBM + DRAM) against LRU, close to an oracle. A serving system should not guess what its tools can tell it.
 
 **主张与研究方法：** 工具运行时，任务的 KV 暂时不用，却占据显存。系统希望把暂时不会返回的状态卸载，并在工具结束前恢复。工具名称、历史耗时和调用参数无法完整反映本次运行中的资源争用、下载速度和执行阶段。论文增加一条来自运行中工具的进度通道，持续修正这些决定。
 
@@ -858,9 +980,13 @@ Prefill 内部还采用 **compute quota（计算时间额度）**：根据已缓
 **研究启发：** 值得讨论的是哪些工具信号足以覆盖真实 KV 恢复预算、缺失时如何回退。进度通道与保留策略已有具体工作覆盖，新题需要进一步定位到未解决的工具类型、负载或接口问题。
 
 <a id="paper-2601-12967"></a>
-### 5.14 Sutradhara：提前 prefill、流式派发工具与语义缓存提示
+### 5.14 Sutradhara
 
 [论文](https://arxiv.org/abs/2601.12967) · [全文](https://arxiv.org/html/2601.12967v3)
+
+**Abstract**
+
+Agentic applications are LLMs that iteratively invoke external tools to accomplish complex tasks [27, 29]. Such tool-based agents are rapidly becoming the dominant paradigm for deploying language models in production. Unlike traditional single-turn inference, agentic workloads chain together multiple LLM calls and tool executions before producing a final response, creating a new performance bottleneck that manifests as increased latency in First Token Rendered (FTR) of the final answer. Through analysis of requests at production scale, we reveal three critical challenges: tool calls account for 30-85% of FTR latency, KV cache hit rates collapse despite substantial context reuse across iterations [9, 30], and sequential orchestration wastes potential intra-request parallelism. These bottlenecks stem from a design gap in which orchestrators and LLM engines operate as decoupled black boxes, preventing cross-layer optimizations. We present Sutradhara, a co-designed agentic inference system that integrates orchestration with LLM serving through a thin API enabling three optimizations: **overlap tool execution with subsequent LLM prefill** using tool-aware prompt splitting, streaming tool execution to dispatch tools incrementally during decode rather than waiting for complete output, and orchestrator-aware cache management that uses semantic hints to improve hit rates and reduce thrashing. Implemented on vLLM, Sutradhara improves the throughput–latency trade-off in agentic systems, sustains up to 77% higher load at the same median FTR latency, or reduces median FTR latency by up to 15% at the same load while reducing end-to-end latency by up-to 11% on A100 GPUs.
 
 **主张与研究方法：** 编排器知道当前轮次、工具依赖和 prompt 结构，引擎掌握模型计算与缓存。两者只交换完整请求和完整结果时，部分本可并行的工作会被串行执行。Sutradhara 用一组薄接口传递这些信息，组合三项优化。
 
@@ -880,9 +1006,13 @@ Prefill 内部还采用 **compute quota（计算时间额度）**：根据已缓
 长程任务会积累错误。这里分别研究当前理解是否一致、训练是否适应执行过程、环境怎样回退，以及第一次错误在哪里。
 <a id="paper-2610-01415"></a>
 
-### 6.1 PoS：检查当前理解是否一致，避免一直行动却没有进展
+### 6.1 PoS
 
 论文：[Beyond Memory: Harnessing Long-Horizon Agents with Explicit Belief States](https://arxiv.org/abs/2610.01415)。
+
+**Abstract**
+
+Large language model (LLM) agents can now undertake increasingly complex tasks, but the way they organize interaction history into memory does not ensure a coherent understanding of the current world. We introduce PoS, an inference-time framework that **constructs and continually maintains explicit belief states** as the agent’s decision context. Each belief combines an estimate of the current world state with unresolved task requirements, making explicit what the agent still needs to learn and accomplish. To keep this belief reliable and actionable, PoS validates its consistency and monitors task progress to detect Belief Trapping, where the agent continues to act without making meaningful progress toward the goal. Recovery is then tailored to both the trapping pattern and the type of unresolved task requirement. Experiments on four benchmarks spanning execution and diagnosis show that PoS achieves the highest overall performance on every benchmark with all three LLM backbones. Ablations demonstrate the importance of consistency validation and recovery, while context-scaling experiments show resilience to context growth. Together, these results support belief construction and continual maintenance as a foundation for long-horizon context management beyond history retention and compression.
 
 **主张与研究方法：** PoS 将“发生过什么”的历史，转成“现在认为世界是什么样、还有什么没完成”的显式 belief state（当前判断状态）。
 
@@ -904,9 +1034,13 @@ Prefill 内部还采用 **compute quota（计算时间额度）**：根据已缓
 **研究启发：** 可以把任务要求变成可检查的状态条件。与 Scout 的错误定位、AgentRewind 的环境回退结合思考，分别解决判断、检测和执行恢复。
 
 <a id="paper-2610-16998"></a>
-### 6.2 Glasseek：让训练适应压缩，并排除搜索评测中的答案泄漏
+### 6.2 Glasseek
 
 论文：[Glasseek: A Transparent Recipe for Training and Trustworthy Evaluation of DeepSearch Agents](https://arxiv.org/abs/2610.16998)。
+
+**Abstract**
+
+Deep search enables language agents to solve complex information-seeking tasks through iterative web exploration. However, developing robust open-source agents remains challenging for three reasons. First, opaque trajectory-construction pipelines make training data difficult to audit and reproduce. Second, context compression can create a substantial mismatch between training and inference. Third, agents may retrieve benchmark content from the open web during evaluation, contaminating the results and overstating their performance. To overcome these bottlenecks, we introduce Glasseek, a fully transparent deep search framework spanning the complete development lifecycle, releasing all data, model weights, training recipes, and code. Specifically, for data construction, we establish a verifiable trajectory curation pipeline that systematically generates high-quality exploration paths. For training, we propose Compaction-Managed GSPO (CM-GSPO), which **uses the same policy for search and summarization while optimizing only execution sub-trajectories**, enabling end-to-end search-policy training across context-compaction boundaries. For evaluation, we conduct the first systematic audit of test-set leakage in open-web agents and release a modular anti-leakage plugin that seamlessly integrates into existing evaluation harnesses. Under this rigorous evaluation protocol, our 9B agent outperforms frontier proprietary agents across almost all deep research benchmarks spanning diverse task types, and achieves the best overall performance among recent open-weight agents, setting a new state of the art at the 9B scale.
 
 **主张与研究方法：** Glasseek 同时处理数据构造、压缩感知训练和评测泄漏，其中最需要理解的新机制是 CM-GSPO。
 
@@ -930,9 +1064,13 @@ CM-GSPO 将这件事显式化：
 **研究启发：** 理解一个 Agent 系统时，要把训练与推理连接起来。推理侧新增压缩、恢复或其他状态操作后，应检查训练概率和奖励分配是否仍然对应真实执行。
 <a id="paper-2608-14380"></a>
 
-### 6.3 AgentRewind：把模型上下文和工作区一起退回检查点
+### 6.3 AgentRewind
 
 论文：[AgentRewind: Recoverable Execution for Long-Horizon LLM Agents](https://arxiv.org/abs/2608.14380v1)。 [代码](https://github.com/Futuresis/replay-agent-recorder) · [MettleBench](https://github.com/Kelvin-Coffee/MettleBench)。
+
+**Abstract**
+
+Many real-world tasks require LLM agents to interact with their environments over long execution horizons. Errors that occur early in execution may propagate through both the agent context and environment state, and their effects may be difficult to reverse through subsequent actions. Existing methods mainly seek to reduce such errors through plan refinement and safety checks but provide little support after errors occur. To enable recovery during long-horizon execution, we present AgentRewind, a runtime recovery framework that records **aligned checkpoints of the agent context and controlled environment**, allowing agents to return to an earlier state and resume execution with information from previous attempts. We also construct MettleBench, a benchmark for evaluating task completion and partial progress on long-horizon engineering assignments containing a series of related requirements. Experiments across tasks, multiple models, execution strategies, and agent harnesses show that AgentRewind improves task success rate and average checklist progress over the compared baselines.
 
 **主张与研究方法：** AgentRewind 为长程 Agent 提供可恢复执行：在同一检查点同时记录模型上下文与受控工作区，出错后两者一起退回。
 
@@ -955,9 +1093,13 @@ CM-GSPO 将这件事显式化：
 **研究启发：** 检查点不是一份聊天备份，而是 Agent 和环境的共同恢复点。与 Scout 连接时，错误检测信号还要转成合适的回退位置。
 <a id="paper-2609-17930"></a>
 
-### 6.4 Traverse / Scout：找出长轨迹第一次在哪里走错
+### 6.4 Traverse / Scout
 
 论文：[Locating Hidden Failures Makes Long-Horizon Agents More Reliable](https://arxiv.org/abs/2609.17930v1)。
+
+**Abstract**
+
+As AI agents take on long, autonomous tasks, we increasingly oversee rather than perform the work, yet we still judge them almost entirely by whether they finally succeed. An outcome cannot reveal where a run went wrong, whether the agent recovered, or the irreversible harm it caused along the way, and where long-horizon agents fail remains unmapped. We study 2,518 agent trajectories across software engineering, computer use, and science, close to real deployment, and classify 6,967 mistakes into 78 failure types. Failure follows a recurring signature: after its first mistake an agent often fails to recover and rarely catches the error itself, so the run continues unchecked while still looking correct; whether an agent recovers depends on the task and the environment’s feedback, not on the agent framework running it. Long-horizon agents can do real harm on the way to a passing result: even runs scored as solved delete data, corrupt systems, or fabricate success rather than earning it. We release these human-verified annotations as Traverse, a benchmark on which six frontier judges struggle to locate failure regardless of scale: even the strongest **correctly identifies the first mistake** in fewer than a third of runs. Yet Scout, a 4B verifier we trained, locates failure far better than these judges and transfers to domains it never saw. Used at test time to select among an agent’s candidate runs, it raises task success above the agent’s own single-attempt performance, without retraining the agent. By making failure cheap to locate and correct, this work is a foundation for more trustworthy long-horizon agents that learn from their own mistakes, and a practical path to overseeing increasingly autonomous AI.
 
 **主张与研究方法：** Traverse 和 Scout 将一个只有最终成败的任务，变成可以研究逐步错误的过程。
 
@@ -976,9 +1118,13 @@ CM-GSPO 将这件事显式化：
 **研究启发：** 从“给最终结果打分”转向“提供可行动的错误位置”。与 AgentRewind 联合思考时，要判断定位信息怎样真正减少重做。
 
 <a id="paper-flashprove"></a>
-### 6.5 FlashProve：用密码学证明核查指定模型的输出
+### 6.5 FlashProve
 
 [官方发布](https://www.anthropic.com/research/provable-inference) · [技术报告](https://www.anthropic.com/document/flashprove-technical-report) · [开源代码](https://github.com/anthropics/FlashProve)
+
+**Report overview**
+
+FlashProve lets a model provider produce a cryptographic proof that a checked output follows from **committed model weights and a specified inference procedure**. The provider commits to the weights in advance, and the client can verify the proof without access to those weights. The report describes how the proof system represents model operations and evaluates a quantized Llama 4 Maverick prototype. Its evaluation measures proof generation and verification under the reported arithmetic and decoding setup.
 
 **主张与研究方法：** 第三方网关可能把请求发给不同模型，API 返回的模型名由服务端声明。FlashProve 让客户端核查一个具体的计算命题。给定请求的 token、指定模型和解码规则，回复中被检查的位置是否符合该模型的计算结果？
 
@@ -995,73 +1141,101 @@ CM-GSPO 将这件事显式化：
 <a id="topic-synthesis"></a>
 ## 7. Survey
 
-### 论文分类对照
+### 7.1 Benchmark
 
-| 论文                                                                                                                                  | 任务类型               | 单/多用户设置          | Agent 形态        | 长程/短程设置              | 优化对象               | 训练要求           | 评测方式                 | 优化目标          | 主要评估指标                            |
-| ----------------------------------------------------------------------------------------------------------------------------------- | ------------------ | ---------------- | --------------- | -------------------- | ------------------ | -------------- | -------------------- | ------------- | --------------------------------- |
-| [DLite](https://arxiv.org/html/2610.23787v1)                                                                                        | 生成 / 编码 / 工具       | 单用户型（含 batch）    | 主模型＋草稿          | 兼有                   | 解码 / 草稿 KV         | 草稿模型训练         | 固定提示＋BFCL 闭环         | 延迟↓           | 生成加速比；接受长度                        |
-| [AgentSysBench](https://arxiv.org/html/2608.15127v1)                                                                                | 混合 Agent 工作流       | 兼有               | 混合工作流           | 兼有                   | 全栈测量               | 无需（测量）         | 工作流实测＋生产观察           | 瓶颈测量          | 任务耗时；Util；内存；token/费用             |
-| [OpenDS-World](https://arxiv.org/html/2610.30181v1)                                                                                 | 开放网页搜索             | 单用户型             | 单 Agent         | 长程                   | 工具 / 评测            | 无需（基准）         | 开放 Web 闭环            | 质量 / 成本评测     | Acc.；工具调用；搜索成本                    |
-| [Request Order Matters](https://arxiv.org/html/2610.05833v1)                                                                        | 滚动文档 QA            | 未明确（串行请求）        | 固定请求，无行动闭环      | 单轮 + 持久缓存            | KV 复用 / 重算         | 无需             | 固定请求序列               | 一致性↑；延迟↓      | 输出变化率；fidelity；TTFT               |
-| [Agent Memory Characterization](https://arxiv.org/html/2606.06448v2)                                                                | 记忆 QA / 跨会话任务      | 兼有               | 依记忆系统而异         | 单轮 QA + 跨会话          | 记忆构建 / 检索          | 无需（测量）         | 记忆 QA＋时序回放/共置        | 成本 / 新鲜度测量    | 构建/查询耗时；Acc.；J/correct；更新滞后       |
-| [CoMem](https://arxiv.org/html/2605.30842v1)                                                                                        | 编码                 | 单用户型（含 batch）    | 主 Agent＋记忆模型    | 长程                   | 上下文 / 记忆流水线        | 辅助模型训练         | 编码闭环＋batch 实测        | 延迟↓；质量保持      | 任务延迟；成功率；上下文/内存                   |
-| [LongSeeker](https://arxiv.org/html/2605.05191v1)                                                                                   | 搜索                 | 单用户型             | 单 Agent         | 长程                   | 上下文编辑              | 任务模型 SFT       | 搜索闭环                 | 质量↑；上下文↓      | Acc.；上下文/生成 token                 |
-| [ACM](https://arxiv.org/html/2607.23809v1)                                                                                          | 搜索 / 编码            | 单用户型             | 主 Agent＋辅助 LLM  | 长程                   | 上下文 / 外部记忆         | 可选；增强版蒸馏       | 搜索/编码闭环              | 质量↑；上下文↓      | pass@1；峰值 token；工具调用              |
-| [Scroll](https://arxiv.org/html/2608.21690v1)                                                                                       | 记忆 QA / 环境操作       | 单用户型             | 单 Agent＋运行时     | 单轮 QA + 长程           | 日志 / 程序运行时         | 无需             | 记忆 QA＋LOCA 闭环        | 质量↑；输入规模↓     | Acc./任务分数；输入输出 token              |
-| [ReCAP](https://arxiv.org/html/2609.40118v1)                                                                                        | 编码 / 多轮反馈          | 单用户型             | 单 Agent         | 长程 / 多轮              | 历史选择 / 依赖图         | 无需             | 编码闭环＋开销估算            | 质量保持；开销↓      | 任务分数/Acc.；历史 token；冷恢复开销（含估算）     |
-| [ACON](https://arxiv.org/html/2510.00615v3)                                                                                         | 办公 / 工具 / QA       | 单用户型             | 主 Agent＋压缩器     | 兼有                   | 历史 / 观察压缩          | 无需；可选蒸馏        | 工具闭环＋QA              | 质量保持；成本↓      | 成功率；峰值 token；API 费用               |
-| [ContextPilot](https://arxiv.org/html/2511.03475v4)                                                                                 | RAG / 记忆 / 多 Agent | 兼有               | 混合，含协作多 Agent   | 兼有                   | 输入组织 / 前缀 KV       | 无需             | RAG/Agent 应用/edge 实测 | 延迟↓；质量保持      | Prefill/TTFT；任务质量；复用率             |
-| [Agentix](https://www.usenix.org/system/files/nsdi26-luo.pdf)                                                                       | 对话 / 工具 / 树搜索      | 多用户型             | 串行/并行 Agent 程序  | 兼有                   | 程序调度 / 路由          | 无需             | 程序实验，含对话回放           | 延迟↓；吞吐↑       | 程序时延/token；program/s；p95/p99      |
-| [Continnum](https://arxiv.org/html/2511.02230v7)                                                                                    | 编码 / 工具            | 多用户型             | 独立 Agent 程序     | 长程                   | KV 驻留 / 续接调度       | 无需             | 轨迹回放＋SWE 闭环          | 延迟↓；吞吐↑       | 任务完成时间；job/s；尾延迟                  |
-| [MORI](https://arxiv.org/html/2606.00866v1)                                                                                         | 编码轨迹               | 多用户型（回放）         | 独立 Agent 程序     | 长程（轨迹）               | KV 驻留 / 卸载         | 无需             | 轨迹回放                 | 吞吐↑；延迟↓       | token/s、step/s；TTFT；Util          |
-| [CacheScout](https://arxiv.org/html/2608.14624v1)                                                                                   | QA / 对话 / 搜索 / 编码  | 未明确（多 Agent 服务）  | 多 Agent（六角色）    | 兼有                   | 固定前缀 KV / 预取       | 无需；在线统计        | 多 Agent 服务实验         | 延迟↓；吞吐↑       | TTFT；每轮延迟；turn/s；命中率              |
-| [Vesta](https://arxiv.org/html/2610.14686v1)                                                                                        | 在线 Agent 服务轨迹      | 多用户型（回放）         | 未明确（会话轨迹）       | 长程（轨迹）               | 路由 / KV 迁移         | 无需             | 生产轨迹回放               | 延迟↓；吞吐↑       | 平均/p99 TTFT；吞吐；排队时间               |
-| [AgentKV](https://arxiv.org/html/2609.14872v1)                                                                                      | 工具交互               | 单用户型（含 batch）    | 单 Agent         | 长程 / 多轮              | token KV 淘汰 / 页回收  | 无需             | 工具闭环＋服务实测            | 容量↓；质量保持；吞吐↑  | 固定 KV 预算下任务分数；token/s             |
-| [ActKV](https://arxiv.org/html/2609.31395v1)                                                                                        | 环境操作 / QA / 购物     | 单用户型（离线 batch）   | 单 Agent         | 长程                   | KV 淘汰 / 预算 / 页回收   | 无需             | 工具闭环＋离线 batch        | 容量↓；质量保持；吞吐↑  | 峰值 KV；Acc.；token/s、task/s         |
-| [CacheBlend](https://arxiv.org/html/2405.16444v3)                                                                                   | RAG / QA / 摘要      | 多用户型（请求服务）       | 固定请求，无行动闭环      | 单轮（长输入）              | 非前缀 KV 复用 / 重算     | 无需             | QA/摘要＋请求服务实测         | 延迟↓；吞吐↑；质量保持  | TTFT；推理吞吐；F1 / ROUGE-L            |
-| [PoS](https://arxiv.org/html/2610.01415v1)                                                                                          | 环境操作 / 诊断          | 单用户型             | 主 Agent＋检查模块    | 长程                   | 任务状态 / 检查          | 无需             | 执行/诊断闭环              | 质量↑；可靠性↑      | 成功率/诊断指标；token 成本                 |
-| [Glasseek](https://arxiv.org/html/2610.16998v1)                                                                                     | 开放网页搜索             | 单用户型             | 单 Agent，兼搜索/摘要  | 长程                   | 策略训练 / 评测          | 任务模型 SFT＋RL    | 搜索闭环＋训练/泄漏审计         | 质量↑；评测可信度↑    | Acc./pass@1；泄漏分析                  |
-| [AgentRewind](https://arxiv.org/html/2608.14380v1)                                                                                  | 编码 / 工程任务          | 单用户型             | 主 Agent＋恢复模块    | 长程                   | 检查点 / 环境恢复         | 无需             | 工程闭环＋恢复比较            | 质量↑；可恢复性↑     | 成功率；验收进度；轨迹长度                     |
-| [Traverse / Scout](https://arxiv.org/html/2609.17930v1)                                                                             | 编码 / 终端 / 科学任务     | 单用户型（多候选）        | 任务 Agent＋验证器    | 长程（轨迹）               | 验证器 / 轨迹选择         | 验证器 SFT＋RL     | 离线轨迹＋候选选择            | 检测质量↑；任务质量↑   | 首错定位准确率；检测 F1；best-of-N 成功率       |
-| [CacheSlide](https://www.usenix.org/conference/fast26/presentation/liu-yang)                                                        | 搜索 / 对话 / 编码       | 兼有               | 单 Agent / 并行候选  | 多轮 / 长程              | 位置编码 / KV / I/O    | CoPE/LoRA 适配   | Agent 基准＋服务实测        | 延迟↓；吞吐↑；质量保持  | TTFT；QPS；F1/ROUGE/成功率             |
-| [EfficientAgent](https://arxiv.org/html/2609.33762v1)                                                                               | 编码                 | 多用户型（回放为主）       | 独立 Agent 程序     | 长程（轨迹）               | CPU KV 写入准入        | 无需             | 依赖保持回放＋实跑采集          | 完成耗时↓；重算/搬运↓  | makespan；computed prefill；CPU 读写量 |
-| [CONCUR](https://arxiv.org/html/2601.22705v1)                                                                                       | 批量 Agent rollout   | 多用户型（独立程序）       | 独立 ReAct Agent  | 长程                   | Agent 执行准入 / 活跃窗口  | 无需             | 离线批量服务实测             | 完成耗时↓；吞吐↑     | batch latency；KV 命中率/占用           |
-| [DualPath](https://arxiv.org/html/2602.21548v2)                                                                                     | 编码 / RL rollout    | 多用户型（回放）         | 独立 Agent 程序     | 长程（轨迹）               | KV 读取路径 / 网络 / 批调度 | 无需             | 生产轨迹回放＋服务实测          | 吞吐↑；SLO 内延迟控制 | JCT；APS；TTFT/TTST/TPOT            |
-| [Copilot in the Wild](https://arxiv.org/html/2608.00101v1)                                                                          | 生产编码 Agent         | 多用户（生产观察）        | 编码 Agent＋工具     | 长程 / 多轮会话            | 会话测量 / 空闲预测        | 辅助预测器训练        | 生产观察＋离线预测            | 瓶颈测量 / 回收机会   | 调用耗时；缓存率；token；空闲分布；预测 AUC        |
-| [Hippocampus](https://proceedings.mlsys.org/paper_files/paper/2026/hash/a1d04870cf83a0f29819d66f1dfdbfcb-Abstract-Conference.html)  | 对话历史 QA            | 单用户型             | 回答模型＋记忆模块       | 跨会话记忆（离线 QA）         | 记忆存储 / 索引 / 检索     | 无需（随机索引）       | 固定历史 QA＋检索微测         | 延迟↓；存储↓；质量保持  | 检索耗时；输入 token；存储；F1/Acc.          |
-| [Ask the Tool](https://arxiv.org/html/2609.18849v1)                                                                                 | 编码 / 工具执行          | 多用户型（服务回放）       | Agent＋进度包装层     | 长程（轨迹）               | KV 保留 / 卸载 / 恢复    | 无需新增模型训练       | 工具重跑＋任务对照＋服务回放       | 尾延迟↓；搬运/重算↓   | post-tool p90 TTFT；吞吐；重载量；ETA 误差  |
-| [AgenticCache](https://proceedings.mlsys.org/paper_files/paper/2026/hash/c66a9db149261435664284a20b6f1d42-Abstract-Conference.html) | 具身协作 / 运输 / 烹饪     | 单用户型（多 Agent 协作） | 2–5 Agent＋后台规划器 | 长程（模拟环境）             | 高层计划复用 / 异步校正      | 无需新增训练；可选轨迹预填充 | 任务闭环（3D/图环境）         | 延迟↓；成本↓；任务质量  | 成功率；执行耗时；token；费用；缓存命中            |
-| [APC](https://arxiv.org/html/2506.14852v2)                                                                                          | 文档/数学推理；开放调查       | 单用户型             | 规划模型＋执行模型       | 兼有（限轮 Plan–Act/GAIA） | 计划模板复用 / 小模型适配     | 无需             | 数据推理＋工具任务评测          | 成本↓；延迟↓；质量取舍  | 准确率；费用；延迟；命中率                     |
-| [Sutradhara](https://arxiv.org/html/2601.12967v3)                                                                                   | 工具查询 / 编码          | 多用户型（回放）         | 单 Agent＋多工具调用   | 兼有（短链/长轨迹）           | 编排—引擎接口 / 并行 / KV  | 无需             | 生产及公开轨迹回放            | 延迟↓；吞吐↑       | FTR；E2E；QPS；缓存命中                  |
-| [Compact-Bench](https://arxiv.org/html/2610.31710v2)                                                                                | 编码修复               | 单用户型             | 编码 Agent＋摘要模型   | 长程                   | 历史压缩测量             | 无需             | 配对任务续跑＋生产链观察         | 质量测量          | 修复通过；稳定损伤率；细节保留率                  |
-| [FlashProve](https://www.anthropic.com/research/provable-inference)                                                                 | 模型推理证明             | 多请求批处理（基准）       | 无 Agent 闭环      | 固定 token 窗口          | 推理完整性验证            | 无需             | 证明与验证基准              | 可靠性；证明效率      | 处理/核查 token/s、证明大小、验证耗时           |
+| Benchmark／负载 | 相关论文 |
+| --- | --- |
+| SWE-bench 系列（含 Verified 与 Pro） | [Compact-Bench](#paper-2610-31710)、[CoMem](#paper-2605-30842)、[ACM](#paper-2607-23809)、[Continnum](#paper-2511-02230)、[MORI](#paper-2606-00866)、[CacheScout](#paper-2608-14624)、[EfficientAgent](#paper-2609-33762)、[Ask the Tool](#paper-2609-18849)、[Sutradhara](#paper-2601-12967)、[Traverse / Scout](#paper-2609-17930) |
+| SWE-Agent-Bench | [CacheSlide](#paper-fast26-cacheslide) |
+| DeepSWE | [CoMem](#paper-2605-30842) |
+| Terminal-Bench 系列 | [AgentRewind](#paper-2608-14380)、[Traverse / Scout](#paper-2609-17930) |
+| BFCL 系列 | [DLite](#paper-2610-23787)、[Agentix](#paper-nsdi26-agentix)、[AgentKV](#paper-2609-14872)、[Sutradhara](#paper-2601-12967) |
+| BrowseComp 系列（含 Plus、ZH 与 Live） | [LongSeeker](#paper-2605-05191)、[ACM](#paper-2607-23809)、[Glasseek](#paper-2610-16998) |
+| DeepSearchQA | [ACM](#paper-2607-23809) |
+| xbench 搜索评测 | [LongSeeker](#paper-2605-05191)、[Glasseek](#paper-2610-16998) |
+| GAIA | [AgentSysBench](#paper-2608-15127)、[LongSeeker](#paper-2605-05191)、[APC](#paper-2506-14852)、[CacheScout](#paper-2608-14624)、[Glasseek](#paper-2610-16998) |
+| LongMemEval 系列 | [Agent Memory Characterization](#paper-2606-06448)、[Scroll](#paper-2608-21690)、[Hippocampus](#paper-2602-13594) |
+| LoCoMo | [Hippocampus](#paper-2602-13594) |
+| BEAM | [Scroll](#paper-2608-21690) |
+| MemoryAgentBench / MemoryArena | [Agent Memory Characterization](#paper-2606-06448) |
+| SWE-Together / Lost-in-Conversation | [ReCAP](#paper-2609-40118) |
+| AppWorld / OfficeBench / Multi-objective QA | [ACON](#paper-2510-00615) |
+| QASPER | [ContextPilot](#paper-2511-03475)、[APC](#paper-2506-14852) |
+| MultiHop-RAG / NarrativeQA / MT-RAG | [ContextPilot](#paper-2511-03475) |
+| LOCA 系列 | [Scroll](#paper-2608-21690)、[PoS](#paper-2610-01415) |
+| ALFWorld | [ActKV](#paper-2609-31395)、[PoS](#paper-2610-01415) |
+| WebShop / HotpotQA-Web | [ActKV](#paper-2609-31395) |
+| HotpotQA | [Agentix](#paper-nsdi26-agentix)、[CacheSlide](#paper-fast26-cacheslide) |
+| 2WikiMQA / MuSiQue / SAMSum / MultiNews | [CacheBlend](#paper-2405-16444) |
+| BixBench | [Traverse / Scout](#paper-2609-17930) |
+| RCA-100 / ClinDiag | [PoS](#paper-2610-01415) |
+| TDW-MAT / TDW-COOK / TDW-GAME / BEHAVIOR-1K | [AgenticCache](#paper-2604-24039) |
+| HumanEval / MBPP / LiveCodeBench | [DLite](#paper-2610-23787) |
+| GSM8K / MT-Bench | [DLite](#paper-2610-23787)、[CacheScout](#paper-2608-14624) |
+| ShareGPT / LATS 负载 | [Agentix](#paper-nsdi26-agentix) |
+| 滚动文档 QA 受控负载 | [Request Order Matters](#paper-2610-05833) |
+| 在线或离线服务轨迹 / 批量 rollout | [AgentSysBench](#paper-2608-15127)、[Copilot in the Wild](#paper-2608-00101)、[Continnum](#paper-2511-02230)、[MORI](#paper-2606-00866)、[Vesta](#paper-2610-14686)、[EfficientAgent](#paper-2609-33762)、[CONCUR](#paper-2601-22705)、[DualPath](#paper-2602-21548)、[Ask the Tool](#paper-2609-18849)、[Sutradhara](#paper-2601-12967) |
+| 推理证明与验证微基准 | [FlashProve](#paper-flashprove) |
 
-**分类口径：** 单用户型指主要研究一个用户任务内部的能力或效率；多用户型指多个独立会话/程序共享推理资源的服务设置，实验可能用合成请求或回放代替真人；兼有指同时包含两类设置。多 Agent、多个候选或 batch 本身不构成多用户证据，无法判定的保留“未明确”。这列描述研究设置，不声称论文报告了真实用户人数。
+### 7.2 Harness
 
-**时域口径：** 单轮/短程与持续多步反馈的长程任务分开；一次请求可以有很长输入。跨会话记忆与长程执行也分别标注。包含短任务和长程子实验的写“兼有”，不强行二选一。
+| Harness／评测框架 | 相关论文 |
+| --- | --- |
+| OpenHands / CodeActAgent | [CoMem](#paper-2605-30842)、[EfficientAgent](#paper-2609-33762)、[Ask the Tool](#paper-2609-18849)、[Traverse / Scout](#paper-2609-17930) |
+| SWE-agent 系列（含 mini-SWE-agent） | [Continnum](#paper-2511-02230)、[CacheSlide](#paper-fast26-cacheslide)、[Ask the Tool](#paper-2609-18849)、[AgentRewind](#paper-2608-14380)、[Traverse / Scout](#paper-2609-17930) |
+| Claude Code | [AgentSysBench](#paper-2608-15127)、[Compact-Bench](#paper-2610-31710)、[MORI](#paper-2606-00866) |
+| Codex 系列 | [AgentSysBench](#paper-2608-15127)、[Compact-Bench](#paper-2610-31710)、[ReCAP](#paper-2609-40118) |
+| OpenClaw | [AgentSysBench](#paper-2608-15127)、[ContextPilot](#paper-2511-03475) |
+| AutoGen | [CacheScout](#paper-2608-14624) |
+| Chain-of-Agent | [ContextPilot](#paper-2511-03475) |
+| R2E-Gym | [CoMem](#paper-2605-30842) |
+| Terminus 2 | [Traverse / Scout](#paper-2609-17930) |
+| Reflexion / MemGPT | [CacheSlide](#paper-fast26-cacheslide) |
+| CoELA / COMBO / COHERENT | [AgenticCache](#paper-2604-24039) |
+| Open Deep Research | [AgentSysBench](#paper-2608-15127)、[APC](#paper-2506-14852) |
+| 自建工作流、工具接入或测量框架 | [AgentSysBench](#paper-2608-15127)、[OpenDS-World](#paper-2610-30181)、[Agent Memory Characterization](#paper-2606-06448)、[Scroll](#paper-2608-21690)、[CacheScout](#paper-2608-14624)、[CONCUR](#paper-2601-22705)、[Sutradhara](#paper-2601-12967)、[AgentRewind](#paper-2608-14380) |
 
-**指标口径：** 延迟区分 TTFT（首 token 等待）、生成耗时和任务完成时间；吞吐注明 token/s、turn/s、task/s 或 program/s。Acc. 是准确率，pass@1 是一次尝试的通过率，Util 是资源利用率；fidelity 是相对参考输出的一致程度。峰值 token、KV 容量、接受长度和命中率用于解释机制，不自动等于任务加速或质量提高。表中列主要指标，不罗列全部实验数字。
+### 7.3 推理引擎
 
-**新增列口径：** Agent 形态描述任务内部角色，和单/多用户服务设置独立；辅助草稿、摘要或验证模型不自动算协作多 Agent。训练要求指是否需要新的参数训练，使用已发布配套权重仍归为需配套训练，提示词优化和在线转移统计不算梯度训练。“闭环”表示行动影响后续观察，可发生在模拟环境中；“生产轨迹回放”表示数据来自生产，但不是在线生产部署的证明。
+| 推理引擎 | 相关论文 |
+| --- | --- |
+| vLLM | [AgentSysBench](#paper-2608-15127)、[Request Order Matters](#paper-2610-05833)、[Agent Memory Characterization](#paper-2606-06448)、[CoMem](#paper-2605-30842)、[ContextPilot](#paper-2511-03475)、[Agentix](#paper-nsdi26-agentix)、[Continnum](#paper-2511-02230)、[CacheScout](#paper-2608-14624)、[Vesta](#paper-2610-14686)、[CacheBlend](#paper-2405-16444)、[CacheSlide](#paper-fast26-cacheslide)、[EfficientAgent](#paper-2609-33762)、[Ask the Tool](#paper-2609-18849)、[Sutradhara](#paper-2601-12967) |
+| SGLang | [AgentSysBench](#paper-2608-15127)、[ContextPilot](#paper-2511-03475)、[MORI](#paper-2606-00866)、[AgentKV](#paper-2609-14872)、[CONCUR](#paper-2601-22705) |
+| llama.cpp | [ContextPilot](#paper-2511-03475) |
+| 作者自建推理引擎 | [DualPath](#paper-2602-21548) |
 
-**可补充关注的数值指标：**
+### 7.4 任务
 
-- **Goodput / SLO 达标率：** 关注满足规定 TTFT、TPOT 或任务时限的有效服务能力；应同时说明阈值与达标口径。总吞吐很高但请求普遍超时，服务价值仍可能有限。参见 [Taming the Titans §2.3](https://aclanthology.org/2025.inlg-main.32.pdf)。
-- **每个成功任务的成本/能耗：** 总费用或能耗除以成功任务数，把失败尝试、记忆构建、辅助调用和重试计入，注明核算范围。Agent Memory 的 [Table 3](https://arxiv.org/html/2606.06448v2) 实际报告 J/correct（每个正确答案的焦耳数），已补入对应行；不能把它直接当作所有 Agent 的已测指标。
-- **任务进度、恢复与过程质量：** 最终成功率之外，可看验收进度、首错定位、恢复后的成功及额外开销；避免失败任务全部记零而看不到过程差异。指标需与真实验收条件对应，参见 [Agent Evaluation Survey Table 1](https://arxiv.org/html/2507.21504)。
-- **状态新鲜度与尾延迟：** 分别记录查询时尚未提交的旧会话更新，以及 p95/p99 等慢请求；均值可能掩盖更新积压和少数任务长时间等待。新鲜度口径见 [Agent Memory §4.6](https://arxiv.org/html/2606.06448v2)，服务延迟口径见 Taming the Titans Table 1。
+#### 任务类型
 
-这些是后续阅读时值得检查的指标，只有原文确实测过才填入论文行；没有测量结果不能由方法描述推断。模态、部署规模和存储层级可在相关论文正文补充，不再给所有论文增加大量专用列。
+| 任务类型 | 相关论文 |
+| --- | --- |
+| 代码生成、仓库修复与工程任务恢复 | [DLite](#paper-2610-23787)、[AgentSysBench](#paper-2608-15127)、[Copilot in the Wild](#paper-2608-00101)、[Compact-Bench](#paper-2610-31710)、[CoMem](#paper-2605-30842)、[ACM](#paper-2607-23809)、[ReCAP](#paper-2609-40118)、[Continnum](#paper-2511-02230)、[MORI](#paper-2606-00866)、[CacheScout](#paper-2608-14624)、[CacheSlide](#paper-fast26-cacheslide)、[EfficientAgent](#paper-2609-33762)、[DualPath](#paper-2602-21548)、[Ask the Tool](#paper-2609-18849)、[Sutradhara](#paper-2601-12967)、[AgentRewind](#paper-2608-14380)、[Traverse / Scout](#paper-2609-17930) |
+| 开放网页搜索、证据收集与多步调查 | [AgentSysBench](#paper-2608-15127)、[OpenDS-World](#paper-2610-30181)、[LongSeeker](#paper-2605-05191)、[ACM](#paper-2607-23809)、[ContextPilot](#paper-2511-03475)、[APC](#paper-2506-14852)、[CacheScout](#paper-2608-14624)、[Sutradhara](#paper-2601-12967)、[Glasseek](#paper-2610-16998) |
+| 对话记忆、文档问答与检索增强生成 | [Request Order Matters](#paper-2610-05833)、[Agent Memory Characterization](#paper-2606-06448)、[Scroll](#paper-2608-21690)、[ContextPilot](#paper-2511-03475)、[Hippocampus](#paper-2602-13594)、[APC](#paper-2506-14852)、[Agentix](#paper-nsdi26-agentix)、[CacheScout](#paper-2608-14624)、[CacheBlend](#paper-2405-16444)、[CacheSlide](#paper-fast26-cacheslide) |
+| 调用工具、操作应用与完成环境目标 | [DLite](#paper-2610-23787)、[AgentSysBench](#paper-2608-15127)、[Scroll](#paper-2608-21690)、[ACON](#paper-2510-00615)、[Agentix](#paper-nsdi26-agentix)、[AgentKV](#paper-2609-14872)、[ActKV](#paper-2609-31395)、[Sutradhara](#paper-2601-12967)、[PoS](#paper-2610-01415) |
+| 具身协作、物体搬运与烹饪 | [AgenticCache](#paper-2604-24039) |
+| 故障诊断、终端与科学任务的轨迹检查 | [PoS](#paper-2610-01415)、[Traverse / Scout](#paper-2609-17930) |
+| 批量 Agent 推理与并发会话服务 | [AgentSysBench](#paper-2608-15127)、[Copilot in the Wild](#paper-2608-00101)、[CoMem](#paper-2605-30842)、[ContextPilot](#paper-2511-03475)、[Agentix](#paper-nsdi26-agentix)、[Continnum](#paper-2511-02230)、[MORI](#paper-2606-00866)、[Vesta](#paper-2610-14686)、[CacheBlend](#paper-2405-16444)、[CacheSlide](#paper-fast26-cacheslide)、[EfficientAgent](#paper-2609-33762)、[CONCUR](#paper-2601-22705)、[DualPath](#paper-2602-21548)、[Ask the Tool](#paper-2609-18849)、[Sutradhara](#paper-2601-12967) |
+| 模型输出生成与推理完整性核查 | [DLite](#paper-2610-23787)、[FlashProve](#paper-flashprove) |
 
+#### Agent 数 × 用户设置
+
+Agent 数按一次任务内部的执行角色统计。单 Agent 可以调用工具、摘要模型或验证器。多个候选分别尝试同一题仍按各自的执行角色判断。单用户指单个任务或会话内的实验，多用户指多个独立任务或会话共享服务，包含明确的批量运行或服务回放。同一篇论文有不同实测设置时可以跨格登记。
+
+| Agent 形态 | 单用户                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 多用户                                                                                                                                                                                                                                                                                                                                                                    |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 单 Agent  | [DLite](#paper-2610-23787)、[OpenDS-World](#paper-2610-30181)、[Compact-Bench](#paper-2610-31710)、[CoMem](#paper-2605-30842)、[LongSeeker](#paper-2605-05191)、[ACM](#paper-2607-23809)、[Scroll](#paper-2608-21690)、[ReCAP](#paper-2609-40118)、[ACON](#paper-2510-00615)、[ContextPilot](#paper-2511-03475)、[AgentKV](#paper-2609-14872)、[ActKV](#paper-2609-31395)、[CacheSlide](#paper-fast26-cacheslide)、[PoS](#paper-2610-01415)、[Glasseek](#paper-2610-16998)、[AgentRewind](#paper-2608-14380)、[Traverse / Scout](#paper-2609-17930) | [AgentSysBench](#paper-2608-15127)、[Copilot in the Wild](#paper-2608-00101)、[CoMem](#paper-2605-30842)、[Continnum](#paper-2511-02230)、[MORI](#paper-2606-00866)、[CacheSlide](#paper-fast26-cacheslide)、[EfficientAgent](#paper-2609-33762)、[CONCUR](#paper-2601-22705)、[DualPath](#paper-2602-21548)、[Ask the Tool](#paper-2609-18849)、[Sutradhara](#paper-2601-12967) |
+| 多 Agent  | [ContextPilot](#paper-2511-03475)、[AgenticCache](#paper-2604-24039)、[CacheScout](#paper-2608-14624)                                                                                                                                                                                                                                                                                                                                                                                                                                 | [ContextPilot](#paper-2511-03475)、[CacheScout](#paper-2608-14624)                                                                                                                                                                                                                                                                                                      |
 <a id="survey-references"></a>
 
 **其他研究者怎样组织 survey：**
 
-- [Memory in the Age of AI Agents，Table 1、Table 2](https://arxiv.org/html/2512.13564)：先按记忆形式分组，再用 Task、Type、Memory Form 等列横向比较；Table 2 的 Optimization 列标 SFT、FT、PE 等接入/训练策略。借鉴其训练策略单列的做法，不把 Optimization 误读成 latency/吞吐目标。Table 1 的 Multi 表示多模态，不表示多用户。
-- [Evaluation and Benchmarking of LLM Agents，Figure 1、Table 1、§4](https://arxiv.org/html/2507.21504)：Figure 1 区分“评什么”和“怎么评”；Table 1 按目标类别列 SR、F1、pass@k、Progress Rate、Latency/Token/Cost 等指标；§4 再区分静态与交互评测。借鉴其目标、指标、评测方式分别记录的做法。
+- [Memory in the Age of AI Agents，Table 1、Table 2](https://arxiv.org/html/2512.13564)：先按记忆形式分组，再用 Task、Type、Memory Form 等列横向比较；Table 2 的 Optimization 列标 SFT、FT、PE 等接入/训练策略。Optimization 列描述接入或训练策略。Table 1 的 Multi 表示多模态，不表示多用户。
+- [Evaluation and Benchmarking of LLM Agents，Figure 1、Table 1、§4](https://arxiv.org/html/2507.21504)：Figure 1 区分“评什么”和“怎么评”；Table 1 按目标类别列 SR、F1、pass@k、Progress Rate、Latency/Token/Cost 等指标；§4 再区分静态与交互评测。目标、指标和评测方式可在对应论文的正文中分别记录。
 - [Taming the Titans，Table 1、§2.3、§3–4](https://aclanthology.org/2025.inlg-main.32.pdf)：按单实例与集群层次组织系统工作，Table 1 定义 TTFT、TBT、TPOT、吞吐、容量、归一化延迟和百分位；§2.3 补充 Goodput。借鉴其统一服务指标和计量范围的做法，不把单请求加速与集群能力混比。
-- [A survey on LLM-based multi-agent systems，§3、Table 1、§3.4.2](https://link.springer.com/article/10.1007/s44336-024-00009-2)：围绕 profile、perception、self-action、mutual interaction、evolution 五个模块组织工作；交互结构区分层级、去中心、中心和共享消息池。借鉴其任务内部角色/协作结构视角，用单独 Agent 形态列与用户并发区分。
-- [Agent Memory Characterization，Table 1、Table 3](https://arxiv.org/html/2606.06448v2) 是系统测量论文：Table 1 比较构建、数据库、检索与可变性，Table 3 同时列准确率、总耗时、调用数、总能耗和 J/correct。它说明同一个质量分数背后可能是不同写读成本，借鉴其全生命周期成本归因；专用于记忆的细项保留在正文。
+- [A survey on LLM-based multi-agent systems，§3、Table 1、§3.4.2](https://link.springer.com/article/10.1007/s44336-024-00009-2)：围绕 profile、perception、self-action、mutual interaction、evolution 五个模块组织工作；交互结构区分层级、去中心、中心和共享消息池。借鉴其任务内部角色/协作结构视角，据此在任务交叉表中将 Agent 形态与用户并发分开。
+- [Agent Memory Characterization，Table 1、Table 3](https://arxiv.org/html/2606.06448v2) 是系统测量论文：Table 1 比较构建、数据库、检索与可变性，Table 3 同时列准确率、总耗时、调用数、总能耗和 J/correct。它说明同一个质量分数背后可能是不同写读成本，借鉴其全生命周期成本归因；专用于记忆的细项见对应论文正文。
 
 <a id="materials-index"></a>
 ## 8. Materials Index
@@ -1078,41 +1252,41 @@ CM-GSPO 将这件事显式化：
 
 ### 论文
 
-| 论文（原文）                                                              | 主要内容                         | 本文位置                          |
-| ------------------------------------------------------------------- | ---------------------------- | ----------------------------- |
-| [DLite](https://arxiv.org/abs/2610.23787)                           | 借用目标表示，无历史草稿 + 隐藏空间顺序修正      | [§2.4](#paper-2610-23787)     |
-| [AgentSysBench](https://arxiv.org/abs/2608.15127)                   | 联合测模型、工具、环境、状态与通信            | [§3.1](#paper-2608-15127)     |
-| [OpenDS-World](https://arxiv.org/abs/2610.30181v1)                  | 真实网页多步取证，分析工具成本与停止行为         | [§3.2](#paper-2610-30181)     |
-| [Request Order Matters](https://arxiv.org/abs/2610.05833v1)         | 持续 KV 复用对前序请求敏感，连续重算更稳       | [§3.3](#paper-2610-05833)     |
-| [Agent Memory Characterization](https://arxiv.org/abs/2606.06448v2) | 分开测记忆构建、检索、生成与更新等待           | [§3.4](#paper-2606-06448)     |
-| [CoMem](https://arxiv.org/abs/2605.30842)                           | 将摘要与执行拆开，异步重叠两者耗时            | [§4.1](#paper-2605-30842)     |
-| [LongSeeker](https://arxiv.org/abs/2605.05191)                      | 把上下文编辑变成可学习的动作               | [§4.2](#paper-2605-05191)     |
-| [ACM](https://arxiv.org/abs/2607.23809)                             | 主动压缩 + 外部保留原文 + 按需查询         | [§4.3](#paper-2607-23809)     |
-| [Scroll](https://arxiv.org/abs/2608.21690)                          | 完整日志与持久变量在外部，按需读取并 print     | [§4.4](#paper-2608-21690)     |
-| [ReCAP](https://arxiv.org/abs/2609.40118)                           | 历史注意力 + 当前请求 + 依赖图选择上下文      | [§4.5](#paper-2609-40118)     |
-| [ACON](https://arxiv.org/abs/2510.00615v3)                          | 用成功／失败轨迹对照优化自然语言压缩指南         | [§4.6](#paper-2510-00615)     |
-| [Agentix](https://www.usenix.org/system/files/nsdi26-luo.pdf)       | PLAS / ATLAS 把逐次调用调度提升到任务级   | [§5.1](#paper-nsdi26-agentix) |
-| [Continnum](https://arxiv.org/abs/2511.02230v7)                     | 用 TTL 临时保护 GPU KV，减少跨轮恢复与排队  | [§5.2](#paper-2511-02230)     |
-| [MORI](https://arxiv.org/abs/2606.00866)                            | 按相对忙闲排序，在 GPU 与 CPU 间放置整份 KV | [§5.3](#paper-2606-00866)     |
-| [CacheScout](https://arxiv.org/abs/2608.14624)                      | 学习调用转移，指导固定前缀的驱逐与预取          | [§5.4](#paper-2608-14624)     |
-| [Vesta](https://arxiv.org/abs/2610.14686v1)                         | 联合权衡缓存命中、排队与 KV 迁移           | [§5.5](#paper-2610-14686)     |
-| [AgentKV](https://arxiv.org/abs/2609.14872v1)                       | 保存各阶段代表 Query，避免只照顾最近的需求     | [§5.6](#paper-2609-14872)     |
-| [ActKV](https://arxiv.org/abs/2609.31395v1)                         | 按动作价值压缩，并用置信度调整预算            | [§5.7](#paper-2609-31395)     |
-| [PoS](https://arxiv.org/abs/2610.01415)                             | 显式记录当前世界判断与未完成要求，检测停滞        | [§6.1](#paper-2610-01415)     |
-| [Glasseek](https://arxiv.org/abs/2610.16998)                        | 可审查数据 + 压缩感知训练 + 防泄漏评测       | [§6.2](#paper-2610-16998)     |
-| [AgentRewind](https://arxiv.org/abs/2608.14380v1)                   | 对齐保存上下文与文件状态，失败后换一条路径        | [§6.3](#paper-2608-14380)     |
-| [Traverse / Scout](https://arxiv.org/abs/2609.17930v1)              | 人工标注首错位置，训练小验证器辅助选择轨迹        | [§6.4](#paper-2609-17930)     |
-| [CacheBlend](https://arxiv.org/abs/2405.16444v3)                    | 独立块 KV + 选择性重算 + 加载计算流水线     | [§5.8](#paper-2405-16444)     |
-| [ContextPilot（MLSys）](https://arxiv.org/abs/2511.03475v4)           | 上下文索引 + 共同前缀对齐 + 去重与语义注释     | [§4.7](#paper-2511-03475)     |
-| [CacheSlide](https://www.usenix.org/conference/fast26/presentation/liu-yang) | 相对顺序约束 + 编码适配 + KV 修补与存储流水线 | [§5.9](#paper-fast26-cacheslide) |
-| [EfficientAgent](https://arxiv.org/abs/2609.33762v1) | 复用工作集决定状态能否存活，压力下拒绝大规模回填 | [§5.10](#paper-2609-33762) |
-| [CONCUR](https://arxiv.org/abs/2601.22705) | 按 KV 占用与命中率调整活跃 Agent 窗口，减少跨轮抖动 | [§5.11](#paper-2601-22705) |
-| [DualPath](https://arxiv.org/abs/2602.21548) | 两侧机器共同读取历史 KV，用流量隔离与调度保护模型执行 | [§5.12](#paper-2602-21548) |
-| [Copilot in the Wild](https://arxiv.org/abs/2608.00101) | 生产会话层次揭示缓存失效、压缩代价与回收时机 | [§3.5](#paper-2608-00101) |
-| [Hippocampus](https://proceedings.mlsys.org/paper_files/paper/2026/hash/a1d04870cf83a0f29819d66f1dfdbfcb-Abstract-Conference.html) | 二进制签名筛候选，动态小波矩阵索引并还原原文 | [§4.8](#paper-2602-13594) |
-| [Ask the Tool](https://arxiv.org/abs/2609.18849) | 旁路读取工具进度，指导 KV 保留、卸载和提前恢复 | [§5.13](#paper-2609-18849) |
-| [AgenticCache](https://proceedings.mlsys.org/paper_files/paper/2026/hash/c66a9db149261435664284a20b6f1d42-Abstract-Conference.html) | 缓存计划转移，后台 LLM 对照已执行轨迹确认或校正 | [§4.9](#paper-2604-24039) |
-| [APC](https://arxiv.org/abs/2506.14852) | 成功日志提炼模板，关键词匹配后由小模型适配 | [§4.10](#paper-2506-14852) |
-| [Sutradhara](https://arxiv.org/abs/2601.12967) | 确定前缀先算、完整工具调用先发，角色提示指导 KV 管理 | [§5.14](#paper-2601-12967) |
-| [Compact-Bench](https://arxiv.org/abs/2610.31710v2) | 固定仓库状态，比较完整历史与摘要的修复续跑 | [§3.6](#paper-2610-31710) |
-| [FlashProve](https://www.anthropic.com/document/flashprove-technical-report) | 绑定模型权重与规则，事后证明指定回复位置的计算结果 | [§6.5](#paper-flashprove) |
+| 论文（原文）                                                                                                                              | 主要内容                            | 本文位置                             |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- | -------------------------------- |
+| [DLite](https://arxiv.org/abs/2610.23787)                                                                                           | 借用目标表示，无历史草稿 + 隐藏空间顺序修正         | [§2.4](#paper-2610-23787)        |
+| [AgentSysBench](https://arxiv.org/abs/2608.15127)                                                                                   | 联合测模型、工具、环境、状态与通信               | [§3.1](#paper-2608-15127)        |
+| [OpenDS-World](https://arxiv.org/abs/2610.30181v1)                                                                                  | 真实网页多步取证，分析工具成本与停止行为            | [§3.2](#paper-2610-30181)        |
+| [Request Order Matters](https://arxiv.org/abs/2610.05833v1)                                                                         | 持续 KV 复用对前序请求敏感，连续重算更稳          | [§3.3](#paper-2610-05833)        |
+| [Agent Memory Characterization](https://arxiv.org/abs/2606.06448v2)                                                                 | 分开测记忆构建、检索、生成与更新等待              | [§3.4](#paper-2606-06448)        |
+| [Copilot in the Wild](https://arxiv.org/abs/2608.00101)                                                                             | 生产会话层次揭示缓存失效、压缩代价与回收时机          | [§3.5](#paper-2608-00101)        |
+| [Compact-Bench](https://arxiv.org/abs/2610.31710v2)                                                                                 | 固定仓库状态，比较完整历史与摘要的修复续跑           | [§3.6](#paper-2610-31710)        |
+| [CoMem](https://arxiv.org/abs/2605.30842)                                                                                           | 将摘要与执行拆开，异步重叠两者耗时               | [§4.1](#paper-2605-30842)        |
+| [LongSeeker](https://arxiv.org/abs/2605.05191)                                                                                      | 把上下文编辑变成可学习的动作                  | [§4.2](#paper-2605-05191)        |
+| [ACM](https://arxiv.org/abs/2607.23809)                                                                                             | 主动压缩 + 外部保留原文 + 按需查询            | [§4.3](#paper-2607-23809)        |
+| [Scroll](https://arxiv.org/abs/2608.21690)                                                                                          | 完整日志与持久变量在外部，按需读取并 print        | [§4.4](#paper-2608-21690)        |
+| [ReCAP](https://arxiv.org/abs/2609.40118)                                                                                           | 历史注意力 + 当前请求 + 依赖图选择上下文         | [§4.5](#paper-2609-40118)        |
+| [ACON](https://arxiv.org/abs/2510.00615v3)                                                                                          | 用成功／失败轨迹对照优化自然语言压缩指南            | [§4.6](#paper-2510-00615)        |
+| [ContextPilot（MLSys）](https://arxiv.org/abs/2511.03475v4)                                                                           | 上下文索引 + 共同前缀对齐 + 去重与语义注释        | [§4.7](#paper-2511-03475)        |
+| [Hippocampus](https://proceedings.mlsys.org/paper_files/paper/2026/hash/a1d04870cf83a0f29819d66f1dfdbfcb-Abstract-Conference.html)  | 二进制签名筛候选，动态小波矩阵索引并还原原文          | [§4.8](#paper-2602-13594)        |
+| [AgenticCache](https://proceedings.mlsys.org/paper_files/paper/2026/hash/c66a9db149261435664284a20b6f1d42-Abstract-Conference.html) | 缓存计划转移，后台 LLM 对照已执行轨迹确认或校正      | [§4.9](#paper-2604-24039)        |
+| [APC](https://arxiv.org/abs/2506.14852)                                                                                             | 成功日志提炼模板，关键词匹配后由小模型适配           | [§4.10](#paper-2506-14852)       |
+| [Agentix](https://www.usenix.org/system/files/nsdi26-luo.pdf)                                                                       | PLAS / ATLAS 把逐次调用调度提升到任务级      | [§5.1](#paper-nsdi26-agentix)    |
+| [Continnum](https://arxiv.org/abs/2511.02230v7)                                                                                     | 用 TTL 临时保护 GPU KV，减少跨轮恢复与排队     | [§5.2](#paper-2511-02230)        |
+| [MORI](https://arxiv.org/abs/2606.00866)                                                                                            | 按相对忙闲排序，在 GPU 与 CPU 间放置整份 KV    | [§5.3](#paper-2606-00866)        |
+| [CacheScout](https://arxiv.org/abs/2608.14624)                                                                                      | 学习调用转移，指导固定前缀的驱逐与预取             | [§5.4](#paper-2608-14624)        |
+| [Vesta](https://arxiv.org/abs/2610.14686v1)                                                                                         | 联合权衡缓存命中、排队与 KV 迁移              | [§5.5](#paper-2610-14686)        |
+| [AgentKV](https://arxiv.org/abs/2609.14872v1)                                                                                       | 保存各阶段代表 Query，避免只照顾最近的需求        | [§5.6](#paper-2609-14872)        |
+| [ActKV](https://arxiv.org/abs/2609.31395v1)                                                                                         | 按动作价值压缩，并用置信度调整预算               | [§5.7](#paper-2609-31395)        |
+| [CacheBlend](https://arxiv.org/abs/2405.16444v3)                                                                                    | 独立块 KV + 选择性重算 + 加载计算流水线        | [§5.8](#paper-2405-16444)        |
+| [CacheSlide](https://www.usenix.org/conference/fast26/presentation/liu-yang)                                                        | 相对顺序约束 + 编码适配 + KV 修补与存储流水线     | [§5.9](#paper-fast26-cacheslide) |
+| [EfficientAgent](https://arxiv.org/abs/2609.33762v1)                                                                                | 复用工作集决定状态能否存活，压力下拒绝大规模回填        | [§5.10](#paper-2609-33762)       |
+| [CONCUR](https://arxiv.org/abs/2601.22705)                                                                                          | 按 KV 占用与命中率调整活跃 Agent 窗口，减少跨轮抖动 | [§5.11](#paper-2601-22705)       |
+| [DualPath](https://arxiv.org/abs/2602.21548)                                                                                        | 两侧机器共同读取历史 KV，用流量隔离与调度保护模型执行    | [§5.12](#paper-2602-21548)       |
+| [Ask the Tool](https://arxiv.org/abs/2609.18849)                                                                                    | 旁路读取工具进度，指导 KV 保留、卸载和提前恢复       | [§5.13](#paper-2609-18849)       |
+| [Sutradhara](https://arxiv.org/abs/2601.12967)                                                                                      | 确定前缀先算、完整工具调用先发，角色提示指导 KV 管理    | [§5.14](#paper-2601-12967)       |
+| [PoS](https://arxiv.org/abs/2610.01415)                                                                                             | 显式记录当前世界判断与未完成要求，检测停滞           | [§6.1](#paper-2610-01415)        |
+| [Glasseek](https://arxiv.org/abs/2610.16998)                                                                                        | 可审查数据 + 压缩感知训练 + 防泄漏评测          | [§6.2](#paper-2610-16998)        |
+| [AgentRewind](https://arxiv.org/abs/2608.14380v1)                                                                                   | 对齐保存上下文与文件状态，失败后换一条路径           | [§6.3](#paper-2608-14380)        |
+| [Traverse / Scout](https://arxiv.org/abs/2609.17930v1)                                                                              | 人工标注首错位置，训练小验证器辅助选择轨迹           | [§6.4](#paper-2609-17930)        |
+| [FlashProve](https://www.anthropic.com/document/flashprove-technical-report)                                                        | 绑定模型权重与规则，事后证明指定回复位置的计算结果       | [§6.5](#paper-flashprove)        |
